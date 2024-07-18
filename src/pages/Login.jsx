@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import '../Styles/Login.css';
 
 
 function Login() {
