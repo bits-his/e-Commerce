@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import {Layout} from './components/Layout'
+import Layout from './components/Layout'
+import Login from './pages/Login'
 
 
 const App = ()=>{
@@ -9,8 +10,7 @@ const App = ()=>{
       <BrowserRouter>
         <Routes>
           <Route element={<Layout/>}>
-            <Route path='/' element={<Home />}/>
-           <Footer/>
+            <Route path='/' element={<Login />}/>
           </Route>
         </Routes>
       </BrowserRouter>
