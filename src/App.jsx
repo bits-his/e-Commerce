@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast';
 import Layout from './components/Layout'
 import NoLayout from './components/NoLayout'
 import Login from './pages/Login'

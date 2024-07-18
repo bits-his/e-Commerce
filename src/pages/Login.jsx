@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function LoginForm() {
     const [formData, setFormData] = useState({
@@ -24,13 +25,15 @@ function LoginForm() {
         console.log('Form submitted with:', formData);
 
         if (formData.userId === 'admin') {
-            navigate('/admin');
+            toast.success('Admin logged in');
+            navigate('/admin-dashboard');
         }
         else if (formData.userId === 'buyer') {
-            navigate('/buyer');
+            toast.success('buyer logged in');
+            navigate('/user-dashboard');
         }
         else {
-            navigate('/user');
+            toast.error('user not found');
         }
     };
 
