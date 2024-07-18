@@ -52,4 +52,13 @@ body {
     background-color: #0056b3;
     border-color: #004085;
   }
- 
+ /* Media Queries */
+@media (min-width: 768px) {
+    .login {
+      max-width: 500px;
+    }
+    .btn-primary{
+        font-size: 5rem;
+        font-weight: 600;
+    }
+  }
