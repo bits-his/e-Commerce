@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import '../Styles/Login.css';
 
@@ -65,7 +66,7 @@ function Login() {
                     <Button variant='primary' type='submit' className='btn-primary'>Login</Button>
                 </div>
                 <div className='d-flex pt-2' style={{justifyContent:"center"}}>
-                    <h6>Dont have an account ? <NavLink to= 'register' className='text-decoration-none text-dark'>Register Now</NavLink> </h6>
+                    <h6>Dont have an account ? <Link to= 'register' className='text-decoration-none text-dark'>Register Now</Link> </h6>
                 </div>
             </Form>
         </div>

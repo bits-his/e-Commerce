@@ -1,6 +1,6 @@
 /* src/styles/styles.css */
 
-body {
+/* body {
     font-family: 'Arial', sans-serif;
     background-color: #f7f7f7;
     margin: 0;
@@ -10,7 +10,7 @@ body {
     align-items: center;
     height: 100vh;
   }
-  
+   */
   .register {
     width: 100%;
     max-width: 400px;
@@ -19,6 +19,11 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     margin-top: 5rem;
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
   }
   
   .register h2 {

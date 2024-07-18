@@ -1,9 +1,11 @@
-import React from 'react'
+// src/components/Dashboard.js
+import React from 'react';
 
-function user_Dashboard() {
-  return (
-    <div>user</div>
-  )
-}
 
-export default user_Dashboard
+const Dashboard = () => (
+  <div>
+   wellcome
+  </div>
+);
+
+export default Dashboard;
