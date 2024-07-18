@@ -52,7 +52,4 @@ body {
     background-color: #0056b3;
     border-color: #004085;
   }
-  .login .btn-container {
-    display: flex;
-    justify-content: center;
-  }
+ 
