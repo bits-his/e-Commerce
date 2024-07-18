@@ -1,0 +1,85 @@
+/* Sidebar.css */
+
+.sidebar-wrapper {
+  height: 100vh;
+  background-color: #343a40;
+  color: #ffffff;
+}
+
+.sidebar-content {
+  width: 280px !important;
+  height: 100%;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.sidebar-navbar {
+  margin-bottom: 1rem;
+}
+
+.sidebar-brand-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidebar-divider {
+  background-color: #ffffff;
+  margin: 1rem 0;
+}
+
+.sidebar-nav .sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.sidebar-nav .sidebar-link:hover {
+  background-color: #495057;
+}
+
+.sidebar-nav .sidebar-link.active {
+  background-color: #6c757d;
+}
+
+.sidebar-icon {
+  margin-right: 0.5rem;
+}
+
+.sidebar-text {
+  flex-grow: 1;
+}
+
+.sidebar-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.sidebar-dropdown-toggle:hover {
+  background-color: #495057;
+}
+
+.sidebar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.sidebar-username {
+  font-weight: bold;
+}
+
+a{
+    color: aliceblue !important;
+}
+
+.header{
+    height: 8vh;
+    background: #343a40 !important;
+}
