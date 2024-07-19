@@ -13,6 +13,9 @@ function Login() {
     password: "",
   });
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,7 +25,9 @@ function Login() {
       [name]: value,
     });
   };
-
+    const togglePasswordVisibility = ()=>{
+        setPasswordVisible (!passwordVisible);
+    }
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform actions based on formData
@@ -46,28 +51,28 @@ function Login() {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        backgroundColor: "#d3d3d3",
       }}
     >
       <div className="login">
         <div>
-          <h2>Login</h2>
+          <h2 className="d-flex" style={{ justifyContent: "center" }}>
+            Login
+          </h2>
         </div>
-        <h3>Welcome back</h3>
-        <p>Enter password and email to het access</p>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formEmail">
-            <Form.Label htmlFor="user">Email</Form.Label>
+            <Form.Label htmlFor="user">User ID</Form.Label>
             <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <span className="input-group-text">
-                  <i className="fas fa-envelope"></i>
+                  <i className="fas fa-user"></i>
                 </span>
               </div>
               <Form.Control
                 type="text"
                 id="user"
                 name="userId"
-                required
                 value={formData.userId}
                 onChange={handleChange}
               />
@@ -82,15 +87,23 @@ function Login() {
                 </span>
               </div>
               <Form.Control
-                type="password"
+                type={passwordVisible ? 'text' : 'password'}
                 id="pass"
                 name="password"
-                required
                 value={formData.password}
                 onChange={handleChange}
               />
+              <div className="input-group-append">
+              <span className="input-group-text" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                {passwordVisible ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
+              </span>
+                </div>
             </div>
-            <Link to="/forgot-password" className="ml-auto">
+            <Link
+              to="/forgot-password"
+              className="ml-auto text-decoration-none text-dark d-flex"
+              style={{ justifyContent: "end" }}
+            >
               Forgot your password?
             </Link>
           </Form.Group>

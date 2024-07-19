@@ -4,7 +4,7 @@ import React from 'react';
 
 const Dashboard = () => (
   <div>
-   wellcome
+   wellcome 
   </div>
 );
 
