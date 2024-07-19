@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import '../Styles/Login.css';
+import { NavLink, } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import '../Styles/Login.css';
+
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -39,39 +41,34 @@ function Login() {
     };
 
     return (
-        <div className='container d-flex justify-content-center align-items-center login-body'>
-            <div className='login'>
-                <h2>Login</h2>
-                
-                <Form onSubmit={handleSubmit}>
-                    <Form.Label htmlFor="user">User ID</Form.Label>
-                    <Form.Control
-                        type="text"
-                        id="user"
-                        name="userId"
-                        required
-                        value={formData.userId}
-                        onChange={handleChange}
-                        className='w-100'
-                    />
-                    <Form.Label htmlFor="pass">Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        id="pass"
-                        name="password"
-                        required
-                        value={formData.password}
-                        onChange={handleChange}
-                        className='w-100'
-                    />
-                    <div className='d-flex' style={{justifyContent:"center"}}>
-                        <Button variant='primary' type='submit' className='btn-primary'>Login</Button>
-                    </div>
-                    <div className='d-flex pt-2' style={{justifyContent:"center"}}>
-                        <h6>Dont have an account ? <Link to= 'register' className='text-decoration-none text-dark'>Register Now</Link> </h6>
-                    </div>
-                </Form>
-            </div>
+        <div className='login'>
+            <h2>Login</h2>
+            <Form onSubmit={handleSubmit}>
+                <Form.Label htmlFor="user">User ID</Form.Label>
+                <Form.Control
+                    type="text"
+                    id="user"
+                    name="userId"
+                    required
+                    value={formData.userId}
+                    onChange={handleChange}
+                />
+                <Form.Label htmlFor="pass">Password</Form.Label>
+                <Form.Control
+                    type="password"
+                    id="pass"
+                    name="password"
+                    required
+                    value={formData.password}
+                    onChange={handleChange}
+                />
+                <div className='d-flex' style={{justifyContent:"center"}}>
+                    <Button variant='primary' type='submit' className='btn-primary'>Login</Button>
+                </div>
+                <div className='d-flex pt-2' style={{justifyContent:"center"}}>
+                    <h6>Dont have an account ? <Link to= 'register' className='text-decoration-none text-dark'>Register Now</Link> </h6>
+                </div>
+            </Form>
         </div>
     );
 }

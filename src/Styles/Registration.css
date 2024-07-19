@@ -9,18 +9,16 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-  } */
-  
-.login-body{
-  height: 100vh;
-}
-  .login {
+  }
+   */
+  .register {
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     padding: 20px;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
+    margin-top: 5rem;
     font-family: 'Arial', sans-serif;
     background-color: #f7f7f7;
     margin: 0 auto;
@@ -28,18 +26,18 @@
     align-items: center;
   }
   
-  .login h2 {
+  .register h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   
-  .login .form-label {
+  .register .form-label {
     margin-bottom: 8px;
     font-weight: bold;
     color: #333333;
   }
   
-  .login .form-control {
+  .register .form-control {
     width: 20rem;
     margin-bottom: 16px;
     padding: 10px;
@@ -47,7 +45,7 @@
     border: 1px solid #cccccc;
   }
   
-  .login .btn-primary {
+  .register .btn-primary {
     width: 50%;
     padding: 10px;
     margin: auto 0;
@@ -56,13 +54,13 @@
     border-radius: 4px;
   }
   
-  .login .btn-primary:hover {
+  .register .btn-primary:hover {
     background-color: #0056b3;
     border-color: #004085;
   }
  /* Media Queries */
 @media (min-width: 768px) {
-    .login {
+    .register {
       max-width: 500px;
     }
     .btn-primary{

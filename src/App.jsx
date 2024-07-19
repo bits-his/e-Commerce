@@ -5,6 +5,7 @@ import NoLayout from './components/NoLayout'
 import Login from './pages/Login'
 import Dashboard from './pages/admin_dashboard/AdminDashboard'
 import UserDashboard from './pages/user_Dashboard/user_Dashboard'
+import Registration from './pages/Registration';
 import Orders from './components/orders/orders'
 import NotFound from './components/NotFound'
 
@@ -18,6 +19,8 @@ const App = ()=>{
         <Routes>
           <Route element={<NoLayout />}>
             <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Registration />} />
+          
           </Route>
           <Route element={<Layout />}>
             <Route path="/admin-dashboard" element={<Dashboard />} /> 
