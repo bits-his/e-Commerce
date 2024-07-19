@@ -40,7 +40,8 @@ function Registration() {
     };
 
     return (
-        <div className='register'>
+        <div className='d-flex' style={{justifyContent:"center", alignItems:"center", height:"100vh"}}>
+            <div className='register'>
             <h2>Registration</h2>
             <Form onSubmit={handleSubmit}>
                 <Form.Label htmlFor="user">First Name</Form.Label>
@@ -95,6 +96,7 @@ function Registration() {
                     <h6>Already have an account ? <NavLink to= '/' className='text-decoration-none text-dark'>Login Here</NavLink> </h6>
                 </div>
             </Form>
+        </div>
         </div>
     );
 }
