@@ -27,12 +27,12 @@ const Sidebar = () => {
         </Navbar>
         <hr className="sidebar-divider" />
         <Nav vertical pills className="flex-column sidebar-nav">
-          <NavItem>
+          {/* <NavItem>
             <NavLink tag={Link} to="/" activeClassName="active" className="sidebar-link">
               <FaHome className="sidebar-icon" />
               <span className="sidebar-text">Home</span>
             </NavLink>
-          </NavItem>
+          </NavItem> */}
           <NavItem>
             <NavLink tag={Link} to="/dashboard" activeClassName="active" className="sidebar-link">
               <FaTachometerAlt className="sidebar-icon" />

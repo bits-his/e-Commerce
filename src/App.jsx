@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/admin_dashboard/AdminDashboard'
 import UserDashboard from './pages/user_Dashboard/user_Dashboard'
 import Orders from './components/orders/orders'
+import NotFound from './components/NotFound'
 
 
 
@@ -20,11 +21,11 @@ const App = ()=>{
           </Route>
           <Route element={<Layout />}>
             <Route path="/admin-dashboard" element={<Dashboard />} /> 
-            <Route path="/user-dashboard" element={<UserDashboard />} /> 
-            <Route path="/orders" element={<Orders/>} /> 
-
-
-            
+            <Route path="/user-dashboard" element={<UserDashboard />} >
+              <Route index element={<Login />}/>
+            </Route> 
+            <Route path="/orders" element={<Orders />} /> 
+            <Route path='*' element={<NotFound />}/>
           </Route>
         </Routes>
     </BrowserRouter>
