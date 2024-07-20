@@ -52,9 +52,9 @@ const Sidebar = () => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to="/customers" activeClassName="active" className="sidebar-link">
+            <NavLink tag={Link} to="/profile" activeClassName="active" className="sidebar-link">
               <FaUsers className="sidebar-icon" />
-              <span className="sidebar-text">Customers</span>
+              <span className="sidebar-text">profile</span>
             </NavLink>
           </NavItem>
         </Nav>

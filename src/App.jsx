@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/admin_dashboard/AdminDashboard'
 import UserDashboard from './pages/user_Dashboard/user_Dashboard'
 import Orders from './components/orders/orders'
+import Profile from './components/profile/profile'
 
 
 
@@ -22,6 +23,7 @@ const App = ()=>{
             <Route path="/admin-dashboard" element={<Dashboard />} /> 
             <Route path="/user-dashboard" element={<UserDashboard />} /> 
             <Route path="/orders" element={<Orders/>} /> 
+            <Route path="/profile" element={<Profile/>} /> 
 
 
             
