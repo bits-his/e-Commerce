@@ -7,6 +7,7 @@ import Dashboard from './pages/admin_dashboard/AdminDashboard'
 import UserDashboard from './pages/user_Dashboard/user_Dashboard'
 import Orders from './components/orders/orders'
 import Profile from './components/profile/profile'
+import UserDashboardcon from './components/dashboard/dashboard'
 
 
 
@@ -21,9 +22,11 @@ const App = ()=>{
           </Route>
           <Route element={<Layout />}>
             <Route path="/admin-dashboard" element={<Dashboard />} /> 
-            <Route path="/user-dashboard" element={<UserDashboard />} /> 
+            <Route path="/user-dashboard" element={<UserDashboardcon />} /> 
             <Route path="/orders" element={<Orders/>} /> 
             <Route path="/profile" element={<Profile/>} /> 
+            <Route path="/dashboard" element={<UserDashboard/>} /> 
+
 
 
             
