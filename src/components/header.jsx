@@ -1,11 +1,21 @@
 import React from 'react';
-import { FaSearch } from 'react-icons/fa'; // Assuming you are using react-icons for icons
+import { FaSearch, FaBell } from 'react-icons/fa'; // Importing icons from react-icons
 
 function Header() {
   return (
-    <div className="bg-dark header">
-      <div className="">
-       hi
+    <div className="header">
+      <div className="logo">
+       
+      </div>
+      <div className="header-icons">
+        <div className="search-container">
+          <input type="text" placeholder="Search..." className="search-input" />
+          <button className="search-button"><FaSearch /></button>
+        </div>
+        <button className="notification-button">
+          <FaBell />
+          <span className="notification-badge"></span>
+        </button>
       </div>
     </div>
   );
