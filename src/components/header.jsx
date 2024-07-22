@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaSearch, FaBell } from 'react-icons/fa'; // Importing icons from react-icons
+import "../Styles/Header.css";
 
 function Header() {
   return (
@@ -7,7 +8,7 @@ function Header() {
       <div className="logo">
        
       </div>
-      <div className="header-icons">
+      <div className="header-icons d-flex bg-dark">
         <div className="search-container">
           <input type="text" placeholder="Search..." className="search-input" />
           <button className="search-button"><FaSearch /></button>
