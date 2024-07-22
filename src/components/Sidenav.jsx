@@ -5,6 +5,11 @@ import DropdownBtn from "../components/DropdownBtn"
 import "./sidenav.css";
 
 const Sidebar = () => {
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  const handleToggle = (dropdownName) => {
+    setActiveDropdown((prevActive) => (prevActive === dropdownName ? null : dropdownName));
+  };
 
   return (
     <div className="side-nav bg-dark">
@@ -17,10 +22,13 @@ const Sidebar = () => {
           <DropdownBtn
             title="Dashboard"
             items={["Overview", "Sales Analytics", "Recent Orders", "Revenue Reports", "Traffic Insights"]}
+            onToggle={() => handleToggle("Dashboard")}
+            isActive={activeDropdown === "Dashboard"}
           />
           <DropdownBtn
             title="Product Management"
             items={["All Customers", "Customer Details", "Customer Groups", "Customer Reviews"]}
+            
           />
           <DropdownBtn
             title="Reports"

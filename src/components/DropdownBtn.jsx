@@ -2,23 +2,18 @@ import { useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 
-const DropdownMenu = ({ title, items }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleDropdownClick = () => {
-    setIsOpen(!isOpen);
-  };
+const DropdownMenu = ({ title, items, isActive, onToggle }) => {
 
   return (
     <>
       <NavLink
         className={({ isActive }) => (isActive ? "active-btn" : "norm-btn")}
-        onClick={handleDropdownClick}
+        onClick={onToggle}
       >
         {title}
-        <IoIosArrowDroprightCircle className={`icon ${isOpen ? 'rotated' : ''}`} />
+        <IoIosArrowDroprightCircle className={`icon ${isActive ? 'rotated' : ''}`} />
       </NavLink>
-      {isOpen && (
+      {isActive && (
         <div className="ps-3">
           {items.map((item, index) => (
             <NavLink
