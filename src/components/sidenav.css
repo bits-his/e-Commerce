@@ -1,5 +1,5 @@
 .side-nav {
-  width: 400px;
+  width: 260px;
   height: 100vh;
   overflow-y: auto;
   position: relative;
@@ -9,12 +9,12 @@
 
 .norm-btn {
   width: 100% !important;
-  height: 3.5rem;
-  padding: 0 1rem;
+  height: 2.5rem;
+  padding: 0 0.5rem;
   display: flex;
   align-items: center;
-  margin-top: 2rem;
-  font-size: 1.2rem;
+  margin-top: 1rem;
+  font-size: 0.87rem;
   color: white;
   border-radius: .5rem;
   text-decoration: none;
@@ -23,13 +23,13 @@
 
 .active-btn {
   width: 100% !important;
-  height: 3.5rem;
-  padding: 0 1rem;
+  height: 2.5rem;
+  padding: 0 .5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
-  font-size: 1.2rem;
+  font-size: 0.87rem;
   color: white;
   border-radius: .5rem;
   text-decoration: none;
@@ -51,5 +51,6 @@
 
 .logout {
   position: absolute;
-  bottom: 20px;
+  padding: 0 .5rem;
+  bottom: 10px;
 }
