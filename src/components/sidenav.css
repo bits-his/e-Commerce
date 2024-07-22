@@ -1,87 +1,55 @@
-/* Sidebar.css */
-
-.sidebar-wrapper {
+.side-nav {
+  width: 400px;
   height: 100vh;
-  background-color: #343a40;
-  color: #ffffff;
+  overflow-y: auto;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
-.sidebar-content {
-  width: 400px !important;
-  height: 100%;
-  padding: 1rem;
+.norm-btn {
+  width: 100% !important;
+  height: 3.5rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: white;
+  border-radius: .5rem;
+  text-decoration: none;
+  background-color: #666666;
+}
+
+.active-btn {
+  width: 100% !important;
+  height: 3.5rem;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: white;
+  border-radius: .5rem;
+  text-decoration: none;
+  background-color: #3d3d3d;
+}
+
+.icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.rotated {
+  transform: rotate(90deg); /* Adjust the angle as needed */
+}
+
+.nav-container {
   overflow-y: auto;
 }
 
-.sidebar-navbar {
-  margin-bottom: 1rem;
-}
-
-.sidebar-brand-text {
-  font-size: 1.5rem;
-  font-weight: bold;
-  font-family: fantasy;
-}
-
-.sidebar-divider {
-  background-color: #ffffff;
-  margin: 1rem 0;
-}
-
-.sidebar-nav .sidebar-link {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  color: #ffffff;
-  font-size: 1.4rem;
-  text-decoration: none;
-  transition: background-color 0.3s;
-}
-
-.sidebar-nav .sidebar-link:hover {
-  background-color: #495057;
-}
-
-.sidebar-nav .sidebar-link.active {
-  background-color: #6c757d;
-}
-
-.sidebar-icon {
-  margin-right: 0.5rem;
-}
-
-.sidebar-text {
-  flex-grow: 1;
-}
-
-.sidebar-dropdown-toggle {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.sidebar-dropdown-toggle:hover {
-  background-color: #495057;
-}
-
-.sidebar-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  margin-right: 0.5rem;
-}
-
-.sidebar-username {
-  font-weight: bold;
-}
-
-a{
-    color: aliceblue !important;
-}
-
-.header{
-    height: 9.4vh;
-    background: #343a40 !important;
+.logout {
+  position: absolute;
+  bottom: 20px;
 }
