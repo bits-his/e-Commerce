@@ -18,7 +18,8 @@ const Sidebar = () => {
           <div className="d-flex justify-content-center">
             <div className="brand-logo"></div>
           </div>
-          
+
+          <div></div>
           <DropdownBtn
             title="Dashboard"
             items={["Overview", "Sales Analytics", "Recent Orders", "Revenue Reports", "Traffic Insights"]}
