@@ -30,6 +30,11 @@ const Sidebar = () => {
             title="User Management"
             items={["Admin Users", "Roles & Permissions", "Activity Logs"]}
           />
+
+          <DropdownBtn  
+            title="User Management"
+            items={["Admin Users", "Roles & Permissions", "Activity Logs"]}
+          />
         </div>
       </Nav>
       <div clas>
