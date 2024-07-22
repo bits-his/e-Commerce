@@ -7,6 +7,13 @@
   left: 0;
 }
 
+.brand-logo {
+  margin-top: 15px;
+  width: 50%;
+  height: 100px;
+  background-color: black;
+}
+
 .norm-btn {
   width: 100% !important;
   height: 2.5rem;
@@ -49,9 +56,29 @@
   overflow-y: auto;
 }
 
-.logout {
+.logout-main {
   position: absolute;
+  width: 100%;
   padding: 0 .5rem;
   bottom: 10px;
+}
+
+.logout-container {
+  width: 100%;
   padding: 0 0.5rem;
+}
+
+.logout {
+  width: 100% !important;
+  height: 2.5rem;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 0.87rem;
+  text-align: center;
+  color: white;
+  border-radius: .5rem;
+  text-decoration: none;
+  background-color: red;
 }
