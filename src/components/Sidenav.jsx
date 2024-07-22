@@ -62,7 +62,7 @@ const Sidebar = () => {
 
         </div>
       </Nav>
-      <div className="logout-main">
+      <div className="logout-main bg-dark">
         <div className="logout-container">
           <NavLink className="logout">
             Logout
