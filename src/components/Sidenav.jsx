@@ -32,7 +32,7 @@ const Sidebar = () => {
           />
         </div>
       </Nav>
-      <div clas>
+      <div className="logout">
         <NavLink>
           Logout
         </NavLink>
