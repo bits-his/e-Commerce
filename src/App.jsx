@@ -29,6 +29,9 @@ const App = ()=>{
             </Route> 
             <Route path="/seller-dashboard" >
               <Route index element={<Profile />}/>
+              <Route path='/product-mgmt' >
+                <Route index element={}/>
+              </Route>
             </Route> 
             <Route path="/orders" element={<Orders />} /> 
             <Route path='*' element={<NotFound />}/>
