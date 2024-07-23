@@ -81,7 +81,7 @@ function Login() {
           <Form.Group controlId="passwordId">
             <Form.Label htmlFor="pass">Password</Form.Label>
             <div className="input-group mb-3">
-              <div className="input-group-prepend">
+              <div className="input-group-prepend ">
                 <span className="input-group-text">
                   <i className="fas fa-lock icon"></i>
                 </span>
@@ -95,7 +95,7 @@ function Login() {
               />
               <div className="input-group-append">
               <span className="input-group-text" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
-                {passwordVisible ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
+                {passwordVisible ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>}
               </span>
                 </div>
             </div>

@@ -7,12 +7,12 @@ import "../Styles/Registration.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
-function Login() {
+function Registration() {
   const [formData, setFormData] = useState({
     userId: "",
     password: "",
   });
-
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,7 +22,10 @@ function Login() {
       [name]: value,
     });
   };
-
+  
+  const togglePasswordVisibility = ()=>{
+    setPasswordVisible (!passwordVisible);
+}
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform actions based on formData
@@ -49,7 +52,7 @@ function Login() {
         backgroundColor: "#d3d3d3",
       }}
     >
-      <div className="login">
+      <div className="register">
         <div>
           <h2 className="d-flex" style={{ justifyContent: "center" }}>
             Registration
@@ -142,4 +145,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Registration;
