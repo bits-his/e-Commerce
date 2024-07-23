@@ -9,8 +9,6 @@ import Registration from './pages/Registration';
 import Orders from './components/orders/orders'
 import NotFound from './components/NotFound'
 
-
-
 const App = ()=>{
 
   return(
