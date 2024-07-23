@@ -25,6 +25,20 @@ const App = ()=>{
           <Route element={<Layout />}>
             <Route path="/admin-dashboard" >
               <Route index element={<Profile />}/>
+              <Route path='customer-mgmt' >
+                <Route path='customers' element={<Product />}/>
+                <Route path='customer-reviews' element={<Product />}/>
+              </Route>
+              <Route path='reports' >
+                <Route path='sales' element={<Product />}/>
+                <Route path='product-performance' element={<Product />}/>
+                <Route path='inventory' element={<Product />}/>
+                <Route path='traffic' element={<Product />}/>
+              </Route>
+              <Route path='user-mgmt' >
+                <Route path='admin' element={<Product />}/>
+                <Route path='logs' element={<Product />}/>
+              </Route>
             </Route> 
             <Route path="/seller-dashboard" >
               <Route index element={<Profile />}/>

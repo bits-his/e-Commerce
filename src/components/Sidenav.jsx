@@ -51,14 +51,14 @@ const Sidebar = () => {
                   "Inventory Reports",
                   "Traffic & Conversion",
                 ]}
-                links={["/admin-dashboard/reports/sales", "/admin-dashboard/reports/product-performance", "/admin-dashboard/reports/inventory", "traffic"]}
+                links={["/admin-dashboard/reports/sales", "/admin-dashboard/reports/product-performance", "/admin-dashboard/reports/inventory", "/admin-dashboard/reports/traffic"]}
                 onToggle={() => handleToggle("Reports")}
                 isActive={activeDropdown === "Reports"}
               />
               <DropdownBtn
                 title="User Management"
                 items={["Admin Users", "Activity Logs"]}
-                links={[""]}
+                links={["/admin-dashboard/user-mgmt/admin", "/admin-dashboard/user-mgmt/logs"]}
                 onToggle={() => handleToggle("User Management")}
                 isActive={activeDropdown === "User Management"}
               />
