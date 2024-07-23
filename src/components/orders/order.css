@@ -1,0 +1,31 @@
+.order-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .order-page h2 {
+    margin-bottom: 20px;
+  }
+  
+  .order-page .table {
+    background-color: white;
+    border: 1px solid #dee2e6;
+  }
+  
+  .order-page .table th,
+  .order-page .table td {
+    vertical-align: middle;
+  }
+  
+  .order-page .table th {
+    background-color: #e9ecef;
+    border-bottom: 2px solid #dee2e6;
+  }
+  
+  .order-page .no-orders {
+    text-align: center;
+    color: #6c757d;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+  
