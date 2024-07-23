@@ -15,7 +15,9 @@ function Login() {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-
+   const togglePasswordVisibility = ()=>{
+        setPasswordVisible (!passwordVisible);
+    }
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,9 +27,7 @@ function Login() {
       [name]: value,
     });
   };
-    const togglePasswordVisibility = ()=>{
-        setPasswordVisible (!passwordVisible);
-    }
+   
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -39,7 +39,8 @@ function Login() {
     } else if (formData.userId === "seller") {
       toast.success(`${formData.userId} logged in`);
       navigate("/seller-dashboard");
-    } else {
+    } 
+    else {
       toast.error("user not found");
     }
   };
