@@ -30,15 +30,15 @@ function Login() {
     }
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform actions based on formData
+    
     console.log("Form submitted with:", formData);
 
     if (formData.userId === "admin") {
-      toast.success("Admin logged in");
+      toast.success(`${formData.userId} logged in`);
       navigate("/admin-dashboard");
-    } else if (formData.userId === "buyer") {
-      toast.success("buyer logged in");
-      navigate("/user-dashboard");
+    } else if (formData.userId === "seller") {
+      toast.success(`${formData.userId} logged in`);
+      navigate("/seller-dashboard");
     } else {
       toast.error("user not found");
     }

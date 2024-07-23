@@ -23,8 +23,10 @@ const App = ()=>{
           
           </Route>
           <Route element={<Layout />}>
-            <Route path="/admin-dashboard" element={<Dashboard />} /> 
-            <Route path="/user-dashboard" element={<UserDashboard />} >
+            <Route path="/admin-dashboard" element={<Dashboard />} >
+              <Route index element={<Login />}/>
+            </Route> 
+            <Route path="/seller-dashboard" element={<UserDashboard />} >
               <Route index element={<Login />}/>
             </Route> 
             <Route path="/orders" element={<Orders />} /> 
