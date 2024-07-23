@@ -5,9 +5,9 @@ import NoLayout from './components/NoLayout'
 import Login from './pages/Login'
 import Dashboard from './pages/admin_dashboard/AdminDashboard'
 import UserDashboard from './pages/user_Dashboard/user_Dashboard'
+import Registration from './pages/Registration';
 import Orders from './components/orders/orders'
-import Profile from './components/profile/profile'
-import UserDashboardcon from './components/dashboard/dashboard'
+import NotFound from './components/NotFound'
 
 
 
@@ -19,17 +19,16 @@ const App = ()=>{
         <Routes>
           <Route element={<NoLayout />}>
             <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Registration />} />
+          
           </Route>
           <Route element={<Layout />}>
             <Route path="/admin-dashboard" element={<Dashboard />} /> 
-            <Route path="/user-dashboard" element={<UserDashboardcon />} /> 
-            <Route path="/orders" element={<Orders/>} /> 
-            <Route path="/profile" element={<Profile/>} /> 
-            <Route path="/dashboard" element={<UserDashboard/>} /> 
-
-
-
-            
+            <Route path="/user-dashboard" element={<UserDashboard />} >
+              <Route index element={<Login />}/>
+            </Route> 
+            <Route path="/orders" element={<Orders />} /> 
+            <Route path='*' element={<NotFound />}/>
           </Route>
         </Routes>
     </BrowserRouter>
