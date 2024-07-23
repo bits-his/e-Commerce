@@ -30,8 +30,8 @@ const App = ()=>{
             </Route> 
             <Route path="/seller-dashboard" >
               <Route index element={<Profile />}/>
-              <Route path='product-mgmt'>
-                <Route path='product' element={<Product />}/>
+              <Route path='/product-mgmt' >
+                <Route index element={<Product/>}/>
               </Route>
             </Route> 
             <Route path="/orders" element={<Orders />} /> 

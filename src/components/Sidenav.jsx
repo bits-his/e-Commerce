@@ -31,7 +31,7 @@ const Sidebar = () => {
           >
             Dashboard
           </NavLink>
-          {pathname === '/admin-dashboard' && (
+          {(pathname.startsWith('/admin-dashboard')) && (
             <>
               <DropdownBtn
                 title="Customer Management"
@@ -70,7 +70,7 @@ const Sidebar = () => {
 
             {/* Link to sellers route */}
 
-            {pathname === '/seller-dashboard' && (
+            {(pathname.startsWith('/seller-dashboard')) && (
             <>
               <DropdownBtn
                 title="Store Management"
@@ -83,7 +83,7 @@ const Sidebar = () => {
               <DropdownBtn
                 title="Product Management"
                 items={["Product", "Payment method"]}
-                links={["product", "payment-method"]}
+                links={["/product"]}
                 onToggle={() => handleToggle("Product Management")}
                 isActive={activeDropdown === "Product Management"}
               />
