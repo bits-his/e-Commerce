@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
-import DropdownBtn from "../components/DropdownBtn"
+import { NavLink, useLocation } from "react-router-dom";
+import DropdownBtn from "../components/DropdownBtn";
 import "./sidenav.css";
 
 const Sidebar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const location = useLocation();
+  const { pathname } = location;
 
   const handleToggle = (dropdownName) => {
-    setActiveDropdown((prevActive) => (prevActive === dropdownName ? null : dropdownName));
+    setActiveDropdown((prevActive) =>
+      prevActive === dropdownName ? null : dropdownName
+    );
   };
 
   return (
@@ -18,55 +22,86 @@ const Sidebar = () => {
           <div className="d-flex justify-content-center">
             <div className="brand-logo"></div>
           </div>
+
+          <div className="nav-list">
           
-          <DropdownBtn
-            title="Dashboard"
-            items={["Overview", "Sales Analytics", "Recent Orders", "Revenue Reports", "Traffic Insights"]}
-            onToggle={() => handleToggle("Dashboard")}
-            isActive={activeDropdown === "Dashboard"}
-          />
-          <DropdownBtn
-            title="Customer Management"
-            items={["All Customers", "Customer Details", "Customer Groups", "Customer Reviews"]}
-            onToggle={() => handleToggle("Customer Management")}
-            isActive={activeDropdown === "Customer Management"}
-          />
-          <DropdownBtn
-            title="Reports"
-            items={["Sales Reports", "Product Performance", "Customer Insights", "Inventory Reports", "Traffic & Conversion"]}
-            onToggle={() => handleToggle("Reports")}
-            isActive={activeDropdown === "Reports"}
-          />
-          <DropdownBtn
-            title="User Management"
-            items={["Admin Users", "Roles & Permissions", "Activity Logs"]}
-            onToggle={() => handleToggle("User Management")}
-            isActive={activeDropdown === "User Management"}
-          />
+            <DropdownBtn
+              title="Dashboard"
+              items={[
+                "Overview",
+                "Sales Analytics",
+                "Recent Orders",
+                "Revenue Reports",
+                "Traffic Insights",
+              ]}
+              links={[""]}
+              onToggle={() => handleToggle("Dashboard")}
+              isActive={activeDropdown === "Dashboard"}
+            />
+          {pathname === '/admin-dashboard' && (
+            <>
+              <DropdownBtn
+                title="Customer Management"
+                items={[
+                  "All Customers",
+                  "Customer Details",
+                  "Customer Groups",
+                  "Customer Reviews",
+                ]}
+                links={[""]}
+                onToggle={() => handleToggle("Customer Management")}
+                isActive={activeDropdown === "Customer Management"}
+              />
+              <DropdownBtn
+                title="Reports"
+                items={[
+                  "Sales Reports",
+                  "Product Performance",
+                  "Customer Insights",
+                  "Inventory Reports",
+                  "Traffic & Conversion",
+                ]}
+                links={[""]}
+                onToggle={() => handleToggle("Reports")}
+                isActive={activeDropdown === "Reports"}
+              />
+              <DropdownBtn
+                title="User Management"
+                items={["Admin Users", "Roles & Permissions", "Activity Logs"]}
+                links={[""]}
+                onToggle={() => handleToggle("User Management")}
+                isActive={activeDropdown === "User Management"}
+              />
+            </>
+          )}
 
-          {/* Link to sellers route */}
+            {/* Link to sellers route */}
 
-          <DropdownBtn
-            title="Store Management"
-            items={["Store profile", "Payment method"]}
-            onToggle={() => handleToggle("Store Management")}
-            isActive={activeDropdown === "Store Management"}
-          />
+            {pathname === '/seller-dashboard' && (
+            <>
+              <DropdownBtn
+                title="Store Management"
+                items={["Store profile", "Payment method"]}
+                links={[""]}
+                onToggle={() => handleToggle("Store Management")}
+                isActive={activeDropdown === "Store Management"}
+              />
 
-          <DropdownBtn
-            title="Product Management"
-            items={["Product", "Payment method"]}
-            onToggle={() => handleToggle("Product Management")}
-            isActive={activeDropdown === "Product Management"}
-          />
-
+              <DropdownBtn
+                title="Product Management"
+                items={["Product", "Payment method"]}
+                links={[""]}
+                onToggle={() => handleToggle("Product Management")}
+                isActive={activeDropdown === "Product Management"}
+              />
+            </>
+            )}
+          </div>
         </div>
       </Nav>
       <div className="logout-main bg-dark">
         <div className="logout-container">
-          <NavLink className="logout">
-            Logout
-          </NavLink>
+          <NavLink className="logout">Logout</NavLink>
         </div>
       </div>
     </div>

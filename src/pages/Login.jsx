@@ -15,7 +15,9 @@ function Login() {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-
+   const togglePasswordVisibility = ()=>{
+        setPasswordVisible (!passwordVisible);
+    }
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,21 +27,20 @@ function Login() {
       [name]: value,
     });
   };
-    const togglePasswordVisibility = ()=>{
-        setPasswordVisible (!passwordVisible);
-    }
+   
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform actions based on formData
+    
     console.log("Form submitted with:", formData);
 
     if (formData.userId === "admin") {
-      toast.success("Admin logged in");
+      toast.success(`${formData.userId} logged in`);
       navigate("/admin-dashboard");
-    } else if (formData.userId === "buyer") {
-      toast.success("buyer logged in");
-      navigate("/user-dashboard");
-    } else {
+    } else if (formData.userId === "seller") {
+      toast.success(`${formData.userId} logged in`);
+      navigate("/seller-dashboard");
+    } 
+    else {
       toast.error("user not found");
     }
   };

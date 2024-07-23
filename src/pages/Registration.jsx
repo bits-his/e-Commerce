@@ -14,7 +14,9 @@ function Registration() {
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
-
+  const togglePasswordVisibility = ()=>{
+    setPasswordVisible (!passwordVisible);
+}
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -23,9 +25,7 @@ function Registration() {
     });
   };
   
-  const togglePasswordVisibility = ()=>{
-    setPasswordVisible (!passwordVisible);
-}
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform actions based on formData
@@ -97,7 +97,8 @@ function Registration() {
             <Form.Label htmlFor="user">Password</Form.Label>
             <div className="input-group mb-3">
               <div className="input-group-prepend">
-                <span className="input-group-text">
+                <span className="input-group-text" onClick={togglePasswordVisibility} style={{cursor:"pointer"}}>
+                  {passwordVisible ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>}
                   <i className="fas fa-lock"></i>
                 </span>
               </div>
