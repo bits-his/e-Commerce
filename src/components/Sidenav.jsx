@@ -25,19 +25,12 @@ const Sidebar = () => {
 
           <div className="nav-list">
           
-            <DropdownBtn
-              title="Dashboard"
-              items={[
-                "Overview",
-                "Sales Analytics",
-                "Recent Orders",
-                "Revenue Reports",
-                "Traffic Insights",
-              ]}
-              links={[""]}
-              onToggle={() => handleToggle("Dashboard")}
-              isActive={activeDropdown === "Dashboard"}
-            />
+          <NavLink
+            className={({ isActive }) => (isActive ? "active-btn" : "norm-btn")}
+            to={pathname === '/admin-dashboard' ? '/admin-dashboard' : '/seller-dashboard'}
+          >
+            Dashboard
+          </NavLink>
           {pathname === '/admin-dashboard' && (
             <>
               <DropdownBtn
