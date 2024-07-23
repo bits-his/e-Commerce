@@ -9,6 +9,7 @@ import UserDashboard from './pages/user_Dashboard/user_Dashboard'
 import Registration from './pages/Registration';
 import Orders from './components/orders/orders'
 import NotFound from './components/NotFound'
+import Product from './pages/prodoct-mgnt/product'
 
 
 
@@ -29,6 +30,9 @@ const App = ()=>{
             </Route> 
             <Route path="/seller-dashboard" >
               <Route index element={<Profile />}/>
+              <Route path='product-mgmt'>
+                <Route path='product' element={<Product />}/>
+              </Route>
             </Route> 
             <Route path="/orders" element={<Orders />} /> 
             <Route path='*' element={<NotFound />}/>
