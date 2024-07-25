@@ -6,11 +6,11 @@ import {
   Button,
   Nav,
   NavItem,
+  NavLink,
   Card,
   CardHeader,
   CardBody
 } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
 import { FaPlus, FaSearch, FaSort, FaCog } from 'react-icons/fa'; // Import React Icons
 import './product.css'; // Import the custom CSS file
 
@@ -35,26 +35,16 @@ const ProductsPage = () => {
         </CardHeader>
         <CardBody>
           <Row className="mb-4">
-            <Col className='d-flex justify-content-between'>
-              <Nav pills>
+            <Col className='d-flex justify-content-betwee'>
+              <Nav pills >
                 <NavItem>
-                  <NavLink
-                    to="/all"
-                    className={({ isActive }) => 
-                      `p-2 w-100 ${isActive ? 'bg-secondary text-light' : ''}`
-                    }
-                  >
-                    All
+                  <NavLink active className='bg-secondary p-2 w-100 '>
+                     All
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink
-                    to="/addproduct"
-                    className={({ isActive }) => 
-                      `p-2 mr-3 w-100 ${isActive ? 'bg-secondary text-light' : ''}`
-                    }
-                  >
-                    <FaPlus className="text-light" />
+                  <NavLink className='p-2 mr-3 w-100 bg-secondary'>
+                    <FaPlus className=" text-light" /> 
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -67,10 +57,7 @@ const ProductsPage = () => {
               <p className="card-text">
                 Start by stocking your store with products your customers will love.
               </p>
-              <Button
-                className='btn btn-primary add-product text-white py-2 px-1'
-                href="addproduct"
-              >
+              <Button color="primary" href="addproduct">
                 <FaPlus /> Add product
               </Button>
               <Button color="secondary" className="ml-2">
