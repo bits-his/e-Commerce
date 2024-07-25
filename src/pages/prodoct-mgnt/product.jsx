@@ -67,12 +67,12 @@ const ProductsPage = () => {
               <p className="card-text">
                 Start by stocking your store with products your customers will love.
               </p>
-              <NavLink
+              <Button
                 className='btn btn-primary add-product text-white py-2 px-1'
-                to="addproduct"
+                href="addproduct"
               >
                 <FaPlus /> Add product
-              </NavLink>
+              </Button>
               <Button color="secondary" className="ml-2">
                 <FaCog /> Manage products
               </Button>
