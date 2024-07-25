@@ -6,6 +6,11 @@
   left: 0;
 }
 
+.main-outlet {
+  height: 100vh;
+  overflow-y: auto;
+}
+
 .brand-logo {
   margin-top: 15px;
   width: 50%;
@@ -58,6 +63,8 @@
 .nav-container {
   overflow-y: auto;
 }
+
+
 
 .logout-main {
   position: absolute;

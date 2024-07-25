@@ -6,12 +6,10 @@ import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Product from './pages/seller_Dashboard/Product'
 import Registration from './pages/Registration';
-import Orders from './components/orders/orders'
 import NotFound from './components/NotFound'
 import Productmgnt from './pages/prodoct-mgnt/product'
 import AddProductPage from './pages/prodoct-mgnt/addproduct'
-
-
+import Customers from './pages/admin_dashboard/Customers'
 
 const App = ()=>{
 
@@ -28,7 +26,7 @@ const App = ()=>{
             <Route path="/admin-dashboard" >
               <Route index element={<Profile />}/>
               <Route path='customer-mgmt' >
-                <Route path='customers' element={<Product />}/>
+                <Route path='customers' element={<Customers />}/>
                 <Route path='customer-reviews' element={<Product />}/>
               </Route>
               <Route path='reports' >
@@ -46,11 +44,11 @@ const App = ()=>{
               <Route index element={<Profile />}/>
               
               <Route path='product-mgmt' >
-                <Route path='product' element={<Productmgnt />}/>
-                <Route path="addproduct" element={<AddProductPage />} />
+                <Route path='product' element={<Productmgnt />}>
+                  <Route path="addproduct" element={<AddProductPage />} />
+                </Route>
               </Route>
             </Route> 
-            <Route path="/orders" element={<Orders />} /> 
             <Route path='*' element={<NotFound />}/>
           </Route>
         </Routes>
