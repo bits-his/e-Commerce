@@ -66,4 +66,47 @@ Centering the form container
 .btn-primary:hover {
   background-color: #0056b3;
 }
- 
+.dropzone {
+  border: 2px dashed #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f8f8f8;
+}
+
+.dropzone:hover {
+  background-color: #e8e8e8;
+}
+
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.image-preview img {
+  max-width: 100px;
+  max-height: 100px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.remove-image {
+  position: relative;
+  top: -10px;
+  right: -10px;
+  background-color: #ffffff;
+  border: 2px solid #cccccc;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.remove-image:hover {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}

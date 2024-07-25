@@ -29,8 +29,8 @@ export default function Profile() {
           </div>
           
           <div className='d-flex ' style={{justifyContent:"center"}}>
-            <button className="btn btn-primary" style={{fontSize:"smaller"}}>Follow</button>
-            <button className="btn btn-secondary" style={{fontSize:"smaller"}}>Message</button>
+            <button className="btns btn-primary" style={{fontSize:"smaller"}}>Follow</button>
+            <button className="btns btn-secondary" style={{fontSize:"smaller"}}>Message</button>
           </div>
          <hr></hr>
           <div className="about-section">
