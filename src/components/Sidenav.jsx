@@ -93,7 +93,7 @@ const Sidebar = () => {
                 <DropdownBtn
                   title="Store Management"
                   items={["Store profile", "Payment method"]}
-                  links={[""]}
+                  links={["/seller-dashboard/storemangement"]}
                   onToggle={() => handleToggle("Store Management")}
                   isActive={activeDropdown === "Store Management"}
                 />

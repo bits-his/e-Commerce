@@ -10,6 +10,7 @@ import NotFound from './components/NotFound'
 import Productmgnt from './pages/prodoct-mgnt/product'
 import AddProductPage from './pages/prodoct-mgnt/addproduct'
 import Customers from './pages/admin_dashboard/Customers'
+import Storemanagement from './pages/seller_Dashboard/storemanagement/storemgrt'
 
 const App = ()=>{
 
@@ -47,7 +48,10 @@ const App = ()=>{
                 <Route path='product'>
                   <Route index element={<Productmgnt />}/>
                   <Route path="addproduct" element={<AddProductPage />} />
-                </Route>
+                </Route>  
+              </Route>
+              <Route path='storemangement'>
+                <Route index element={<Storemanagement />}/>
               </Route>
             </Route> 
             <Route path='*' element={<NotFound />}/>
