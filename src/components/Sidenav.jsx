@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
-<<<<<<< HEAD
-import { NavLink } from "react-router-dom";
 import DropdownBtn from "../components/DropdownBtn";
-import ecommerce from "../images/e-commerce.png"; // Ensure the path is correct
-=======
 import { NavLink, useLocation } from "react-router-dom";
-import DropdownBtn from "../components/DropdownBtn";
->>>>>>> ca6a26f39df8ea04922201828a38450789527006
+
 import "./sidenav.css";
 
 const Sidebar = () => {
@@ -27,7 +22,7 @@ const Sidebar = () => {
         <div className="d-flex flex-column nav-container">
           <div className="d-flex justify-content-center">
             <div className="brand-logo">
-              <img src={ecommerce} alt="Brand Logo" className="brand-logo" />
+             
             </div>
           </div>
 
@@ -75,21 +70,6 @@ const Sidebar = () => {
 
             {/* Link to sellers route */}
 
-<<<<<<< HEAD
-          <DropdownBtn
-            title="Store Management"
-            items={["Store profile", "Payment method"]}
-            onToggle={() => handleToggle("Store Management")}
-            isActive={activeDropdown === "Store Management"}
-          />
-
-          <DropdownBtn
-            title="Product Management"
-            items={["Product", "Payment method"]}
-            onToggle={() => handleToggle("Product Management")}
-            isActive={activeDropdown === "Product Management"}
-          />
-=======
             {(pathname.startsWith('/seller-dashboard')) && (
             <>
               <DropdownBtn
@@ -110,7 +90,6 @@ const Sidebar = () => {
             </>
             )}
           </div>
->>>>>>> ca6a26f39df8ea04922201828a38450789527006
         </div>
       </Nav>
       <div className="logout-main bg-dark">
