@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 
-const DropdownMenu = ({ title, items, isActive, onToggle }) => {
+const DropdownMenu = ({ title, items, isActive, onToggle, links }) => {
 
   return (
     <>
@@ -18,7 +18,8 @@ const DropdownMenu = ({ title, items, isActive, onToggle }) => {
           {items.map((item, index) => (
             <NavLink
               key={index}
-              className={({ isActive }) => (isActive ? `active-btn mt-3` : `norm-btn mt-3`)}
+              className={({ isActive }) => (isActive ? `active-btn mt-2` : `norm-btn mt-2`)}
+              to={links[index]}
             >
               {item}
             </NavLink>

@@ -7,7 +7,7 @@
   padding-top: 3rem;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .text-center {
@@ -32,14 +32,11 @@
   border-radius: 0;
   border: none;
   height: 100%;
-  
-
 }
 
 .input-group .form-control {
   border-radius: 0;
 }
-
 .input-group-text {
   border-color: #cccccc;
   height: 100%;
@@ -57,7 +54,6 @@
 .ml-auto {
   margin-left: auto;
 }
-
 .forgot-password {
   font-size: 0.875rem;
   color: gray;
@@ -68,23 +64,18 @@
 .forgot-password:hover {
   text-decoration: underline;
 }
-
 .w-100 {
   width: 100%;
 }
-
 .mt-3 {
   margin-top: 1rem;
 }
-
 .d-flex {
   display: flex;
 }
-
 .justify-content-center {
   justify-content: center;
 }
-
 .mr-2 {
   margin-right: 0.5rem;
 }

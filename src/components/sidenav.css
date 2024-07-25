@@ -1,7 +1,6 @@
 .side-nav {
   width: 260px;
   height: 100vh;
-  overflow-y: auto;
   position: relative;
   top: 0;
   left: 0;
@@ -17,13 +16,17 @@
   border: 0.3  rem solid red;
 }
 
+.nav-list{
+  overflow-y: auto;
+}
+
 .norm-btn {
   width: 100% !important;
   height: 2.5rem;
   padding: 0 0.5rem;
   display: flex;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   font-size: 0.87rem;
   color: white;
   border-radius: .5rem;
@@ -38,7 +41,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   font-size: 0.87rem;
   color: white;
   border-radius: .5rem;
