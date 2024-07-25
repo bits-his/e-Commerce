@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import DropdownBtn from "../components/DropdownBtn"
+import DropdownBtn from "../components/DropdownBtn";
+import ecommerce from "../images/e-commerce.png"; // Ensure the path is correct
 import "./sidenav.css";
 
 const Sidebar = () => {
@@ -16,7 +17,9 @@ const Sidebar = () => {
       <Nav className="d-flex flex-column h-full w-100 px-3">
         <div className="d-flex flex-column nav-container">
           <div className="d-flex justify-content-center">
-            <div className="brand-logo"></div>
+            <div className="brand-logo">
+              <img src={ecommerce} alt="Brand Logo" className="brand-logo" />
+            </div>
           </div>
           
           <DropdownBtn
@@ -59,7 +62,6 @@ const Sidebar = () => {
             onToggle={() => handleToggle("Product Management")}
             isActive={activeDropdown === "Product Management"}
           />
-
         </div>
       </Nav>
       <div className="logout-main bg-dark">
