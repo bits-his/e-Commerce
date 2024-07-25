@@ -101,3 +101,6 @@
     text-align: right; /* Align text to the right */
   }
   
+  .add-product {
+    width: 9rem;
+  }
