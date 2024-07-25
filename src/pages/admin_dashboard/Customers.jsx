@@ -1,7 +1,20 @@
-import React from 'react';
-import '../../Styles/Customers.css'
+import React, { useState } from 'react';
+import '../../Styles/Customers.css';
 
 export default function Customers() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const customers = [
+    { name: 'ayomide', email: 'AyoMide@example.com', phone: '(555) 555-5555' },
+    { name: 'Abba Boss', email: 'abbaboss@example.com', phone: '(555) 555-1234' },
+  ];
+
+  const filteredCustomers = customers.filter(customer =>
+    customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    customer.phone.includes(searchQuery)
+  );
+
   return (
     <>
       <div className='customer-button'>
@@ -14,6 +27,15 @@ export default function Customers() {
           <button className="custom-button">Add customers</button>
         </div>
       </div>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          className="search-input"
+        />
+      </div>
       <table className="customers-table">
         <thead>
           <tr>
@@ -23,16 +45,13 @@ export default function Customers() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>ayomide</td>
-            <td>Ayo Mide@example.com</td>
-            <td>(555) 555-5555</td>
-          </tr>
-          <tr>
-            <td>Abba Boss</td>
-            <td>abbaboss@example.com</td>
-            <td>(555) 555-1234</td>
-          </tr>
+          {filteredCustomers.map((customer, index) => (
+            <tr key={index}>
+              <td>{customer.name}</td>
+              <td>{customer.email}</td>
+              <td>{customer.phone}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
