@@ -20,8 +20,9 @@ const Sidebar = () => {
   };
 
   return (
+    <div className="navs">
     <div className="side-nav bg-dark">
-      <Nav className="d-flex flex-column h-full w-100 px-3">
+      <Nav className="d-flex position-relative flex-column h-full w-100 px-3">
         <div className="d-flex flex-column nav-container">
           <div className="d-flex justify-content-center">
             <div className="brand-logo"></div>
@@ -111,6 +112,7 @@ const Sidebar = () => {
           <NavLink className="logout">Logout</NavLink>
         </div>
       </div>
+    </div>
     </div>
   );
 };

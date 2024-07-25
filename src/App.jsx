@@ -8,6 +8,8 @@ import Product from './pages/seller_Dashboard/Product'
 import Registration from './pages/Registration';
 import Orders from './components/orders/orders'
 import NotFound from './components/NotFound'
+import Productmgnt from './pages/prodoct-mgnt/product'
+import AddProductPage from './pages/prodoct-mgnt/addproduct'
 
 const App = ()=>{
 
@@ -41,7 +43,8 @@ const App = ()=>{
             <Route path="/seller-dashboard" >
               <Route index element={<Profile />}/>
               <Route path='product-mgmt' >
-                <Route path='product' element={<Product />}/>
+                <Route path='product' element={<Productmgnt />}/>
+                <Route path="addproduct" element={<AddProductPage />} />
               </Route>
             </Route> 
             <Route path="/orders" element={<Orders />} /> 
