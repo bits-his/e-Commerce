@@ -20,7 +20,7 @@ export default function Layout() {
             ):(
                 <>
                     <SideNav style={{ flex: '0 0 200px'}} />
-                    <div style={{ flex: '1' }}>
+                    <div style={{ flex: '1' }} className='main-outlet'>
                         <Header/>
                         <Outlet />
                     </div>

@@ -6,6 +6,11 @@
   left: 0;
 }
 
+.main-outlet {
+  height: 100vh;
+  overflow-y: auto;
+}
+
 .brand-logo {
   margin-top: 15px;
   width: 50%;

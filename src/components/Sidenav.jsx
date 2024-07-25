@@ -15,6 +15,10 @@ const Sidebar = () => {
     );
   };
 
+  const getClassName = () => {
+    return (pathname === "/admin-dashboard" || pathname === "/seller-dashboard") ? "active-btn" : "norm-btn";
+  };
+
   return (
     <div className="side-nav bg-dark">
       <Nav className="d-flex flex-column h-full w-100 px-3">
@@ -24,18 +28,15 @@ const Sidebar = () => {
           </div>
 
           <div className="nav-list">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "active-btn" : "norm-btn"
-              }
-              to={
-                pathname === "/admin-dashboard"
-                  ? "/admin-dashboard"
-                  : "/seller-dashboard"
-              }
-            >
-              Dashboard
-            </NavLink>
+          <NavLink
+            className={getClassName}
+            to={
+              pathname.startsWith("/admin-dashboard") ? "/admin-dashboard" : "/seller-dashboard"
+            }
+          >
+            Dashboard
+          </NavLink>
+
             {pathname.startsWith("/admin-dashboard") && (
               <>
                 <DropdownBtn
@@ -47,6 +48,7 @@ const Sidebar = () => {
                   ]}
                   onToggle={() => handleToggle("Customer Management")}
                   isActive={activeDropdown === "Customer Management"}
+                  baseLink="/customer-mgmt"
                 />
                 <DropdownBtn
                   title="Reports"
@@ -64,6 +66,7 @@ const Sidebar = () => {
                   ]}
                   onToggle={() => handleToggle("Reports")}
                   isActive={activeDropdown === "Reports"}
+                  baseLink="/reports"
                 />
                 <DropdownBtn
                   title="User Management"
@@ -74,6 +77,7 @@ const Sidebar = () => {
                   ]}
                   onToggle={() => handleToggle("User Management")}
                   isActive={activeDropdown === "User Management"}
+                  baseLink="/user-mgmt"
                 />
               </>
             )}

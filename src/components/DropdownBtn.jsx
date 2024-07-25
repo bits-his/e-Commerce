@@ -1,17 +1,14 @@
 import { useState } from "react";
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 
-const DropdownMenu = ({ title, items, isActive, onToggle, links, baseLink }) => {
-  const location = useLocation();
-  const isDropdownActive = location.pathname.startsWith(baseLink);
+const DropdownMenu = ({ title, items, isActive, onToggle, links }) => {
 
   return (
     <>
       <NavLink
-        className={({ isDropdownActive }) => (isActive ? "active-btn" : "norm-btn")}
+        className={({ isActive }) => (isActive ? "active-btn" : "norm-btn")}
         onClick={onToggle}
-        to={baseLink}
       >
         {title}
         <IoIosArrowDroprightCircle className={`icon ${isActive ? 'rotated' : ''}`} />
