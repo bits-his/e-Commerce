@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Container,
   Row,
@@ -6,10 +6,14 @@ import {
   Form,
   FormGroup,
   Label,
-Input,
+  Input,
   Button,
   FormText
 } from 'reactstrap';
+import { IoMdClose } from 'react-icons/io';
+import { useDropzone } from 'react-dropzone';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './addProduct.css'; // Import custom CSS for styling
 
 const AddProductPage = () => {
@@ -27,6 +31,26 @@ const AddProductPage = () => {
     status: '',
     publishing: ''
   });
+  
+
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const onDrop = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+      setProduct({ ...product, image: file });
+    }
+  }, [product]);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: 'image/*'
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,10 +60,15 @@ const AddProductPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission (e.g., send data to an API)
+    toast.success('Product added successfully!');
+  };
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setProduct({ ...product, image: '' });
   };
 
   return (
-    <Container className="">
+    <Container>
       <Row className="justify-content-center">
         <Col lg={12} md={12}>
           <div className="form-container">
@@ -85,15 +114,19 @@ const AddProductPage = () => {
                   </FormText>
                 </FormGroup>
                 <FormGroup className="form-group-card">
-                  <Label for="image">Image URL</Label>
-                  <Input
-                    type="text"
-                    name="image"
-                    id="image"
-                    value={product.image}
-                    onChange={handleChange}
-                    placeholder="Enter image URL"
-                  />
+                  <Label for="image">Image</Label>
+                  <div {...getRootProps({ className: 'dropzone' })}>
+                    <input {...getInputProps()} />
+                    <p>Drag & drop an image here, or click to select one</p>
+                  </div>
+                  {imagePreview && (
+                    <div className="image-preview">
+                      <img src={imagePreview} alt="Preview" />
+                      <div className="remove-image" onClick={handleRemoveImage}>
+                        <IoMdClose size={20} color="#dc3545" />
+                      </div>
+                    </div>
+                  )}
                 </FormGroup>
                 <FormGroup className="form-group-card">
                   <Label for="category">Category</Label>
@@ -189,10 +222,12 @@ const AddProductPage = () => {
                 </FormGroup>
               </div>
               <Button className="btn-primary mt-3" type="submit">Save Product</Button>
+              <Button className="btn-secondary mt-3 ml-2" type="button">Preview Product</Button>
             </Form>
           </div>
         </Col>
       </Row>
+      <ToastContainer />
     </Container>
   );
 };
