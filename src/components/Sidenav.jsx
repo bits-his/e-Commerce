@@ -31,17 +31,15 @@ const Sidebar = () => {
           >
             Dashboard
           </NavLink>
-          {pathname === '/admin-dashboard' && (
+          {(pathname.startsWith('/admin-dashboard')) && (
             <>
               <DropdownBtn
                 title="Customer Management"
                 items={[
                   "All Customers",
-                  "Customer Details",
-                  "Customer Groups",
                   "Customer Reviews",
                 ]}
-                links={[""]}
+                links={["/admin-dashboard/customer-mgmt/customers", "/admin-dashboard/customer-mgmt/customer-reviews"]}
                 onToggle={() => handleToggle("Customer Management")}
                 isActive={activeDropdown === "Customer Management"}
               />
@@ -50,18 +48,17 @@ const Sidebar = () => {
                 items={[
                   "Sales Reports",
                   "Product Performance",
-                  "Customer Insights",
                   "Inventory Reports",
                   "Traffic & Conversion",
                 ]}
-                links={[""]}
+                links={["/admin-dashboard/reports/sales", "/admin-dashboard/reports/product-performance", "/admin-dashboard/reports/inventory", "/admin-dashboard/reports/traffic"]}
                 onToggle={() => handleToggle("Reports")}
                 isActive={activeDropdown === "Reports"}
               />
               <DropdownBtn
                 title="User Management"
-                items={["Admin Users", "Roles & Permissions", "Activity Logs"]}
-                links={[""]}
+                items={["Admin Users", "Activity Logs"]}
+                links={["/admin-dashboard/user-mgmt/admin", "/admin-dashboard/user-mgmt/logs"]}
                 onToggle={() => handleToggle("User Management")}
                 isActive={activeDropdown === "User Management"}
               />
@@ -70,7 +67,7 @@ const Sidebar = () => {
 
             {/* Link to sellers route */}
 
-            {pathname === '/seller-dashboard' && (
+            {(pathname.startsWith('/seller-dashboard')) && (
             <>
               <DropdownBtn
                 title="Store Management"
@@ -83,7 +80,7 @@ const Sidebar = () => {
               <DropdownBtn
                 title="Product Management"
                 items={["Product", "Payment method"]}
-                links={[""]}
+                links={["/seller-dashboard/product-mgmt/product", ""]}
                 onToggle={() => handleToggle("Product Management")}
                 isActive={activeDropdown === "Product Management"}
               />
