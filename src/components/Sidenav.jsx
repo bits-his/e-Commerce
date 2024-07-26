@@ -79,8 +79,9 @@ const Sidebar = () => {
                 />
                 <DropdownBtn
                   title="User Management"
-                  items={["Admin Users", "Activity Logs"]}
+                  items={["All", "Admin Users", "Activity Logs"]}
                   links={[
+                    "/admin-dashboard/user-mgmt/all",
                     "/admin-dashboard/user-mgmt/admin",
                     "/admin-dashboard/user-mgmt/logs",
                   ]}
