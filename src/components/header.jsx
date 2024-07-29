@@ -4,6 +4,7 @@ import "../Styles/Header.css";
 
 function Header() {
   return (
+  
     <div className="header">
       <div className="logo">
        
@@ -19,6 +20,7 @@ function Header() {
         </button>
       </div>
     </div>
+  
   );
 }
 
