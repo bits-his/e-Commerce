@@ -10,6 +10,7 @@ import NotFound from './components/NotFound'
 import Productmgnt from './pages/prodoct-mgnt/product'
 import AddProductPage from './pages/prodoct-mgnt/addproduct'
 import Customers from './pages/admin_dashboard/Customers'
+import CustomerDetails from './pages/admin_dashboard/CustomerDetails'
 
 const App = ()=>{
 
@@ -27,6 +28,7 @@ const App = ()=>{
               <Route index element={<Profile />}/>
               <Route path='customer-mgmt' >
                 <Route path='customers' element={<Customers />}/>
+                <Route path='customer-details' element={<CustomerDetails />} />
                 <Route path='customer-reviews' element={<Product />}/>
               </Route>
               <Route path='reports' >
