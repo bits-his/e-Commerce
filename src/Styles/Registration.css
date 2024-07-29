@@ -1,6 +1,6 @@
 
   .register {
-  height: 35rem;
+  height: 40rem;
   width: 400px;
   padding: 20px;
   padding-top: 3rem;
@@ -21,14 +21,7 @@
   .mb-4 {
     margin-bottom: 1.5rem;
   }
-  .input-group-prepend .input-group-text {
-    background-color: #343a40;
-    border-radius: 0;
-    border: 1px solid #343a40;
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
+  
   .input-group-append .input-group-text {
     color: #343a40;
     border-radius: 0;
@@ -39,7 +32,7 @@
     border-radius: 0;
   }
   .input-group-text {
-    border-color: #cccccc;
+   
     height: 100%;
     display: flex;
     align-items: center;
