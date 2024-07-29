@@ -4,6 +4,7 @@ import DropdownBtn from "../components/DropdownBtn";
 import { NavLink, useLocation } from "react-router-dom";
 
 import "./sidenav.css";
+import toast from "react-hot-toast";
 
 const Sidebar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -19,6 +20,10 @@ const Sidebar = () => {
   const getClassName = () => {
     return (pathname === "/admin-dashboard" || pathname === "/seller-dashboard") ? "active-btn" : "norm-btn";
   };
+
+  const handleLogout = () => {
+    toast.success('User logged out successfully');
+  }
 
   return (
     <div className="navs">
@@ -74,8 +79,9 @@ const Sidebar = () => {
                 />
                 <DropdownBtn
                   title="User Management"
-                  items={["Admin Users", "Activity Logs"]}
+                  items={["All", "Admin Users", "Activity Logs"]}
                   links={[
+                    "/admin-dashboard/user-mgmt/all",
                     "/admin-dashboard/user-mgmt/admin",
                     "/admin-dashboard/user-mgmt/logs",
                   ]}
@@ -112,7 +118,7 @@ const Sidebar = () => {
       </Nav>
       <div className="logout-main bg-dark">
         <div className="logout-container">
-          <NavLink className="logout">Logout</NavLink>
+          <NavLink className="logout" to="/" onClick={handleLogout}>Logout</NavLink>
         </div>
       </div>
     </div>

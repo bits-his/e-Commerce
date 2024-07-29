@@ -14,6 +14,8 @@ import Storeprofile from './pages/seller_Dashboard/storemanagement/storeprofile'
 import Storepayment from './pages/seller_Dashboard/storemanagement/payment'
 import Ordermanangement from './pages/seller_Dashboard/storemanagement/OrderManagement'
 import Sellerdashboard from './pages/seller_Dashboard/seller-dashboard/sellerdashboard'
+import CustomerDetails from './pages/admin_dashboard/CustomerDetails'
+
 const App = ()=>{
 
   return(
@@ -30,6 +32,7 @@ const App = ()=>{
               <Route index element={<Profile />}/>
               <Route path='customer-mgmt' >
                 <Route path='customers' element={<Customers />}/>
+                <Route path='customer-details' element={<CustomerDetails />} />
                 <Route path='customer-reviews' element={<Product />}/>
               </Route>
               <Route path='reports' >
@@ -39,6 +42,7 @@ const App = ()=>{
                 <Route path='traffic' element={<Product />}/>
               </Route>
               <Route path='user-mgmt' >
+                <Route path='all' element={<Product />}/>
                 <Route path='admin' element={<Product />}/>
                 <Route path='logs' element={<Product />}/>
               </Route>
