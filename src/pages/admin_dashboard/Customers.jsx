@@ -18,7 +18,7 @@ export default function Customers() {
 
   const navigate = useNavigate();
 
-  const handleRowClick = (id) => {
+  const handleRowClick = () => {
     navigate(`/admin-dashboard/customer-mgmt/customer-details`);
   };
 
@@ -40,12 +40,6 @@ export default function Customers() {
           <table className="table table-hover">
             <thead>
               <tr>
-                <th>
-                  <input 
-                    type='checkbox' 
-                    className='form-check-input'
-                  />
-                </th>
                 <th>Customer ID</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -55,11 +49,8 @@ export default function Customers() {
             <tbody className='table-group-divider'>
               {filteredCustomers.map((customer, index) => (
                 <tr key={index} 
-                  onClick={() => handleRowClick(customer.id)}
+                  onClick={handleRowClick}
                 >
-                  <td>
-                    <input type='checkbox' className='form-check-input' />
-                  </td>
                   <td>{customer.id}</td>
                   <td>{customer.name}</td>
                   <td>{customer.email}</td>
