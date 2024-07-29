@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUser, faChartLine, faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import "./sidenav.css";
+import toast from "react-hot-toast";
 
 const Sidebar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -21,6 +22,10 @@ const Sidebar = () => {
   const getClassName = () => {
     return (pathname === "/admin-dashboard" || pathname === "/seller-dashboard") ? "active-btn" : "norm-btn";
   };
+
+  const handleLogout = () => {
+    toast.success('User logged out successfully');
+  }
 
   return (
     <div className="navs">
@@ -76,9 +81,10 @@ const Sidebar = () => {
                   />
                   <DropdownBtn
                     title={<><FontAwesomeIcon icon={faCogs} /> User Management</>}
-                    items={["Admin Users", "Activity Logs"]}
+                    items={["All", "Admin Users", "Activity Logs"]}
                     links={[
-                      "/admin-dashboard/user-mgmt/admin",
+                      "/admin-dashboard/user-mgmt/all",
+                    "/admin-dashboard/user-mgmt/admin",
                       "/admin-dashboard/user-mgmt/logs",
                     ]}
                     onToggle={() => handleToggle("User Management")}
@@ -98,26 +104,24 @@ const Sidebar = () => {
                     isActive={activeDropdown === "Store Management"}
                   />
 
-                  <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faProductHunt} /> Product Management</>}
-                    items={["Product", "Payment method"]}
-                    links={["/seller-dashboard/product-mgmt/product", ""]}
-                    onToggle={() => handleToggle("Product Management")}
-                    isActive={activeDropdown === "Product Management"}
-                  />
-                </>
-              )}
-            </div>
-          </div>
-        </Nav>
-        <div className="logout-main bg-dark">
-          <div className="logout-container">
-            <NavLink className="logout">
-              <FontAwesomeIcon icon={faSignOutAlt} /> Logout
-            </NavLink>
+                <DropdownBtn
+                  title="Product Management"
+                  items={["Product", "Payment method"]}
+                  links={["/seller-dashboard/product-mgmt/product", ""]}
+                  onToggle={() => handleToggle("Product Management")}
+                  isActive={activeDropdown === "Product Management"}
+                />
+              </>
+            )}
           </div>
         </div>
+      </Nav>
+      <div className="logout-main bg-dark">
+        <div className="logout-container">
+          <NavLink className="logout">Logout</NavLink>
+        </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -69,7 +69,7 @@ const ProductsPage = () => {
               </p>
               <NavLink
                 className='btn btn-primary add-product text-white py-2 px-1'
-                to="addproduct"
+                to="addproduct" 
               >
                 <FaPlus /> Add product
               </NavLink>
