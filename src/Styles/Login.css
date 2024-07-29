@@ -1,7 +1,7 @@
 
 .login {
   width: 100%;
-  height: 30rem;
+  height: 35rem;
   max-width: 400px;
   padding: 20px;
   padding-top: 3rem;
@@ -18,38 +18,55 @@
   margin-bottom: 1.5rem;
 }
 
-.input-group-prepend .input-group-text {
-  background-color: #343a40;
-  border-radius: 0;
-  border: 1px solid #343a40;
-  height: 100%;
-  display: flex;
-  align-items: center;
 
-}
-.input-group-append .input-group-text {
-  color: #343a40;
-  border-radius: 0;
-  border: none;
-  height: 100%;
-}
 
 .input-group .form-control {
   border-radius: 0;
 }
-.input-group-text {
-  border-color: #cccccc;
+/* .input-group-text {
+  border: none;
+  background: transparent;
   height: 100%;
   display: flex;
   align-items: center;
+  padding-left: 0;
+  padding-right: 0;
 }
-.input-group-prepend i{
-  color: white;
+
+.input-group-prepend .input-group-text i {
+  color: #cccccc;
 }
+
 .input-group .form-control:focus {
   box-shadow: none;
   border-color: #cccccc;
+} */
+
+.input-group {
+  position: relative;
 }
+
+.form-control-with-icon {
+  padding-right: 30px; /* Adjust the padding to make space for the icon */
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Ensure the icon doesn't block input interaction */
+  color: #cccccc;
+}
+.input-icon-right {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  color: #cccccc;
+}
+
 
 .ml-auto {
   margin-left: auto;

@@ -35,26 +35,24 @@ export default function Profile() {
          <hr></hr>
           <div className="about-section">
             <h5 className='heading'>About</h5>
-            <p style={{ textAlign: "left" }}>Hi I'm Admin. I am user experience and user interface designer. I have been working on UI & UX since last 10 years.</p>
+            <p style={{ textAlign: "left" }}>Hi I'm Admin. Introduction about admin.</p>
           </div>
          <hr></hr>
           <div className="contact" style={{ textAlign: "left" }}>
             <h5 className='heading'>Contact Information</h5>
             <Table>
-              <tbody>
+              <tr>Email
+              <td>shatu@gmail.com</td>
+              </tr>
                 <tr>
-                  <td>Email</td>
-                  <td>admin@email.com</td>
-                </tr>
-                <tr>
-                  <td>Phone</td>
+                  Phone
                   <td>08028343839</td>
                 </tr>
                 <tr>
-                  <td>Address</td>
+                  Address
                   <td>No.1037 gama A Brigade, Kano.</td>
                 </tr>
-              </tbody>
+             
             </Table>
           </div>
         </div>
