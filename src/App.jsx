@@ -10,6 +10,11 @@ import NotFound from './components/NotFound'
 import Productmgnt from './pages/prodoct-mgnt/product'
 import AddProductPage from './pages/prodoct-mgnt/addproduct'
 import Customers from './pages/admin_dashboard/Customers'
+import Storeprofile from './pages/seller_Dashboard/storemanagement/storeprofile'
+import Storepayment from './pages/seller_Dashboard/storemanagement/payment'
+import Ordermanangement from './pages/seller_Dashboard/storemanagement/OrderManagement'
+import Sellerdashboard from './pages/seller_Dashboard/seller-dashboard/sellerdashboard'
+import AdminDashboard from './pages/admin_dashboard/AdminDashboard'
 
 const App = ()=>{
 
@@ -24,7 +29,7 @@ const App = ()=>{
 
           <Route element={<Layout />}>
             <Route path="/admin-dashboard" >
-              <Route index element={<Profile />}/>
+              <Route index element={<AdminDashboard />}/>
               <Route path='customer-mgmt' >
                 <Route path='customers' element={<Customers />}/>
                 <Route path='customer-reviews' element={<Product />}/>
@@ -42,13 +47,18 @@ const App = ()=>{
               </Route>
             </Route> 
             <Route path="/seller-dashboard" >
-              <Route index element={<Profile />}/>
+              <Route index element={<Sellerdashboard/>}/>
               
               <Route path='product-mgmt' >
                 <Route path='product'>
                   <Route index element={<Productmgnt />}/>
                   <Route path="addproduct" element={<AddProductPage />} />
-                </Route>
+                </Route>  
+              </Route>
+              <Route path='storemangement'>
+                <Route path='storeprofile' element={<Storeprofile />}/>
+                <Route path='storepayment' element={<Storepayment />}/>
+                <Route path='ordermanagement' element={<Ordermanangement />}/>
               </Route>
             </Route> 
             <Route path='*' element={<NotFound />}/>
