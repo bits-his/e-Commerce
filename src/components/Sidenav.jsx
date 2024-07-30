@@ -94,7 +94,6 @@ const Sidebar = () => {
                 </>
               )}
 
-<<<<<<< HEAD
             {/* Link to sellers route */}
 
             {pathname.startsWith("/seller-dashboard") && (
@@ -106,17 +105,6 @@ const Sidebar = () => {
                   onToggle={() => handleToggle("Store Management")}
                   isActive={activeDropdown === "Store Management"}
                 />
-=======
-              {pathname.startsWith("/seller-dashboard") && (
-                <>
-                  <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faStore} /> Store Management</>}
-                    items={["Store profile", "Payment method"]}
-                    links={[""]}
-                    onToggle={() => handleToggle("Store Management")}
-                    isActive={activeDropdown === "Store Management"}
-                  />
->>>>>>> 533da5e514eeedef38ac06d4874e1ad4f5097d85
 
                 <DropdownBtn
                   title="Product Management"
