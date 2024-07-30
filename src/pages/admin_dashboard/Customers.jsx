@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import '../../Styles/Customers.css';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 
-export default function Customers() {
+export default function Customers(args) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const customers = [
     { id: 'cr42537', name: 'ayomide', email: 'AyoMide@example.com', phone: '(555) 555-5555' },
@@ -15,6 +18,16 @@ export default function Customers() {
     customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     customer.phone.includes(searchQuery)
   );
+
+  const handleView = (customer) => {
+    setSelectedCustomer(customer);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedCustomer(null);
+  };
 
   const navigate = useNavigate();
 
@@ -55,10 +68,35 @@ export default function Customers() {
                   <td>{customer.name}</td>
                   <td>{customer.email}</td>
                   <td>{customer.phone}</td>
+                  <td>
+                    <button className="view-button" onClick={() => handleView(customer)}>
+                      View
+                    </button>
+                    <button className="edit-button">
+                      Edit
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <Modal isOpen={isModalOpen} toggle={handleCloseModal} {...args}>
+            <ModalHeader toggle={handleCloseModal}>Customer Details</ModalHeader>
+            <ModalBody>
+              {selectedCustomer && (
+                <div>
+                  <p><strong>Name:</strong> {selectedCustomer.name}</p>
+                  <p><strong>Email:</strong> {selectedCustomer.email}</p>
+                  <p><strong>Phone:</strong> {selectedCustomer.phone}</p>
+                </div>
+              )}
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={handleCloseModal}>
+                Close
+              </Button>
+            </ModalFooter>
+          </Modal>
         </div>
       </div>
     </>
