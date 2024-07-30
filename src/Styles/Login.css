@@ -47,9 +47,11 @@
 }
 
 .form-control-with-icon {
-  padding-right: 30px; /* Adjust the padding to make space for the icon */
+  padding-right: 40px; /* Adjust the padding to make space for the icon */
 }
-
+.form-control-with-icon + .input-icon {
+  left: 10px;
+}
 .input-icon {
   position: absolute;
   left: 10px;

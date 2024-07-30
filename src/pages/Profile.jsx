@@ -1,119 +1,83 @@
 import React, { useState } from 'react';
-import { Form, Button } from "react-bootstrap";
-import "../Styles/Profile.css";
+import { Form, Button, Modal } from "react-bootstrap";
 import profile from "../assets/profile.png";
-import { Col, Row, Table } from 'reactstrap';
+import "../Styles/Profile.css";
+import Editprofile from './Editprofile';
 
-export default function Profile() {
-  const [activityTab, setActivityTab] = useState('Activity');
+ function Profile() {
+  const [modal, setModal] = useState(false);
 
-  const handleActivityTab = (tab) => {
-    setActivityTab(tab);
-  };
+  const toggle = () => setModal(!modal);
 
   return (
     <div className='profile-container'>
-      <h5>Profile</h5>
-      <div className='d-flex '>
-        <div className='profile-card col-md-3'>
-          <img src={profile} className="profile" alt="Profile" />
-          <div className='adminprofile'>
-            <h6>Admin</h6>
-            <p style={{fontSize:"smaller"}}>User Experience Specialist 
-            Kano Nigeria</p>
-          </div>
-          <div className="progress">
-            <div className="progress-bar" style={{ width: '60%'}}>
-            <span className='progress-text'>Your Profile is 60% complete</span>
+      <h5>Personal Information</h5>
+      <div className='profile-card'>
+        <div className='d-flex justify-content-between align-items-center'>
+          <div className='d-flex align-items-center'>
+            <img src={profile} className="profile" alt="Profile" />
+            <div className='mb-3'>
+              <Button variant="link" className='p-0'>
+                <i className="fa fa-edit" aria-hidden="true"></i>
+              </Button>
             </div>
           </div>
-          
-          <div className='d-flex ' style={{justifyContent:"center"}}>
-            <button className="btns btn-primary" style={{fontSize:"smaller"}}>Follow</button>
-            <button className="btns btn-secondary" style={{fontSize:"smaller"}}>Message</button>
-          </div>
-         <hr></hr>
-          <div className="about-section">
-            <h5 className='heading'>About</h5>
-            <p style={{ textAlign: "left" }}>Hi I'm Admin. Introduction about admin.</p>
-          </div>
-         <hr></hr>
-          <div className="contact" style={{ textAlign: "left" }}>
-            <h5 className='heading'>Contact Information</h5>
-            <Table>
-              <tr>Email
-              <td>shatu@gmail.com</td>
-              </tr>
-                <tr>
-                  Phone
-                  <td>08028343839</td>
-                </tr>
-                <tr>
-                  Address
-                  <td>No.1037 gama A Brigade, Kano.</td>
-                </tr>
-             
-            </Table>
-          </div>
+          <Button variant="link" className='p-0' onClick={toggle}>
+            <i className="fa fa-edit" aria-hidden="true"></i> Edit Profile Information
+          </Button>
         </div>
-        <div className='profile-card rightside col-md-9'>
-          <div className="tabs">
-            <button className={`tab ${activityTab === 'Activity' ? 'active' : ''}`} onClick={() => handleActivityTab('Activity')}>Activity</button>
-            <button className={`tab ${activityTab === 'Messages' ? 'active' : ''}`} onClick={() => handleActivityTab('Messages')}>Messages</button>
-            <button className={`tab ${activityTab === 'Orders' ? 'active' : ''}`} onClick={() => handleActivityTab('Orders')}>Orders</button>
-            <button className={`tab ${activityTab === 'Payments' ? 'active' : ''}`} onClick={() => handleActivityTab('Payments')}>Payments</button>
-            <button className={`tab ${activityTab === 'Deliveries' ? 'active' : ''}`} onClick={() => handleActivityTab('Deliveries')}>Deliveries</button>
-          </div>
-          <div className="activity-section">
-            {activityTab === 'Activity' && (
-              <>
-                <h6>This Week</h6>
-                <div className="activity-item">
-                  <p className="time">02 hours ago</p>
-                  <p className="activity-description">Designing Shreyu Admin</p>
-                </div>
-                <div className="activity-item">
-                  <p className="time">21 hours ago</p>
-                  <p className="activity-description">UX and UI for Ubold Admin</p>
-                </div>
-                <div className="activity-item">
-                  <p className="time">22 hours ago</p>
-                  <p className="activity-description">UX and UI for Hyper Admin</p>
-                </div>
-                <h6>Last Week</h6>
-                <div className="activity-item">
-                  <p className="time">02 hours ago</p>
-                  <p className="activity-description">Designing Shreyu Admin</p>
-                </div>
-              </>
-            )}
-            {activityTab === 'Messages' && (
-              <div>
-                <h6>Messages</h6>
-                <p>No new messages.</p>
-              </div>
-            )}
-            {activityTab === 'Orders' && (
-              <div>
-                <h6>Orders</h6>
-                <p>No new orders.</p>
-              </div>
-            )}
-            {activityTab === 'Payments' && (
-              <div>
-                <h6>Payments</h6>
-                <p>No new payments.</p>
-              </div>
-            )}
-            {activityTab === 'Deliveries' && (
-              <div>
-                <h6>Deliveries</h6>
-                <p>No new deliveries.</p>
-              </div>
-            )}
-          </div>
-        </div>
+        <Form className='mt-3 input-group d-block'>
+          <Form.Group controlId="formName" className='col-md-3'>
+            <Form.Label className='label'>Name</Form.Label>
+            <Form.Control type="text" value="Admin Name" readOnly />
+          </Form.Group>
+          <Form.Group controlId="formDateOfBirth" className='col-md-3'>
+            <Form.Label className='label'>Date Of Birth</Form.Label>
+            <Form.Control type="date" value="2022-01-20" />
+          </Form.Group>
+          <Form.Group controlId="formGender">
+            <Form.Label className='label'>Gender</Form.Label>
+            <div className='d-flex'>
+              <Form.Check
+                type="radio"
+                label="Male"
+                name="gender"
+                id="male"
+                checked
+                readOnly
+              />
+              <Form.Check
+                type="radio"
+                label="Female"
+                name="gender"
+                id="female"
+                readOnly
+              />
+            </div>
+          </Form.Group>
+          <Form.Group controlId="formPhoneNumber" className='col-md-3'>
+            <Form.Label className='label'>Phone Number</Form.Label>
+            <div className='d-flex align-items-center'>
+              <img src="https://flagcdn.com/w40/ng.png" alt="Nigeria flag" width="20" />
+              <Form.Control type="text" value="+90-123456789" className='ml-2' readOnly />
+            </div>
+          </Form.Group>
+          <Form.Group controlId="formEmail" className='col-md-3'>
+            <Form.Label className='label'>Email</Form.Label>
+            <Form.Control type="email" value="abcd1234@email.com" readOnly />
+          </Form.Group>
+        </Form>
       </div>
+      <Modal show={modal} onHide={toggle}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Editprofile />
+        </Modal.Body>
+      </Modal>
     </div>
-  )
+  );
 }
+
+export default Profile;

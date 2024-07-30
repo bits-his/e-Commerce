@@ -70,7 +70,7 @@ function Registration() {
         >
           <i className="fab fa-google mr-2"></i> Sign up with Google
         </Button>
-        <div className="d-flex align-items-center mb-3">
+        <div className="d-flex align-items-center mb-1">
           <hr className="flex-grow-1"/>
           <span className="px-2">or</span>
           <hr className="flex-grow-1"/>
@@ -78,7 +78,7 @@ function Registration() {
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formFullName">
             <Form.Label htmlFor="user">Full Name</Form.Label>
-            <div className="input-group mb-3">
+            <div className="input-group mb-1">
               <Form.Control
                 type="text"
                 id="user"
@@ -94,7 +94,7 @@ function Registration() {
           </Form.Group>
           <Form.Group controlId="formEmail">
             <Form.Label htmlFor="email">Email</Form.Label>
-            <div className="input-group mb-3">
+            <div className="input-group mb-1">
               <Form.Control
                 type="email"
                 id="email"
@@ -110,7 +110,7 @@ function Registration() {
           </Form.Group>
           <Form.Group controlId="formPassword">
             <Form.Label htmlFor="pass">Password</Form.Label>
-            <div className="input-group mb-3">
+            <div className="input-group mb-1">
               <Form.Control
                 type={passwordVisible ? 'text' : 'password'}
                 id="pass"
@@ -129,7 +129,7 @@ function Registration() {
           </Form.Group>
           <Form.Group controlId="formConfirmPassword">
             <Form.Label htmlFor="confirm-pass">Confirm Password</Form.Label>
-            <div className="input-group mb-3">
+            <div className="input-group mb-1">
               <Form.Control
                 type={passwordVisible ? 'text' : 'password'}
                 id="confirm-pass"

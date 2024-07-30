@@ -66,12 +66,12 @@ function Login() {
         </div>
         <Button 
           
-          className="w-100 mb-3"
+          className="w-100"
           onClick={handleGoogleSignIn}
         >
           <i className="fab fa-google mr-2"></i> Sign in with Google
         </Button>
-        <div className="d-flex align-items-center mb-3">
+        <div className="d-flex align-items-center">
           <hr className="flex-grow-1"/>
           <span className="px-2">or</span>
           <hr className="flex-grow-1"/>
@@ -79,14 +79,14 @@ function Login() {
         <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formEmail">
             <Form.Label htmlFor="user">Email</Form.Label>
-            <div className="input-group mb-3">
+            <div className="input-group mb-1">
               <Form.Control
                 type="text"
                 id="user"
                 name="userId"
                 value={formData.userId}
                 onChange={handleChange}
-                className="form-control-with-icon"
+                className="form-control-with-icon txt"
               />
               <div className="input-icon">
                 <i className="fas fa-envelope"></i>
@@ -96,7 +96,7 @@ function Login() {
 
           <Form.Group controlId="passwordId">
             <Form.Label htmlFor="pass">Password</Form.Label>
-            <div className="input-group mb-3">
+            <div className="input-group mb-1">
               <Form.Control
                 type={passwordVisible ? 'text' : 'password'}
                 id="pass"
@@ -129,7 +129,7 @@ function Login() {
           </Form.Group>
           
 
-          <Button variant="primary" type="submit" className="w-100 btn-primary">
+          <Button variant="primary" type="submit" className="w-100 btn-primary mb-3">
            Log In <i className="fas fa-sign-in-alt "></i>
           </Button>
           <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
