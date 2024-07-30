@@ -3,7 +3,7 @@ import { Nav } from "react-bootstrap";
 import DropdownBtn from "../components/DropdownBtn";
 import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faUser, faChartLine, faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faUser, faChartLine, faCogs, faSignOutAlt,faStore } from '@fortawesome/free-solid-svg-icons';
 
 import "./sidenav.css";
 import toast from "react-hot-toast";
@@ -81,11 +81,12 @@ const Sidebar = () => {
                   />
                   <DropdownBtn
                     title={<><FontAwesomeIcon icon={faCogs} /> User Management</>}
-                    items={["All", "Admin Users", "Activity Logs"]}
+                    items={["All", "profile", "Activity Logs"]}
                     links={[
                       "/admin-dashboard/user-mgmt/all",
-                    "/admin-dashboard/user-mgmt/admin",
+                      "/admin-dashboard/user-mgmt/profile",
                     "/admin-dashboard/user-mgmt/logs",
+                   
                   ]}
                   onToggle={() => handleToggle("User Management")}
                   isActive={activeDropdown === "User Management"}

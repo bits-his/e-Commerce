@@ -117,11 +117,16 @@ const ProductsPage = () => {
         </CardHeader>
         <CardBody>
           <Row className="mb-4">
-            <Col className='d-flex justify-content-betwee'>
-              <Nav pills >
+            <Col className='d-flex justify-content-between'>
+              <Nav pills>
                 <NavItem>
-                  <NavLink active className='bg-secondary p-2 w-100 '>
-                     All
+                  <NavLink
+                    to="/all"
+                    className={({ isActive }) => 
+                      `p-2 w-100 ${isActive ? 'bg-secondary text-light' : ''}`
+                    }
+                  >
+                    All
                   </NavLink>
                 </NavItem>
                 <NavItem>

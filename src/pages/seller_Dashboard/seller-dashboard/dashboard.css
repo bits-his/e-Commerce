@@ -32,6 +32,8 @@
 .order-card {
   background-color: #ffffff;
   text-align: center;
+  width: 100%;
+  margin: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-left: 5px solid transparent;
 }
@@ -45,11 +47,11 @@
   border-left-color: #007bff; 
 }
 
-.order-card.completed {
-  border-left-color: #28a745; 
+.completed {
+  border-left-color: #28a745 !important; 
 }
 
-.order-card.canceled {
+.order-card{
   border-left-color: #dc3545;
 }
 
@@ -128,3 +130,31 @@
 .engagement-chart {
   margin-bottom: 1.5rem;
 }
+
+
+.vendor-dashboard-cards {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.vendor-dashboard-cards .card {
+  width: 30%;
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.total-sales-card {
+  background-color: #d4edda;
+}
+
+.total-orders-card {
+  background-color: #cce5ff;
+}
+
+.pending-orders-card {
+  background-color: #fff3cd;
+}
+
+

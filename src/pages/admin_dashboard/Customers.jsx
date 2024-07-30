@@ -37,17 +37,9 @@ export default function Customers(args) {
 
   return (
     <>
-      <div className='px-4'>
-        <h1 className='customers-text mt-4'>Customers</h1>
-        <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            className="search-input me-3"
-          />
-          <button className="custom-button">Add customer</button>
+      <div className='customer-button'>
+        <div>
+          <h1 className='customers-text'>Customers</h1>
         </div>
         <div className='table-responsive'>
           <table className="table table-hover">

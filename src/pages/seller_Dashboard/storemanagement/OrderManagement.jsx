@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardBody, CardTitle, CardText, Button, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Card, CardBody, CardTitle, CardText, Button, Table } from 'reactstrap';
 
 // Define static order data for different types
 const orderData = {
@@ -24,14 +24,10 @@ const orderTypes = [
 
 const OrderSummary = () => {
   const [orderCounts] = useState(orderData); // Use static order data
-  const [modal, setModal] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState(null);
 
-  const toggle = () => setModal(!modal);
-
-  const handleView = (order) => {
-    setSelectedOrder(order);
-    toggle();
+  const handleView = (id) => {
+    alert(`Viewing details for order ID: ${id}`);
+    // Implement view logic here
   };
 
   const handleDelete = (id) => {
@@ -66,7 +62,7 @@ const OrderSummary = () => {
                       <td>{new Date(order.date).toLocaleDateString()}</td>
                       <td style={{ textAlign: 'right' }}>${order.total.toFixed(2)}</td>
                       <td>
-                        <Button color="info" size="sm" onClick={() => handleView(order)}>View</Button>{' '}
+                        <Button color="info" size="sm" onClick={() => handleView(order.id)}>View</Button>{' '}
                         <Button color="warning" size="sm">Edit</Button>{' '}
                         <Button color="danger" size="sm" onClick={() => handleDelete(order.id)}>Delete</Button>
                       </td>
@@ -80,30 +76,6 @@ const OrderSummary = () => {
           </CardBody>
         </Card>
       ))}
-
-      {/* Modal for viewing order details */}
-      {selectedOrder && (
-        <Modal isOpen={modal} toggle={toggle} size="lg">
-          <ModalHeader toggle={toggle}>Order Details</ModalHeader>
-          <ModalBody>
-            <div style={{ marginBottom: '15px' }}>
-              <strong>Order ID:</strong> {selectedOrder.id}
-            </div>
-            <div style={{ marginBottom: '15px' }}>
-              <strong>Customer Name:</strong> {selectedOrder.customerName}
-            </div>
-            <div style={{ marginBottom: '15px' }}>
-              <strong>Date:</strong> {new Date(selectedOrder.date).toLocaleDateString()}
-            </div>
-            <div style={{ marginBottom: '15px' }}>
-              <strong>Total:</strong> ${selectedOrder.total.toFixed(2)}
-            </div>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={toggle}>Close</Button>
-          </ModalFooter>
-        </Modal>
-      )}
     </>
   );
 };

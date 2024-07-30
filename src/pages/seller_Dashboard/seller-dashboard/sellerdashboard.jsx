@@ -9,14 +9,8 @@ const Dashboard = () => {
     <Container fluid>
     
       <Row>
-        <Col md="4">
+        <Col md="12" className='d-flex justify-content-between'>
           <OrderSummary type="pending" />
-        </Col>
-        <Col md="4">
-          <OrderSummary type="completed" />
-        </Col>
-        <Col md="4">
-          <OrderSummary type="canceled" />
         </Col>
       </Row>
 
