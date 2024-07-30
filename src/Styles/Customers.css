@@ -69,6 +69,28 @@
 
 .customers-table tr:hover {
     background-color: #ddd;
+}
+
+.customer-action-btn {
+    width: 180px !important;
+}
+
+#action-text {
+    display: block;
+}
+
+@media (width < 992px){
+    #action-text {
+        display: none;
+    }
+
+    .customer-action-btn {
+        width: 50px !important;
+    }    
+}
+
+.customer-card-details {
+    border-radius: 7px;
 } 
 .edit-button {
     background-color: #4CAF50;
@@ -137,48 +159,4 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-.customer-action-btn {
-    width: 180px !important;
-}
-
-#action-text {
-    display: block;
-}
-
-@media (width < 992px){
-    #action-text {
-        display: none;
-    }
-
-    .customer-action-btn {
-        width: 50px !important;
-    }    
-}
-
-.customer-card-details {
-    border-radius: 7px;
-}
-
-.customer-action-btn {
-    width: 180px !important;
-}
-
-#action-text {
-    display: block;
-}
-
-@media (width < 992px){
-    #action-text {
-        display: none;
-    }
-
-    .customer-action-btn {
-        width: 50px !important;
-    }    
-}
-
-.customer-card-details {
-    border-radius: 7px;
 }
