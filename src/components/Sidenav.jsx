@@ -81,11 +81,12 @@ const Sidebar = () => {
                   />
                   <DropdownBtn
                     title={<><FontAwesomeIcon icon={faCogs} /> User Management</>}
-                    items={["All", "Admin Users", "Activity Logs"]}
+                    items={["All", "profile", "Activity Logs"]}
                     links={[
                       "/admin-dashboard/user-mgmt/all",
-                    "/admin-dashboard/user-mgmt/admin",
+                      "/admin-dashboard/user-mgmt/profile",
                     "/admin-dashboard/user-mgmt/logs",
+                   
                   ]}
                   onToggle={() => handleToggle("User Management")}
                   isActive={activeDropdown === "User Management"}
