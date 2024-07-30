@@ -9,8 +9,8 @@ export default function Customers(args) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const customers = [
-    { id: 'cr42537', name: 'ayomide', email: 'AyoMide@example.com', phone: '(555) 555-5555' },
-    { id: 'cr78590', name: 'Abba Boss', email: 'abbaboss@example.com', phone: '(555) 555-1234' },
+    { id: 'cr42537', name: 'ayomide', email: 'AyoMide@example.com', phone: '(555) 555-5555', lga: 'Fagge', state: 'Kano' },
+    { id: 'cr78590', name: 'Abba Boss', email: 'abbaboss@example.com', phone: '(555) 555-1234', lga: 'Gezawa', state: 'Kano' },
   ];
 
   const filteredCustomers = customers.filter(customer =>
@@ -37,29 +37,32 @@ export default function Customers(args) {
 
   return (
     <>
-      <div className='customer-button'>
+      <div className='container'>
         <div>
-          <h1 className='customers-text'>Customers</h1>
+          <h1 className='customers-text mt-4'>Customers</h1>
         </div>
         <div className='table-responsive'>
           <table className="table table-hover">
             <thead>
               <tr>
                 <th>Customer ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>PHONE</th>
+                <th>LGA</th>
+                <th>State</th>
+                <th>ACTION</th>
               </tr>
             </thead>
             <tbody className='table-group-divider'>
               {filteredCustomers.map((customer, index) => (
-                <tr key={index} 
-                  onClick={handleRowClick}
-                >
+                <tr key={index}>
                   <td>{customer.id}</td>
                   <td>{customer.name}</td>
                   <td>{customer.email}</td>
                   <td>{customer.phone}</td>
+                  <td>{customer.lga}</td>
+                  <td>{customer.state}</td>
                   <td>
                     <button className="view-button" onClick={() => handleView(customer)}>
                       View

@@ -1,22 +1,9 @@
 .search-container {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 818a51a0cef4fbe52f54235398263c4eb542c071
     margin: 20px 0;
     width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-<<<<<<< HEAD
-=======
-    margin: 20px 0; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
->>>>>>> 533da5e514eeedef38ac06d4874e1ad4f5097d85
-=======
->>>>>>> 818a51a0cef4fbe52f54235398263c4eb542c071
 }
 .customer-button {
     display: flex;
@@ -24,11 +11,6 @@
     align-items: center;
     height: 40px; 
 } 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 818a51a0cef4fbe52f54235398263c4eb542c071
 .search-input {
     padding: 5px 10px;
     font-size: 14px;
@@ -36,21 +18,6 @@
     border-radius: 4px;
     max-width: 500px;
     height: 40px;
-    /* max-width: 300px; */
-<<<<<<< HEAD
-=======
-.search-input { 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    padding: 5px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 50%;
->>>>>>> 533da5e514eeedef38ac06d4874e1ad4f5097d85
-=======
->>>>>>> 818a51a0cef4fbe52f54235398263c4eb542c071
 }
 
 .customers-text {
@@ -190,7 +157,4 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-<<<<<<< HEAD
->>>>>>> 533da5e514eeedef38ac06d4874e1ad4f5097d85
-=======
 }
