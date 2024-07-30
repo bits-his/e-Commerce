@@ -100,8 +100,6 @@
 
 .customers-table tr:hover {
     background-color: #ddd;
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
 
 .customer-action-btn {
@@ -124,9 +122,6 @@
 
 .customer-card-details {
     border-radius: 7px;
-=======
-=======
->>>>>>> 818a51a0cef4fbe52f54235398263c4eb542c071
 } 
 .edit-button {
     background-color: #4CAF50;
@@ -198,49 +193,4 @@
 <<<<<<< HEAD
 >>>>>>> 533da5e514eeedef38ac06d4874e1ad4f5097d85
 =======
-}
-
-.customer-action-btn {
-    width: 180px !important;
-}
-
-#action-text {
-    display: block;
-}
-
-@media (width < 992px){
-    #action-text {
-        display: none;
-    }
-
-    .customer-action-btn {
-        width: 50px !important;
-    }    
-}
-
-.customer-card-details {
-    border-radius: 7px;
-}
-
-.customer-action-btn {
-    width: 180px !important;
-}
-
-#action-text {
-    display: block;
-}
-
-@media (width < 992px){
-    #action-text {
-        display: none;
-    }
-
-    .customer-action-btn {
-        width: 50px !important;
-    }    
-}
-
-.customer-card-details {
-    border-radius: 7px;
->>>>>>> 818a51a0cef4fbe52f54235398263c4eb542c071
 }
