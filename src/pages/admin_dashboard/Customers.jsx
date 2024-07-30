@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import '../../Styles/Customers.css';
-import { useNavigate } from 'react-router-dom';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-export default function Customers() {
+export default function Customers(args) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const customers = [
     { id: 'cr42537', name: 'ayomide', email: 'AyoMide@example.com', phone: '(555) 555-5555' },
@@ -16,51 +18,45 @@ export default function Customers() {
     customer.phone.includes(searchQuery)
   );
 
-  const navigate = useNavigate();
-
-  const handleRowClick = () => {
-    navigate(`/admin-dashboard/customer-mgmt/customer-details`);
-  };
-
   return (
     <>
-      <div className='px-4'>
-        <h1 className='customers-text mt-4'>Customers</h1>
-        <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            className="search-input me-3"
-          />
-          <button className="custom-button">Add customer</button>
+      <div className='customer-button'>
+        <div>
+          <h1 className='customers-text'>Customers</h1>
         </div>
-        <div className='table-responsive'>
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th>Customer ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-              </tr>
-            </thead>
-            <tbody className='table-group-divider'>
-              {filteredCustomers.map((customer, index) => (
-                <tr key={index} 
-                  onClick={handleRowClick}
-                >
-                  <td>{customer.id}</td>
-                  <td>{customer.name}</td>
-                  <td>{customer.email}</td>
-                  <td>{customer.phone}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div>
+          <button className="custom-button">Export</button>
+          <button className="custom-button">Import</button>
+          <button className="custom-button">Add customers</button>
         </div>
       </div>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          className="search-input"
+        />
+      </div>
+      <table className="customers-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredCustomers.map((customer, index) => (
+            <tr key={index}>
+              <td>{customer.name}</td>
+              <td>{customer.email}</td>
+              <td>{customer.phone}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }
