@@ -32,6 +32,8 @@
 .order-card {
   background-color: #ffffff;
   text-align: center;
+  width: 100%;
+  margin: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-left: 5px solid transparent;
 }
@@ -45,11 +47,11 @@
   border-left-color: #007bff; 
 }
 
-.order-card.completed {
-  border-left-color: #28a745; 
+.completed {
+  border-left-color: #28a745 !important; 
 }
 
-.order-card.canceled {
+.order-card{
   border-left-color: #dc3545;
 }
 
