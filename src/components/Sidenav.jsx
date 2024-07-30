@@ -3,7 +3,7 @@ import { Nav } from "react-bootstrap";
 import DropdownBtn from "../components/DropdownBtn";
 import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faUser, faChartLine, faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faUser, faChartLine, faCogs, faSignOutAlt,faStore } from '@fortawesome/free-solid-svg-icons';
 
 import "./sidenav.css";
 import toast from "react-hot-toast";
@@ -85,26 +85,26 @@ const Sidebar = () => {
                     links={[
                       "/admin-dashboard/user-mgmt/all",
                     "/admin-dashboard/user-mgmt/admin",
-                      "/admin-dashboard/user-mgmt/logs",
-                    ]}
-                    onToggle={() => handleToggle("User Management")}
-                    isActive={activeDropdown === "User Management"}
-                    baseLink="/user-mgmt"
-                  />
-                </>
-              )}
+                    "/admin-dashboard/user-mgmt/logs",
+                  ]}
+                  onToggle={() => handleToggle("User Management")}
+                  isActive={activeDropdown === "User Management"}
+                  baseLink="/user-mgmt"
+                />
+              </>
+            )}
 
             {/* Link to sellers route */}
 
-            {pathname.startsWith("/seller-dashboard") && (
-              <>
-                <DropdownBtn
-                  title="Store Management"
-                  items={["Store profile", "Payment method","Order management"]}
-                  links={["/seller-dashboard/storemangement/storeprofile", "/seller-dashboard/storemangement/storepayment","/seller-dashboard/storemangement/ordermanagement"]}
-                  onToggle={() => handleToggle("Store Management")}
-                  isActive={activeDropdown === "Store Management"}
-                />
+              {pathname.startsWith("/seller-dashboard") && (
+                <>
+                  <DropdownBtn
+                    title={<><FontAwesomeIcon icon={faStore} /> Store Management</>}
+                    items={["Store profile", "Payment method","Order management"]}
+                    links={["/seller-dashboard/storemangement/storeprofile", "/seller-dashboard/storemangement/storepayment","/seller-dashboard/storemangement/ordermanagement"]}
+                    onToggle={() => handleToggle("Store Management")}
+                    isActive={activeDropdown === "Store Management"}
+                  />
 
                 <DropdownBtn
                   title="Product Management"

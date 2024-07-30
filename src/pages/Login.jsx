@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../Styles/Login.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -15,9 +13,10 @@ function Login() {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-   const togglePasswordVisibility = ()=>{
-        setPasswordVisible (!passwordVisible);
-    }
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,10 +26,10 @@ function Login() {
       [name]: value,
     });
   };
-   
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     console.log("Form submitted with:", formData);
 
     if (formData.userId === "admin") {
@@ -39,10 +38,14 @@ function Login() {
     } else if (formData.userId === "seller") {
       toast.success(`${formData.userId} logged in`);
       navigate("/seller-dashboard");
-    } 
-    else {
+    } else {
       toast.error("user not found");
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    // Your logic for Google Sign-In
+    console.log("Google Sign-In clicked");
   };
 
   return (
@@ -61,63 +64,77 @@ function Login() {
             Login
           </h2>
         </div>
+        <Button 
+          
+          className="w-100 mb-3"
+          onClick={handleGoogleSignIn}
+        >
+          <i className="fab fa-google mr-2"></i> Sign in with Google
+        </Button>
+        <div className="d-flex align-items-center mb-3">
+          <hr className="flex-grow-1"/>
+          <span className="px-2">or</span>
+          <hr className="flex-grow-1"/>
+        </div>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formEmail">
-            <Form.Label htmlFor="user">User ID</Form.Label>
+        <Form.Group controlId="formEmail">
+            <Form.Label htmlFor="user">Email</Form.Label>
             <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  <i className="fas fa-user"></i>
-                </span>
-              </div>
               <Form.Control
                 type="text"
                 id="user"
                 name="userId"
                 value={formData.userId}
                 onChange={handleChange}
+                className="form-control-with-icon"
               />
+              <div className="input-icon">
+                <i className="fas fa-envelope"></i>
+              </div>
             </div>
           </Form.Group>
+
           <Form.Group controlId="passwordId">
             <Form.Label htmlFor="pass">Password</Form.Label>
             <div className="input-group mb-3">
-              <div className="input-group-prepend ">
-                <span className="input-group-text">
-                  <i className="fas fa-lock icon"></i>
-                </span>
-              </div>
               <Form.Control
                 type={passwordVisible ? 'text' : 'password'}
                 id="pass"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
+                className="form-control-with-icon"
               />
-              <div className="input-group-append">
-              <span className="input-group-text" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+              <div className="input-icon">
+                <i className="fas fa-lock"></i>
+              </div>
+              <div className="input-icon-right" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
                 {passwordVisible ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>}
-              </span>
-                </div>
+              </div>
             </div>
-            <Link
-              to="/forgot-password"
-              className="ml-auto text-decoration-none text-dark d-flex"
-              style={{ justifyContent: "end" }}
-            >
-              Forgot your password?
-            </Link>
+
+                  
+            <Form.Group controlId="formRemember" className="mb-3 d-flex justify-content-between align-items-center">
+              <Form.Check type="checkbox" label="Remember me" />
+              <Link
+                to="/forgot-password"
+                className="text-decoration-none text-dark"
+              >
+                Forgot your password?
+              </Link>
+            </Form.Group>
+
+           
+            
           </Form.Group>
-          <Form.Group controlId="formRemember" className="mb-3">
-            <Form.Check type="checkbox" label="Remember me" />
-          </Form.Group>
+          
 
           <Button variant="primary" type="submit" className="w-100 btn-primary">
-            Log In
+           Log In <i className="fas fa-sign-in-alt "></i>
           </Button>
           <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
             <h6>
-              Dont have an account ?{" "}
+              Don't have an account?{" "}
               <Link to="register" className="text-decoration-none text-dark">
                 Register Now
               </Link>{" "}
