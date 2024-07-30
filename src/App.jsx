@@ -14,6 +14,7 @@ import Storeprofile from './pages/seller_Dashboard/storemanagement/storeprofile'
 import Storepayment from './pages/seller_Dashboard/storemanagement/payment'
 import Ordermanangement from './pages/seller_Dashboard/storemanagement/OrderManagement'
 import Sellerdashboard from './pages/seller_Dashboard/seller-dashboard/sellerdashboard'
+import AdminDashboard from './pages/admin_dashboard/AdminDashboard'
 
 const App = ()=>{
 
@@ -28,7 +29,7 @@ const App = ()=>{
 
           <Route element={<Layout />}>
             <Route path="/admin-dashboard" >
-              <Route index element={<Profile />}/>
+              <Route index element={<AdminDashboard />}/>
               <Route path='customer-mgmt' >
                 <Route path='customers' element={<Customers />}/>
                 <Route path='customer-reviews' element={<Product />}/>
