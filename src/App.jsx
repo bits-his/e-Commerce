@@ -15,7 +15,9 @@ import Ordermanangement from './pages/seller_Dashboard/storemanagement/OrderMana
 import Sellerdashboard from './pages/seller_Dashboard/seller-dashboard/sellerdashboard'
 import AdminDashboard from './pages/admin_dashboard/AdminDashboard'
 import Inventory from './pages/admin_dashboard/Inventory'
-
+import PendingOrders  from './pages/seller_Dashboard/seller-dashboard/Pendingordertable'
+import ApprovedOrders from './pages/seller_Dashboard/seller-dashboard/ApprovedOrders'
+import TotalOrders from './pages/seller_Dashboard/seller-dashboard/TotalOrders'
 const App = ()=>{
 
   return(
@@ -49,6 +51,9 @@ const App = ()=>{
             </Route> 
             <Route path="/seller-dashboard" >
               <Route index element={<Sellerdashboard/>}/>
+              <Route path="orders/pending" element={<PendingOrders />} />
+                <Route path="orders/approved" element={<ApprovedOrders />} />
+                <Route path="orders/total" element={<TotalOrders />} />
               
               <Route path='product-mgmt' >
                 <Route path='product'>
@@ -60,6 +65,7 @@ const App = ()=>{
                 <Route path='storeprofile' element={<Storeprofile />}/>
                 {/* <Route path='storepayment' element={<Storepayment />}/> */}
                 <Route path='ordermanagement' element={<Ordermanangement />}/>
+                
               </Route>
             </Route> 
             <Route path='*' element={<NotFound />}/>

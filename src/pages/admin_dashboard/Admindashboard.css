@@ -1,0 +1,11 @@
+.cardstyle{
+    position: relative;
+    border-bottom: 5px solid #ff5733;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+  
+  .cardstyle:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+    transform: translateY(-15px); /* Slightly lift the card on hover */
+  }
