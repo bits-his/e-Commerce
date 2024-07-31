@@ -42,9 +42,7 @@ const LineChart = () => {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    
-    marginTop: '30px ',
-   
+    // marginTop: '30px'
   };
 
   const h2Style = {
@@ -57,14 +55,14 @@ const LineChart = () => {
   };
 
   return (
-    <Container className="p-4">
+    <div className="">
       <Card style={cardStyle}>
         <Card.Body style={cardBodyStyle}>
           <h2 style={h2Style}>Sales Data</h2>
           <Line data={data} options={options} />
         </Card.Body>
       </Card>
-    </Container>
+    </div>
   );
 };
 
