@@ -187,13 +187,13 @@
 /* product.css */
 
 .au-btn {
-  line-height: 45px !important;
-  padding: 0 35px !important;
-  text-transform: uppercase !important;
+  line-height: 35px !important;
+  padding: 0 25px !important;
   color: #fff !important;
   border-radius: 3px !important;
   transition: all 0.3s ease !important;
   cursor: pointer !important;
+  border-radius: 10px !important;
   border: none !important;
   background: none !; /* No background */
 }
@@ -205,11 +205,11 @@
 }
 
 .au-btn--blue {
-  background-color: red!important; /* Blue background for the button */
+  background-color: green !important; /* Blue background for the button */
 }
 
 .au-btn--blue:hover {
-  background-color: red !important; /* Darker shade on hover */
+  background-color: green !important; /* Darker shade on hover */
 }
 
 .au-btn i {
