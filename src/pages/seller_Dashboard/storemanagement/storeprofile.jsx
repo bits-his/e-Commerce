@@ -58,7 +58,7 @@ function Storeprofile() {
       <Card className='m-0'>
         <div className='d-flex justify-content-between p-3'>
           <h5>Seller Profile</h5>
-          <Button className='btn-primary'>Edit Profile</Button>
+          <Button className='btn-primary'>Add Product</Button>
         </div>
         <Card.Header className='warning' style={{ height: "6rem" }}>
           <div className='d-flex align-items-center h-100'>
