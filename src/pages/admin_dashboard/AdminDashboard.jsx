@@ -18,7 +18,7 @@ const SalesAndOrder = () => {
     <Col lg={4} md={12} className="d-flex flex-column px-md-2 px-sm-3 py-2">
       <div className="card mb-0 px-2 pt-3 pb-4">
         <div className="d-flex justify-content-between align-items-center pb-3">
-          Total Orders
+          <b>Total Orders</b>
           <BsThreeDotsVertical />
         </div>
         <div className="">
