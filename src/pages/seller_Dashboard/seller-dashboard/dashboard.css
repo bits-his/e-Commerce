@@ -43,17 +43,19 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.order-card.pending {
-  border-left-color: #007bff; 
+.pending {
+  border-left-color: red !important; 
 }
 
-.completed {
+.approved{
+  
+  border-left-color: #007bff !important; 
+}
+.total{
   border-left-color: #28a745 !important; 
 }
 
-.order-card{
-  border-left-color: #dc3545;
-}
+
 
 .order-card .card-body {
   display: flex;

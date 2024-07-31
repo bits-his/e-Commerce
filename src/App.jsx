@@ -10,13 +10,15 @@ import NotFound from './components/NotFound'
 import Productmgnt from './pages/prodoct-mgnt/product'
 import AddProductPage from './pages/prodoct-mgnt/addproduct'
 import Customers from './pages/admin_dashboard/Customers'
-import Storeprofile from '../src/pages/seller_Dashboard/storemanagement/Storeprofile'
-import Storepayment from './pages/seller_Dashboard/storemanagement/payment'
+import Storeprofile from '../src/pages/seller_Dashboard/storemanagement/storeprofile'
 import Ordermanangement from './pages/seller_Dashboard/storemanagement/OrderManagement'
 import Sellerdashboard from './pages/seller_Dashboard/seller-dashboard/sellerdashboard'
 import AdminDashboard from './pages/admin_dashboard/AdminDashboard'
 import Inventory from './pages/admin_dashboard/Inventory'
-
+import PendingOrders  from './pages/seller_Dashboard/seller-dashboard/Pendingordertable'
+import ApprovedOrders from './pages/seller_Dashboard/seller-dashboard/ApprovedOrders'
+import TotalOrders from './pages/seller_Dashboard/seller-dashboard/TotalOrders'
+// import Notification from './pages/seller_Dashboard/NotificationContainer'
 const App = ()=>{
 
   return(
@@ -50,6 +52,9 @@ const App = ()=>{
             </Route> 
             <Route path="/seller-dashboard" >
               <Route index element={<Sellerdashboard/>}/>
+              <Route path="orders/pending" element={<PendingOrders />} />
+                <Route path="orders/approved" element={<ApprovedOrders />} />
+                <Route path="orders/total" element={<TotalOrders />} />
               
               <Route path='product-mgmt' >
                 <Route path='product'>
@@ -59,9 +64,13 @@ const App = ()=>{
               </Route>
               <Route path='storemangement'>
                 <Route path='storeprofile' element={<Storeprofile />}/>
-                <Route path='storepayment' element={<Storepayment />}/>
+                {/* <Route path='storepayment' element={<Storepayment />}/> */}
                 <Route path='ordermanagement' element={<Ordermanangement />}/>
               </Route>
+              {/* <Route path='notification'>
+                <Route path='notification' element={<Notification />}/>
+                
+              </Route> */}
             </Route> 
             <Route path='*' element={<NotFound />}/>
           </Route>
