@@ -10,9 +10,12 @@ const DropdownMenu = ({ title, items, isActive, onToggle, links }) => {
         className={({ isActive }) => (isActive ? "active-btn" : "norm-btn")}
         onClick={onToggle}
       >
-        {title}
-        <IoIosArrowDroprightCircle className={`icon ${isActive ? 'rotated' : ''}`} />
+        <div className="d-flex align-items-center justify-content-between">
+          {title}
+          <IoIosArrowDroprightCircle className={`icon ${isActive ? 'rotated' : ''}`} />
+        </div>
       </NavLink>
+                
       {isActive && (
         <div className="ps-3">
           {items.map((item, index) => (

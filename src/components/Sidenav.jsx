@@ -54,7 +54,7 @@ const Sidebar = () => {
               {pathname.startsWith("/admin-dashboard") && (
                 <>
                   <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faUser} /> Customer Management</>}
+                    title={<><FontAwesomeIcon icon={faUser} className="me-2"/> Customer Management</>}
                     items={["All Customers", "Customer Reviews"]}
                     links={[
                       "/admin-dashboard/customer-mgmt/customers",
@@ -65,7 +65,7 @@ const Sidebar = () => {
                     baseLink="/customer-mgmt"
                   />
                   <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faChartLine} /> Reports</>}
+                    title={<><FontAwesomeIcon icon={faChartLine} className="me-2" /> Reports</>}
                     items={[
                       "Sales",
                       "Product Performance",
@@ -83,7 +83,7 @@ const Sidebar = () => {
                     baseLink="/reports"
                   />
                   <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faCogs} /> User Management</>}
+                    title={<><FontAwesomeIcon icon={faCogs} className="me-2" /> User Management</>}
                     items={["All", "profile", "Activity Logs"]}
                     links={[
                       "/admin-dashboard/user-mgmt/all",
