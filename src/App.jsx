@@ -10,11 +10,11 @@ import NotFound from './components/NotFound'
 import Productmgnt from './pages/prodoct-mgnt/product'
 import AddProductPage from './pages/prodoct-mgnt/addproduct'
 import Customers from './pages/admin_dashboard/Customers'
-
-import Storeprofile from './pages/seller_Dashboard/storemanagement/Storeprofile'
+import Storeprofile from '../src/pages/seller_Dashboard/storemanagement/storeprofile'
 import Ordermanangement from './pages/seller_Dashboard/storemanagement/OrderManagement'
 import Sellerdashboard from './pages/seller_Dashboard/seller-dashboard/sellerdashboard'
 import AdminDashboard from './pages/admin_dashboard/AdminDashboard'
+import Inventory from './pages/admin_dashboard/Inventory'
 
 const App = ()=>{
 
@@ -37,7 +37,7 @@ const App = ()=>{
               <Route path='reports' >
                 <Route path='sales' element={<Product />}/>
                 <Route path='product-performance' element={<Product />}/>
-                <Route path='inventory' element={<Product />}/>
+                <Route path='inventory' element={<Inventory />}/>
                 <Route path='traffic' element={<Product />}/>
               </Route>
               <Route path='user-mgmt' >

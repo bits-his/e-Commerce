@@ -9,8 +9,8 @@ export default function Customers(args) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const customers = [
-    { id: 'cr42537', name: 'ayomide', email: 'AyoMide@example.com', phone: '(555) 555-5555' },
-    { id: 'cr78590', name: 'Abba Boss', email: 'abbaboss@example.com', phone: '(555) 555-1234' },
+    { id: 'cr42537', name: 'ayomide', email: 'AyoMide@example.com', phone: '(555) 555-5555', lga: 'Fagge', state: 'Kano' },
+    { id: 'cr78590', name: 'Abba Boss', email: 'abbaboss@example.com', phone: '(555) 555-1234', lga: 'Gezawa', state: 'Kano' },
   ];
 
   const filteredCustomers = customers.filter(customer =>
@@ -37,58 +37,75 @@ export default function Customers(args) {
 
   return (
     <>
-      <div className='customer-button'>
-        <div>
-          <h1 className='customers-text'>Customers</h1>
+      <div className='container pt-2'>
+        <div className="d-flex justify-content-between align-items-end mt-md-4 mt-sm-3 mb-3">
+          <div className="d-flex flex-column">
+            <h1 className="customers-text">Customers</h1>
+            <small>Home {'>'} Customers</small>
+          </div>
+          <div className="search-container mb-1">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              className="search-input me-3"
+            />
+          </div>
         </div>
-        <div className='table-responsive'>
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th>Customer ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-              </tr>
-            </thead>
-            <tbody className='table-group-divider'>
-              {filteredCustomers.map((customer, index) => (
-                <tr key={index} 
-                  onClick={handleRowClick}
-                >
-                  <td>{customer.id}</td>
-                  <td>{customer.name}</td>
-                  <td>{customer.email}</td>
-                  <td>{customer.phone}</td>
-                  <td>
-                    <button className="view-button" onClick={() => handleView(customer)}>
-                      View
-                    </button>
-                    <button className="edit-button">
-                      Edit
-                    </button>
-                  </td>
+        <div className='card px-2 pb-4'>
+          <div className='table-responsive'>
+            <table className="table table-hover">
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>NAME</th>
+                  <th>EMAIL</th>
+                  <th>PHONE</th>
+                  <th>LGA</th>
+                  <th>State</th>
+                  <th>ACTION</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          <Modal isOpen={isModalOpen} toggle={handleCloseModal} {...args}>
-            <ModalHeader toggle={handleCloseModal}>Customer Details</ModalHeader>
-            <ModalBody>
-              {selectedCustomer && (
-                <div>
-                  <p><strong>Name:</strong> {selectedCustomer.name}</p>
-                  <p><strong>Email:</strong> {selectedCustomer.email}</p>
-                  <p><strong>Phone:</strong> {selectedCustomer.phone}</p>
-                </div>
-              )}
-            </ModalBody>
-            <ModalFooter>
-              <Button color="secondary" onClick={handleCloseModal}>
-                Close
-              </Button>
-            </ModalFooter>
-          </Modal>
+              </thead>
+              <tbody className='table-group-divider'>
+                {filteredCustomers.map((customer, index) => (
+                  <tr key={index}>
+                    <td>{customer.id}</td>
+                    <td>{customer.name}</td>
+                    <td>{customer.email}</td>
+                    <td>{customer.phone}</td>
+                    <td>{customer.lga}</td>
+                    <td>{customer.state}</td>
+                    <td>
+                      <button className="view-button" onClick={() => handleView(customer)}>
+                        View
+                      </button>
+                      <button className="edit-button">
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <Modal isOpen={isModalOpen} toggle={handleCloseModal} {...args}>
+              <ModalHeader toggle={handleCloseModal}>Customer Details</ModalHeader>
+              <ModalBody>
+                {selectedCustomer && (
+                  <div>
+                    <p><strong>Name:</strong> {selectedCustomer.name}</p>
+                    <p><strong>Email:</strong> {selectedCustomer.email}</p>
+                    <p><strong>Phone:</strong> {selectedCustomer.phone}</p>
+                  </div>
+                )}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="secondary" onClick={handleCloseModal}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </Modal>
+          </div>
         </div>
       </div>
     </>
