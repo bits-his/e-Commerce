@@ -10,8 +10,8 @@ import NotFound from './components/NotFound'
 import Productmgnt from './pages/prodoct-mgnt/product'
 import AddProductPage from './pages/prodoct-mgnt/addproduct'
 import Customers from './pages/admin_dashboard/Customers'
-import Storeprofile from './pages/seller_Dashboard/storemanagement/storeprofile'
-import Storepayment from './pages/seller_Dashboard/storemanagement/payment'
+
+import Storeprofile from './pages/seller_Dashboard/storemanagement/Storeprofile'
 import Ordermanangement from './pages/seller_Dashboard/storemanagement/OrderManagement'
 import Sellerdashboard from './pages/seller_Dashboard/seller-dashboard/sellerdashboard'
 import AdminDashboard from './pages/admin_dashboard/AdminDashboard'
@@ -58,7 +58,7 @@ const App = ()=>{
               </Route>
               <Route path='storemangement'>
                 <Route path='storeprofile' element={<Storeprofile />}/>
-                <Route path='storepayment' element={<Storepayment />}/>
+                {/* <Route path='storepayment' element={<Storepayment />}/> */}
                 <Route path='ordermanagement' element={<Ordermanangement />}/>
               </Route>
             </Route> 

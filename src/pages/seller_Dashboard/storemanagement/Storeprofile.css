@@ -1,0 +1,13 @@
+.btn{
+    margin-right: 3rem;
+}
+.heading{
+    margin-left: 3rem;
+}
+.position{
+    margin-left: 2rem;
+    margin-right: 3rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-top: 2rem;
+}

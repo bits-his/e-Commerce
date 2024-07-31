@@ -1,152 +1,91 @@
-import React, { useState } from 'react';
-import { Button, FormGroup, Label, Input } from 'reactstrap';
+import React from 'react';
+import { Button, Card, Container, Row, Col } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "../storemanagement/Storeprofile.css";
 
-const EditableProfile = () => {
-  const [storeInfo, setStoreInfo] = useState({
-    name: 'My Store',
-    logo: 'logo-url',
-    banner: 'banner-url',
-    email: 'contact@mystore.com',
-    phone: '123-456-7890',
-    address: '123 Store St, City, Country',
-    registrationNumber: '123456789',
-  });
+const products = [
+  {
+    img: "https://via.placeholder.com/150",
+    title: "GoPro Camera Black",
+    price: "$379.00"
+  },
+  {
+    img: "https://via.placeholder.com/150",
+    title: "Speaker for Music",
+    price: "$250.00"
+  },
+  {
+    img: "https://via.placeholder.com/150",
+    title: "Samsung Smartwatch",
+    price: "$375.00"
+  },
+  {
+    img: "https://via.placeholder.com/150",
+    title: "Apple iPhone 12",
+    price: "$879.00"
+  }
+];
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [editData, setEditData] = useState(storeInfo);
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleCancelClick = () => {
-    setIsEditing(false);
-    setEditData(storeInfo);
-  };
-
-  const handleSaveClick = () => {
-    setStoreInfo(editData);
-    setIsEditing(false);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
+function Storeprofile() {
   return (
-    <div>
-      <h2>Store Profile</h2>
-      <div>
-        <FormGroup>
-          <Label for="name">Store Name</Label>
-          {isEditing ? (
-            <Input
-              type="text"
-              name="name"
-              id="name"
-              value={editData.name}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{storeInfo.name}</p>
-          )}
-        </FormGroup>
-        <FormGroup>
-          <Label for="logo">Store Logo</Label>
-          {isEditing ? (
-            <Input
-              type="text"
-              name="logo"
-              id="logo"
-              value={editData.logo}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{storeInfo.logo}</p>
-          )}
-        </FormGroup>
-        <FormGroup>
-          <Label for="banner">Store Banner</Label>
-          {isEditing ? (
-            <Input
-              type="text"
-              name="banner"
-              id="banner"
-              value={editData.banner}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{storeInfo.banner}</p>
-          )}
-        </FormGroup>
-        <FormGroup>
-          <Label for="email">Email</Label>
-          {isEditing ? (
-            <Input
-              type="email"
-              name="email"
-              id="email"
-              value={editData.email}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{storeInfo.email}</p>
-          )}
-        </FormGroup>
-        <FormGroup>
-          <Label for="phone">Phone</Label>
-          {isEditing ? (
-            <Input
-              type="text"
-              name="phone"
-              id="phone"
-              value={editData.phone}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{storeInfo.phone}</p>
-          )}
-        </FormGroup>
-        <FormGroup>
-          <Label for="address">Address</Label>
-          {isEditing ? (
-            <Input
-              type="text"
-              name="address"
-              id="address"
-              value={editData.address}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{storeInfo.address}</p>
-          )}
-        </FormGroup>
-        <FormGroup>
-          <Label for="registrationNumber">Registration Number</Label>
-          {isEditing ? (
-            <Input
-              type="text"
-              name="registrationNumber"
-              id="registrationNumber"
-              value={editData.registrationNumber}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{storeInfo.registrationNumber}</p>
-          )}
-        </FormGroup>
-        {isEditing ? (
-          <div>
-            <Button color="primary" onClick={handleSaveClick}>Save</Button>
-            <Button color="secondary" onClick={handleCancelClick}>Cancel</Button>
+    <Container className='mt-3'>
+      <Card className='m-0'>
+        <div className='d-flex justify-content-between p-3'>
+          <h5>Seller Profile</h5>
+          <Button className='btn-primary'>Edit Profile</Button>
+        </div>
+        <Card.Header className='bg-warning' style={{ height: "6rem" }}>
+          <div className='d-flex align-items-center h-100'>
+            <img src="https://via.placeholder.com/150" alt="Seller Logo" className='me-3' style={{ height: "5rem" }} />
+            <div>
+              <h6 className='mb-0'>Shop Name</h6>
+              <p className='mb-0'>2001 Fashion Ave, Eldorado, California 90210</p>
+            </div>
           </div>
-        ) : (
-          <Button color="primary" onClick={handleEditClick}>Edit</Button>
-        )}
-      </div>
-    </div>
-  );
-};
+        </Card.Header>
+        <Card.Body>
+          <Row>
+            <Col className='text-center'>
+              <h6 className='mb-0'>234</h6>
+              <small className='text-muted'>Sales</small>
+            </Col>
+            <Col className='text-center'>
+              <h6 className='mb-0'>$2380</h6>
+              <small className='text-muted'>Revenue</small>
+            </Col>
+            <Col className='text-center'>
+              <h6 className='mb-0'>Contacts</h6>
+              <small className='text-muted'>Marquez Javis Bell</small>
+              <small className='text-muted'>+1 123 456 7890</small>
+            </Col>
+            <Col className='text-center'>
+              <h6 className='mb-0'>Address</h6>
+              <small className='text-muted'>2001 Fashion Ave</small>
+              <small className='text-muted'>Eldorado, California 90210</small>
+            </Col>
+            <Col className='text-center'>
+              <img src="https://via.placeholder.com/100" alt="Map" className='img-fluid' />
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
 
-export default EditableProfile;
+      <h5 className='mt-4'>Products</h5>
+      <Row>
+        {products.map((product, index) => (
+          <Col key={index} md={3}>
+            <Card className='mb-4'>
+              <Card.Img variant="top" src={product.img} />
+              <Card.Body>
+                <Card.Title>{product.title}</Card.Title>
+                <Card.Text>{product.price}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  );
+}
+
+export default Storeprofile;
