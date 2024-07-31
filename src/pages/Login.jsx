@@ -39,10 +39,10 @@ function Login() {
     }
 
     // Check if the userId is either "admin" or "vendors"
-    if (formData.userId === "admin") {
+    if (formData.userId === "admin@gmail.com") {
       toast.success("Admin logged in successfully");
       navigate("/admin-dashboard");
-    } else if (formData.userId === "vendors") {
+    } else if (formData.userId === "vendors@gmail.com") {
       toast.success("Vendor logged in successfully");
       navigate("/seller-dashboard");
     } else {
