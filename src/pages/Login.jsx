@@ -35,7 +35,7 @@ function Login() {
     if (formData.userId === "admin") {
       toast.success(`${formData.userId} logged in`);
       navigate("/admin-dashboard");
-    } else if (formData.userId === "seller") {
+    } else if (formData.userId === "vendors") {
       toast.success(`${formData.userId} logged in`);
       navigate("/seller-dashboard");
     } else {
