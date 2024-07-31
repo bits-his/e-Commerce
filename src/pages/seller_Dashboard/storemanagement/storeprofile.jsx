@@ -2,27 +2,53 @@ import React from 'react';
 import { Button, Card, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../storemanagement/Storeprofile.css";
+import pic1 from "../storemanagement/pics/pic1.jpg";
+import pic2 from "../storemanagement/pics/pic2.jpg";
+import pic3 from "../storemanagement/pics/pic3.jpg";
+import pic4 from "../storemanagement/pics/pic4.jpg";
+import logo from "../storemanagement/pics/brand.jpg";
+
 
 const products = [
   {
-    img: "https://via.placeholder.com/150",
-    title: "GoPro Camera Black",
-    price: "$379.00"
+    img:  pic1,
+    title: "Home Decor",
+    price: "\u20A6 379.00"
   },
   {
-    img: "https://via.placeholder.com/150",
-    title: "Speaker for Music",
-    price: "$250.00"
+    img: pic2,
+    title: "Lotion",
+    price: "\u20A6 250.00"
   },
   {
-    img: "https://via.placeholder.com/150",
-    title: "Samsung Smartwatch",
-    price: "$375.00"
+    img: pic3,
+    title: "Side Chair",
+    price: "\u20A6 375.00"
   },
   {
-    img: "https://via.placeholder.com/150",
-    title: "Apple iPhone 12",
-    price: "$879.00"
+    img: pic4,
+    title: "Apple m 3",
+    price: "\u20A6 879.00"
+  },
+  {
+    img:  pic1,
+    title: "Home Decor",
+    price: "\u20A6 379.00"
+  },
+  {
+    img: pic2,
+    title: "Lotion",
+    price: "\u20A6 250.00"
+  },
+  {
+    img: pic3,
+    title: "Side Chair",
+    price: "\u20A6 375.00"
+  },
+  {
+    img: pic4,
+    title: "Apple m 3",
+    price: "\u20A6 879.00"
   }
 ];
 
@@ -34,37 +60,39 @@ function Storeprofile() {
           <h5>Seller Profile</h5>
           <Button className='btn-primary'>Edit Profile</Button>
         </div>
-        <Card.Header className='bg-warning' style={{ height: "6rem" }}>
+        <Card.Header className='warning' style={{ height: "6rem" }}>
           <div className='d-flex align-items-center h-100'>
-            <img src="https://via.placeholder.com/150" alt="Seller Logo" className='me-3' style={{ height: "5rem" }} />
+            <img src={logo} alt="Seller Logo" className='me-3' style={{ height: "5rem" }} />
             <div>
               <h6 className='mb-0'>Shop Name</h6>
-              <p className='mb-0'>2001 Fashion Ave, Eldorado, California 90210</p>
+              <p className='mb-0'>Shop Address</p>
             </div>
           </div>
         </Card.Header>
         <Card.Body>
+          
           <Row>
-            <Col className='text-center'>
-              <h6 className='mb-0'>234</h6>
-              <small className='text-muted'>Sales</small>
+            <Col>
+            <Card className='p-3' style={{height:"10rem", width:"15rem"}}>
+            <Col className='text-left'>
+              <h5 className='mb-0'>Sale</h5>
+              <h2>234</h2>
             </Col>
-            <Col className='text-center'>
-              <h6 className='mb-0'>$2380</h6>
-              <small className='text-muted'>Revenue</small>
+            <Col className='text-left'>
+              <h5 className='mb-0'>Revenue</h5>
+              <h2>2380</h2>
             </Col>
-            <Col className='text-center'>
-              <h6 className='mb-0'>Contacts</h6>
-              <small className='text-muted'>Marquez Javis Bell</small>
+            </Card>
+            </Col>
+            <Col>
+              <h4 className='mb-0'>Contacts</h4>
+              <small className='text-muted'>Marquez Javis Bell</small> <br></br>
               <small className='text-muted'>+1 123 456 7890</small>
             </Col>
-            <Col className='text-center'>
-              <h6 className='mb-0'>Address</h6>
-              <small className='text-muted'>2001 Fashion Ave</small>
+            <Col>
+              <h4 className='mb-0'>Address</h4>
+              <small className='text-muted'>2001 Fashion Ave</small> <br></br>
               <small className='text-muted'>Eldorado, California 90210</small>
-            </Col>
-            <Col className='text-center'>
-              <img src="https://via.placeholder.com/100" alt="Map" className='img-fluid' />
             </Col>
           </Row>
         </Card.Body>
@@ -75,8 +103,8 @@ function Storeprofile() {
         {products.map((product, index) => (
           <Col key={index} md={3}>
             <Card className='mb-4'>
-              <Card.Img variant="top" src={product.img} />
-              <Card.Body>
+              <Card.Img variant="top" className='imgtag' src={product.img} />
+              <Card.Body className='product'>
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>{product.price}</Card.Text>
               </Card.Body>
