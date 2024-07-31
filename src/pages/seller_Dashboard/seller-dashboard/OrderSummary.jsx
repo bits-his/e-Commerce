@@ -4,9 +4,9 @@ import { FaClipboardList, FaCheckCircle, FaListAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const orderTypes = [
-  { type: 'pending', title: 'Pending Orders', className: 'order-card pending', icon: <FaClipboardList /> },
-  { type: 'approved', title: 'Approved Orders', className: 'order-card approved', icon: <FaCheckCircle /> },
-  { type: 'total', title: 'Total Orders', className: 'order-card total', icon: <FaListAlt /> },
+  { type: 'pending', title: 'Pending Orders', className: 'order-card pending', icon: <FaClipboardList className='text-danger' /> },
+  { type: 'approved', title: 'Approved Orders', className: 'order-card approved', icon: <FaCheckCircle className='text-primary' /> },
+  { type: 'total', title: 'Total Orders', className: 'order-card total', icon: <FaListAlt  className='text-success'/> },
 ];
 
 const OrderSummary = () => {

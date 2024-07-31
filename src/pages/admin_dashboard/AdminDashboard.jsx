@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+
 import {
   Container,
   Row,
@@ -14,7 +14,7 @@ import { FaShoppingBag, FaArrowUp, FaCalendarTimes } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Adminchart from './adminchart'
 import "../admin_dashboard/Admindashboard.css";
-import Progress from "./Progress";
+
 
 const SalesAndOrder = () => {
   return (
