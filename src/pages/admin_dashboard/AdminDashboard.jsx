@@ -88,15 +88,15 @@ export default function AdminDashboard() {
             <FaCalendarTimes className="me-1"/> Select Date Range
           </Button>
         </div>
-        <Row>
+        <Row className="mb-2">
           <SalesAndOrder/>
           <SalesAndOrder/>
           <SalesAndOrder/>
         </Row>
-        <Row>
-            <Col lg={7} md={12} className="p-2">
-              <div className="" style={cardStyle}><Adminchart/></div>
-            </Col>
+        <Row className="align-items-center mb-0">
+          <Col lg={7} md={12} className="p-2">
+            <div className="" style={cardStyle}><Adminchart/></div>
+          </Col>
           <Col lg={5} md={12} className="p-2">
             <div className="card px-2 py-3">
               <div className="d-flex justify-content-between align-items-center">
