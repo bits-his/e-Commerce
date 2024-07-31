@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { FaShoppingBag, FaArrowUp, FaCalendarTimes } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Adminchart from './adminchart'
 
 const SalesAndOrder = () => {
   return (
@@ -64,6 +65,16 @@ const Seller = ()=>{
 }
 
 export default function AdminDashboard() {
+  const cardStyle = {
+    height: '400px', 
+    display: 'flex',
+    flexDirection: 'column',
+    paddingTop:'30px',
+    paddingBottom:'30px',
+   
+    justifyContent: 'center'
+  };
+
   return (
     <>
       <Container fluid>
@@ -83,9 +94,9 @@ export default function AdminDashboard() {
           <SalesAndOrder/>
         </Row>
         <Row>
-          <Col lg={7} md={12} className="p-2">
-            <div className="card">1</div>
-          </Col>
+            <Col lg={7} md={12} className="p-2">
+              <div className="" style={cardStyle}><Adminchart/></div>
+            </Col>
           <Col lg={5} md={12} className="p-2">
             <div className="card px-2 py-3">
               <div className="d-flex justify-content-between align-items-center">
@@ -93,6 +104,8 @@ export default function AdminDashboard() {
                 <BsThreeDotsVertical />
               </div>
               <hr class="border border-dark border-1 opacity-50 mt-3 mb-2"/>
+              <Seller />
+              <Seller />
               <Seller />
               <Seller />
               <Seller />
