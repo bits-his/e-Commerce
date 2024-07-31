@@ -121,6 +121,13 @@ const Sidebar = () => {
                   onToggle={() => handleToggle("Order notifiction")}
                   isActive={activeDropdown === "Order notifiction"}
                 />
+                 <DropdownBtn
+                  title="table"
+                  items={["aproved order", "pending order","total order"]}
+                  links={["/seller-dashboard/orders/approved", "/seller-dashboard/orders/pending","/seller-dashboard/orders/total",]}
+                  onToggle={() => handleToggle("")}
+                  isActive={activeDropdown === ""}
+                />
               </>
             )}
           </div>
