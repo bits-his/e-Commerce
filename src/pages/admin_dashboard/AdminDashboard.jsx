@@ -78,13 +78,13 @@ export default function AdminDashboard() {
   return (
     <>
       <Container fluid>
-        <div className="d-flex justify-content-between align-items-end pb-3">
+        <div className="d-flex justify-content-between align-items-start pb-3">
           <div className="d-flex flex-column">
             <h1 className="">Dashboard</h1>
             <small>Home {'>'} Dashboard</small>
           </div>
           
-          <Button variant="dark-outline" className="d-flex align-items-center p-1" onClick={console.log("clicked")}>
+          <Button variant="dark-outline" className="d-flex align-items-center p-1 mt-3" onClick={console.log("clicked")}>
             <FaCalendarTimes className="me-1"/> Select Date Range
           </Button>
         </div>

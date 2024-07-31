@@ -45,7 +45,10 @@ const Sidebar = () => {
                   pathname.startsWith("/admin-dashboard") ? "/admin-dashboard" : "/seller-dashboard"
                 }
               >
-                <FontAwesomeIcon icon={faTachometerAlt} /> Dashboard
+                <div className="d-flex align-items-center">
+                  <FontAwesomeIcon icon={faTachometerAlt} className="me-2" style={{}} /> 
+                  <b>Dashboard</b>
+                </div>
               </NavLink>
 
               {pathname.startsWith("/admin-dashboard") && (
@@ -64,9 +67,9 @@ const Sidebar = () => {
                   <DropdownBtn
                     title={<><FontAwesomeIcon icon={faChartLine} /> Reports</>}
                     items={[
-                      "Sales Reports",
+                      "Sales",
                       "Product Performance",
-                      "Inventory Reports",
+                      "Inventory",
                       "Traffic & Conversion",
                     ]}
                     links={[
@@ -121,7 +124,7 @@ const Sidebar = () => {
       </Nav>
       <div className="logout-main bg-dark">
         <div className="logout-container">
-          <NavLink className="logout">Logout</NavLink>
+          <NavLink className="logout" to="/" onClick={handleLogout}>Logout</NavLink>
         </div>
       </div>
     </div>
