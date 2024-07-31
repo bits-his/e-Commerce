@@ -69,7 +69,7 @@ export default function AdminDashboard() {
       <Container fluid>
         <div className="d-flex justify-content-between align-items-end pb-3">
           <div className="d-flex flex-column">
-            <h1 className="text-">Dashboard</h1>
+            <h1 className="">Dashboard</h1>
             <small>Home {'>'} Dashboard</small>
           </div>
           
@@ -112,6 +112,7 @@ export default function AdminDashboard() {
               <table className="table table-hover mt-2">
                 <thead>
                   <tr>
+                    <th><input type="checkbox" className="form-check-input p-0" /></th>
                     <th>Product</th>
                     <th>Order ID</th>
                     <th>Date</th>
@@ -122,6 +123,7 @@ export default function AdminDashboard() {
                 </thead>
                 <tbody className='table-group-divider'>
                   <tr>
+                    <td><input type="checkbox" className="form-check-input p-0" /></td>
                     <td></td>
                   </tr>
                 </tbody>

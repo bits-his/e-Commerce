@@ -15,6 +15,7 @@ import Storepayment from './pages/seller_Dashboard/storemanagement/payment'
 import Ordermanangement from './pages/seller_Dashboard/storemanagement/OrderManagement'
 import Sellerdashboard from './pages/seller_Dashboard/seller-dashboard/sellerdashboard'
 import AdminDashboard from './pages/admin_dashboard/AdminDashboard'
+import Inventory from './pages/admin_dashboard/Inventory'
 
 const App = ()=>{
 
@@ -37,7 +38,7 @@ const App = ()=>{
               <Route path='reports' >
                 <Route path='sales' element={<Product />}/>
                 <Route path='product-performance' element={<Product />}/>
-                <Route path='inventory' element={<Product />}/>
+                <Route path='inventory' element={<Inventory />}/>
                 <Route path='traffic' element={<Product />}/>
               </Route>
               <Route path='user-mgmt' >
