@@ -127,9 +127,9 @@ const Storeprofile = () => {
       <Row>
         {products.map((product, index) => (
           <Col key={index} md={3}>
-            <Card className='mb-4'>
+            <Card className='mb-4 product'>
               <Card.Img variant="top" className='imgtag' src={product.img} />
-              <Card.Body className='product'>
+              <Card.Body >
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>{product.price}</Card.Text>
               </Card.Body>

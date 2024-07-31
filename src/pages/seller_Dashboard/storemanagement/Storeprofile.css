@@ -21,10 +21,10 @@
     margin-top: 2rem;
 }
 .product{
-   max-height: 25rem;
+   min-height: 25rem;
 }
 .imgtag{
-    height: 12rem;
+    height: 15rem;
 }
 /* .warning{
     background-color: #FFBC76;

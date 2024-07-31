@@ -29,6 +29,7 @@ const ApprovedOrders = () => {
           total: '₦3000',
           details: 'Order details for Abba',
         },
+        
       ];
 
       // Replace staticOrders with response data if fetching from API
