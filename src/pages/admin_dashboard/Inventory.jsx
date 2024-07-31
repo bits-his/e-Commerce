@@ -1,9 +1,7 @@
 import React from "react";
 import { Container, Col, Button, Row } from "react-bootstrap";
 import {
-  FaShoppingBag,
   FaArrowUp,
-  FaCalendarTimes,
   FaPlusCircle,
 } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
@@ -11,14 +9,14 @@ import { BsThreeDots } from "react-icons/bs";
 const InventoryItem = () => {
   return (
     <Col lg={4} md={12} className="d-flex px-md-2 px-sm-3 py-2">
-      <div className="card w-100 p-2">
+      <div className="card w-100 p-2 mb-0">
         <div className="d-flex align-items-start justify-content-between mb-3 mt-0">
           <div className="d-flex align-items-center">
             <div className="rounded bg-dark" style={{padding: '2.4rem'}}></div>
             <div className="d-flex flex-column ms-2">
                 <div className="d-flex flex-column mb-2">
-                    <span style={{fontSize: '1rem', fontWeight: '600', overflowX: 'auto'}}>Seller name</span>
-                    <i style={{fontSize: '0.8rem', overflowX: 'auto'}}>Seller name</i>
+                    <span style={{fontSize: '1rem', fontWeight: '600', overflowX: 'auto'}}>Brand name</span>
+                    <i style={{fontSize: '0.8rem', overflowX: 'auto'}}>name</i>
                 </div>
               
                 <small className="fw-bold">#124.43</small>
@@ -29,11 +27,24 @@ const InventoryItem = () => {
           </div>
         </div>
         <div className="d-flex flex-column mb-3 mt-0">
-            <small className="mb-0" style={{fontSize: '1rem', fontWeight: '600'}}>wdefrgt</small>
-            <small>ynh 99 9eho v;;fdkvn; kkh i hd ioh  opjo o   oj oid </small>
+            <small className="mb-0" style={{fontSize: '1rem', fontWeight: '600'}}>Summary</small>
+            <small>This is the summary of the product in this card that tells about the item.</small>
         </div>
-        <div className="d-flex flex-column mb-3 mt-0 border border-1 rounded p-2">
-            
+        <div className="d-flex flex-column mb-3 mt-0 border border-1 rounded py-2 px-3">
+            <div style={{fontSize: '12px'}} className="d-flex justify-content-between align-items-center">
+                <small>sales</small>
+                <div className="d-flex align-items-center ">
+                    <FaArrowUp className="me-1 text-warning"/>
+                    <i>123</i>
+                </div>
+            </div>
+            <hr class="border border-dark border-1 opacity-25 my-1"/>
+            <div style={{fontSize: '12px'}} className="d-flex justify-content-between align-items-center">
+                <small>Remaining product</small>
+                <div className="d-flex align-items-center ">
+                    <i>456</i>
+                </div>
+            </div>
         </div>
       </div>
     </Col>
@@ -61,6 +72,17 @@ export default function Inventory() {
         </Button>
       </div>
       <Row>
+        <InventoryItem />
+        <InventoryItem />
+        <InventoryItem />
+        <InventoryItem />
+        <InventoryItem />
+        <InventoryItem />
+        <InventoryItem />
+        <InventoryItem />
+        <InventoryItem />
+        <InventoryItem />
+        <InventoryItem />
         <InventoryItem />
       </Row>
     </Container>

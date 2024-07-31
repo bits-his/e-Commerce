@@ -80,7 +80,7 @@ export default function AdminDashboard() {
       <Container fluid>
         <div className="d-flex justify-content-between align-items-start pb-3">
           <div className="d-flex flex-column">
-            <h1 className="">Dashboard</h1>
+            <h1 className="fw-bold">Dashboard</h1>
             <small>Home {'>'} Dashboard</small>
           </div>
           

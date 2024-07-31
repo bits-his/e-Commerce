@@ -40,7 +40,7 @@ export default function Customers(args) {
       <div className='container pt-2'>
         <div className="d-flex justify-content-between align-items-end mt-md-4 mt-sm-3 mb-3">
           <div className="d-flex flex-column">
-            <h1 className="customers-text">Customers</h1>
+            <h1 className="fw-bold">Customers</h1>
             <small>Home {'>'} Customers</small>
           </div>
           <div className="search-container mb-1">
