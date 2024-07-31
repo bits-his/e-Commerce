@@ -54,7 +54,7 @@ const Sidebar = () => {
               {pathname.startsWith("/admin-dashboard") && (
                 <>
                   <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faUser} /> Customer Management</>}
+                    title={<><FontAwesomeIcon icon={faUser} className="me-2"/> Customer Management</>}
                     items={["All Customers", "Customer Reviews"]}
                     links={[
                       "/admin-dashboard/customer-mgmt/customers",
@@ -65,7 +65,7 @@ const Sidebar = () => {
                     baseLink="/customer-mgmt"
                   />
                   <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faChartLine} /> Reports</>}
+                    title={<><FontAwesomeIcon icon={faChartLine} className="me-2" /> Reports</>}
                     items={[
                       "Sales",
                       "Product Performance",
@@ -83,7 +83,7 @@ const Sidebar = () => {
                     baseLink="/reports"
                   />
                   <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faCogs} /> User Management</>}
+                    title={<><FontAwesomeIcon icon={faCogs} className="me-2" /> User Management</>}
                     items={["All", "profile", "Activity Logs"]}
                     links={[
                       "/admin-dashboard/user-mgmt/all",
@@ -103,7 +103,7 @@ const Sidebar = () => {
               {pathname.startsWith("/seller-dashboard") && (
                 <>
                   <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faStore} /> Store Management</>}
+                    title={<><FontAwesomeIcon icon={faStore} className="me-2" /> Store Management</>}
                     items={["Store profile", "Payment method","Order management"]}
                     links={["/seller-dashboard/storemangement/storeprofile", "/seller-dashboard/storemangement/storepayment","/seller-dashboard/storemangement/ordermanagement"]}
                     onToggle={() => handleToggle("Store Management")}
