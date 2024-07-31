@@ -32,20 +32,27 @@ function Login() {
 
     console.log("Form submitted with:", formData);
 
+    // Check if the password is correct
+    if (formData.password !== "123456") {
+      toast.error("Incorrect password");
+      return;
+    }
+
+    // Check if the userId is either "admin" or "vendors"
     if (formData.userId === "admin") {
-      toast.success(`${formData.userId} logged in`);
+      toast.success("Admin logged in successfully");
       navigate("/admin-dashboard");
     } else if (formData.userId === "vendors") {
-      toast.success(`${formData.userId} logged in`);
+      toast.success("Vendor logged in successfully");
       navigate("/seller-dashboard");
     } else {
-      toast.error("user not found");
+      toast.error("User not found");
     }
   };
 
   const handleGoogleSignIn = () => {
     // Your logic for Google Sign-In
-    console.log("Google Sign-In clicked");
+    toast.error("can't login with google now");
   };
 
   return (
@@ -64,11 +71,7 @@ function Login() {
             Login
           </h2>
         </div>
-        <Button 
-          
-          className="w-100"
-          onClick={handleGoogleSignIn}
-        >
+        <Button className="w-100" onClick={handleGoogleSignIn}>
           <i className="fab fa-google mr-2"></i> Sign in with Google
         </Button>
         <div className="d-flex align-items-center">
@@ -77,7 +80,7 @@ function Login() {
           <hr className="flex-grow-1"/>
         </div>
         <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formEmail">
+          <Form.Group controlId="formEmail">
             <Form.Label htmlFor="user">Email</Form.Label>
             <div className="input-group mb-1">
               <Form.Control
@@ -112,25 +115,17 @@ function Login() {
                 {passwordVisible ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>}
               </div>
             </div>
-
-                  
-            <Form.Group controlId="formRemember" className="mb-3 d-flex justify-content-between align-items-center">
-              <Form.Check type="checkbox" label="Remember me" />
-              <Link
-                to="/forgot-password"
-                className="text-decoration-none text-dark"
-              >
-                Forgot your password?
-              </Link>
-            </Form.Group>
-
-           
-            
           </Form.Group>
-          
+
+          <Form.Group controlId="formRemember" className="mb-3 d-flex justify-content-between align-items-center">
+            <Form.Check type="checkbox" label="Remember me" />
+            <Link to="/forgot-password" className="text-decoration-none text-dark">
+              Forgot your password?
+            </Link>
+          </Form.Group>
 
           <Button variant="primary" type="submit" className="w-100 btn-primary mb-3">
-           Log In <i className="fas fa-sign-in-alt "></i>
+            Log In <i className="fas fa-sign-in-alt "></i>
           </Button>
           <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
             <h6>

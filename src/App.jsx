@@ -18,6 +18,7 @@ import Inventory from './pages/admin_dashboard/Inventory'
 import PendingOrders  from './pages/seller_Dashboard/seller-dashboard/Pendingordertable'
 import ApprovedOrders from './pages/seller_Dashboard/seller-dashboard/ApprovedOrders'
 import TotalOrders from './pages/seller_Dashboard/seller-dashboard/TotalOrders'
+// import Notification from './pages/seller_Dashboard/NotificationContainer'
 const App = ()=>{
 
   return(
@@ -65,8 +66,11 @@ const App = ()=>{
                 <Route path='storeprofile' element={<Storeprofile />}/>
                 {/* <Route path='storepayment' element={<Storepayment />}/> */}
                 <Route path='ordermanagement' element={<Ordermanangement />}/>
-                
               </Route>
+              {/* <Route path='notification'>
+                <Route path='notification' element={<Notification />}/>
+                
+              </Route> */}
             </Route> 
             <Route path='*' element={<NotFound />}/>
           </Route>
