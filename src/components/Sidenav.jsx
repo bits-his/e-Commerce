@@ -101,7 +101,7 @@ const Sidebar = () => {
                 <>
                   <DropdownBtn
                     title={<><FontAwesomeIcon icon={faStore} /> Store Management</>}
-                    items={["Store profile", "Payment method","Order management",]}
+                    items={["Store profile", ,"Order management",]}
                     links={["/seller-dashboard/storemangement/storeprofile", "/seller-dashboard/storemangement/storepayment","/seller-dashboard/storemangement/ordermanagement"]}
                     onToggle={() => handleToggle("Store Management")}
                     isActive={activeDropdown === "Store Management"}
@@ -109,7 +109,7 @@ const Sidebar = () => {
 
                 <DropdownBtn
                   title="Product Management"
-                  items={["Product", "Payment method"]}
+                  items={["Product", ]}
                   links={["/seller-dashboard/product-mgmt/product", ""]}
                   onToggle={() => handleToggle("Product Management")}
                   isActive={activeDropdown === "Product Management"}
@@ -121,13 +121,13 @@ const Sidebar = () => {
                   onToggle={() => handleToggle("Order notifiction")}
                   isActive={activeDropdown === "Order notifiction"}
                 />
-                 <DropdownBtn
+                 {/* <DropdownBtn
                   title="table"
                   items={["aproved order", "pending order","total order"]}
                   links={["/seller-dashboard/orders/approved", "/seller-dashboard/orders/pending","/seller-dashboard/orders/total",]}
                   onToggle={() => handleToggle("")}
                   isActive={activeDropdown === ""}
-                />
+                /> */}
               </>
             )}
           </div>
