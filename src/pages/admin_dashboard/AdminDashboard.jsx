@@ -14,14 +14,14 @@ import { FaShoppingBag, FaArrowUp, FaCalendarTimes } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Adminchart from './adminchart'
 import "../admin_dashboard/Admindashboard.css";
-import Progress from "./Progress";
+
 
 const SalesAndOrder = () => {
   return (
     <Col lg={4} md={12} className="d-flex flex-column px-md-2 px-sm-3 py-2">
       <div className="card mb-0 px-2 pt-3 pb-4 cardstyle">
         <div className="d-flex justify-content-between align-items-center pb-3">
-          Total Orders
+          Total 
           <BsThreeDotsVertical />
         </div>
         <div className="">
