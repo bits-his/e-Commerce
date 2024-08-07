@@ -21,7 +21,7 @@ const SalesAndOrder = () => {
     <Col lg={4} md={12} className="d-flex flex-column px-md-2 px-sm-3 py-2">
       <div className="card mb-0 px-2 pt-3 pb-4 cardstyle">
         <div className="d-flex justify-content-between align-items-center pb-3">
-          Total 
+          <b>Total Orders</b>
           <BsThreeDotsVertical />
         </div>
         <div className="">
@@ -83,7 +83,7 @@ export default function AdminDashboard() {
       <Container fluid>
         <div className="d-flex justify-content-between align-items-start pb-3">
           <div className="d-flex flex-column">
-            <h1 className="">Dashboard</h1>
+            <h1 className="fw-bold">Dashboard</h1>
             <small>Home {'>'} Dashboard</small>
           </div>
           
