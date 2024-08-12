@@ -70,7 +70,7 @@ const BubbleChart = () => {
   const chartStyle = {
     flex: 1,
     marginRight: '0.5rem',
-    height: '250px' // Adjust height as needed
+    height: '350px' // Adjust height as needed
   };
 
   const titleStyle = {
