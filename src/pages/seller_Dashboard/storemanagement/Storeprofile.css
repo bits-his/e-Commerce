@@ -1,14 +1,18 @@
 .btn2{
     margin-right: 3rem;
     background-color: red !important;
-    line-height: 45px !important;
-    padding: 0 35px !important;
-    text-transform: uppercase !important;
+    line-height: 35px !important;
+    padding: 0 25px !important;
+    
     color: #fff !important;
     border-radius: 3px !important;
+    border-radius: 10px !important;
     transition: all 0.3s ease !important;
     cursor: pointer !important;
     border: none !important;
+}
+.btn2:hover{
+    background-color: red !important;
 }
 .heading{
     margin-left: 3rem;
