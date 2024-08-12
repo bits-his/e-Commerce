@@ -7,10 +7,10 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Input, InputGroup, InputGroupText } from "reactstrap";
 
 function Login() {
-  const [formData, setFormData] = useState({
-    userId: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate();
+
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -18,8 +18,7 @@ function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
-  const navigate = useNavigate();
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -28,26 +27,42 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+
+  const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("Form submitted with:", email + " & " + password);
 
-    console.log("Form submitted with:", formData);
+    let item = { email, password };
 
-    // Check if the password is correct
-    if (formData.password !== "123456") {
-      toast.error("Incorrect password");
-      return;
-    }
+    try {
+      let result = await fetch('http://192.168.1.64:3002/api/users/login', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(item)
+      });
 
-    // Check if the userId is either "admin" or "vendors"
-    if (formData.userId === "admin@gmail.com") {
-      toast.success("Admin logged in successfully");
-      navigate("/admin-dashboard");
-    } else if (formData.userId === "vendors@gmail.com") {
-      toast.success("Vendor logged in successfully");
-      navigate("/seller-dashboard");
-    } else {
-      toast.error("User not found");
+      result = await result.json();
+      localStorage.setItem("user-info", JSON.stringify(result));
+
+      if (result.success) {
+        if (result.role === "vendor") {
+          toast.success("Vendor logged in successfully");
+          navigate("/seller-dashboard");
+        } else if (result.role === "admin") {
+          toast.success("Admin logged in successfully");
+          navigate("/admin-dashboard");
+        } else {
+          toast.error("Unknown role");
+        }
+      } else {
+        toast.error(result.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -80,9 +95,9 @@ function Login() {
           <span className="px-2">or</span>
           <hr className="flex-grow-1"/>
         </div>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleLogin}>
           <Form.Group controlId="formEmail">
-            <Form.Label htmlFor="user">Email</Form.Label>
+            <Form.Label >Email</Form.Label>
            
             <InputGroup size="sm">
               <InputGroupText>
@@ -92,14 +107,13 @@ function Login() {
                 type="text"
                 id="user"
                 name="userId"
-                value={formData.userId}
-                onChange={handleChange}
+                onChange={(e)=>setEmail(e.target.value)}
               />
             </InputGroup>
           </Form.Group>
 
           <Form.Group controlId="passwordId">
-            <Form.Label htmlFor="pass">Password</Form.Label>
+            <Form.Label >Password</Form.Label>
             <InputGroup className="input-group mb-1" size="sm">
              <InputGroupText >
                 <i className="fas fa-lock icon"></i>
@@ -108,8 +122,7 @@ function Login() {
                 type={passwordVisible ? 'text' : 'password'}
                 id="pass"
                 name="password"
-                value={formData.password}
-                onChange={handleChange}
+                onChange={(e)=>setPassword(e.target.value)}
                 className="form-control-with-icon"
               />
              
