@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import {
   Container,
   Row,
@@ -12,11 +13,13 @@ import {
 import { FaShoppingBag, FaArrowUp, FaCalendarTimes } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Adminchart from './adminchart'
+import "../admin_dashboard/Admindashboard.css";
+
 
 const SalesAndOrder = () => {
   return (
     <Col lg={4} md={12} className="d-flex flex-column px-md-2 px-sm-3 py-2">
-      <div className="card mb-0 px-2 pt-3 pb-4">
+      <div className="card mb-0 px-2 pt-3 pb-4 cardstyle">
         <div className="d-flex justify-content-between align-items-center pb-3">
           <b>Total Orders</b>
           <BsThreeDotsVertical />
@@ -32,7 +35,7 @@ const SalesAndOrder = () => {
               </b>
               <b>#125.500</b>
             </span>
-            <span className="d-flex align-items-center">
+            <span className="d-flex align-items-center progress">
               <FaArrowUp />
               <i>30.21%</i>
             </span>

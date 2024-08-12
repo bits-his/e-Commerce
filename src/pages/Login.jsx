@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../Styles/Login.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { Input, InputGroup, InputGroupText } from "reactstrap";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -82,25 +83,28 @@ function Login() {
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formEmail">
             <Form.Label htmlFor="user">Email</Form.Label>
-            <div className="input-group mb-1">
-              <Form.Control
+           
+            <InputGroup size="sm">
+              <InputGroupText>
+                <i className="fas fa-envelope icon"></i>
+              </InputGroupText> 
+              <Input
                 type="text"
                 id="user"
                 name="userId"
                 value={formData.userId}
                 onChange={handleChange}
-                className="form-control-with-icon txt"
               />
-              <div className="input-icon">
-                <i className="fas fa-envelope"></i>
-              </div>
-            </div>
+            </InputGroup>
           </Form.Group>
 
           <Form.Group controlId="passwordId">
             <Form.Label htmlFor="pass">Password</Form.Label>
-            <div className="input-group mb-1">
-              <Form.Control
+            <InputGroup className="input-group mb-1" size="sm">
+             <InputGroupText >
+                <i className="fas fa-lock icon"></i>
+              </InputGroupText>
+              <Input
                 type={passwordVisible ? 'text' : 'password'}
                 id="pass"
                 name="password"
@@ -108,13 +112,11 @@ function Login() {
                 onChange={handleChange}
                 className="form-control-with-icon"
               />
-              <div className="input-icon">
-                <i className="fas fa-lock"></i>
-              </div>
-              <div className="input-icon-right" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
-                {passwordVisible ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>}
-              </div>
-            </div>
+             
+              <InputGroupText  onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                {passwordVisible ? <i className="fas fa-eye icon"></i> : <i className="fas fa-eye-slash icon"></i>}
+              </InputGroupText>
+            </InputGroup>
           </Form.Group>
 
           <Form.Group controlId="formRemember" className="mb-3 d-flex justify-content-between align-items-center">
@@ -124,7 +126,7 @@ function Login() {
             </Link>
           </Form.Group>
 
-          <Button variant="primary" type="submit" className="w-100 btn-primary mb-3">
+          <Button variant="primary" type="submit" className="w-100 btn-primary">
             Log In <i className="fas fa-sign-in-alt "></i>
           </Button>
           <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
