@@ -8,10 +8,13 @@ import { Input, InputGroupText } from "reactstrap";
 
 function Registration() {
   const [formData, setFormData] = useState({
-    userId: "",
+    firstname: "",
+    lastname: "",
+    username: "",
+    role: "",
     emailId: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
@@ -28,19 +31,37 @@ function Registration() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform actions based on formData
-    console.log("Form submitted with:", formData);
 
-    if (formData.userId === "admin") {
-      toast.success("Admin logged in");
-      navigate("/admin-dashboard");
-    } else if (formData.userId === "buyer") {
-      toast.success("Buyer logged in");
-      navigate("/user-dashboard");
-    } else {
-      toast.error("User not found");
+    if (formData.password === formData.confirmPassword){
+
+      console.log("Form submitted with:", formData);
+
+      const { firstname, lastname, username, role, emailId, password } = formData;
+
+      let result = await fetch('http://192.168.1.64:3001/api/users/login', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ email: emailId, password, firstname, lastname, username, role })
+      });
+
+      result = await result.json();
+      localStorage.setItem("user-info", JSON.stringify(result));
+
+      if (result.role === "vendor") {
+        navigate("/seller-dashboard");
+      } else if (result.role === "admin") {
+        navigate("/admin-dashboard");
+      } else {
+        toast.error("Invalid credentials");
+      }
+    }
+    else {
+      toast.error("Password input does not match!");
     }
   };
 
@@ -55,7 +76,7 @@ function Registration() {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        // height: "100vh",
         backgroundColor: "#d3d3d3",
       }}
     >
@@ -77,23 +98,76 @@ function Registration() {
           <hr className="flex-grow-1"/>
         </div>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formFullName">
-            <Form.Label htmlFor="user">Full Name</Form.Label>
+          <Form.Group controlId="firstname">
+            <Form.Label htmlFor="firstname">First Name</Form.Label>
             <InputGroup size="sm">
             <InputGroupText>
                 <i className="fas fa-user icon"></i>
               </InputGroupText>
               <Input
                 type="text"
-                id="user"
-                name="userId"
-                value={formData.userId}
+                id="firstname"
+                name="firstname"
+                value={formData.firstname}
                 onChange={handleChange}
                 className="form-control-with-icon"
               />
             
             </InputGroup>
           </Form.Group>
+          <Form.Group controlId="lastname">
+            <Form.Label htmlFor="lastname">Last name</Form.Label>
+            <InputGroup size="sm">
+            <InputGroupText>
+                <i className="fas fa-user icon"></i>
+              </InputGroupText>
+              <Input
+                type="text"
+                id="lastname"
+                name="lastname"
+                value={formData.lastname}
+                onChange={handleChange}
+                className="form-control-with-icon"
+              />
+            
+            </InputGroup>
+          </Form.Group>
+          <Form.Group controlId="username">
+            <Form.Label htmlFor="username">Username</Form.Label>
+            <InputGroup size="sm">
+            <InputGroupText>
+                <i className="fas fa-user icon"></i>
+              </InputGroupText>
+              <Input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="form-control-with-icon"
+              />
+            
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group controlId="role">
+            <Form.Label htmlFor="role">Role</Form.Label>
+            <InputGroup size="sm">
+            <InputGroupText>
+                <i className="fas fa-user icon"></i>
+              </InputGroupText>
+              <Input
+                type="text"
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="form-control-with-icon"
+              />
+            
+            </InputGroup>
+          </Form.Group>
+
           <Form.Group controlId="formEmail">
             <Form.Label htmlFor="email">Email</Form.Label>
             <InputGroup size="sm">
@@ -111,6 +185,7 @@ function Registration() {
              
             </InputGroup>
           </Form.Group>
+          
           <Form.Group controlId="formPassword">
             <Form.Label htmlFor="pass">Password</Form.Label>
             <InputGroup size="sm">

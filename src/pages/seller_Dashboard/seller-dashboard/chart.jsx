@@ -87,10 +87,8 @@ const BubbleChart = () => {
           <div style={chartStyle}>
             <Bubble data={data} options={options} />
           </div>
-          <div style={chartStyle}>
-            <LineChart />
-          </div>
         </div>
+        <LineChart />
       </CardBody>
     </Card>
   );

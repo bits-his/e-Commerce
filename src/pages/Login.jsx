@@ -4,13 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../Styles/Login.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { Input, InputGroup, InputGroupText } from "reactstrap";
+import { Input, InputGroup, InputGroupText, Spinner } from "reactstrap";
+import { _post } from "../utils/Helper";
 
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [Loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -18,52 +19,41 @@ function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
-  
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value,
+  //   });
+  // };
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    console.log("Form submitted with:", email + " & " + password);
-
-    let item = { email, password };
-
-    try {
-      let result = await fetch('http://192.168.1.64:3002/api/users/login', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(item)
-      });
-
-      result = await result.json();
-      localStorage.setItem("user-info", JSON.stringify(result));
-
-      if (result.success) {
-        if (result.role === "vendor") {
-          toast.success("Vendor logged in successfully");
+    e.preventDefault(); 
+    setLoading(true);
+    
+    const obj = { email, password };
+    
+    _post(
+      'api/users/login',
+      obj,
+      (res) => {
+        setLoading(false);
+        toast.success("Logged Successful");
+        console.log(email, password);
+        if (res.role === "vendor") {
           navigate("/seller-dashboard");
-        } else if (result.role === "admin") {
-          toast.success("Admin logged in successfully");
+        } else if (res.role === "admin") {
           navigate("/admin-dashboard");
         } else {
-          toast.error("Unknown role");
+          toast.error("Invalid credentials");
         }
-      } else {
-        toast.error(result.message || "Login failed");
+      },
+      (err) => {
+        setLoading(false);
+        toast.error("An error occurred!");
+        console.log(err);
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("An error occurred. Please try again.");
-    }
+    );
   };
 
   const handleGoogleSignIn = () => {
@@ -140,7 +130,7 @@ function Login() {
           </Form.Group>
 
           <Button variant="primary" type="submit" className="w-100 btn-primary">
-            Log In <i className="fas fa-sign-in-alt "></i>
+            {Loading ? <Spinner/> : <>Log In <i className="fas fa-sign-in-alt "></i></>}
           </Button>
           <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
             <h6>
