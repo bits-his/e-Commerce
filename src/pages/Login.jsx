@@ -19,14 +19,6 @@ function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
-
   const handleLogin = async (e) => {
     e.preventDefault(); 
     setLoading(true);

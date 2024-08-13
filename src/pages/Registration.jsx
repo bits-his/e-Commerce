@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../Styles/Registration.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { Input, InputGroupText } from "reactstrap";
+import { Input, InputGroupText, Spinner } from "reactstrap";
 
 function Registration() {
   const [formData, setFormData] = useState({
@@ -16,6 +16,7 @@ function Registration() {
     password: "",
     confirmPassword: "",
   });
+  const [Loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
@@ -35,30 +36,24 @@ function Registration() {
     e.preventDefault();
 
     if (formData.password === formData.confirmPassword){
-
-      console.log("Form submitted with:", formData);
-
-      const { firstname, lastname, username, role, emailId, password } = formData;
-
-      let result = await fetch('http://192.168.1.64:3001/api/users/login', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+      setLoading(true);
+      const obj = { ...formData };
+      
+      _post(
+        'api/users/create',
+        obj,
+        (res) => {
+          setLoading(false);
+          toast.success("Created Successfully");
+          navigate("/");
         },
-        body: JSON.stringify({ email: emailId, password, firstname, lastname, username, role })
-      });
-
-      result = await result.json();
-      localStorage.setItem("user-info", JSON.stringify(result));
-
-      if (result.role === "vendor") {
-        navigate("/seller-dashboard");
-      } else if (result.role === "admin") {
-        navigate("/admin-dashboard");
-      } else {
-        toast.error("Invalid credentials");
-      }
+        
+        (err) => {
+          setLoading(false);
+          toast.error("An error occurred!");
+          console.log(err);
+        }
+      );
     }
     else {
       toast.error("Password input does not match!");
@@ -223,8 +218,8 @@ function Registration() {
             
             </InputGroup>
           </Form.Group>
-          <Button variant="primary" type="submit" className="w-100 btn-primary">
-            Register <i className="fas fa-sign-in-alt"></i>
+          <Button variant="primary" type="submit" disabled={Loading} className="w-100 btn-primary">
+            {Loading ? <Spinner /> : <> Register <i className="fas fa-sign-in-alt"></i> </>}
           </Button>
           <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
             <h6>
