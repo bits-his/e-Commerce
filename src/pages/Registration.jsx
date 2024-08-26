@@ -18,13 +18,15 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea"
 
 function Registration() {
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
     shopname: "",
+    shopaddress: "",
+    shopcontact: "",
     role: "",
     emailId: "",
     password: "",
@@ -137,6 +139,35 @@ function Registration() {
                     required
                   />
                 </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Shop address</Label>
+                  <Textarea
+                    id="shop-name"
+                    placeholder="no. 1, Phisherman avenue, Shago tara"
+                    value={formData.shopaddress}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="contact">Shop contact</Label>
+                  <div className="relative mt-2 rounded-md shadow-sm">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                      <span className="text-gray-500 sm:text-sm">+234</span>
+                    </div>
+                    <input
+                      id="contact"
+                      name="contact"
+                      type="text"
+                      placeholder="7012345678"
+                      value={formData.shopcontact}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-1.5 pl-12 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
