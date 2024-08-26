@@ -143,7 +143,6 @@ const PendingOrders = () => {
         </CardContent>
       </Card>
 
-
       {selectedOrder && (
         <Modal isOpen={modal} toggle={toggleModal}>
           <ModalHeader toggle={toggleModal}>Order Details</ModalHeader>
