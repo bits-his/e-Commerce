@@ -1,12 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardBody, CardTitle, CardText } from 'reactstrap';
-import { FaClipboardList, FaCheckCircle, FaListAlt } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { CardBody, CardText } from "reactstrap";
+import { FaClipboardList, FaCheckCircle, FaListAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { DollarSign, TableOfContents, Loader, PackageCheck } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const orderTypes = [
-  { type: 'pending', title: 'Pending Orders', className: 'order-card pending', icon: <FaClipboardList className='text-danger' /> },
-  { type: 'approved', title: 'Approved Orders', className: 'order-card approved', icon: <FaCheckCircle className='text-primary' /> },
-  { type: 'total', title: 'Total Orders', className: 'order-card total', icon: <FaListAlt  className='text-success'/> },
+  {
+    type: "total",
+    title: "Total Orders",
+    icon: <TableOfContents className="h-4 w-4 text-muted-foreground" />,
+    description: "",
+  },
+  {
+    type: "approved",
+    title: "Approved Orders",
+    icon: <PackageCheck className="h-4 w-4 text-muted-foreground" />,
+    description: "",
+  },
+  {
+    type: "pending",
+    title: "Pending Orders",
+    icon: <Loader className="h-4 w-4 text-muted-foreground" />,
+    description: "",
+  },
 ];
 
 const OrderSummary = () => {
@@ -16,9 +33,9 @@ const OrderSummary = () => {
   useEffect(() => {
     // Set static counts for the cards
     const counts = {
-      pending: 2,
-      approved: 2,
       total: 5,
+      approved: 2,
+      pending: 2,
     };
 
     setOrderCounts(counts);
@@ -30,22 +47,26 @@ const OrderSummary = () => {
 
   return (
     <>
-      {orderTypes.map(({ type, title, className, icon }) => (
-        <Card
-          key={type}
-          className={className}
-          style={{ marginBottom: '1rem', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}
-          onClick={() => handleCardClick(type)} // Handle card click
-        >
-          <CardBody style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ marginRight: '1rem', fontSize: '1.5rem', color: '#007bff' }}>{icon}</div>
-            <div>
-              <CardTitle style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#333' }}>{title}</CardTitle>
-              <CardText style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#555' }}>{orderCounts[type] || 0}</CardText>
-            </div>
-          </CardBody>
-        </Card>
-      ))}
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+        {orderTypes.map(({ type, title, icon, description }) => (
+          <Card
+            x-chunk="dashboard-01-chunk-0"
+            key={type}
+            onClick={() => handleCardClick(type)}
+          >
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">{title}</CardTitle>
+              {icon}
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{orderCounts[type] || 0}</div>
+              <p className="text-xs text-muted-foreground">
+                +20.1% from last month
+              </p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </>
   );
 };

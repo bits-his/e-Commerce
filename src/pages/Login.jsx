@@ -1,15 +1,24 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../Styles/Login.css";
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import { Input, InputGroup, InputGroupText, Spinner } from "reactstrap";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Spinner } from "reactstrap";
 import { _post } from "../utils/Helper";
 
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [Loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -20,13 +29,13 @@ function Login() {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setLoading(true);
-    
+
     const obj = { email, password };
-    
+
     _post(
-      'api/users/login',
+      "api/users/login",
       obj,
       (res) => {
         setLoading(false);
@@ -49,92 +58,94 @@ function Login() {
   };
 
   const handleGoogleSignIn = () => {
-    // Your logic for Google Sign-In
     toast.error("can't login with google now");
   };
 
   return (
-    <div
-      className="d-flex"
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#d3d3d3",
-      }}
-    >
-      <div className="login">
-        <div>
-          <h2 className="d-flex" style={{ justifyContent: "center" }}>
-            Login
-          </h2>
-        </div>
-        <Button className="w-100" onClick={handleGoogleSignIn}>
-          <i className="fab fa-google mr-2"></i> Sign in with Google
-        </Button>
-        <div className="d-flex align-items-center">
-          <hr className="flex-grow-1"/>
-          <span className="px-2">or</span>
-          <hr className="flex-grow-1"/>
-        </div>
-        <Form onSubmit={handleLogin}>
-          <Form.Group controlId="formEmail">
-            <Form.Label >Email</Form.Label>
-           
-            <InputGroup size="sm">
-              <InputGroupText>
-                <i className="fas fa-envelope icon"></i>
-              </InputGroupText> 
-              <Input
-                type="text"
-                id="user"
-                name="userId"
-                onChange={(e)=>setEmail(e.target.value)}
-              />
-            </InputGroup>
-          </Form.Group>
+    <>
+      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[100vh]">
+        <Card className="mx-auto min-w-[23rem]">
+          <CardHeader>
+            <CardTitle className="text-2xl text-center">Login</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  required
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <Link
+                    to="/forgot-password"
+                    className="ml-auto inline-block text-sm underline"
+                  >
+                    Forgot your password?
+                  </Link>
+                </div>
 
-          <Form.Group controlId="passwordId">
-            <Form.Label >Password</Form.Label>
-            <InputGroup className="input-group mb-1" size="sm">
-             <InputGroupText >
-                <i className="fas fa-lock icon"></i>
-              </InputGroupText>
-              <Input
-                type={passwordVisible ? 'text' : 'password'}
-                id="pass"
-                name="password"
-                onChange={(e)=>setPassword(e.target.value)}
-                className="form-control-with-icon"
-              />
-             
-              <InputGroupText  onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
-                {passwordVisible ? <i className="fas fa-eye icon"></i> : <i className="fas fa-eye-slash icon"></i>}
-              </InputGroupText>
-            </InputGroup>
-          </Form.Group>
-
-          <Form.Group controlId="formRemember" className="mb-3 d-flex justify-content-between align-items-center">
-            <Form.Check type="checkbox" label="Remember me" />
-            <Link to="/forgot-password" className="text-decoration-none text-dark">
-              Forgot your password?
-            </Link>
-          </Form.Group>
-
-          <Button variant="primary" type="submit" className="w-100 btn-primary">
-            {Loading ? <Spinner/> : <>Log In <i className="fas fa-sign-in-alt "></i></>}
-          </Button>
-          <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
-            <h6>
-              Don't have an account?{" "}
-              <Link to="register" className="text-decoration-none text-dark">
-                Register Now
-              </Link>{" "}
-            </h6>
-          </div>
-        </Form>
-      </div>
-    </div>
+                <div className="mt-2 flex rounded-md shadow-sm">
+                  <div className="relative flex flex-grow items-stretch focus-within:z-10">
+                    <Input
+                      id="password"
+                      type={passwordVisible ? "text" : "password"}
+                      name="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  >
+                    {passwordVisible ? (
+                      <i className="fas fa-eye h-5 w-5 text-gray-400"></i>
+                    ) : (
+                      <i className="fas fa-eye-slash h-5 w-5 text-gray-400"></i>
+                    )}
+                  </button>
+                </div>
+              </div>
+              <Button
+                type="submit"
+                className="w-full"
+                onClick={handleLogin}
+                disabled={Loading}
+              >
+                {Loading ? (
+                  <Spinner className="h-5 w-5" />
+                ) : (
+                  <b className="text-white">Login</b>
+                )}
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={handleGoogleSignIn}
+              >
+                Login with Google
+              </Button>
+            </div>
+            <div className="mt-4 text-center text-sm">
+              Don&apos;t have an account?{" "}
+              <Link to="register" className="underline">
+                Sign up
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+    </>
   );
 }
 

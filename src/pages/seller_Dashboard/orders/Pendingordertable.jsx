@@ -67,7 +67,7 @@ const PendingOrders = () => {
   };
 
   return (
-    <Container fluid>
+    <Container fluid  className="min-h-[92vh]">
       <Card x-chunk="dashboard-06-chunk-0">
         <CardHeader>
           <div className="flex items-center">

@@ -1,7 +1,7 @@
 "use client"
 
 import { TrendingUp } from "lucide-react"
-import { Pie, PieChart } from "recharts"
+import { LabelList, Pie, PieChart } from "recharts"
 
 import {
   Card,
@@ -17,8 +17,9 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 const chartData = [
-  { browser: "chrome", visitors: 20, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 100, fill: "var(--color-safari)" },
+  { browser: "cancled", visitors: 2, fill: "var(--color-chrome)" },
+  { browser: "completed", visitors: 5, fill: "var(--color-safari)" },
+  { browser: "pending", visitors: 2, fill: "var(--color-firefox)" },
 ]
 
 const chartConfig = {
@@ -32,6 +33,10 @@ const chartConfig = {
   safari: {
     label: "Safari",
     color: "hsl(var(--chart-2))",
+  },
+  firefox: {
+    label: "Firefox",
+    color: "hsl(var(--chart-3))",
   },
 }
 
@@ -49,7 +54,14 @@ export default function OrdersChart() {
         >
           <PieChart>
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-            <Pie data={chartData} dataKey="visitors" label nameKey="browser" />
+            <Pie data={chartData} dataKey="visitors">
+              <LabelList
+                dataKey="browser"
+                className="fill-background"
+                stroke="none"
+                fontSize={10}
+              />
+            </Pie>
           </PieChart>
         </ChartContainer>
       </CardContent>
