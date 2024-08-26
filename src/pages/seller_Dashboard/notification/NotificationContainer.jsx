@@ -1,4 +1,3 @@
-// NotificationContainer.js
 import React, { useState, useEffect } from 'react';
 import Notification from './Notification';
 import './NotificationContainer.css'; // Add custom styles for the container

@@ -39,6 +39,7 @@ const ProductsPage = () => {
   const handleRemoveImage = (index) => {
     setImages(images.filter((_, i) => i !== index));
   };
+  
 
   const handleAddProduct = () => {
     const newProduct = {
@@ -56,7 +57,7 @@ const ProductsPage = () => {
   const handleEditProduct = () => {
     const updatedProducts = products.map(product =>
       product.id === currentProduct.id
-        ? { ...currentProduct, name: "Updated Product" } // Update with actual form values
+        ? { ...currentProduct } // Update with actual form values
         : product
     );
 

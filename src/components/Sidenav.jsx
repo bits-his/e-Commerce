@@ -119,8 +119,8 @@ const Sidebar = () => {
                 />
                  <DropdownBtn
                   title="Order management"
-                  items={["Aproved order", "Pending order","Total order"]}
-                  links={["/seller-dashboard/orders/approved", "/seller-dashboard/orders/pending","/seller-dashboard/orders/total",]}
+                  items={["Total order", "Aproved order", "Pending order"]}
+                  links={["/seller-dashboard/orders/total", "/seller-dashboard/orders/approved", "/seller-dashboard/orders/pending",]}
                   onToggle={() => handleToggle("Order management")}
                   isActive={activeDropdown === "Order management"}
                 />
