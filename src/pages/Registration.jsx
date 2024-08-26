@@ -97,22 +97,22 @@ function Registration() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="first-name">First name</Label>
-                    <Input 
-                      id="first-name" 
+                    <Input
+                      id="first-name"
                       placeholder="John"
                       value={formData.firstname}
-                      onChange={handleChange} 
+                      onChange={handleChange}
                       required
                     />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="last-name">Last name</Label>
-                    <Input 
-                      id="last-name" 
+                    <Input
+                      id="last-name"
                       placeholder="Doe"
                       value={formData.lastname}
                       onChange={handleChange}
-                      required 
+                      required
                     />
                   </div>
                 </div>
@@ -125,7 +125,7 @@ function Registration() {
                     Enter shop details bellow
                   </p>
                 </div>
-                <hr style={{ marginTop: "-1rem", marginBottom: "-1rem" }} />
+                <hr className="border-2" style={{ marginTop: "-1rem", marginBottom: "-1rem" }} />
 
                 <div className="grid gap-2">
                   <Label htmlFor="email">Shop name</Label>
@@ -226,6 +226,12 @@ function Registration() {
                 >
                   Sign up with Google
                 </Button>
+              </div>
+              <div className="mt-4 text-center text-sm">
+                Already have an account?{" "}
+                <Link to="/" className="underline">
+                  Login Here
+                </Link>
               </div>
             </CardContent>
           </Card>
