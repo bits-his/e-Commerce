@@ -5,7 +5,6 @@ import "../Styles/Login.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Spinner } from "reactstrap";
 import { _post } from "../utils/Helper";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -39,11 +38,12 @@ function Login() {
       obj,
       (res) => {
         setLoading(false);
-        toast.success("Logged Successful");
-        console.log(email, password);
+        
         if (res.role === "vendor") {
+          toast.success("Logged Successful");
           navigate("/seller-dashboard");
         } else if (res.role === "admin") {
+          toast.success("Logged Successful");
           navigate("/admin-dashboard");
         } else {
           toast.error("Invalid credentials");

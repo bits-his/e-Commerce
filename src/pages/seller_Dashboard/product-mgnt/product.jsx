@@ -52,15 +52,13 @@ export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [newProduct, setNewProduct] = useState({
-    id: products.length + 1,
-    name: "",
-    description: "",
-    category: "",
-    subcategory: "",
-    price: 0,
-    sku: "GGPC-001",
-    stock: 0,
-    status: "",
+    product_name: "",
+    product_description: "",
+    product_category: "",
+    product_subcategory: "",
+    product_price: 0,
+    product_quantity: 0,
+    product_status: "",
   });
 
   const handleInputChange = (e) => {
@@ -80,15 +78,13 @@ export default function ProductsPage() {
 
   const handleAddProduct = () => {
     setNewProduct({
-      id: products.length + 1,
-      name: "",
-      description: "",
-      category: "",
-      subcategory: "",
-      price: null,
-      sku: "GGPC-001",
-      stock: null,
-      status: "",
+      product_name: "",
+      product_description: "",
+      product_category: "",
+      product_subcategory: "",
+      product_price: null,
+      product_quantity: null,
+      product_status: "",
     });
     setProducts([...products, newProduct]);
     setShowForm(false);
@@ -103,7 +99,7 @@ export default function ProductsPage() {
   const handleEditProduct = () => {
     const updatedProducts = products.map((product) =>
       product.id === currentProduct.id
-        ? { ...currentProduct, name: "Updated Product" }
+        ? { ...currentProduct }
         : product
     );
 
@@ -132,7 +128,7 @@ export default function ProductsPage() {
   };
 
   const filteredProducts = products.filter(
-    (product) => product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    (product) => product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
