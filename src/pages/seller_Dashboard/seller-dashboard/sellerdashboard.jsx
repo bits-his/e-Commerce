@@ -1,25 +1,17 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
-import OrderSummary from './OrderSummary';
-import TrafficAndEngagement from './TrafficAndEngagement';
 import './dashboard.css';
-import Chart from './chart'
+import OrderSummary from './OrderSummary';
+import PerformanceChart from "./PerformanceChart";
+
+
 const Dashboard = () => {
   return (
-    <Container fluid>
-    
-      <Row>
-        <Col md="12" className='d-flex justify-content-between'>
-          <OrderSummary type="pending" />
-        </Col>
-      </Row>
-
-      <Row>
-        <Col md="12">
-          <Chart />
-        </Col>
-      </Row>
-    </Container>
+    <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[92vh]">
+      <PerformanceChart />
+      <div>
+        <OrderSummary/>
+      </div>
+    </main>
   );
 };
 

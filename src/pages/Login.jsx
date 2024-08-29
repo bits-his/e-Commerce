@@ -1,15 +1,25 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../Styles/Login.css";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Spinner } from "reactstrap";
+import { _post } from "../utils/Helper";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 function Login() {
-  const [formData, setFormData] = useState({
-    userId: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [Loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -17,127 +27,125 @@ function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    console.log("Form submitted with:", formData);
+    const obj = { email, password };
 
-    // Check if the password is correct
-    if (formData.password !== "123456") {
-      toast.error("Incorrect password");
-      return;
-    }
-
-    // Check if the userId is either "admin" or "vendors"
-    if (formData.userId === "admin@gmail.com") {
-      toast.success("Admin logged in successfully");
-      navigate("/admin-dashboard");
-    } else if (formData.userId === "vendors@gmail.com") {
-      toast.success("Vendor logged in successfully");
-      navigate("/seller-dashboard");
-    } else {
-      toast.error("User not found");
-    }
+    _post(
+      "api/users/login",
+      obj,
+      (res) => {
+        setLoading(false);
+        
+        if (res.role === "vendor") {
+          toast.success("Logged Successful");
+          navigate("/seller-dashboard");
+        } else if (res.role === "admin") {
+          toast.success("Logged Successful");
+          navigate("/admin-dashboard");
+        } else {
+          toast.error("Invalid credentials");
+        }
+      },
+      (err) => {
+        setLoading(false);
+        toast.error("An error occurred!");
+        console.log(err);
+      }
+    );
   };
 
   const handleGoogleSignIn = () => {
-    // Your logic for Google Sign-In
     toast.error("can't login with google now");
   };
 
   return (
-    <div
-      className="d-flex"
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#d3d3d3",
-      }}
-    >
-      <div className="login">
-        <div>
-          <h2 className="d-flex" style={{ justifyContent: "center" }}>
-            Login
-          </h2>
-        </div>
-        <Button className="w-100" onClick={handleGoogleSignIn}>
-          <i className="fab fa-google mr-2"></i> Sign in with Google
-        </Button>
-        <div className="d-flex align-items-center">
-          <hr className="flex-grow-1"/>
-          <span className="px-2">or</span>
-          <hr className="flex-grow-1"/>
-        </div>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formEmail">
-            <Form.Label htmlFor="user">Email</Form.Label>
-            <div className="input-group mb-1">
-              <Form.Control
-                type="text"
-                id="user"
-                name="userId"
-                value={formData.userId}
-                onChange={handleChange}
-                className="form-control-with-icon txt"
-              />
-              <div className="input-icon">
-                <i className="fas fa-envelope"></i>
+    <>
+      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[100vh]">
+        <Card className="mx-auto min-w-[23rem]">
+          <CardHeader>
+            <CardTitle className="text-2xl text-center">Login</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  required
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <Link
+                    to="/forgot-password"
+                    className="ml-auto inline-block text-sm underline"
+                  >
+                    Forgot your password?
+                  </Link>
+                </div>
+
+                <div className="mt-2 flex rounded-md shadow-sm">
+                  <div className="relative flex flex-grow items-stretch focus-within:z-10">
+                    <Input
+                      id="password"
+                      type={passwordVisible ? "text" : "password"}
+                      name="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  >
+                    {passwordVisible ? (
+                      <i className="fas fa-eye h-5 w-5 text-gray-400"></i>
+                    ) : (
+                      <i className="fas fa-eye-slash h-5 w-5 text-gray-400"></i>
+                    )}
+                  </button>
+                </div>
+              </div>
+              <Button
+                type="submit"
+                className="w-full"
+                onClick={handleLogin}
+                disabled={Loading}
+              >
+                {Loading ? (
+                  <Spinner className="h-5 w-5" />
+                ) : (
+                  <b className="text-white">Login</b>
+                )}
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={handleGoogleSignIn}
+              >
+                Login with Google
+              </Button>
             </div>
-          </Form.Group>
-
-          <Form.Group controlId="passwordId">
-            <Form.Label htmlFor="pass">Password</Form.Label>
-            <div className="input-group mb-1">
-              <Form.Control
-                type={passwordVisible ? 'text' : 'password'}
-                id="pass"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-              <div className="input-icon">
-                <i className="fas fa-lock"></i>
-              </div>
-              <div className="input-icon-right" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
-                {passwordVisible ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>}
-              </div>
+            <div className="mt-4 text-center text-sm">
+              Don&apos;t have an account?{" "}
+              <Link to="register" className="underline">
+                Sign up
+              </Link>
             </div>
-          </Form.Group>
-
-          <Form.Group controlId="formRemember" className="mb-3 d-flex justify-content-between align-items-center">
-            <Form.Check type="checkbox" label="Remember me" />
-            <Link to="/forgot-password" className="text-decoration-none text-dark">
-              Forgot your password?
-            </Link>
-          </Form.Group>
-
-          <Button variant="primary" type="submit" className="w-100 btn-primary mb-3">
-            Log In <i className="fas fa-sign-in-alt "></i>
-          </Button>
-          <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
-            <h6>
-              Don't have an account?{" "}
-              <Link to="register" className="text-decoration-none text-dark">
-                Register Now
-              </Link>{" "}
-            </h6>
-          </div>
-        </Form>
-      </div>
-    </div>
+          </CardContent>
+        </Card>
+      </main>
+    </>
   );
 }
 

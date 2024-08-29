@@ -1,22 +1,51 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../Styles/Registration.css";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Spinner } from "reactstrap";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { _post } from "../utils/Helper";
 
 function Registration() {
   const [formData, setFormData] = useState({
-    userId: "",
-    emailId: "",
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    role: "vendor",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    shopname: "",
+    shopaddress: "",
+    shopcontact: "",
   });
+  const [Loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const handleTabChange = (newRole) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      role: newRole,
+    }));
   };
 
   const handleChange = (e) => {
@@ -27,136 +56,374 @@ function Registration() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform actions based on formData
-    console.log("Form submitted with:", formData);
 
-    if (formData.userId === "admin") {
-      toast.success("Admin logged in");
-      navigate("/admin-dashboard");
-    } else if (formData.userId === "buyer") {
-      toast.success("Buyer logged in");
-      navigate("/user-dashboard");
+    if (formData.password === formData.confirmPassword) {
+      setLoading(true);
+      const obj = { ...formData };
+      delete obj.confirmPassword;
+
+      _post(
+        "api/users/create",
+        obj,
+        (res) => {
+          setLoading(false);
+          toast.success("Created Successfully");
+          navigate("/");
+        },
+
+        (err) => {
+          setLoading(false);
+          toast.error("An error occurred!");
+          console.log(err);
+        }
+      );
     } else {
-      toast.error("User not found");
+      toast.error("Password input does not match!");
     }
   };
 
   const handleGoogleSignUp = () => {
-    // Your logic for Google Sign-Up
-    console.log("Google Sign-Up clicked");
+    toast.error("Can't sign up with google now");
   };
 
   return (
-    <div
-      className="d-flex"
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#d3d3d3",
-      }}
-    >
-      <div className="register">
-        <div>
-          <h2 className="d-flex" style={{ justifyContent: "center" }}>
-            Registration
-          </h2>
-        </div>
-        <Button 
-          className="w-100 mb-3"
-          onClick={handleGoogleSignUp}
-        >
-          <i className="fab fa-google mr-2"></i> Sign up with Google
-        </Button>
-        <div className="d-flex align-items-center mb-1">
-          <hr className="flex-grow-1"/>
-          <span className="px-2">or</span>
-          <hr className="flex-grow-1"/>
-        </div>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formFullName">
-            <Form.Label htmlFor="user">Full Name</Form.Label>
-            <div className="input-group mb-1">
-              <Form.Control
-                type="text"
-                id="user"
-                name="userId"
-                value={formData.userId}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-              <div className="input-icon">
-                <i className="fas fa-user"></i>
+    <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[100vh]">
+      <Tabs
+        defaultValue="vendor"
+        className="w-[400px]"
+        onValueChange={handleTabChange}
+      >
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="vendor">Vendor</TabsTrigger>
+          <TabsTrigger value="admin">Admin</TabsTrigger>
+        </TabsList>
+        <TabsContent value="vendor">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl text-center">
+                Vendor sign Up
+              </CardTitle>
+              <CardDescription>Enter your information</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="grid gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="firstname">First name</Label>
+                    <Input
+                      id="firstname"
+                      name="firstname"
+                      placeholder="John"
+                      value={formData.firstname}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="lastname">Last name</Label>
+                    <Input
+                      id="lastname"
+                      name="lastname"
+                      placeholder="Doe"
+                      value={formData.lastname}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <h4 className="text-sm font-medium leading-none">
+                    Shop details
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    Enter shop details bellow
+                  </p>
+                </div>
+                <hr
+                  className="border-2"
+                  style={{ marginTop: "-1rem", marginBottom: "-1rem" }}
+                />
+
+                <div className="grid gap-2">
+                  <Label htmlFor="shopname">Shop name</Label>
+                  <Input
+                    id="shopname"
+                    name="shopname"
+                    placeholder="Phisherman's accessories"
+                    value={formData.shopname}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="shopaddress">Shop address</Label>
+                  <Textarea
+                    id="shopaddress"
+                    name="shopaddress"
+                    placeholder="no. 1, Phisherman avenue, Shago tara"
+                    value={formData.shopaddress}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="shopcontact">Shop contact</Label>
+                  <div className="relative mt-2 rounded-md shadow-sm">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                      <span className="text-gray-500 sm:text-sm">+234</span>
+                    </div>
+                    <input
+                      id="shopcontact"
+                      name="shopcontact"
+                      type="text"
+                      placeholder="7012345678"
+                      value={formData.shopcontact}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-1.5 pl-12 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="mide@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="password">Password</Label>
+
+                  <div className="mt-2 flex rounded-md shadow-sm">
+                    <div className="relative flex flex-grow items-stretch focus-within:z-10">
+                      <Input
+                        id="password"
+                        type={passwordVisible ? "text" : "password"}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      {passwordVisible ? (
+                        <i className="fas fa-eye h-5 w-5 text-gray-400"></i>
+                      ) : (
+                        <i className="fas fa-eye-slash h-5 w-5 text-gray-400"></i>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+
+                  <div className="mt-2 flex rounded-md shadow-sm">
+                    <div className="relative flex flex-grow items-stretch focus-within:z-10">
+                      <Input
+                        id="confirmPassword"
+                        type={passwordVisible ? "text" : "password"}
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        required
+                        className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      {passwordVisible ? (
+                        <i className="fas fa-eye h-5 w-5 text-gray-400"></i>
+                      ) : (
+                        <i className="fas fa-eye-slash h-5 w-5 text-gray-400"></i>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  onClick={handleSubmit}
+                  disabled={Loading}
+                >
+                  {Loading ? (
+                    <Spinner className="h-5 w-5" />
+                  ) : (
+                    <b className="text-white">Register</b>
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleGoogleSignUp}
+                >
+                  Sign up with Google
+                </Button>
               </div>
-            </div>
-          </Form.Group>
-          <Form.Group controlId="formEmail">
-            <Form.Label htmlFor="email">Email</Form.Label>
-            <div className="input-group mb-1">
-              <Form.Control
-                type="email"
-                id="email"
-                name="emailId"
-                value={formData.emailId}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-              <div className="input-icon">
-                <i className="fas fa-envelope"></i>
+              <div className="mt-4 text-center text-sm">
+                Already have an account?{" "}
+                <Link to="/" className="underline">
+                  Login Here
+                </Link>
               </div>
-            </div>
-          </Form.Group>
-          <Form.Group controlId="formPassword">
-            <Form.Label htmlFor="pass">Password</Form.Label>
-            <div className="input-group mb-1">
-              <Form.Control
-                type={passwordVisible ? 'text' : 'password'}
-                id="pass"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-              <div className="input-icon">
-                <i className="fas fa-lock"></i>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="admin">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-center">Admin sign-up</CardTitle>
+              <CardDescription>fill in the required fields</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="grid gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="firstname">First name</Label>
+                    <Input
+                      id="firstname"
+                      name="firstname"
+                      placeholder="John"
+                      value={formData.firstname}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="lastname">Last name</Label>
+                    <Input
+                      id="lastname"
+                      name="lastname"
+                      placeholder="Doe"
+                      value={formData.lastname}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="mide@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="password">Password</Label>
+
+                  <div className="mt-2 flex rounded-md shadow-sm">
+                    <div className="relative flex flex-grow items-stretch focus-within:z-10">
+                      <Input
+                        id="password"
+                        type={passwordVisible ? "text" : "password"}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      {passwordVisible ? (
+                        <i className="fas fa-eye h-5 w-5 text-gray-400"></i>
+                      ) : (
+                        <i className="fas fa-eye-slash h-5 w-5 text-gray-400"></i>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+
+                  <div className="mt-2 flex rounded-md shadow-sm">
+                    <div className="relative flex flex-grow items-stretch focus-within:z-10">
+                      <Input
+                        id="confirmPassword"
+                        type={passwordVisible ? "text" : "password"}
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        required
+                        className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      {passwordVisible ? (
+                        <i className="fas fa-eye h-5 w-5 text-gray-400"></i>
+                      ) : (
+                        <i className="fas fa-eye-slash h-5 w-5 text-gray-400"></i>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  onClick={handleSubmit}
+                  disabled={Loading}
+                >
+                  {Loading ? (
+                    <Spinner className="h-5 w-5" />
+                  ) : (
+                    <b className="text-white">Register</b>
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleGoogleSignUp}
+                >
+                  Sign up with Google
+                </Button>
               </div>
-              <div className="input-icon-right" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
-                {passwordVisible ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>}
+              <div className="mt-4 text-center text-sm">
+                Already have an account?{" "}
+                <Link to="/" className="underline">
+                  Login Here
+                </Link>
               </div>
-            </div>
-          </Form.Group>
-          <Form.Group controlId="formConfirmPassword">
-            <Form.Label htmlFor="confirm-pass">Confirm Password</Form.Label>
-            <div className="input-group mb-1">
-              <Form.Control
-                type={passwordVisible ? 'text' : 'password'}
-                id="confirm-pass"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-              <div className="input-icon">
-                <i className="fas fa-lock"></i>
-              </div>
-            </div>
-          </Form.Group>
-          <Button variant="primary" type="submit" className="w-100 btn-primary">
-            Register <i className="fas fa-sign-in-alt"></i>
-          </Button>
-          <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
-            <h6>
-              Already have an account?{" "}
-              <Link to="/" className="text-decoration-none text-dark">
-                Login Here
-              </Link>{" "}
-            </h6>
-          </div>
-        </Form>
-      </div>
-    </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </main>
   );
 }
 
