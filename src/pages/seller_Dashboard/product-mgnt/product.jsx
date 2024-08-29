@@ -58,11 +58,11 @@ export default function ProductsPage() {
 
   useEffect(() => {
     _get(
-      "api/get-products",
+      `api/get-products/${products.id}`,
       (resp) => {
         setProducts(resp.result[0]);
         setLoading(false);
-        // console.log(resp.result[0])
+        // console.log(resp.result[0])  
       },
       (err) => {
         setError(err);
