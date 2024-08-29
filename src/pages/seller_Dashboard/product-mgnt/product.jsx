@@ -62,7 +62,7 @@ export default function ProductsPage() {
       (resp) => {
         setProducts(resp.result[0]);
         setLoading(false);
-        // console.log(resp.result[0])
+        // console.log(resp.result[0])  
       },
       (err) => {
         setError(err);
