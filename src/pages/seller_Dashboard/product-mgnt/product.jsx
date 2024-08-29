@@ -56,9 +56,10 @@ export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
 
+  let userDetails = localStorage.getItem("@@toke_$$_45598")
   useEffect(() => {
     _get(
-      `api/get-products/${products.id}`,
+      `api/get-products?shop_id=${parseInt(userDetails)}`,
       (resp) => {
         setProducts(resp.result[0]);
         setLoading(false);
@@ -70,7 +71,6 @@ export default function ProductsPage() {
       }
     );
   }, []);
-
   const [newProduct, setNewProduct] = useState({
     product_name: "",
     product_description: "",
@@ -117,7 +117,7 @@ export default function ProductsPage() {
 
     setLoading(true);
     // setProducts([...products, newProduct]);
-    const obj = { ...newProduct };
+    const obj = { ...newProduct,shop_id:parseInt(userDetails) };
 
     _post(
       "api/products",
@@ -198,9 +198,12 @@ export default function ProductsPage() {
     (product) => product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+let obj = {name:"musa",date:"2020"}
   return (
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
+   {JSON.stringify(parseInt(userDetails))}
+     
         <div className="flex flex-col sm:gap-4 sm:py-4">
           {showForm ? (
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -512,7 +515,8 @@ export default function ProductsPage() {
                     <CardHeader>
                       <CardTitle>Products</CardTitle>
                       <CardDescription>
-                        Manage your products and view their sales performance.
+                        Manage your products and view their sales performance. 
+                       
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
