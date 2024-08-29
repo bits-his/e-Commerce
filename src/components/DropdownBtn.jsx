@@ -1,19 +1,17 @@
 import { useState } from "react";
 import { NavLink } from 'react-router-dom';
-import { IoIosArrowDroprightCircle } from "react-icons/io";
+import { ChevronRight } from "lucide-react";
 
 const DropdownMenu = ({ title, items, isActive, onToggle, links }) => {
 
   return (
     <>
       <NavLink
-        className={({ isActive }) => (isActive ? "active-btn" : "norm-btn")}
+        className={({ isActive }) => (isActive ? "active-btn" : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary")}
         onClick={onToggle}
       >
-        <div className="d-flex align-items-center justify-content-between w-100 ">
-          <b>{title}</b>
-          <IoIosArrowDroprightCircle className={`icon ${isActive ? 'rotated' : ''}`} />
-        </div>
+        {title}
+        <ChevronRight className={`icon h-4 w-4 ${isActive ? 'rotated' : ''}`} />
       </NavLink>
                 
       {isActive && (

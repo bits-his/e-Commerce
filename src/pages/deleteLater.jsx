@@ -1,258 +1,239 @@
-import React, { useState } from "react";
-import { Form, InputGroup } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import "../Styles/Registration.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import { InputGroupText, Spinner } from "reactstrap";
+import Link from "next/link"
+import {
+  Bell,
+  CircleUser,
+  Home,
+  LineChart,
+  Menu,
+  Package,
+  Package2,
+  Search,
+  ShoppingCart,
+  Users,
+} from "lucide-react"
 
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
-function Registration() {
-  const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
-    username: "",
-    role: "",
-    emailId: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [Loading, setLoading] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const navigate = useNavigate();
-
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (formData.password === formData.confirmPassword) {
-      setLoading(true);
-      const obj = { ...formData };
-
-      _post(
-        "api/users/create",
-        obj,
-        (res) => {
-          setLoading(false);
-          toast.success("Created Successfully");
-          navigate("/");
-        },
-
-        (err) => {
-          setLoading(false);
-          toast.error("An error occurred!");
-          console.log(err);
-        }
-      );
-    } else {
-      toast.error("Password input does not match!");
-    }
-  };
-
-  const handleGoogleSignUp = () => {
-    console.log("Google Sign-Up clicked");
-  };
-
+export function Dashboard() {
   return (
-    <div
-      className="d-flex"
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        // height: "100vh",
-        backgroundColor: "#d3d3d3",
-      }}
-    >
-      <div className="register">
-        <div>
-          <h2 className="d-flex" style={{ justifyContent: "center" }}>
-            Registration
-          </h2>
-        </div>
-        <Button className="w-100 mb-1" onClick={handleGoogleSignUp}>
-          <i className="fab fa-google mr-2"></i> Sign up with Google
-        </Button>
-        <div className="d-flex align-items-center">
-          <hr className="flex-grow-1" />
-          <span className="px-2">or</span>
-          <hr className="flex-grow-1" />
-        </div>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="firstname">
-            <Form.Label htmlFor="firstname">First Name</Form.Label>
-            <InputGroup size="sm">
-              <InputGroupText>
-                <i className="fas fa-user icon"></i>
-              </InputGroupText>
-              <Input
-                type="text"
-                id="firstname"
-                name="firstname"
-                value={formData.firstname}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-            </InputGroup>
-          </Form.Group>
-          <Form.Group controlId="lastname">
-            <Form.Label htmlFor="lastname">Last name</Form.Label>
-            <InputGroup size="sm">
-              <InputGroupText>
-                <i className="fas fa-user icon"></i>
-              </InputGroupText>
-              <Input
-                type="text"
-                id="lastname"
-                name="lastname"
-                value={formData.lastname}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-            </InputGroup>
-          </Form.Group>
-          <Form.Group controlId="username">
-            <Form.Label htmlFor="username">Username</Form.Label>
-            <InputGroup size="sm">
-              <InputGroupText>
-                <i className="fas fa-user icon"></i>
-              </InputGroupText>
-              <Input
-                type="text"
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-            </InputGroup>
-          </Form.Group>
-
-          <Form.Group controlId="role">
-            <Form.Label htmlFor="role">Role</Form.Label>
-            <InputGroup size="sm">
-              <InputGroupText>
-                <i className="fas fa-user icon"></i>
-              </InputGroupText>
-              <Input
-                type="text"
-                id="role"
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-            </InputGroup>
-          </Form.Group>
-
-          <Form.Group controlId="formEmail">
-            <Form.Label htmlFor="email">Email</Form.Label>
-            <InputGroup size="sm">
-              <InputGroupText>
-                <i className="fas fa-envelope icon"></i>
-              </InputGroupText>
-              <Input
-                type="email"
-                id="email"
-                name="emailId"
-                value={formData.emailId}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-            </InputGroup>
-          </Form.Group>
-
-          <Form.Group controlId="formPassword">
-            <Form.Label htmlFor="pass">Password</Form.Label>
-            <InputGroup size="sm">
-              <InputGroupText>
-                <i className="fas fa-lock icon"></i>
-              </InputGroupText>
-              <Form.Control
-                type={passwordVisible ? "text" : "password"}
-                id="pass"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-
-              <InputGroupText
-                onClick={togglePasswordVisibility}
-                style={{ cursor: "pointer" }}
-              >
-                {passwordVisible ? (
-                  <i className="fas fa-eye icon"></i>
-                ) : (
-                  <i className="fas fa-eye-slash icon"></i>
-                )}
-              </InputGroupText>
-            </InputGroup>
-          </Form.Group>
-          <Form.Group controlId="formConfirmPassword">
-            <Form.Label htmlFor="confirm-pass">Confirm Password</Form.Label>
-            <InputGroup className="input-group mb-4" size="sm">
-              <InputGroupText>
-                <i className="fas fa-lock icon"></i>
-              </InputGroupText>
-              <Form.Control
-                type={passwordVisible ? "text" : "password"}
-                id="confirm-pass"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="form-control-with-icon"
-              />
-            </InputGroup>
-          </Form.Group>
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={Loading}
-            className="w-100 btn-primary"
-          >
-            {Loading ? (
-              <Spinner />
-            ) : (
-              <>
-                {" "}
-                Register <i className="fas fa-sign-in-alt"></i>{" "}
-              </>
-            )}
-          </Button>
-          <div className="d-flex pt-2" style={{ justifyContent: "center" }}>
-            <h6>
-              Already have an account?{" "}
-              <Link to="/" className="text-decoration-none text-dark">
-                Login Here
-              </Link>{" "}
-            </h6>
+    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+      <div className="hidden border-r bg-muted/40 md:block">
+        <div className="flex h-full max-h-screen flex-col gap-2">
+          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+            <Link href="/" className="flex items-center gap-2 font-semibold">
+              <Package2 className="h-6 w-6" />
+              <span className="">Acme Inc</span>
+            </Link>
+            <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
+              <Bell className="h-4 w-4" />
+              <span className="sr-only">Toggle notifications</span>
+            </Button>
           </div>
-        </Form>
+          <div className="flex-1">
+            <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+              <Link
+                href="#"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              >
+                <Home className="h-4 w-4" />
+                Dashboard
+              </Link>
+              <Link
+                href="#"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              >
+                <ShoppingCart className="h-4 w-4" />
+                Orders
+                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                  6
+                </Badge>
+              </Link>
+              <Link
+                href="#"
+                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+              >
+                <Package className="h-4 w-4" />
+                Products{" "}
+              </Link>
+              <Link
+                href="#"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              >
+                <Users className="h-4 w-4" />
+                Customers
+              </Link>
+              <Link
+                href="#"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              >
+                <LineChart className="h-4 w-4" />
+                Analytics
+              </Link>
+            </nav>
+          </div>
+          <div className="mt-auto p-4">
+            <Card x-chunk="dashboard-02-chunk-0">
+              <CardHeader className="p-2 pt-0 md:p-4">
+                <CardTitle>Upgrade to Pro</CardTitle>
+                <CardDescription>
+                  Unlock all features and get unlimited access to our support
+                  team.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
+                <Button size="sm" className="w-full">
+                  Upgrade
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col">
+        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0 md:hidden"
+              >
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="flex flex-col">
+              <nav className="grid gap-2 text-lg font-medium">
+                <Link
+                  href="#"
+                  className="flex items-center gap-2 text-lg font-semibold"
+                >
+                  <Package2 className="h-6 w-6" />
+                  <span className="sr-only">Acme Inc</span>
+                </Link>
+                <Link
+                  href="#"
+                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                >
+                  <Home className="h-5 w-5" />
+                  Dashboard
+                </Link>
+                <Link
+                  href="#"
+                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  Orders
+                  <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                    6
+                  </Badge>
+                </Link>
+                <Link
+                  href="#"
+                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                >
+                  <Package className="h-5 w-5" />
+                  Products
+                </Link>
+                <Link
+                  href="#"
+                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                >
+                  <Users className="h-5 w-5" />
+                  Customers
+                </Link>
+                <Link
+                  href="#"
+                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                >
+                  <LineChart className="h-5 w-5" />
+                  Analytics
+                </Link>
+              </nav>
+              <div className="mt-auto">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Upgrade to Pro</CardTitle>
+                    <CardDescription>
+                      Unlock all features and get unlimited access to our
+                      support team.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button size="sm" className="w-full">
+                      Upgrade
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </SheetContent>
+          </Sheet>
+          <div className="w-full flex-1">
+            <form>
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search products..."
+                  className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
+                />
+              </div>
+            </form>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" size="icon" className="rounded-full">
+                <CircleUser className="h-5 w-5" />
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </header>
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+          <div className="flex items-center">
+            <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
+          </div>
+          <div
+            className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1"
+          >
+            <div className="flex flex-col items-center gap-1 text-center">
+              <h3 className="text-2xl font-bold tracking-tight">
+                You have no products
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                You can start selling as soon as you add a product.
+              </p>
+              <Button className="mt-4">Add Product</Button>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
-  );
+  )
 }
-
-export default Registration;
