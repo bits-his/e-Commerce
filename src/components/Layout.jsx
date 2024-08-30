@@ -51,11 +51,11 @@ export default function Layout() {
           <div className="flex-1 mt-3">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <NavLink
-                className={({ isActive }) =>
+                className={
                   `flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                    isActive
-                      ? "<b>text-primary bg-muted/90"
-                      : "bg-white text-muted-foreground"
+                    pathname===("/admin-dashboard")||pathname===("/seller-dashboard")
+                      ? "text-primary bg-muted/90"
+                      : "bg-white text-dark"
                   }`
                 }
                 to={
@@ -83,6 +83,7 @@ export default function Layout() {
                     ]}
                     onToggle={() => handleToggle("Customer Management")}
                     isActive={activeDropdown === "Customer Management"}
+                    open={pathname.includes("/customer-mgmt")}
                     baseLink="/customer-mgmt"
                   />
                   <DropdownBtn
@@ -105,6 +106,7 @@ export default function Layout() {
                     ]}
                     onToggle={() => handleToggle("Reports")}
                     isActive={activeDropdown === "Reports"}
+                    open={pathname.includes("/reports")}
                     baseLink="/reports"
                   />
                   <DropdownBtn
@@ -121,6 +123,7 @@ export default function Layout() {
                     ]}
                     onToggle={() => handleToggle("User Management")}
                     isActive={activeDropdown === "User Management"}
+                    open={pathname.includes("/user-mgmt")}
                     baseLink="/user-mgmt"
                   />
                 </>
@@ -142,7 +145,7 @@ export default function Layout() {
                     ]}
                     onToggle={() => handleToggle("Store Management")}
                     isActive={activeDropdown === "Store Management"}
-                    open={pathname.includes("/storemangement") ? "open" : "closed"}
+                    open={pathname.includes("/storemangement")}
                   />
 
                   <DropdownBtn
