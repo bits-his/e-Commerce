@@ -46,6 +46,21 @@ export const _put = (url, data, success = (f) => f, error = (f) => f) => {
     });
 };
 
+export const _delete = (url, success = (f) => f, error = (f) => f) => {
+  fetch(`${server_url}/${url}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((raw) => raw.json())
+    .then((result) => {
+      success(result);
+    })
+    .catch((err) => {
+      error(err);
+    });
+};
+
+
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
 }

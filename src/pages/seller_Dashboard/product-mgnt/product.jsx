@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   ListFilter,
@@ -43,13 +43,33 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import toast from "react-hot-toast";
 import img from "./placeholder.svg";
+import { _get, _post, _put, _delete, separator } from "../../../utils/Helper";
+
 
 export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [products, setProducts] = useState([]);
   const [currentProduct, setCurrentProduct] = useState(null);
+  const [Loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+
+
+  useEffect(() => {
+    _get(
+      `api/get-products/${products.id}`,
+      (resp) => {
+        setProducts(resp.result[0]);
+        setLoading(false);
+        // console.log(resp.result[0])  
+      },
+      (err) => {
+        setError(err);
+        setLoading(false);
+      }
+    );
+  }, []);
 
   const [newProduct, setNewProduct] = useState({
     product_name: "",
@@ -63,56 +83,103 @@ export default function ProductsPage() {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    setNewProduct((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
+  
+    if (editMode) {
+      setCurrentProduct((prevData) => ({
+        ...prevData,
+        [id]: value,
+      }));
+    } else {
+      setNewProduct((prevData) => ({
+        ...prevData,
+        [id]: value,
+      }));
+    }
   };
 
   const handleSelectChange = (id, value) => {
-    setNewProduct((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
+    if (editMode) {
+      setCurrentProduct((prevData) => ({
+        ...prevData,
+        [id]: value,
+      }));
+    } else {
+      setNewProduct((prevData) => ({
+        ...prevData,
+        [id]: value,
+      }));
+    }
   };
+  
 
-  const handleAddProduct = () => {
-    setNewProduct({
-      product_name: "",
-      product_description: "",
-      product_category: "",
-      product_subcategory: "",
-      product_price: null,
-      product_quantity: null,
-      product_status: "",
-    });
-    setProducts([...products, newProduct]);
-    setShowForm(false);
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    // setProducts([...products, newProduct]);
+    const obj = { ...newProduct };
+
+    _post(
+      "api/products",
+      obj,
+      (res) => {
+        setLoading(false);
+        toast.success("New product added");
+        setShowForm(false);
+      },
+
+      (err) => {
+        setLoading(false);
+        toast.error("An error occurred!");
+        console.log(err);
+      }
+    );
   };
 
   const handleEditButtonClick = (product) => {
     setCurrentProduct(product);
     setEditMode(true);
     setShowForm(true);
-  };
+  };  
 
   const handleEditProduct = () => {
-    const updatedProducts = products.map((product) =>
-      product.id === currentProduct.id
-        ? { ...currentProduct }
-        : product
+    const obj = { ...currentProduct }; 
+  
+    _put(
+      `api/products/${currentProduct.id}`,
+      obj,
+      (res) => {
+        const updatedProducts = products.map((product) =>
+          product.id === currentProduct.id ? res.result[0] : product,
+          console.log(res.result)
+        );
+        setProducts(updatedProducts);
+        setShowForm(false);
+        setEditMode(false);
+        toast.success("Product updated successfully");
+      },
+      (err) => {
+        toast.error("Failed to update product");
+        console.error(err);
+      }
     );
-
-    setProducts(updatedProducts);
-    setShowForm(false);
-    setEditMode(false);
-  };
+  };  
 
   const handleDeleteProduct = (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      setProducts(products.filter((product) => product.id !== id));
-    }
-  };
+  if (window.confirm("Are you sure you want to delete this product?")) {
+    _delete(
+      `api/products/${id}`,
+      (res) => {
+        setProducts(products.filter((product) => product.id !== id));
+        toast.success("Product deleted successfully");
+      },
+      (err) => {
+        toast.error("An error occurred while deleting the product");
+        console.log(err);
+      }
+    );
+  }
+};
 
   const handleBackButtonClick = () => {
     setShowForm(false);
@@ -174,24 +241,24 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                            <Label htmlFor="name">Name</Label>
+                            <Label htmlFor="product_name">Name</Label>
                             <Input
-                              id="name"
+                              id="product_name"
                               type="text"
                               className="w-full"
                               placeholder="Gamer Gear Pro Controller"
-                              defaultValue={editMode ? currentProduct.name : ""}
+                              value={editMode ? currentProduct?.product_name : newProduct.product_name}
                               onChange={handleInputChange}
                             />
                           </div>
                           <div className="grid gap-3">
-                            <Label htmlFor="description">Description</Label>
+                            <Label htmlFor="product_description">Description</Label>
                             <Textarea
-                              id="description"
+                              id="product_description"
                               placeholder="Lorem ipsum."
                               className="min-h-32"
-                              defaultValue={
-                                editMode ? currentProduct.description : ""
+                              value={
+                                editMode ? currentProduct?.product_description : newProduct.product_description
                               }
                               onChange={handleInputChange}
                             />
@@ -207,14 +274,14 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6 sm:grid-cols-3">
                           <div className="grid gap-3">
-                            <Label htmlFor="category">Category</Label>
+                            <Label htmlFor="product_category">Category</Label>
                             <Select
                               onValueChange={(value) =>
-                                handleSelectChange("category", value)
+                                handleSelectChange("product_category", value)
                               }
                             >
                               <SelectTrigger
-                                id="category"
+                                id="product_category"
                                 aria-label="Select category"
                               >
                                 <SelectValue placeholder="Select category" />
@@ -233,16 +300,16 @@ export default function ProductsPage() {
                             </Select>
                           </div>
                           <div className="grid gap-3">
-                            <Label htmlFor="subcategory">
+                            <Label htmlFor="product_subcategory">
                               Subcategory (optional)
                             </Label>
                             <Select
                               onValueChange={(value) =>
-                                handleSelectChange("subcategory", value)
+                                handleSelectChange("product_subcategory", value)
                               }
                             >
                               <SelectTrigger
-                                id="subcategory"
+                                id="product_subcategory"
                                 aria-label="Select subcategory"
                               >
                                 <SelectValue placeholder="Select subcategory" />
@@ -270,42 +337,34 @@ export default function ProductsPage() {
                         <Table>
                           <TableHeader>
                             <TableRow>
-                              <TableHead className="w-[100px]">SKU</TableHead>
                               <TableHead>Stock</TableHead>
                               <TableHead>Price</TableHead>
                             </TableRow>
                           </TableHeader>
                           <TableBody>
                             <TableRow>
-                              <TableCell className="font-semibold">
-                                GGPC-001
-                              </TableCell>
                               <TableCell>
-                                <Label htmlFor="stock" className="sr-only">
+                                <Label htmlFor="product_quantity" className="sr-only">
                                   Stock
                                 </Label>
                                 <Input
-                                  id="stock"
+                                  id="product_quantity"
                                   type="number"
-                                  defaultValue={
-                                    editMode ? currentProduct.stock : ""
+                                  value={
+                                    editMode ? currentProduct?.product_quantity : newProduct.product_quantity
                                   }
                                   onChange={handleInputChange}
                                 />
                               </TableCell>
                               <TableCell>
-                                <Label htmlFor="price" className="sr-only">
+                                <Label htmlFor="product_price" className="sr-only">
                                   Price
                                 </Label>
                                 <Input
-                                  id="price"
+                                  id="product_price"
                                   type="number"
-                                  defaultValue={
-                                    editMode
-                                      ? parseFloat(
-                                          currentProduct.price.replace("₦", "")
-                                        ).toFixed(2)
-                                      : ""
+                                  value={
+                                    editMode ? parseFloat(currentProduct?.product_price).toFixed(2) : newProduct.product_price
                                   }
                                   onChange={handleInputChange}
                                 />
@@ -330,14 +389,14 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                            <Label htmlFor="status">Status</Label>
+                            <Label htmlFor="product_status">Status</Label>
                             <Select
                               onValueChange={(value) =>
-                                handleSelectChange("status", value)
+                                handleSelectChange("product_status", value)
                               }
                             >
                               <SelectTrigger
-                                id="status"
+                                id="product_status"
                                 aria-label="Select status"
                               >
                                 <SelectValue placeholder="Select status" />
@@ -470,9 +529,6 @@ export default function ProductsPage() {
                             <TableHead className="hidden md:table-cell text-center">
                               Price
                             </TableHead>
-                            {/* <TableHead className="hidden md:table-cell text-center">
-                              Total Sales
-                            </TableHead> */}
                             <TableHead className="hidden md:table-cell text-center">
                               In stock
                             </TableHead>
@@ -489,8 +545,8 @@ export default function ProductsPage() {
                               </TableCell>
                             </TableRow>
                           ) : (
-                            filteredProducts.map((product) => (
-                              <TableRow key={product.id}>
+                            filteredProducts.map((product, idx) => (
+                              <TableRow key={idx}>
                                 <TableCell className="hidden sm:table-cell p-2">
                                   <img
                                     alt="Product image"
@@ -501,12 +557,12 @@ export default function ProductsPage() {
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
-                                  {product.name}
+                                  {product.product_name}
                                 </TableCell>
                                 <TableCell className="text-center">
-                                  {product.status === "available" ? (
+                                  {product.product_status === "available" ? (
                                     <Badge variant="outline">
-                                      {product.status}
+                                      {product.product_status}
                                     </Badge>
                                   ) : (
                                     <Badge variant="destructive">
@@ -515,10 +571,10 @@ export default function ProductsPage() {
                                   )}
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell text-end">
-                                  {product.price}
+                                  {separator(product.product_price)}
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell text-center">
-                                  {product.stock}
+                                  {product.product_quantity}
                                 </TableCell>
                                 <TableCell className="p-2">
                                   <div className="justify-center items-center gap-2 md:flex sm:flex">

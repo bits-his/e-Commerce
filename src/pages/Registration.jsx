@@ -134,6 +134,18 @@ function Registration() {
                   </div>
                 </div>
 
+                <div className="grid gap-2">
+                  <Label htmlFor="username">Username</Label>
+                  <Input
+                    id="username"
+                    name="username"
+                    placeholder="user"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
                 <div className="space-y-1">
                   <h4 className="text-sm font-medium leading-none">
                     Shop details
