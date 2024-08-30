@@ -109,56 +109,6 @@ function Registration() {
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="grid gap-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="firstname">First name</Label>
-                    <Input
-                      id="firstname"
-                      name="firstname"
-                      placeholder="John"
-                      value={formData.firstname}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="lastname">Last name</Label>
-                    <Input
-                      id="lastname"
-                      name="lastname"
-                      placeholder="Doe"
-                      value={formData.lastname}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="grid gap-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    name="username"
-                    placeholder="user"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <h4 className="text-sm font-medium leading-none">
-                    Shop details
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    Enter shop details bellow
-                  </p>
-                </div>
-                <hr
-                  className="border-2"
-                  style={{ marginTop: "-1rem", marginBottom: "-1rem" }}
-                />
-
                 <div className="grid gap-2">
                   <Label htmlFor="shopname">Shop name</Label>
                   <Input
@@ -208,6 +158,53 @@ function Registration() {
                     name="email"
                     placeholder="mide@example.com"
                     value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <h4 className="text-sm text-center font-medium leading-none">
+                    Shop owners details
+                  </h4>
+                </div>
+                <hr
+                  className="border-2"
+                  style={{ marginTop: "-1rem", marginBottom: "-1rem" }}
+                />
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="firstname">First name</Label>
+                    <Input
+                      id="firstname"
+                      name="firstname"
+                      placeholder="John"
+                      value={formData.firstname}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="lastname">Last name</Label>
+                    <Input
+                      id="lastname"
+                      name="lastname"
+                      placeholder="Doe"
+                      value={formData.lastname}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="username">Username</Label>
+                  <Input
+                    id="username"
+                    name="username"
+                    placeholder="user"
+                    value={formData.username}
                     onChange={handleChange}
                     required
                   />
@@ -332,6 +329,18 @@ function Registration() {
                       required
                     />
                   </div>
+                </div>
+
+                <div className="grid gap-2">
+                  <Label htmlFor="username">Username</Label>
+                  <Input
+                    id="username"
+                    name="username"
+                    placeholder="user"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
 
                 <div className="grid gap-2">
