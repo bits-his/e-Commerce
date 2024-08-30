@@ -142,7 +142,7 @@ export default function Layout() {
                     ]}
                     onToggle={() => handleToggle("Store Management")}
                     isActive={activeDropdown === "Store Management"}
-                    open={pathname.includes("/seller-dashboard/storemangement") ? "open" : "closed"}
+                    open={pathname.includes("/storemangement") ? "open" : "closed"}
                   />
 
                   <DropdownBtn
@@ -155,6 +155,7 @@ export default function Layout() {
                     links={["/seller-dashboard/product-mgmt/product", ""]}
                     onToggle={() => handleToggle("Product Management")}
                     isActive={activeDropdown === "Product Management"}
+                    open={pathname.includes("/product-mgmt")}
                   />
                   <DropdownBtn
                     title={
@@ -170,6 +171,7 @@ export default function Layout() {
                     ]}
                     onToggle={() => handleToggle("Order management")}
                     isActive={activeDropdown === "Order management"}
+                    open={pathname.includes("/orders")}
                   />
                   <DropdownBtn
                     title={
