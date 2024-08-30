@@ -38,7 +38,9 @@ function Login() {
       obj,
       (res) => {
         setLoading(false);
-        
+        // alert(JSON.stringify(res.userDetails))
+        let data = res?.userDetails.id
+        localStorage.setItem("@@toke_$$_45598",JSON.stringify(data))
         if (res.role === "vendor") {
           toast.success("Logged Successful");
           navigate("/seller-dashboard");

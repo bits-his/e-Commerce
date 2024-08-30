@@ -12,6 +12,7 @@ import {
   ShoppingCart,
   Users,
   UserPlus2,
+  Store,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -35,30 +36,26 @@ export default function Layout() {
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+      <div className="hidden border-r bg-dark md:block">
         <div
           className="flex h-full max-h-screen flex-col gap-2"
           style={{ overflowY: "auto" }}
         >
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link className="flex items-center gap-2 font-semibold">
+          <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
+            <Link className="flex items-center gap-2 text-white font-semibold">
               <Package2 className="h-6 w-6" />
               <span className="">Kasua</span>
             </Link>
-            <Button
-              variant="outline"
-              size="icon"
-              className="ml-auto h-8 w-8 rounded-full"
-            >
-              <Bell className="h-4 w-4" />
-            </Button>
           </div>
-          <div className="flex-1">
+
+          <div className="flex-1 mt-3">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                    isActive ? "<b>text-primary bg-muted" : "text-muted-foreground"
+                    isActive
+                      ? "<b>text-primary bg-muted/90"
+                      : "bg-white text-muted-foreground"
                   }`
                 }
                 to={
@@ -76,7 +73,7 @@ export default function Layout() {
                   <DropdownBtn
                     title={
                       <>
-                        <Users className="h-4 w-4" /> Customer Management
+                        <Users className="h-4 w-4" /> Customers
                       </>
                     }
                     items={["All Customers", "Customer Reviews"]}
@@ -84,7 +81,7 @@ export default function Layout() {
                       "/admin-dashboard/customer-mgmt/customers",
                       "/admin-dashboard/customer-mgmt/customer-reviews",
                     ]}
-                    onToggle={() => handleToggle("Customer Mgmt")}
+                    onToggle={() => handleToggle("Customer Management")}
                     isActive={activeDropdown === "Customer Management"}
                     baseLink="/customer-mgmt"
                   />
@@ -113,7 +110,7 @@ export default function Layout() {
                   <DropdownBtn
                     title={
                       <>
-                        <UserPlus2 className="h-4 w-4" /> User Management
+                        <UserPlus2 className="h-4 w-4" /> Users
                       </>
                     }
                     items={["All", "profile", "Activity Logs"]}
@@ -129,41 +126,71 @@ export default function Layout() {
                 </>
               )}
 
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <ShoppingCart className="h-4 w-4" />
-                Orders
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  6
-                </Badge>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
-              >
-                <Package className="h-4 w-4" />
-                Products{" "}
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <Users className="h-4 w-4" />
-                Customers
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <LineChart className="h-4 w-4" />
-                Analytics
-              </Link>
+              {pathname.startsWith("/seller-dashboard") && (
+                <>
+                  <DropdownBtn
+                    title={
+                      <>
+                        <Store className="h-4 w-4" /> Store
+                      </>
+                    }
+                    items={["Store profile"]}
+                    links={[
+                      "/seller-dashboard/storemangement/storeprofile",
+                      "/seller-dashboard/storemangement/storepayment",
+                      "/seller-dashboard/storemangement/ordermanagement",
+                    ]}
+                    onToggle={() => handleToggle("Store Management")}
+                    isActive={activeDropdown === "Store Management"}
+                    open={pathname.includes("/seller-dashboard/storemangement") ? "open" : "closed"}
+                  />
+
+                  <DropdownBtn
+                    title={
+                      <>
+                        <Package className="h-4 w-4" /> Products
+                      </>
+                    }
+                    items={["Product"]}
+                    links={["/seller-dashboard/product-mgmt/product", ""]}
+                    onToggle={() => handleToggle("Product Management")}
+                    isActive={activeDropdown === "Product Management"}
+                  />
+                  <DropdownBtn
+                    title={
+                      <>
+                        <ShoppingCart className="h-4 w-4" /> Orders
+                      </>
+                    }
+                    items={["Total order", "Aproved order", "Pending order"]}
+                    links={[
+                      "/seller-dashboard/orders/total",
+                      "/seller-dashboard/orders/approved",
+                      "/seller-dashboard/orders/pending",
+                    ]}
+                    onToggle={() => handleToggle("Order management")}
+                    isActive={activeDropdown === "Order management"}
+                  />
+                  <DropdownBtn
+                    title={
+                      <>
+                        <Bell className="h-4 w-4" /> Notifications
+                      </>
+                    }
+                    items={["order notifiction", "app notification"]}
+                    links={[
+                      "/seller-dashboard/product-mgmt/order-notifiction",
+                      "",
+                    ]}
+                    onToggle={() => handleToggle("Order notifiction")}
+                    isActive={activeDropdown === "Order notifiction"}
+                  />
+                </>
+              )}
             </nav>
           </div>
           <div className="mt-auto p-4">
-            <Button size="sm" className="w-full bg-destructive">
+            <Button size="sm" className="w-full bg-destructive hover:bg-destructive/50">
               Logout
             </Button>
           </div>

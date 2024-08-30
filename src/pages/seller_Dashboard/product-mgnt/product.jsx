@@ -40,11 +40,9 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import toast from "react-hot-toast";
 import img from "./placeholder.svg";
 import { _get, _post, _put, _delete, separator } from "../../../utils/Helper";
-
 
 export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
@@ -54,22 +52,7 @@ export default function ProductsPage() {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-
-  useEffect(() => {
-    _get(
-      `api/get-products/${products.id}`,
-      (resp) => {
-        setProducts(resp.result[0]);
-        setLoading(false);
-        // console.log(resp.result[0])  
-      },
-      (err) => {
-        setError(err);
-        setLoading(false);
-      }
-    );
-  }, []);
+  let userDetails = localStorage.getItem("@@toke_$$_45598");
 
   const [newProduct, setNewProduct] = useState({
     product_name: "",
@@ -81,9 +64,27 @@ export default function ProductsPage() {
     product_status: "",
   });
 
+  const getProduct = () => {
+    _get(
+      `api/get-products?shop_id=${parseInt(userDetails)}`,
+      (resp) => {
+        setProducts(resp.result[0]);
+        setLoading(false);
+      },
+      (err) => {
+        setError(err);
+        setLoading(false);
+      }
+    );
+  };
+
+  useEffect(() => {
+    getProduct();
+  }, []);
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-  
+
     if (editMode) {
       setCurrentProduct((prevData) => ({
         ...prevData,
@@ -110,20 +111,20 @@ export default function ProductsPage() {
       }));
     }
   };
-  
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
 
     setLoading(true);
     // setProducts([...products, newProduct]);
-    const obj = { ...newProduct };
+    const obj = { ...newProduct, shop_id: parseInt(userDetails) };
 
     _post(
       "api/products",
       obj,
       (res) => {
         setLoading(false);
+        getProduct();
         toast.success("New product added");
         setShowForm(false);
       },
@@ -140,18 +141,19 @@ export default function ProductsPage() {
     setCurrentProduct(product);
     setEditMode(true);
     setShowForm(true);
-  };  
+  };
 
   const handleEditProduct = () => {
-    const obj = { ...currentProduct }; 
-  
+    const obj = { ...currentProduct };
+
     _put(
       `api/products/${currentProduct.id}`,
       obj,
       (res) => {
-        const updatedProducts = products.map((product) =>
-          product.id === currentProduct.id ? res.result[0] : product,
-          console.log(res.result)
+        const updatedProducts = products.map(
+          (product) =>
+            product.id === currentProduct.id ? res.success : product,
+          console.log(res)
         );
         setProducts(updatedProducts);
         setShowForm(false);
@@ -163,23 +165,23 @@ export default function ProductsPage() {
         console.error(err);
       }
     );
-  };  
+  };
 
   const handleDeleteProduct = (id) => {
-  if (window.confirm("Are you sure you want to delete this product?")) {
-    _delete(
-      `api/products/${id}`,
-      (res) => {
-        setProducts(products.filter((product) => product.id !== id));
-        toast.success("Product deleted successfully");
-      },
-      (err) => {
-        toast.error("An error occurred while deleting the product");
-        console.log(err);
-      }
-    );
-  }
-};
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      _delete(
+        `api/products/${id}`,
+        (res) => {
+          setProducts(products.filter((product) => product.id !== id));
+          toast.success("Product deleted successfully");
+        },
+        (err) => {
+          toast.error("An error occurred while deleting the product");
+          console.log(err);
+        }
+      );
+    }
+  };
 
   const handleBackButtonClick = () => {
     setShowForm(false);
@@ -194,13 +196,15 @@ export default function ProductsPage() {
     toast.success("Discarded!");
   };
 
-  const filteredProducts = products.filter(
-    (product) => product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredProducts = products.filter((product) =>
+    product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
+        {/* {JSON.stringify(parseInt("hhjhj"))} */}
+
         <div className="flex flex-col sm:gap-4 sm:py-4">
           {showForm ? (
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -247,18 +251,26 @@ export default function ProductsPage() {
                               type="text"
                               className="w-full"
                               placeholder="Gamer Gear Pro Controller"
-                              value={editMode ? currentProduct?.product_name : newProduct.product_name}
+                              value={
+                                editMode
+                                  ? currentProduct?.product_name
+                                  : newProduct.product_name
+                              }
                               onChange={handleInputChange}
                             />
                           </div>
                           <div className="grid gap-3">
-                            <Label htmlFor="product_description">Description</Label>
+                            <Label htmlFor="product_description">
+                              Description
+                            </Label>
                             <Textarea
                               id="product_description"
                               placeholder="Lorem ipsum."
                               className="min-h-32"
                               value={
-                                editMode ? currentProduct?.product_description : newProduct.product_description
+                                editMode
+                                  ? currentProduct?.product_description
+                                  : newProduct.product_description
                               }
                               onChange={handleInputChange}
                             />
@@ -344,27 +356,39 @@ export default function ProductsPage() {
                           <TableBody>
                             <TableRow>
                               <TableCell>
-                                <Label htmlFor="product_quantity" className="sr-only">
+                                <Label
+                                  htmlFor="product_quantity"
+                                  className="sr-only"
+                                >
                                   Stock
                                 </Label>
                                 <Input
                                   id="product_quantity"
                                   type="number"
                                   value={
-                                    editMode ? currentProduct?.product_quantity : newProduct.product_quantity
+                                    editMode
+                                      ? currentProduct?.product_quantity
+                                      : newProduct.product_quantity
                                   }
                                   onChange={handleInputChange}
                                 />
                               </TableCell>
                               <TableCell>
-                                <Label htmlFor="product_price" className="sr-only">
+                                <Label
+                                  htmlFor="product_price"
+                                  className="sr-only"
+                                >
                                   Price
                                 </Label>
                                 <Input
                                   id="product_price"
                                   type="number"
                                   value={
-                                    editMode ? parseFloat(currentProduct?.product_price).toFixed(2) : newProduct.product_price
+                                    editMode
+                                      ? parseFloat(
+                                          currentProduct?.product_price
+                                        ).toFixed(2)
+                                      : newProduct.product_price
                                   }
                                   onChange={handleInputChange}
                                 />
@@ -489,7 +513,7 @@ export default function ProductsPage() {
                         placeholder="Search..."
                         className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[200px] lg:w-[300px]"
                         value={searchQuery}
-                        onChange={e => setSearchQuery(e.target.value)}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                       />
                     </div>
                     <Button
