@@ -6,6 +6,14 @@
   left: 0;
 }
 
+.sidenav-container {
+  height: 100vh; 
+  overflow-y: auto; 
+  position: sticky;
+  top: 0;
+}
+
+
 .main-outlet {
   height: 100vh;
   overflow-y: auto;
