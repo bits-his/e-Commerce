@@ -28,7 +28,7 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    toast.success("User logged out successfully");
+    toast.error("Working on logout");
   };
 
   return (
@@ -193,6 +193,7 @@ const Sidebar = () => {
           <Button
             size="sm"
             className="w-full bg-destructive hover:bg-destructive/50"
+            onClick={handleLogout}
           >
             Logout
           </Button>
