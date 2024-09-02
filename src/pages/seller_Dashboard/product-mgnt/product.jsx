@@ -115,6 +115,12 @@ export default function ProductsPage() {
   const handleAddProduct = async (e) => {
     e.preventDefault();
 
+     // Basic validation
+  if (!newProduct.product_name && newProduct.product_name.trim() === "") {
+    toast.error("Please fill in the required information.");
+    return;
+  }
+
     setLoading(true);
     // setProducts([...products, newProduct]);
     const obj = { ...newProduct, shop_id: parseInt(userDetails) };
@@ -245,18 +251,20 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_name">Name</Label>
-                            <Input
+                          <Label htmlFor="product_name"><span  className="text-danger">* </span>Name</Label>
+                           <Input
                               id="product_name"
                               type="text"
                               className="w-full"
                               placeholder="Gamer Gear Pro Controller"
+                              
                               value={
                                 editMode
                                   ? currentProduct?.product_name
                                   : newProduct.product_name
                               }
                               onChange={handleInputChange}
+                              
                             />
                           </div>
                           <div className="grid gap-3">
