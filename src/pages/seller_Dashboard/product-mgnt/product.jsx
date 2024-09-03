@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  ListFilter,
-  MoreHorizontal,
   PlusCircle,
   ChevronLeft,
   Upload,
@@ -116,10 +114,40 @@ export default function ProductsPage() {
     e.preventDefault();
 
      // Basic validation
-  if (!newProduct.product_name && newProduct.product_name.trim() === "") {
-    toast.error("Please fill in the required information.");
-    return;
-  }
+if (
+  (!newProduct.product_name || newProduct.product_name.trim() === "") ||
+  (!newProduct.product_description || newProduct.product_description.trim() === "")
+) {
+  toast.error("Please fill in the required information.");
+  return;
+}
+
+if (
+  (!newProduct.product_category || newProduct.product_category.trim() === "") ||
+  (!newProduct.product_subcategory || newProduct.product_subcategory.trim() === "")
+) {
+  toast.error("Please select the product category.");
+  return;
+}
+if (
+  (!newProduct.product_quantity || newProduct.product_quantity.trim() === "") 
+) {
+  toast.error("Please Indicate the number of items available in stock.");
+  return;
+}
+if (
+  (!newProduct.product_price || newProduct.product_price.trim() === "") 
+) {
+  toast.error("Please Indicate the price of the item.");
+  return;
+}
+if (
+  (!newProduct.product_status || newProduct.product_status.trim() === "") 
+) {
+  toast.error("Please Indicate status of the product.");
+  return;
+}
+
 
     setLoading(true);
     // setProducts([...products, newProduct]);
@@ -456,6 +484,7 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-2">
                           <img
+                            id="product_img"
                             alt="Product image"
                             className="aspect-square w-full rounded-md object-cover"
                             height="300"

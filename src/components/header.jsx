@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import "../Styles/Header.css";
+import toast from "react-hot-toast";
 
 function Header() {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -34,6 +35,10 @@ function Header() {
     setActiveDropdown((prevActive) =>
       prevActive === dropdownName ? null : dropdownName
     );
+  };
+
+  const handleLogout = () => {
+    toast.error("Working on logout");
   };
 
 
@@ -194,6 +199,7 @@ function Header() {
             <Button
               size="sm"
               className="w-full bg-destructive hover:bg-destructive/50"
+              onClick={handleLogout}
             >
               Logout
             </Button>

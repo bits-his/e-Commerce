@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 const DropdownMenu = ({ title, items, isActive, onToggle, links, open }) => {
   return (

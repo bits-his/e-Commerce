@@ -127,7 +127,7 @@ const PendingOrders = () => {
                     <TableCell className="hidden md:table-cell text-center">
                       {order.total}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-center">
                       <Button
                         color="warning"
                         onClick={() => handleViewClick(order)}
