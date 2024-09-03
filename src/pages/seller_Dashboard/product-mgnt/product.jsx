@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  ListFilter,
-  MoreHorizontal,
   PlusCircle,
   ChevronLeft,
   Upload,
