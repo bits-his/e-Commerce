@@ -37,8 +37,15 @@ const Sidebar = () => {
         className="flex h-full max-h-screen flex-col gap-2"
       >
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
-          <Link className="flex items-center gap-2 text-white font-semibold">
-            <Package2 className="h-6 w-6" />
+          <Link
+            className="flex items-center gap-2 text-white justify-center font-semibold"
+            to={
+              pathname.startsWith("/admin-dashboard")
+                ? "/admin-dashboard"
+                : "/seller-dashboard"
+            }
+          >
+            <Package2 className="h-8 w-8" />
             <span className="">Kasua</span>
           </Link>
         </div>
