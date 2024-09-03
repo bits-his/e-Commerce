@@ -3,7 +3,7 @@ import { Nav } from "react-bootstrap";
 import DropdownBtn from "../components/DropdownBtn";
 import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faUser, faChartLine, faCogs, faSignOutAlt,faStore } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faUser, faChartLine, faCogs, faSignOutAlt, faStore } from '@fortawesome/free-solid-svg-icons';
 
 import "./sidenav.css";
 import toast from "react-hot-toast";
@@ -46,7 +46,7 @@ const Sidebar = () => {
                 }
               >
                 <div className="d-flex align-items-center">
-                  <FontAwesomeIcon icon={faTachometerAlt} className="me-2" style={{}} /> 
+                  <FontAwesomeIcon icon={faTachometerAlt} className="me-2" style={{}} />
                   <b>Dashboard</b>
                 </div>
               </NavLink>
@@ -54,11 +54,12 @@ const Sidebar = () => {
               {pathname.startsWith("/admin-dashboard") && (
                 <>
                   <DropdownBtn
-                    title={<><FontAwesomeIcon icon={faUser} className="me-2"/> Customer Management</>}
-                    items={["All Customers", "Customer Reviews"]}
+                    title={<><FontAwesomeIcon icon={faUser} className="me-2" /> Customer Management</>}
+                    items={["All Customers", "Customers Reviews", "Pending Customers"]}
                     links={[
                       "/admin-dashboard/customer-mgmt/customers",
                       "/admin-dashboard/customer-mgmt/customer-reviews",
+                      "/admin-dashboard/customer-mgmt/pending-customers",
                     ]}
                     onToggle={() => handleToggle("Customer Management")}
                     isActive={activeDropdown === "Customer Management"}
@@ -88,68 +89,68 @@ const Sidebar = () => {
                     links={[
                       "/admin-dashboard/user-mgmt/all",
                       "/admin-dashboard/user-mgmt/profile",
-                    "/admin-dashboard/user-mgmt/logs",
-                   
-                  ]}
-                  onToggle={() => handleToggle("User Management")}
-                  isActive={activeDropdown === "User Management"}
-                  baseLink="/user-mgmt"
-                />
-              </>
-            )}
+                      "/admin-dashboard/user-mgmt/logs",
 
-            {/* Link to sellers route */}
+                    ]}
+                    onToggle={() => handleToggle("User Management")}
+                    isActive={activeDropdown === "User Management"}
+                    baseLink="/user-mgmt"
+                  />
+                </>
+              )}
+
+              {/* Link to sellers route */}
 
               {pathname.startsWith("/seller-dashboard") && (
                 <>
                   <DropdownBtn
                     title={<><FontAwesomeIcon icon={faStore} /> Store Management</>}
-                    items={["Store profile", ]}
-                    links={["/seller-dashboard/storemangement/storeprofile", "/seller-dashboard/storemangement/storepayment","/seller-dashboard/storemangement/ordermanagement"]}
+                    items={["Store profile",]}
+                    links={["/seller-dashboard/storemangement/storeprofile", "/seller-dashboard/storemangement/storepayment", "/seller-dashboard/storemangement/ordermanagement"]}
                     onToggle={() => handleToggle("Store Management")}
                     isActive={activeDropdown === "Store Management"}
                   />
 
-                <DropdownBtn
-                  title="Product Management"
-                  items={["Product", ]}
-                  links={["/seller-dashboard/product-mgmt/product", ""]}
-                  onToggle={() => handleToggle("Product Management")}
-                  isActive={activeDropdown === "Product Management"}
-                />
-                 <DropdownBtn
-                  title="Order management"
-                  items={["Total order", "Aproved order", "Pending order"]}
-                  links={["/seller-dashboard/orders/total", "/seller-dashboard/orders/approved", "/seller-dashboard/orders/pending",]}
-                  onToggle={() => handleToggle("Order management")}
-                  isActive={activeDropdown === "Order management"}
-                />
-                <DropdownBtn
-                  title="notifications"
-                  items={["order notifiction", "app notification"]}
-                  links={["/seller-dashboard/product-mgmt/order-notifiction", ""]}
-                  onToggle={() => handleToggle("Order notifiction")}
-                  isActive={activeDropdown === "Order notifiction"}
-                />
-               
-                 {/* <DropdownBtn
+                  <DropdownBtn
+                    title="Product Management"
+                    items={["Product",]}
+                    links={["/seller-dashboard/product-mgmt/product", ""]}
+                    onToggle={() => handleToggle("Product Management")}
+                    isActive={activeDropdown === "Product Management"}
+                  />
+                  <DropdownBtn
+                    title="Order management"
+                    items={["Total order", "Aproved order", "Pending order"]}
+                    links={["/seller-dashboard/orders/total", "/seller-dashboard/orders/approved", "/seller-dashboard/orders/pending",]}
+                    onToggle={() => handleToggle("Order management")}
+                    isActive={activeDropdown === "Order management"}
+                  />
+                  <DropdownBtn
+                    title="notifications"
+                    items={["order notifiction", "app notification"]}
+                    links={["/seller-dashboard/product-mgmt/order-notifiction", ""]}
+                    onToggle={() => handleToggle("Order notifiction")}
+                    isActive={activeDropdown === "Order notifiction"}
+                  />
+
+                  {/* <DropdownBtn
                   title="table"
                   items={["aproved order", "pending order","total order"]}
                   links={["/seller-dashboard/orders/approved", "/seller-dashboard/orders/pending","/seller-dashboard/orders/total",]}
                   onToggle={() => handleToggle("")}
                   isActive={activeDropdown === ""}
                 /> */}
-              </>
-            )}
+                </>
+              )}
+            </div>
+          </div>
+        </Nav>
+        <div className="logout-main bg-dark">
+          <div className="logout-container">
+            <NavLink className="logout" to="/" onClick={handleLogout}>Logout</NavLink>
           </div>
         </div>
-      </Nav>
-      <div className="logout-main bg-dark">
-        <div className="logout-container">
-          <NavLink className="logout" to="/" onClick={handleLogout}>Logout</NavLink>
-        </div>
       </div>
-    </div>
     </div>
   );
 };

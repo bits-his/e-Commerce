@@ -76,10 +76,11 @@ export default function Layout() {
                         <Users className="h-4 w-4" /> Customers
                       </>
                     }
-                    items={["All Customers", "Customer Reviews"]}
+                    items={["All Customers", "Customer Reviews", "Pending Customers"]}
                     links={[
                       "/admin-dashboard/customer-mgmt/customers",
                       "/admin-dashboard/customer-mgmt/customer-reviews",
+                      "/admin-dashboard/customer-mgmt/pending-customers",
                     ]}
                     onToggle={() => handleToggle("Customer Management")}
                     isActive={activeDropdown === "Customer Management"}
