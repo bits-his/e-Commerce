@@ -51,6 +51,8 @@ export default function ProductsPage() {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
 
   const [newProduct, setNewProduct] = useState({
@@ -60,7 +62,7 @@ export default function ProductsPage() {
     product_subcategory: "",
     product_price: 0,
     product_quantity: 0,
-    product_status: "",
+    product_status: "available",
   });
 
   const getProduct = () => {
@@ -80,6 +82,41 @@ export default function ProductsPage() {
   useEffect(() => {
     getProduct();
   }, []);
+
+  const getCategories = () => {
+    _get(
+      "api/categories",
+      (resp) => {
+        setCategories(resp.results[0]);
+      },
+      (err) => {
+        setError(err);
+      }
+    );
+  };
+  
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const getSubCategories = () => {
+    const category = newProduct.product_category;
+    _get(
+      `api/categories/types?category=${category}`,
+      (resp) => {
+        setSubCategories(resp.results[0]);
+      },
+      (err) => {
+        setError(err);
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (newProduct.product_category) {
+      getSubCategories();
+    }
+  }, [newProduct.product_category]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -309,15 +346,14 @@ export default function ProductsPage() {
                                 <SelectValue placeholder="Select category" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="clothing">
-                                  Clothing
-                                </SelectItem>
-                                <SelectItem value="electronics">
-                                  Electronics
-                                </SelectItem>
-                                <SelectItem value="accessories">
-                                  Accessories
-                                </SelectItem>
+                                {categories.map((category, idx) => (
+                                  <SelectItem
+                                    key={idx}
+                                    value={category.name}
+                                  >
+                                    {category.name}
+                                  </SelectItem>
+                                ))}
                               </SelectContent>
                             </Select>
                           </div>
@@ -337,13 +373,14 @@ export default function ProductsPage() {
                                 <SelectValue placeholder="Select subcategory" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="t-shirts">
-                                  T-Shirts
-                                </SelectItem>
-                                <SelectItem value="hoodies">Hoodies</SelectItem>
-                                <SelectItem value="sweatshirts">
-                                  Sweatshirts
-                                </SelectItem>
+                                {subCategories.map((subCategory, idx) => (
+                                  <SelectItem
+                                    key={idx}
+                                    value={subCategory.type_name}
+                                  >
+                                    {subCategory.type_name}
+                                  </SelectItem>
+                                ))}
                               </SelectContent>
                             </Select>
                           </div>
@@ -407,12 +444,12 @@ export default function ProductsPage() {
                           </TableBody>
                         </Table>
                       </CardContent>
-                      <CardFooter className="justify-center border-t p-4">
+                      {/* <CardFooter className="justify-center border-t p-4">
                         <Button size="sm" variant="ghost" className="gap-1">
                           <PlusCircle className="h-3.5 w-3.5" />
                           Add Variant
                         </Button>
-                      </CardFooter>
+                      </CardFooter> */}
                     </Card>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
