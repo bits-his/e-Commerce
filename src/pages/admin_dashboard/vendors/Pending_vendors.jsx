@@ -75,23 +75,22 @@ export default function Pending_customer({ args, id }) {
         );
     };
 
-    // const handledeleteusers = (id, status) => {
+    const handledeleteusers = (id, status) => {
 
-    //     _delete(
-    //         "api/deleteusers",
-    //         obj,
-    //         (res) => {
-    //             setLoading(false);
-    //             getProduct();
-    //             toast.success(Status updated to ${status});
-    //         },
-    //         (err) => {
-    //             setLoading(false);
-    //             toast.error("An error occurred while updating status");
-    //             console.error(err);
-    //         }
-    //     );
-    // };
+        _delete(
+            "api/deleteusers",
+            (res) => {
+                setLoading(false);
+                getProduct();
+                window.confirm("Are you sure you want to delete");
+            },
+            (err) => {
+                setLoading(false);
+                toast.error("An error occurred while updating status");
+                console.error(err);
+            }
+        );
+    };
 
 
 
@@ -187,7 +186,7 @@ export default function Pending_customer({ args, id }) {
                                                             variant="warning"
                                                             size="icon"
                                                             className="w-90 p-2"
-                                                            onClick={() => handlechangestatus(id, 'rejected')}
+                                                            onClick={() => handledeleteusers(customer.id, 'rejected')}
                                                         >
                                                             Reject
                                                         </Button>
@@ -195,7 +194,7 @@ export default function Pending_customer({ args, id }) {
                                                             variant="success"
                                                             size="icon"
                                                             className="w-90 p-2"
-                                                            onClick={() => handlechangestatus(id, 'approved')}
+                                                            onClick={() => handlechangestatus(customer.id, 'approved')}
                                                         >
                                                             Approved
                                                         </Button>

@@ -32,7 +32,7 @@ export default function Pending_customer(args) {
 
     const get_customers = () => {
         _get(
-            "api/getusersbyrole",
+            "api/getapproveusers",
             (response) => {
                 if (response.success) {
                     setP_customers(response.results)
@@ -91,6 +91,7 @@ export default function Pending_customer(args) {
 
                     <CardContent>
                         <Table>
+                            {/* {JSON.stringify(filteredCustomers)} */}
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>ID</TableHead>
@@ -110,9 +111,9 @@ export default function Pending_customer(args) {
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                        filteredCustomers.map((customer) => (
+                                        filteredCustomers.map((customer,index) => (
                                             <TableRow key={customer.id}>
-                                                <TableCell>{customer.id}</TableCell>
+                                                <TableCell><div>{index + 1}</div></TableCell>
                                                 <TableCell>{customer.username}</TableCell>
                                                 <TableCell className="hidden md:table-cell">
                                                     {customer.email}
