@@ -24,6 +24,7 @@ import { _get } from "@/utils/Helper";
 import { customerstatus } from "@/utils/Cusromer";
 import { toast } from "react-toastify";
 import { _post } from "@/utils/Helper";
+import { _delete } from "@/utils/Helper";
 
 export default function Pending_customer({ args, id }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -51,31 +52,47 @@ export default function Pending_customer({ args, id }) {
         get_customers();
     }, []);
 
-    const handlechangestatus = () => {
-        // setLoading(true); // Start loading state
+    const handlechangestatus = (id, status) => {
 
-        // Ensure `obj` contains the necessary data
         const obj = {
-            id: productId, // Replace with the actual product ID
-            status: newStatus, // Replace with the new status value
+            id,
+            status,
         };
 
         _post(
-            "api/updatestatus", // Correct API endpoint
+            "api/updatestatus",
             obj,
             (res) => {
                 setLoading(false);
-                getProduct(); // Refresh product list or status
-                toast.success("Product status updated successfully");
-                setShowForm(false); // Optionally hide the form
+                getProduct();
+                toast.success(`Status updated to ${status}`);
             },
             (err) => {
                 setLoading(false);
                 toast.error("An error occurred while updating status");
-                console.error(err); // Log the error for debugging
+                console.error(err);
             }
         );
     };
+
+    // const handledeleteusers = (id, status) => {
+
+    //     _delete(
+    //         "api/deleteusers",
+    //         obj,
+    //         (res) => {
+    //             setLoading(false);
+    //             getProduct();
+    //             toast.success(`Status updated to ${status}`);
+    //         },
+    //         (err) => {
+    //             setLoading(false);
+    //             toast.error("An error occurred while updating status");
+    //             console.error(err);
+    //         }
+    //     );
+    // };
+
 
 
 
@@ -120,6 +137,8 @@ export default function Pending_customer({ args, id }) {
 
                     <CardContent>
                         <Table>
+                            {JSON.stringify(id)}
+                            {/* {JSON.stringify(filteredCustomers)} */}
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>ID</TableHead>

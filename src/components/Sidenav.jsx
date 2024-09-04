@@ -55,10 +55,10 @@ const Sidebar = () => {
             <NavLink
               className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
                 pathname === "/admin-dashboard" ||
-                pathname === "/seller-dashboard"
+                  pathname === "/seller-dashboard"
                   ? "text-primary bg-muted/90"
                   : "bg-white text-dark"
-              }`}
+                }`}
               to={
                 pathname.startsWith("/admin-dashboard")
                   ? "/admin-dashboard"
@@ -86,6 +86,22 @@ const Sidebar = () => {
                   isActive={activeDropdown === "Customer Management"}
                   open={pathname.includes("/customer-mgmt")}
                   baseLink="/customer-mgmt"
+                />
+                <DropdownBtn
+                  title={
+                    <>
+                      <Users className="h-4 w-4" /> Vendors
+                    </>
+                  }
+                  items={["All Vendors", "Pending Vendors"]}
+                  links={[
+                    "/admin-dashboard/vendor-mgmt/vendor",
+                    "/admin-dashboard/vendor-mgmt/pending-vendor",
+                  ]}
+                  onToggle={() => handleToggle("vendor Management")}
+                  isActive={activeDropdown === "vendor Management"}
+                  open={pathname.includes("/vendor-mgmt")}
+                  baseLink="/vendor-mgmt"
                 />
                 <DropdownBtn
                   title={
@@ -190,7 +206,7 @@ const Sidebar = () => {
                   ]}
                   onToggle={() => handleToggle("Order notifiction")}
                   isActive={activeDropdown === "Order notifiction"}
-                  // open={pathname.includes("/product-mgmt")}
+                // open={pathname.includes("/product-mgmt")}
                 />
               </>
             )}
