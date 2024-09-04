@@ -113,18 +113,17 @@ export default function ProductsPage() {
   const handleAddProduct = async (e) => {
     e.preventDefault();
 
-     // Basic validation
+ // Form validation start here
 if (
   (!newProduct.product_name || newProduct.product_name.trim() === "") ||
   (!newProduct.product_description || newProduct.product_description.trim() === "")
 ) {
-  toast.error("Please fill in the required information.");
+  toast.error("Please fill in the product details.");
   return;
 }
 
 if (
-  (!newProduct.product_category || newProduct.product_category.trim() === "") ||
-  (!newProduct.product_subcategory || newProduct.product_subcategory.trim() === "")
+  (!newProduct.product_category || newProduct.product_category.trim() === "") 
 ) {
   toast.error("Please select the product category.");
   return;
@@ -140,7 +139,7 @@ if (
 ) {
   toast.error("Please Indicate the price of the item.");
   return;
-}
+} 
 if (
   (!newProduct.product_status || newProduct.product_status.trim() === "") 
 ) {
@@ -296,7 +295,7 @@ if (
                             />
                           </div>
                           <div className="grid gap-3">
-                            <Label htmlFor="product_description">
+                            <Label htmlFor="product_description"> <span  className="text-danger">* </span>
                               Description
                             </Label>
                             <Textarea
@@ -322,7 +321,7 @@ if (
                       <CardContent>
                         <div className="grid gap-6 sm:grid-cols-3">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_category">Category</Label>
+                            <Label htmlFor="product_category"><span  className="text-danger">* </span>Category</Label>
                             <Select
                               onValueChange={(value) =>
                                 handleSelectChange("product_category", value)
@@ -378,7 +377,7 @@ if (
                     </Card>
                     <Card x-chunk="dashboard-07-chunk-1">
                       <CardHeader>
-                        <CardTitle>Stock</CardTitle>
+                        <CardTitle><span  className="text-danger">* </span>Stock</CardTitle>
                         <CardDescription>Quantity of product</CardDescription>
                       </CardHeader>
                       <CardContent>
@@ -395,8 +394,7 @@ if (
                                 <Label
                                   htmlFor="product_quantity"
                                   className="sr-only"
-                                >
-                                  Stock
+                                ><span  className="text-danger">* </span>
                                 </Label>
                                 <Input
                                   id="product_quantity"
@@ -413,7 +411,7 @@ if (
                                 <Label
                                   htmlFor="product_price"
                                   className="sr-only"
-                                >
+                                ><span  className="text-danger">* </span>
                                   Price
                                 </Label>
                                 <Input
@@ -449,7 +447,7 @@ if (
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_status">Status</Label>
+                            <Label htmlFor="product_status"><span  className="text-danger">* </span>Status</Label>
                             <Select
                               onValueChange={(value) =>
                                 handleSelectChange("product_status", value)
@@ -479,7 +477,7 @@ if (
                       x-chunk="dashboard-07-chunk-4"
                     >
                       <CardHeader>
-                        <CardTitle>Product Images</CardTitle>
+                        <CardTitle><span  className="text-danger">* </span>Product Images</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="grid gap-2">
