@@ -22,8 +22,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { _get } from "@/utils/Helper";
 import { customerstatus } from "@/utils/Cusromer";
+import { toast } from "react-toastify";
+import { _post } from "@/utils/Helper";
+import { _delete } from "@/utils/Helper";
 
-export default function Pending_customer(args) {
+export default function Pending_customer({ args, id }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +34,7 @@ export default function Pending_customer(args) {
 
     const get_customers = () => {
         _get(
-            "api/getusers",
+            "api/getusersbystatus",
             (response) => {
                 if (response.success) {
                     setP_customers(response.results)
@@ -48,6 +51,50 @@ export default function Pending_customer(args) {
     useEffect(() => {
         get_customers();
     }, []);
+
+    const handlechangestatus = (id, status) => {
+
+        const obj = {
+            id,
+            status,
+        };
+
+        _post(
+            "api/updatestatus",
+            obj,
+            (res) => {
+                setLoading(false);
+                getProduct();
+                toast.success("Status updated to ${status}");
+            },
+            (err) => {
+                setLoading(false);
+                toast.error("An error occurred while updating status");
+                console.error(err);
+            }
+        );
+    };
+
+    // const handledeleteusers = (id, status) => {
+
+    //     _delete(
+    //         "api/deleteusers",
+    //         obj,
+    //         (res) => {
+    //             setLoading(false);
+    //             getProduct();
+    //             toast.success(Status updated to ${status});
+    //         },
+    //         (err) => {
+    //             setLoading(false);
+    //             toast.error("An error occurred while updating status");
+    //             console.error(err);
+    //         }
+    //     );
+    // };
+
+
+
 
     const filteredCustomers = p_customers.filter(
         (customer) =>
@@ -90,14 +137,15 @@ export default function Pending_customer(args) {
 
                     <CardContent>
                         <Table>
+                            {/* {JSON.stringify(filteredCustomers)} */}
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>ID</TableHead>
                                     <TableHead>Name</TableHead>
-                                    <TableHead className="hidden md:table-cell text-center">Email</TableHead>
-                                    <TableHead className="text-center">Phone</TableHead>
-                                    <TableHead className="hidden md:table-cell text-center">Role</TableHead>
-                                    <TableHead className="hidden md:table-cell text-center">Status</TableHead>
+                                    <TableHead className="hidden md:table-cell ">Email</TableHead>
+                                    <TableHead className="">Phone</TableHead>
+                                    <TableHead className="hidden md:table-cell ">Role</TableHead>
+                                    <TableHead className="hidden md:table-cell ">Status</TableHead>
                                     <TableHead className="text-center">Action</TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -113,16 +161,16 @@ export default function Pending_customer(args) {
                                             <TableRow key={customer.id}>
                                                 <TableCell>{customer.id}</TableCell>
                                                 <TableCell>{customer.username}</TableCell>
-                                                <TableCell className="hidden md:table-cell text-center">
+                                                <TableCell className="hidden md:table-cell ">
                                                     {customer.email}
                                                 </TableCell>
-                                                <TableCell className="text-center">
+                                                <TableCell className="">
                                                     {customer.shopcontact}
                                                 </TableCell>
-                                                <TableCell className="hidden md:table-cell text-center">
+                                                <TableCell className="hidden md:table-cell ">
                                                     {customer.role}
                                                 </TableCell>
-                                                <TableCell className="hidden md:table-cell text-center">
+                                                <TableCell className="hidden md:table-cell ">
                                                     {customer.status}
                                                 </TableCell>
                                                 <TableCell>
@@ -130,35 +178,26 @@ export default function Pending_customer(args) {
                                                         <Button
                                                             variant="success"
                                                             size="icon"
-                                                            className=" w-100 p-2"
+                                                            className=" w-90 p-2"
                                                             onClick={() => handleView(customer)}
                                                         >
                                                             Veiw
                                                         </Button>
                                                         <Button
-                                                            variant="success"
-                                                            size="icon"
-                                                            className="w-100 p-2"
-                                                            onClick={() => {
-                                                                if (customer.status !== "approved") {
-                                                                    customerstatus(customer.id, "approved",
-                                                                        (res) => {
-                                                                            alert.success(res.message);
-
-                                                                        },
-
-                                                                    )
-                                                                }
-                                                            }}
-                                                        >
-                                                            Approved
-                                                        </Button>
-                                                        <Button
                                                             variant="warning"
                                                             size="icon"
-                                                            className="w-100 p-2"
+                                                            className="w-90 p-2"
+                                                            onClick={() => handlechangestatus(id, 'rejected')}
                                                         >
                                                             Reject
+                                                        </Button>
+                                                        <Button
+                                                            variant="success"
+                                                            size="icon"
+                                                            className="w-90 p-2"
+                                                            onClick={() => handlechangestatus(id, 'approved')}
+                                                        >
+                                                            Approved
                                                         </Button>
                                                     </div>
                                                 </TableCell>
