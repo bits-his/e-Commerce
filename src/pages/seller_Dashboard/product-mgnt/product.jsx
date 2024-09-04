@@ -50,6 +50,7 @@ export default function ProductsPage() {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
 
   const [newProduct, setNewProduct] = useState({
@@ -108,6 +109,17 @@ export default function ProductsPage() {
         [id]: value,
       }));
     }
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    if (files.length + selectedImages.length > 4) {
+      toast.error("You can only upload up to 4 images.");
+      return;
+    }
+
+    setSelectedImages((prevImages) => [...prevImages, ...files]);
   };
 
   const handleAddProduct = async (e) => {
@@ -445,36 +457,29 @@ export default function ProductsPage() {
                       </CardHeader>
                       <CardContent>
                         <div className="grid gap-2">
-                          <img
-                            alt="Product image"
-                            className="aspect-square w-full rounded-md object-cover"
-                            height="300"
-                            src={img}
-                            width="300"
-                          />
                           <div className="grid grid-cols-3 gap-2">
-                            <button>
+                            {selectedImages.map((image, idx) => (
                               <img
-                                alt="Product image"
+                                key={idx}
+                                alt={`Product image ${idx + 1}`}
                                 className="aspect-square w-full rounded-md object-cover"
                                 height="84"
-                                src={img}
+                                src={URL.createObjectURL(image)}
                                 width="84"
                               />
-                            </button>
-                            <button>
-                              <img
-                                alt="Product image"
-                                className="aspect-square w-full rounded-md object-cover"
-                                height="84"
-                                src={img}
-                                width="84"
-                              />
-                            </button>
-                            <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
-                              <Upload className="h-4 w-4 text-muted-foreground" />
-                              <span className="sr-only">Upload</span>
-                            </button>
+                            ))}
+                            {selectedImages.length < 4 && (
+                              <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">
+                                <Upload className="h-4 w-4 text-muted-foreground" />
+                                <input
+                                  type="file"
+                                  multiple
+                                  className="hidden"
+                                  accept="image/*"
+                                  onChange={handleImageChange}
+                                />
+                              </label>
+                            )}
                           </div>
                         </div>
                       </CardContent>
