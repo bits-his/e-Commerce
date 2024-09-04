@@ -32,7 +32,7 @@ export default function Pending_customer(args) {
 
     const get_customers = () => {
         _get(
-            "api/getusers",
+            "api/getusersbyrole",
             (response) => {
                 if (response.success) {
                     setP_customers(response.results)
