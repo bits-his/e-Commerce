@@ -83,7 +83,7 @@ const Storeprofile = () => {
     <Container className='mt-3'>
       <Card className='m-0'>
         <div className='d-flex justify-content-between p-3'>
-          <h5>Seller Profile</h5>
+          <h5>Shop Profile</h5>
           <Button className=' btn2 btn-primary' onClick={handleShow}>Edit Profile</Button>
         </div>
         <Card.Header className='warning' style={{ height: "6rem" }}>

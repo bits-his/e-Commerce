@@ -18,7 +18,8 @@ import Inventory from './pages/admin_dashboard/Inventory'
 import PendingOrders from './pages/seller_Dashboard/orders/Pendingordertable'
 import ApprovedOrders from './pages/seller_Dashboard/orders/ApprovedOrders'
 import TotalOrders from './pages/seller_Dashboard/orders/TotalOrders'
-import Pending_customer from './pages/admin_dashboard/Customers/Pending_customer';
+import Pending_vendor from './pages/admin_dashboard/vendors/Pending_vendors';
+import Vendors from "./pages/admin_dashboard/vendors/Vendors"
 const App = () => {
 
   return (
@@ -36,7 +37,10 @@ const App = () => {
               <Route path='customer-mgmt' >
                 <Route path='customers' element={<Customers />} />
                 <Route path='customer-reviews' element={<Product />} />
-                <Route path='pending-customers' element={<Pending_customer />} />
+              </Route>
+              <Route path='vendor-mgmt' >
+                <Route path='vendor' element={<Vendors />} />
+                <Route path='pending-vendor' element={<Pending_vendor />} />
               </Route>
               <Route path='reports' >
                 <Route path='sales' element={<Product />} />

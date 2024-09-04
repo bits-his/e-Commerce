@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  ListFilter,
-  MoreHorizontal,
   PlusCircle,
   ChevronLeft,
   Upload,
@@ -52,6 +50,9 @@ export default function ProductsPage() {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
 
   const [newProduct, setNewProduct] = useState({
@@ -61,7 +62,7 @@ export default function ProductsPage() {
     product_subcategory: "",
     product_price: 0,
     product_quantity: 0,
-    product_status: "",
+    product_status: "available",
   });
 
   const getProduct = () => {
@@ -81,6 +82,41 @@ export default function ProductsPage() {
   useEffect(() => {
     getProduct();
   }, []);
+
+  const getCategories = () => {
+    _get(
+      "api/categories",
+      (resp) => {
+        setCategories(resp.results[0]);
+      },
+      (err) => {
+        setError(err);
+      }
+    );
+  };
+  
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const getSubCategories = () => {
+    const category = newProduct.product_category;
+    _get(
+      `api/categories/types?category=${category}`,
+      (resp) => {
+        setSubCategories(resp.results[0]);
+      },
+      (err) => {
+        setError(err);
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (newProduct.product_category) {
+      getSubCategories();
+    }
+  }, [newProduct.product_category]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -110,6 +146,17 @@ export default function ProductsPage() {
         [id]: value,
       }));
     }
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    if (files.length + selectedImages.length > 4) {
+      toast.error("You can only upload up to 4 images.");
+      return;
+    }
+
+    setSelectedImages((prevImages) => [...prevImages, ...files]);
   };
 
   const handleAddProduct = async (e) => {
@@ -299,15 +346,14 @@ export default function ProductsPage() {
                                 <SelectValue placeholder="Select category" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="clothing">
-                                  Clothing
-                                </SelectItem>
-                                <SelectItem value="electronics">
-                                  Electronics
-                                </SelectItem>
-                                <SelectItem value="accessories">
-                                  Accessories
-                                </SelectItem>
+                                {categories.map((category, idx) => (
+                                  <SelectItem
+                                    key={idx}
+                                    value={category.name}
+                                  >
+                                    {category.name}
+                                  </SelectItem>
+                                ))}
                               </SelectContent>
                             </Select>
                           </div>
@@ -327,13 +373,14 @@ export default function ProductsPage() {
                                 <SelectValue placeholder="Select subcategory" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="t-shirts">
-                                  T-Shirts
-                                </SelectItem>
-                                <SelectItem value="hoodies">Hoodies</SelectItem>
-                                <SelectItem value="sweatshirts">
-                                  Sweatshirts
-                                </SelectItem>
+                                {subCategories.map((subCategory, idx) => (
+                                  <SelectItem
+                                    key={idx}
+                                    value={subCategory.type_name}
+                                  >
+                                    {subCategory.type_name}
+                                  </SelectItem>
+                                ))}
                               </SelectContent>
                             </Select>
                           </div>
@@ -397,12 +444,12 @@ export default function ProductsPage() {
                           </TableBody>
                         </Table>
                       </CardContent>
-                      <CardFooter className="justify-center border-t p-4">
+                      {/* <CardFooter className="justify-center border-t p-4">
                         <Button size="sm" variant="ghost" className="gap-1">
                           <PlusCircle className="h-3.5 w-3.5" />
                           Add Variant
                         </Button>
-                      </CardFooter>
+                      </CardFooter> */}
                     </Card>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
@@ -447,36 +494,29 @@ export default function ProductsPage() {
                       </CardHeader>
                       <CardContent>
                         <div className="grid gap-2">
-                          <img
-                            alt="Product image"
-                            className="aspect-square w-full rounded-md object-cover"
-                            height="300"
-                            src={img}
-                            width="300"
-                          />
                           <div className="grid grid-cols-3 gap-2">
-                            <button>
+                            {selectedImages.map((image, idx) => (
                               <img
-                                alt="Product image"
+                                key={idx}
+                                alt={`Product image ${idx + 1}`}
                                 className="aspect-square w-full rounded-md object-cover"
                                 height="84"
-                                src={img}
+                                src={URL.createObjectURL(image)}
                                 width="84"
                               />
-                            </button>
-                            <button>
-                              <img
-                                alt="Product image"
-                                className="aspect-square w-full rounded-md object-cover"
-                                height="84"
-                                src={img}
-                                width="84"
-                              />
-                            </button>
-                            <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
-                              <Upload className="h-4 w-4 text-muted-foreground" />
-                              <span className="sr-only">Upload</span>
-                            </button>
+                            ))}
+                            {selectedImages.length < 4 && (
+                              <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">
+                                <Upload className="h-4 w-4 text-muted-foreground" />
+                                <input
+                                  type="file"
+                                  multiple
+                                  className="hidden"
+                                  accept="image/*"
+                                  onChange={handleImageChange}
+                                />
+                              </label>
+                            )}
                           </div>
                         </div>
                       </CardContent>

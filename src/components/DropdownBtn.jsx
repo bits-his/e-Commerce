@@ -1,16 +1,13 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 const DropdownMenu = ({ title, items, isActive, onToggle, links, open }) => {
   return (
     <>
       <NavLink
-        className={open="open"
-          ? "flex items-center gap-3 rounded-lg bg-muted/90 px-3 py-2 text-primary transition-all hover:text-primary mt-2"
-          : "flex items-center gap-3 rounded-lg px-3 py-2 text-dark-foreground transition-all hover:text-primary"
-        }
+        className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary mt-2
+          ${open ? "bg-muted/90 text-primary" : "text-dark-foreground bg-white"}
+        `}
         onClick={onToggle}
       >
         {title}

@@ -27,36 +27,36 @@ function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const obj = { email, password };
-
-    _post(
-      "api/users/login",
-      obj,
-      (res) => {
-        setLoading(false);
-        // alert(JSON.stringify(res.userDetails))
-        let data = res?.userDetails.id
-        localStorage.setItem("@@toke_$$_45598",JSON.stringify(data))
-        if (res.role === "vendor") {
-          toast.success("Logged Successful");
-          navigate("/seller-dashboard");
-        } else if (res.role === "admin") {
-          toast.success("Logged Successful");
-          navigate("/admin-dashboard");
-        } else {
-          toast.error("Invalid credentials");
-        }
-      },
-      (err) => {
-        setLoading(false);
-        toast.error("An error occurred!");
-        console.log(err);
-      }
-    );
+  const handleLogin = async (e) => { 
+    e.preventDefault(); 
+    setLoading(true); 
+ 
+    const obj = { email, password }; 
+ 
+    _post( 
+      "api/users/login", 
+      obj, 
+      (res) => { 
+        setLoading(false); 
+        // alert(JSON.stringify(res.userDetails)) 
+        let data = res?.userDetails.id 
+        localStorage.setItem("@@toke_$$_45598",JSON.stringify(data)) 
+        if (res.role === "vendor") { 
+          toast.success("Logged Successful"); 
+          navigate("/seller-dashboard"); 
+        } else if (res.role === "admin") { 
+          toast.success("Logged Successful"); 
+          navigate("/admin-dashboard"); 
+        } else { 
+          toast.error("Invalid credentials"); 
+        } 
+      }, 
+      (err) => { 
+        setLoading(false); 
+        toast.error("An error occurred!"); 
+        console.log(err); 
+      } 
+    ); 
   };
 
   const handleGoogleSignIn = () => {
