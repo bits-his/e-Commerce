@@ -94,7 +94,7 @@ export default function ProductsPage() {
       }
     );
   };
-  
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -174,6 +174,26 @@ export default function ProductsPage() {
         getProduct();
         toast.success("New product added");
         setShowForm(false);
+
+        const productId = res.result[0];
+
+        if (productId) {
+          selectedImages.forEach((image) => {
+            const formData = new FormData();
+            formData.append("image", image);
+
+            _post(
+              `api/products/uploadImage/${productId}`,
+              formData,
+              (uploadRes) => {
+                console.log("Image uploaded successfully", uploadRes);
+              },
+              (uploadErr) => {
+                console.error("Error uploading image", uploadErr);
+              }
+            );
+          });
+        }
       },
 
       (err) => {
@@ -347,10 +367,7 @@ export default function ProductsPage() {
                               </SelectTrigger>
                               <SelectContent>
                                 {categories.map((category, idx) => (
-                                  <SelectItem
-                                    key={idx}
-                                    value={category.name}
-                                  >
+                                  <SelectItem key={idx} value={category.name}>
                                     {category.name}
                                   </SelectItem>
                                 ))}
