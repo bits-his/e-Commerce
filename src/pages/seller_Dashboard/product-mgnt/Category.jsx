@@ -14,14 +14,14 @@ function Category() {
     
    <div className=" items-center">
    <Form>
-    <FormGroup>
+    <FormGroup col-md={6}>
     <Label for="category">
       Add Product Category
     </Label>
     <Input
       id="category"
       name="category"
-      className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[200px] lg:w-[300px]"
+      
       placeholder="Add the product category here"
       type="text"
     />
@@ -36,6 +36,8 @@ function Category() {
       className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[200px] lg:w-[300px]"
       type="select"
     >
+     
+      <option disabled selected>Select Product category</option>
       <option>
         1
       </option>
