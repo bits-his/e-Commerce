@@ -37,8 +37,12 @@ function Category() {
     setProduct('');
     setCategory('');
     console.log(products)
+
+    if (customeProduct) {
+      setCustomeProduct(false); // Switch back to select dropdown
+    }
     
-  }
+  };
  //method for deleting product
     
  const deleteProduct = (index) => {
@@ -94,7 +98,6 @@ const toInput=(e) =>{
      name="product"
       type="select"
      // className=" rounded-lg bg-background  sm:w-[100px] md:w-[200px] lg:w-[300px]"
-     placeholder="Add the product here"
      value={product}
      onChange={toInput}
     //  onChange={(e) => setProduct(e.target.value)}
@@ -118,12 +121,16 @@ const toInput=(e) =>{
     <Input
           id="product"
           name="product"
-          placeholder="Enter custom category"
+          placeholder="Enter your product category"
           value={product}
           onChange={(e) => setProduct(e.target.value)} // Update product state with custom input
           type="text"
+          
+
+      
         />
    )
+    
   
    }
    
