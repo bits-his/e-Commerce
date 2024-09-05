@@ -90,6 +90,22 @@ function Header() {
                 <DropdownBtn
                   title={
                     <>
+                      <Users className="h-4 w-4" /> Vendors
+                    </>
+                  }
+                  items={["All Vendors", "Pending Vendors"]}
+                  links={[
+                    "/admin-dashboard/vendor-mgmt/vendor",
+                    "/admin-dashboard/vendor-mgmt/pending-vendor",
+                  ]}
+                  onToggle={() => handleToggle("vendor Management")}
+                  isActive={activeDropdown === "vendor Management"}
+                  open={pathname.includes("/vendor-mgmt")}
+                  baseLink="/vendor-mgmt"
+                />
+                <DropdownBtn
+                  title={
+                    <>
                       <LineChart className="h-4 w-4" /> Reports
                     </>
                   }
