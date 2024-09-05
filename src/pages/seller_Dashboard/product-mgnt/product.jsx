@@ -78,7 +78,7 @@ export default function ProductsPage() {
 
   const resetForm = () => {
     setNewProduct(initialProductState);
-    setImage_urls([]); // Reset image URLs as well
+    setImage_urls([]);
   };
 
   const getProduct = () => {
@@ -194,6 +194,7 @@ export default function ProductsPage() {
         getProduct();
         toast.success("New product added");
         setShowForm(false);
+        resetForm()
       })
       .catch((err) => {
         setLoading(false);
