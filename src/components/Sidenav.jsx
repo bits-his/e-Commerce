@@ -11,6 +11,7 @@ import {
   Users,
   UserPlus2,
   Store,
+  NotebookPen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import "./sidenav.css";
@@ -191,14 +192,14 @@ const Sidebar = () => {
                 /> */}
 
                 <NavLink
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
                     pathname === "/seller-dashboard/category"
                       ? "text-primary bg-muted/90"
                       : "bg-white text-dark"
                   }`}
                   to={"/seller-dashboard/category"}
                 >
-                  <Package className="h-4 w-4" />
+                  <NotebookPen className="h-4 w-4" />
                   Category
                 </NavLink>
 
