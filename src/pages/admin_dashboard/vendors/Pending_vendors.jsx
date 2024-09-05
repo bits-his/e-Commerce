@@ -63,9 +63,12 @@ export default function Pending_customer({ args, id }) {
             "api/updatestatus",
             obj,
             (res) => {
-                setLoading(false);
-                getProduct();
-                toast.success("Status updated to ${status}");
+                if (res.success) {
+                    toast.success("venue updated successfully");
+                    get_customers();
+                } else { 
+                    toast.error("Error updating venue status");
+                }
             },
             (err) => {
                 setLoading(false);
@@ -75,22 +78,27 @@ export default function Pending_customer({ args, id }) {
         );
     };
 
-    const handledeleteusers = (id, status) => {
+  const handledeleteusers = (id) => {
+  if (window.confirm("Are you sure you want to delete this user?")) {
+    _delete(
+      `api/deleterejectuser?id=${id}`,
+      { id },
+      (response) => {
+        if (response.success) {
+          toast.success("User deleted successfully");;  // Refresh the list after deletion
+          window.location.reload();  
+          get_customers()// Refresh the page after deletion
+        }
+      },
+      (err) => {
+        toast.error("An error occurred while deleting the user");
+        console.error(err);
+      }
+    );
+  }
+};
 
-        _delete(
-            "api/deleteusers",
-            (res) => {
-                setLoading(false);
-                getProduct();
-                window.confirm("Are you sure you want to delete");
-            },
-            (err) => {
-                setLoading(false);
-                toast.error("An error occurred while updating status");
-                console.error(err);
-            }
-        );
-    };
+
 
 
 
@@ -115,117 +123,134 @@ export default function Pending_customer({ args, id }) {
     const navigate = useNavigate();
 
     return (
-        <>
-            <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[92vh]">
-                <Card x-chunk="dashboard-06-chunk-0">
-                    <CardHeader>
-                        <div className="flex items-center justify-between">
-                            <CardTitle>Pending Vendors</CardTitle>
-                            <div className="relative ml-auto flex-1 md:grow-0">
-                                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    type="search"
-                                    placeholder="Search..."
-                                    className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[200px] lg:w-[300px]"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                />
-                            </div>
-                        </div>
-                    </CardHeader>
+      <>
+        <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[92vh]">
+          <Card x-chunk="dashboard-06-chunk-0">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle>Pending Vendors</CardTitle>
+                <div className="relative ml-auto flex-1 md:grow-0">
+                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="search"
+                    placeholder="Search..."
+                    className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[200px] lg:w-[300px]"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </div>
+            </CardHeader>
 
-                    <CardContent>
-                        <Table>
-                            {/* {JSON.stringify(filteredCustomers)} */}
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>ID</TableHead>
-                                    <TableHead>Name</TableHead>
-                                    <TableHead className="hidden md:table-cell ">Email</TableHead>
-                                    <TableHead className="">Phone</TableHead>
-                                    <TableHead className="hidden md:table-cell ">Role</TableHead>
-                                    <TableHead className="hidden md:table-cell ">Status</TableHead>
-                                    <TableHead className="text-center">Action</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {filteredCustomers.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan="7" className="text-center">
-                                            No customers found
-                                        </TableCell>
-                                    </TableRow>
-                                ) : (
-                                        filteredCustomers.map((customer) => (
-                                            <TableRow key={customer.id}>
-                                                <TableCell>{customer.id}</TableCell>
-                                                <TableCell>{customer.username}</TableCell>
-                                                <TableCell className="hidden md:table-cell ">
-                                                    {customer.email}
-                                                </TableCell>
-                                                <TableCell className="">
-                                                    {customer.shopcontact}
-                                                </TableCell>
-                                                <TableCell className="hidden md:table-cell ">
-                                                    {customer.role}
-                                                </TableCell>
-                                                <TableCell className="hidden md:table-cell ">
-                                                    {customer.status}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <div className="justify-center items-center gap-2 md:flex sm:flex">
-                                                        <Button
-                                                            variant="success"
-                                                            size="icon"
-                                                            className=" w-90 p-2"
-                                                            onClick={() => handleView(customer)}
-                                                        >
-                                                            Veiw
-                                                        </Button>
-                                                        <Button
-                                                            variant="warning"
-                                                            size="icon"
-                                                            className="w-90 p-2"
-                                                            onClick={() => handledeleteusers(customer.id, 'rejected')}
-                                                        >
-                                                            Reject
-                                                        </Button>
-                                                        <Button
-                                                            variant="success"
-                                                            size="icon"
-                                                            className="w-90 p-2"
-                                                            onClick={() => handlechangestatus(customer.id, 'approved')}
-                                                        >
-                                                            Approved
-                                                        </Button>
-                                                    </div>
-                                                </TableCell>
-                                            </TableRow>
-                                        ))
-                                    )}
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
+            <CardContent>
+              <Table>
+                {/* {JSON.stringify(filteredCustomers)} */}
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>ID</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead className="hidden md:table-cell ">
+                      Email
+                    </TableHead>
+                    <TableHead className="">Phone</TableHead>
+                    <TableHead className="hidden md:table-cell ">
+                      Role
+                    </TableHead>
+                    <TableHead className="hidden md:table-cell ">
+                      Status
+                    </TableHead>
+                    <TableHead className="text-center">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredCustomers.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan="7" className="text-center">
+                        No customers found
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    filteredCustomers.map((customer) => (
+                      <TableRow key={customer.id}>
+                        <TableCell>{customer.id}</TableCell>
+                        <TableCell>{customer.username}</TableCell>
+                        <TableCell className="hidden md:table-cell ">
+                          {customer.email}
+                        </TableCell>
+                        <TableCell className="">
+                          {customer.shopcontact}
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell ">
+                          {customer.role}
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell ">
+                          {customer.status}
+                        </TableCell>
+                        <TableCell>
+                          <div className="justify-center items-center gap-2 md:flex sm:flex">
+                            <Button
+                              variant="success"
+                              size="icon"
+                              className=" w-90 p-2"
+                              onClick={() => handleView(customer)}
+                            >
+                              Veiw
+                            </Button>
+                            <Button
+                              variant="warning"
+                              size="icon"
+                              className="w-90 p-2"
+                              onClick={() => handledeleteusers(customer.id)}
+                            >
+                              Reject
+                            </Button>
 
-                <Modal isOpen={isModalOpen} toggle={handleCloseModal} {...args}>
-                    <ModalHeader toggle={handleCloseModal}>Customer Details</ModalHeader>
-                    <ModalBody>
-                        {selectedCustomer && (
-                            <div>
-                                <p><strong>Name:</strong> {selectedCustomer.username}</p>
-                                <p><strong>Email:</strong> {selectedCustomer.email}</p>
-                                <p><strong>Phone:</strong> {selectedCustomer.phone}</p>
-                            </div>
-                        )}
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="secondary" onClick={handleCloseModal}>
-                            Close
-                        </Button>
-                    </ModalFooter>
-                </Modal>
-            </main>
-        </>
+                            <Button
+                              variant="success"
+                              size="icon"
+                              className="w-90 p-2"
+                              onClick={() =>
+                                handlechangestatus(customer.id, "approved")
+                              }
+                            >
+                              Approved
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          <Modal isOpen={isModalOpen} toggle={handleCloseModal} {...args}>
+            <ModalHeader toggle={handleCloseModal}>
+              Customer Details
+            </ModalHeader>
+            <ModalBody>
+              {selectedCustomer && (
+                <div>
+                  <p>
+                    <strong>Name:</strong> {selectedCustomer.username}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {selectedCustomer.email}
+                  </p>
+                  <p>
+                    <strong>Phone:</strong> {selectedCustomer.phone}
+                  </p>
+                </div>
+              )}
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={handleCloseModal}>
+                Close
+              </Button>
+            </ModalFooter>
+          </Modal>
+        </main>
+      </>
     );
 }
