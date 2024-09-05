@@ -40,7 +40,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
 import img from "./placeholder.svg";
-import { _get, _post, _put, _delete, separator } from "../../../utils/Helper";
+import { _get, _post, _put, _delete, separator, server_url } from "../../../utils/Helper";
 import { Spinner } from "reactstrap";
 
 export default function ProductsPage() {
@@ -168,65 +168,36 @@ export default function ProductsPage() {
     setImage_urls((prevImages) => [...prevImages, ...files]);
   };
 
-  const handleAddProduct = async (e) => {
+  const handleAddProduct = (e) => {
+   
     e.preventDefault();
-
-    // Form validation start here
-    if (
-      !newProduct.product_name ||
-      newProduct.product_name.trim() === "" ||
-      !newProduct.product_description ||
-      newProduct.product_description.trim() === ""
-    ) {
-      toast.error("Please fill in the product details.");
-      return;
-    }
-
-    if (
-      !newProduct.product_category ||
-      newProduct.product_category.trim() === ""
-    ) {
-      toast.error("Please select the product category.");
-      return;
-    }
-    if (
-      !newProduct.product_quantity ||
-      newProduct.product_quantity.trim() === ""
-    ) {
-      toast.error("Please Indicate the number of items available in stock.");
-      return;
-    }
-    if (!newProduct.product_price || newProduct.product_price.trim() === "") {
-      toast.error("Please Indicate the price of the item.");
-      return;
-    }
-    if (!newProduct.product_status || newProduct.product_status.trim() === "") {
-      toast.error("Please Indicate status of the product.");
-      return;
-    }
-
     setLoading(true);
-    // setProducts([...products, newProduct]);
-    const obj = { ...newProduct, shop_id: parseInt(userDetails) };
+    const formData = new FormData();
+    
 
-    _post(
-      "api/products",
-      obj,
-      (res) => {
+    Object.keys(newProduct).forEach((i) => formData.append(i, newProduct[i]));
+    image_urls.forEach(image => formData.append('images', image))
+    formData.append('shop_id', parseInt(userDetails))
+  
+    fetch(`${server_url}/api/products`, {
+      method: "POST",
+      body: formData,
+      // headers: { 
+      //   'Authorization': token }
+
+    })
+      .then((raw) => raw.json())
+      .then((res) => {
         setLoading(false);
-        // console.log(obj)
-        getProduct();
-        toast.success("New product added");
-        setShowForm(false);
-        resetForm();
-      },
-
-      (err) => {
+            getProduct();
+            toast.success("New product added");
+            setShowForm(false);
+      })
+      .catch((err) => {
         setLoading(false);
         toast.error("An error occurred!");
         console.log(err);
-      }
-    );
+      });
   };
 
   const handleEditButtonClick = (product) => {
