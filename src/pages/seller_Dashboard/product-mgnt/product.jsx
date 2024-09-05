@@ -61,6 +61,8 @@ export default function ProductsPage() {
   const [image_urls, setImage_urls] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [available, setAvailable] = useState([]);
+  const [outOfStock, setOutOfStock] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
 
   const initialProductState = {
@@ -265,6 +267,14 @@ export default function ProductsPage() {
   const filteredProducts = products.filter((product) =>
     product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  useEffect(() => {
+    setAvailable(products.filter(product => product.product_status === 'available'))
+  , [products]})
+
+  useEffect(() => {
+    setOutOfStock(products.filter(product => product.product_status === 'out of stock'))
+  , [products]})
 
   return (
     <>
@@ -644,6 +654,218 @@ export default function ProductsPage() {
                             </TableRow>
                           ) : (
                             filteredProducts.map((product, idx) => (
+                              <TableRow key={idx}>
+                                <TableCell className="hidden sm:table-cell p-2">
+                                  <img
+                                    alt="Product image"
+                                    className="aspect-square rounded-md object-cover"
+                                    height="64"
+                                    src={img}
+                                    width="64"
+                                  />
+                                </TableCell>
+                                <TableCell className="font-medium">
+                                  {product.product_name}
+                                </TableCell>
+                                <TableCell className="text-center">
+                                  {product.product_status === "available" ? (
+                                    <Badge variant="outline">
+                                      {product.product_status}
+                                    </Badge>
+                                  ) : (
+                                    <Badge variant="destructive">
+                                      Out of Stock
+                                    </Badge>
+                                  )}
+                                </TableCell>
+                                <TableCell className="hidden md:table-cell text-end">
+                                  {separator(product.product_price)}
+                                </TableCell>
+                                <TableCell className="hidden md:table-cell text-center">
+                                  {product.product_quantity}
+                                </TableCell>
+                                <TableCell className="p-2">
+                                  <div className="justify-center items-center gap-2 md:flex sm:flex">
+                                    <Button
+                                      variant="warning"
+                                      size="icon"
+                                      className="h-7 w-7"
+                                      onClick={() =>
+                                        handleEditButtonClick(product)
+                                      }
+                                    >
+                                      <Pencil className="h-4 w-4" />
+                                    </Button>
+                                    <Button
+                                      variant="destructive"
+                                      size="icon"
+                                      className="h-7 w-7"
+                                      onClick={() =>
+                                        handleDeleteProduct(product.id)
+                                      }
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            ))
+                          )}
+                        </TableBody>
+                      </Table>
+                    </CardContent>
+                    <CardFooter>
+                      <div className="text-xs text-muted-foreground">
+                        pagnation
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+                <TabsContent value="avaliable">
+                  <Card x-chunk="dashboard-06-chunk-0">
+                    <CardHeader>
+                      <CardTitle>Products</CardTitle>
+                      <CardDescription>
+                        Manage your products and view their sales performance.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead className="hidden w-[100px] sm:table-cell">
+                              <span className="sr-only">Image</span>
+                            </TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead className="text-center">
+                              Status
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell text-center">
+                              Price
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell text-center">
+                              In stock
+                            </TableHead>
+                            <TableHead className="text-center">
+                              Actions
+                            </TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {available.length === 0 ? (
+                            <TableRow>
+                              <TableCell colSpan="6" className="text-center">
+                                No product(s)
+                              </TableCell>
+                            </TableRow>
+                          ) : (
+                            available.map((product, idx) => (
+                              <TableRow key={idx}>
+                                <TableCell className="hidden sm:table-cell p-2">
+                                  <img
+                                    alt="Product image"
+                                    className="aspect-square rounded-md object-cover"
+                                    height="64"
+                                    src={img}
+                                    width="64"
+                                  />
+                                </TableCell>
+                                <TableCell className="font-medium">
+                                  {product.product_name}
+                                </TableCell>
+                                <TableCell className="text-center">
+                                  {product.product_status === "available" ? (
+                                    <Badge variant="outline">
+                                      {product.product_status}
+                                    </Badge>
+                                  ) : (
+                                    <Badge variant="destructive">
+                                      Out of Stock
+                                    </Badge>
+                                  )}
+                                </TableCell>
+                                <TableCell className="hidden md:table-cell text-end">
+                                  {separator(product.product_price)}
+                                </TableCell>
+                                <TableCell className="hidden md:table-cell text-center">
+                                  {product.product_quantity}
+                                </TableCell>
+                                <TableCell className="p-2">
+                                  <div className="justify-center items-center gap-2 md:flex sm:flex">
+                                    <Button
+                                      variant="warning"
+                                      size="icon"
+                                      className="h-7 w-7"
+                                      onClick={() =>
+                                        handleEditButtonClick(product)
+                                      }
+                                    >
+                                      <Pencil className="h-4 w-4" />
+                                    </Button>
+                                    <Button
+                                      variant="destructive"
+                                      size="icon"
+                                      className="h-7 w-7"
+                                      onClick={() =>
+                                        handleDeleteProduct(product.id)
+                                      }
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            ))
+                          )}
+                        </TableBody>
+                      </Table>
+                    </CardContent>
+                    <CardFooter>
+                      <div className="text-xs text-muted-foreground">
+                        pagnation
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+                <TabsContent value="out-of-stock">
+                  <Card x-chunk="dashboard-06-chunk-0">
+                    <CardHeader>
+                      <CardTitle>Products</CardTitle>
+                      <CardDescription>
+                        Manage your products and view their sales performance.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead className="hidden w-[100px] sm:table-cell">
+                              <span className="sr-only">Image</span>
+                            </TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead className="text-center">
+                              Status
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell text-center">
+                              Price
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell text-center">
+                              In stock
+                            </TableHead>
+                            <TableHead className="text-center">
+                              Actions
+                            </TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {outOfStock.length === 0 ? (
+                            <TableRow>
+                              <TableCell colSpan="6" className="text-center">
+                                No product(s)
+                              </TableCell>
+                            </TableRow>
+                          ) : (
+                            outOfStock.map((product, idx) => (
                               <TableRow key={idx}>
                                 <TableCell className="hidden sm:table-cell p-2">
                                   <img
