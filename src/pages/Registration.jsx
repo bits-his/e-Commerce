@@ -33,6 +33,13 @@ function Registration() {
     shopaddress: "",
     shopcontact: "",
   });
+
+  //checking the active tab
+  // const [activeTab, setActiveTab] = useState("vendor");
+  // const handleTabChange =(value) =>{
+  //   setActiveTab(value);
+  // }
+
   const [Loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
@@ -59,30 +66,87 @@ function Registration() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password === formData.confirmPassword) {
-      setLoading(true);
-      const obj = { ...formData };
-      delete obj.confirmPassword;
-
-      _post(
-        "api/users/create",
-        obj,
-        (res) => {
-          setLoading(false);
-          toast.success("Created Successfully");
-          navigate("/");
-        },
-
-        (err) => {
-          setLoading(false);
-          toast.error("An error occurred!");
-          console.log(err);
-        }
-      );
+    //Form validation
+    if(formData.role === "vendor") {
+      if (!formData.shopname||!formData.shopaddress||!formData.shopcontact||!formData.email){
+        toast.error("Please fill in the shop details");
+        return;
+      }
+  
+      if (!formData.firstname||!formData.lastname||!formData.username){
+        toast.error("Please fill in the shop owner details");
+        return;
+      }
+      if(!formData.password ||!formData.confirmPassword){
+        toast.error("Please fill your password");
+        return;
+      }
+      if (formData.password === formData.confirmPassword) {
+        setLoading(true);
+        const obj = { ...formData };
+        delete obj.confirmPassword;
+  
+        _post(
+          "api/users/create",
+          obj,
+          (res) => {
+            setLoading(false);
+            toast.success("Created Successfully");
+            navigate("/");
+          },
+  
+          (err) => {
+            setLoading(false);
+            toast.error("An error occurred!");
+            console.log(err);
+          }
+        );
+      } else {
+        toast.error("Password input does not match!");
+      }
     } else {
-      toast.error("Password input does not match!");
+
+      if (!formData.firstname||!formData.lastname||!formData.username||!formData.email){
+        toast.error("Please fill in the your details");
+        return;
+      }
+      if(!formData.password||!formData.confirmPassword){
+        toast.error("please fill your password");
+        
+      }
+      if (formData.password === formData.confirmPassword) {
+        setLoading(true);
+        const obj = { ...formData };
+        delete obj.confirmPassword;
+  
+        _post(
+          "api/users/create",
+          obj,
+          (res) => {
+            setLoading(false);
+            toast.success("Created Successfully");
+            navigate("/");
+          },
+  
+          (err) => {
+            setLoading(false);
+            toast.error("An error occurred!");
+            console.log(err);
+          }
+        );
+      } else {
+        toast.error("Password input does not match!");
+      }
+
+
+
+    };
+
+
+
+
+
     }
-  };
 
   const handleGoogleSignUp = () => {
     toast.error("Can't sign up with google now");
@@ -105,7 +169,7 @@ function Registration() {
               <CardTitle className="text-xl text-center">
                 Vendor sign Up
               </CardTitle>
-              <CardDescription>Enter your information</CardDescription>
+              <CardDescription>Enter your shop information</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="grid gap-4">
@@ -141,7 +205,7 @@ function Registration() {
                     <input
                       id="shopcontact"
                       name="shopcontact"
-                      type="text"
+                      type="number"
                       placeholder="7012345678"
                       value={formData.shopcontact}
                       onChange={handleChange}

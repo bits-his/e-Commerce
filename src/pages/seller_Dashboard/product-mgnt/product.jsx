@@ -56,7 +56,7 @@ export default function ProductsPage() {
   const [subCategories, setSubCategories] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
 
-  const [newProduct, setNewProduct] = useState({
+  const initialProductState = {
     product_name: "",
     product_description: "",
     product_category: "",
@@ -64,7 +64,15 @@ export default function ProductsPage() {
     product_price: 0,
     product_quantity: 0,
     product_status: "available",
-  });
+    image_urls: []
+  };
+
+  const [newProduct, setNewProduct] = useState(initialProductState);
+
+  const resetForm = () => {
+    setNewProduct(initialProductState);
+    setImage_urls([]); // Reset image URLs as well
+  };
 
   const getProduct = () => {
     _get(
@@ -95,7 +103,7 @@ export default function ProductsPage() {
       }
     );
   };
-  
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -162,20 +170,44 @@ export default function ProductsPage() {
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    const imageUrls = await Promise.all(
-      image_urls.map((image) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = (error) => reject(error);
-          reader.readAsDataURL(image); // Convert image to base64 URL
-        });
-      })
-    );
+    // Form validation start here
+    if (
+      !newProduct.product_name ||
+      newProduct.product_name.trim() === "" ||
+      !newProduct.product_description ||
+      newProduct.product_description.trim() === ""
+    ) {
+      toast.error("Please fill in the product details.");
+      return;
+    }
+
+    if (
+      !newProduct.product_category ||
+      newProduct.product_category.trim() === ""
+    ) {
+      toast.error("Please select the product category.");
+      return;
+    }
+    if (
+      !newProduct.product_quantity ||
+      newProduct.product_quantity.trim() === ""
+    ) {
+      toast.error("Please Indicate the number of items available in stock.");
+      return;
+    }
+    if (!newProduct.product_price || newProduct.product_price.trim() === "") {
+      toast.error("Please Indicate the price of the item.");
+      return;
+    }
+    if (!newProduct.product_status || newProduct.product_status.trim() === "") {
+      toast.error("Please Indicate status of the product.");
+      return;
+    }
+
+    setLoading(true);
     // setProducts([...products, newProduct]);
-    const obj = { ...newProduct, shop_id: parseInt(userDetails), image_urls: imageUrls, };
+    const obj = { ...newProduct, shop_id: parseInt(userDetails) };
 
     _post(
       "api/products",
@@ -186,6 +218,7 @@ export default function ProductsPage() {
         getProduct();
         toast.success("New product added");
         setShowForm(false);
+        resetForm();
       },
 
       (err) => {
@@ -288,7 +321,13 @@ export default function ProductsPage() {
                       onClick={editMode ? handleEditProduct : handleAddProduct}
                       disabled={Loading}
                     >
-                      {Loading ? <><Spinner className="h-4 w-4"/></> : <>Save Product</>}
+                      {Loading ? (
+                        <>
+                          <Spinner className="h-4 w-4" />
+                        </>
+                      ) : (
+                        <>Save Product</>
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -305,7 +344,9 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_name">Name</Label>
+                            <Label htmlFor="product_name">
+                              <span className="text-danger">* </span>Name
+                            </Label>
                             <Input
                               id="product_name"
                               type="text"
@@ -321,6 +362,8 @@ export default function ProductsPage() {
                           </div>
                           <div className="grid gap-3">
                             <Label htmlFor="product_description">
+                              {" "}
+                              <span className="text-danger">* </span>
                               Description
                             </Label>
                             <Textarea
@@ -346,7 +389,9 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6 sm:grid-cols-3">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_category">Category</Label>
+                            <Label htmlFor="product_category">
+                              <span className="text-danger">* </span>Category
+                            </Label>
                             <Select
                               onValueChange={(value) =>
                                 handleSelectChange("product_category", value)
@@ -360,10 +405,7 @@ export default function ProductsPage() {
                               </SelectTrigger>
                               <SelectContent>
                                 {categories.map((category, idx) => (
-                                  <SelectItem
-                                    key={idx}
-                                    value={category.name}
-                                  >
+                                  <SelectItem key={idx} value={category.name}>
                                     {category.name}
                                   </SelectItem>
                                 ))}
@@ -402,7 +444,9 @@ export default function ProductsPage() {
                     </Card>
                     <Card x-chunk="dashboard-07-chunk-1">
                       <CardHeader>
-                        <CardTitle>Stock</CardTitle>
+                        <CardTitle>
+                          <span className="text-danger">* </span>Stock
+                        </CardTitle>
                         <CardDescription>Quantity of product</CardDescription>
                       </CardHeader>
                       <CardContent>
@@ -420,7 +464,7 @@ export default function ProductsPage() {
                                   htmlFor="product_quantity"
                                   className="sr-only"
                                 >
-                                  Stock
+                                  <span className="text-danger">* </span>
                                 </Label>
                                 <Input
                                   id="product_quantity"
@@ -438,6 +482,7 @@ export default function ProductsPage() {
                                   htmlFor="product_price"
                                   className="sr-only"
                                 >
+                                  <span className="text-danger">* </span>
                                   Price
                                 </Label>
                                 <Input
@@ -473,7 +518,9 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_status">Status</Label>
+                            <Label htmlFor="product_status">
+                              <span className="text-danger">* </span>Status
+                            </Label>
                             <Select
                               onValueChange={(value) =>
                                 handleSelectChange("product_status", value)
@@ -503,7 +550,9 @@ export default function ProductsPage() {
                       x-chunk="dashboard-07-chunk-4"
                     >
                       <CardHeader>
-                        <CardTitle>Product Images</CardTitle>
+                        <CardTitle>
+                          <span className="text-danger">* </span>Product Images
+                        </CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="grid gap-2">
