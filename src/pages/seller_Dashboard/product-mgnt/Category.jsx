@@ -4,19 +4,19 @@ import { CardHeader, CardTitle, Card } from "react-bootstrap";
 import { Form, FormGroup, Label, Input, Button, Table } from "reactstrap";
 
 function Category() {
-  // State to store the current input and the list of categories
+
   const [category, setCategory] = useState("");
   const [categoryList, setCategoryList] = useState([]);
 
-  // Handler for adding the new category to the list
+ 
   const handleAddCategory = () => {
     if (category.trim()) {
       setCategoryList((prevList) => [...prevList, category]);
-      setCategory(""); // Clear input after adding
+      setCategory(""); 
     }
   };
 
-  // Handler for deleting a category from the list
+ 
   const handleDeleteCategory = (indexToDelete) => {
     setCategoryList((prevList) =>
       prevList.filter((_, index) => index !== indexToDelete)
@@ -41,7 +41,7 @@ function Category() {
                   placeholder="Add the product category here"
                   type="text"
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)} // Handle input change
+                  onChange={(e) => setCategory(e.target.value)} 
                 />
               </FormGroup>
               <Button color="primary" onClick={handleAddCategory}>
@@ -49,7 +49,6 @@ function Category() {
               </Button>
             </Form>
 
-            {/* Display the list of categories in a table */}
             {categoryList.length > 0 && (
               <Table striped className="mt-4">
                 <thead>
