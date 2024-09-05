@@ -40,7 +40,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
 import img from "./placeholder.svg";
-import { _get, _post, _put, _delete, separator, server_url } from "../../../utils/Helper";
+import {
+  _get,
+  _post,
+  _put,
+  _delete,
+  separator,
+  server_url,
+} from "../../../utils/Helper";
 import { Spinner } from "reactstrap";
 
 export default function ProductsPage() {
@@ -64,7 +71,7 @@ export default function ProductsPage() {
     product_price: 0,
     product_quantity: 0,
     product_status: "available",
-    image_urls: []
+    image_urls: [],
   };
 
   const [newProduct, setNewProduct] = useState(initialProductState);
@@ -169,29 +176,24 @@ export default function ProductsPage() {
   };
 
   const handleAddProduct = (e) => {
-   
     e.preventDefault();
     setLoading(true);
     const formData = new FormData();
-    
 
     Object.keys(newProduct).forEach((i) => formData.append(i, newProduct[i]));
-    image_urls.forEach(image => formData.append('images', image))
-    formData.append('shop_id', parseInt(userDetails))
-  
+    image_urls.forEach((image) => formData.append("images", image));
+    formData.append("shop_id", parseInt(userDetails));
+
     fetch(`${server_url}/api/products`, {
       method: "POST",
       body: formData,
-      // headers: { 
-      //   'Authorization': token }
-
     })
       .then((raw) => raw.json())
       .then((res) => {
         setLoading(false);
-            getProduct();
-            toast.success("New product added");
-            setShowForm(false);
+        getProduct();
+        toast.success("New product added");
+        setShowForm(false);
       })
       .catch((err) => {
         setLoading(false);
@@ -266,8 +268,6 @@ export default function ProductsPage() {
   return (
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
-        {/* {JSON.stringify(parseInt("hhjhj"))} */}
-
         <div className="flex flex-col sm:gap-4 sm:py-4">
           {showForm ? (
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
