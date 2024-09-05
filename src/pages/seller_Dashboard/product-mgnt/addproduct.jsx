@@ -147,7 +147,7 @@ const AddProductPage = () => {
                       value={product.category}
                       onChange={handleChange}
                     >
-                      <option value="">Select a category</option>
+                      <option value="">Select a category77</option>
                       <option>Category 1</option>
                       <option>Category 2</option>
                       <option>Category 3</option>

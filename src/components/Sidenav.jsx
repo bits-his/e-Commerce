@@ -177,6 +177,33 @@ const Sidebar = () => {
                   isActive={activeDropdown === "Product Management"}
                   open={pathname.includes("/product-mgmt")}
                 />
+                {/* adding subcategory */}
+                
+                {/* <DropdownBtn
+                  title={
+                    <>
+                      <Package className="h-4 w-4" /> Category
+                    </>
+                  }
+                  items={["Category"]}
+                  links={["/seller-dashboard/category", ""]}
+                  onToggle={() => handleToggle("Product Management")}
+                 // isActive={activeDropdown === "Product Management"}
+                  open={pathname.includes("/seller-dashboard")}
+                /> */}
+                
+                <NavLink
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+                pathname === "/seller-dashboard/category"
+                  ? "text-primary bg-muted/90"
+                  : "bg-white text-dark"
+                }`}
+              to={"/seller-dashboard/category" }
+            >
+              <Package className="h-4 w-4" />
+              Category
+            </NavLink>
+
                 <DropdownBtn
                   title={
                     <>
