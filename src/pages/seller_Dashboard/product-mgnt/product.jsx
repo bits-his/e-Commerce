@@ -41,6 +41,7 @@ import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
 import img from "./placeholder.svg";
 import { _get, _post, _put, _delete, separator } from "../../../utils/Helper";
+import { Spinner } from "reactstrap";
 
 export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
@@ -50,7 +51,7 @@ export default function ProductsPage() {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedImages, setSelectedImages] = useState([]);
+  const [image_urls, setImage_urls] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
@@ -151,26 +152,37 @@ export default function ProductsPage() {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    if (files.length + selectedImages.length > 4) {
+    if (files.length + image_urls.length > 4) {
       toast.error("You can only upload up to 4 images.");
       return;
     }
 
-    setSelectedImages((prevImages) => [...prevImages, ...files]);
+    setImage_urls((prevImages) => [...prevImages, ...files]);
   };
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
-
     setLoading(true);
+
+    const imageUrls = await Promise.all(
+      image_urls.map((image) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject(error);
+          reader.readAsDataURL(image); // Convert image to base64 URL
+        });
+      })
+    );
     // setProducts([...products, newProduct]);
-    const obj = { ...newProduct, shop_id: parseInt(userDetails) };
+    const obj = { ...newProduct, shop_id: parseInt(userDetails), image_urls: imageUrls, };
 
     _post(
       "api/products",
       obj,
       (res) => {
         setLoading(false);
+        // console.log(obj)
         getProduct();
         toast.success("New product added");
         setShowForm(false);
@@ -274,8 +286,9 @@ export default function ProductsPage() {
                     <Button
                       size="sm"
                       onClick={editMode ? handleEditProduct : handleAddProduct}
+                      disabled={Loading}
                     >
-                      Save Product
+                      {Loading ? <><Spinner className="h-4 w-4"/></> : <>Save Product</>}
                     </Button>
                   </div>
                 </div>
@@ -495,7 +508,7 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 gap-2">
-                            {selectedImages.map((image, idx) => (
+                            {image_urls.map((image, idx) => (
                               <img
                                 key={idx}
                                 alt={`Product image ${idx + 1}`}
@@ -505,7 +518,7 @@ export default function ProductsPage() {
                                 width="84"
                               />
                             ))}
-                            {selectedImages.length < 4 && (
+                            {image_urls.length < 4 && (
                               <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">
                                 <Upload className="h-4 w-4 text-muted-foreground" />
                                 <input
