@@ -40,7 +40,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
 import img from "./placeholder.svg";
-import { _get, _post, _put, _delete, separator } from "../../../utils/Helper";
+import {
+  _get,
+  _post,
+  _put,
+  _delete,
+  separator,
+  server_url,
+} from "../../../utils/Helper";
+import { Spinner } from "reactstrap";
 
 export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
@@ -50,12 +58,12 @@ export default function ProductsPage() {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedImages, setSelectedImages] = useState([]);
+  const [image_urls, setImage_urls] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
 
-  const [newProduct, setNewProduct] = useState({
+  const initialProductState = {
     product_name: "",
     product_description: "",
     product_category: "",
@@ -63,7 +71,15 @@ export default function ProductsPage() {
     product_price: 0,
     product_quantity: 0,
     product_status: "available",
-  });
+    image_urls: [],
+  };
+
+  const [newProduct, setNewProduct] = useState(initialProductState);
+
+  const resetForm = () => {
+    setNewProduct(initialProductState);
+    setImage_urls([]);
+  };
 
   const getProduct = () => {
     _get(
@@ -94,7 +110,7 @@ export default function ProductsPage() {
       }
     );
   };
-  
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -151,72 +167,40 @@ export default function ProductsPage() {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    if (files.length + selectedImages.length > 4) {
+    if (files.length + image_urls.length > 4) {
       toast.error("You can only upload up to 4 images.");
       return;
     }
 
-    setSelectedImages((prevImages) => [...prevImages, ...files]);
+    setImage_urls((prevImages) => [...prevImages, ...files]);
   };
 
-  const handleAddProduct = async (e) => {
+  const handleAddProduct = (e) => {
     e.preventDefault();
-
- // Form validation start here
-if (
-  (!newProduct.product_name || newProduct.product_name.trim() === "") ||
-  (!newProduct.product_description || newProduct.product_description.trim() === "")
-) {
-  toast.error("Please fill in the product details.");
-  return;
-}
-
-if (
-  (!newProduct.product_category || newProduct.product_category.trim() === "") 
-) {
-  toast.error("Please select the product category.");
-  return;
-}
-if (
-  (!newProduct.product_quantity || newProduct.product_quantity.trim() === "") 
-) {
-  toast.error("Please Indicate the number of items available in stock.");
-  return;
-}
-if (
-  (!newProduct.product_price || newProduct.product_price.trim() === "") 
-) {
-  toast.error("Please Indicate the price of the item.");
-  return;
-} 
-if (
-  (!newProduct.product_status || newProduct.product_status.trim() === "") 
-) {
-  toast.error("Please Indicate status of the product.");
-  return;
-}
-
-
     setLoading(true);
-    // setProducts([...products, newProduct]);
-    const obj = { ...newProduct, shop_id: parseInt(userDetails) };
+    const formData = new FormData();
 
-    _post(
-      "api/products",
-      obj,
-      (res) => {
+    Object.keys(newProduct).forEach((i) => formData.append(i, newProduct[i]));
+    image_urls.forEach((image) => formData.append("images", image));
+    formData.append("shop_id", parseInt(userDetails));
+
+    fetch(`${server_url}/api/products`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((raw) => raw.json())
+      .then((res) => {
         setLoading(false);
         getProduct();
         toast.success("New product added");
         setShowForm(false);
-      },
-
-      (err) => {
+        resetForm()
+      })
+      .catch((err) => {
         setLoading(false);
         toast.error("An error occurred!");
         console.log(err);
-      }
-    );
+      });
   };
 
   const handleEditButtonClick = (product) => {
@@ -285,8 +269,6 @@ if (
   return (
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
-        {/* {JSON.stringify(parseInt("hhjhj"))} */}
-
         <div className="flex flex-col sm:gap-4 sm:py-4">
           {showForm ? (
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -309,8 +291,15 @@ if (
                     <Button
                       size="sm"
                       onClick={editMode ? handleEditProduct : handleAddProduct}
+                      disabled={Loading}
                     >
-                      Save Product
+                      {Loading ? (
+                        <>
+                          <Spinner className="h-4 w-4" />
+                        </>
+                      ) : (
+                        <>Save Product</>
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -327,24 +316,26 @@ if (
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                          <Label htmlFor="product_name"><span  className="text-danger">* </span>Name</Label>
-                           <Input
+                            <Label htmlFor="product_name">
+                              <span className="text-danger">* </span>Name
+                            </Label>
+                            <Input
                               id="product_name"
                               type="text"
                               className="w-full"
                               placeholder="Gamer Gear Pro Controller"
-                              
                               value={
                                 editMode
                                   ? currentProduct?.product_name
                                   : newProduct.product_name
                               }
                               onChange={handleInputChange}
-                              
                             />
                           </div>
                           <div className="grid gap-3">
-                            <Label htmlFor="product_description"> <span  className="text-danger">* </span>
+                            <Label htmlFor="product_description">
+                              {" "}
+                              <span className="text-danger">* </span>
                               Description
                             </Label>
                             <Textarea
@@ -370,7 +361,9 @@ if (
                       <CardContent>
                         <div className="grid gap-6 sm:grid-cols-3">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_category"><span  className="text-danger">* </span>Category</Label>
+                            <Label htmlFor="product_category">
+                              <span className="text-danger">* </span>Category
+                            </Label>
                             <Select
                               onValueChange={(value) =>
                                 handleSelectChange("product_category", value)
@@ -384,10 +377,7 @@ if (
                               </SelectTrigger>
                               <SelectContent>
                                 {categories.map((category, idx) => (
-                                  <SelectItem
-                                    key={idx}
-                                    value={category.name}
-                                  >
+                                  <SelectItem key={idx} value={category.name}>
                                     {category.name}
                                   </SelectItem>
                                 ))}
@@ -426,7 +416,9 @@ if (
                     </Card>
                     <Card x-chunk="dashboard-07-chunk-1">
                       <CardHeader>
-                        <CardTitle><span  className="text-danger">* </span>Stock</CardTitle>
+                        <CardTitle>
+                          <span className="text-danger">* </span>Stock
+                        </CardTitle>
                         <CardDescription>Quantity of product</CardDescription>
                       </CardHeader>
                       <CardContent>
@@ -443,7 +435,8 @@ if (
                                 <Label
                                   htmlFor="product_quantity"
                                   className="sr-only"
-                                ><span  className="text-danger">* </span>
+                                >
+                                  <span className="text-danger">* </span>
                                 </Label>
                                 <Input
                                   id="product_quantity"
@@ -460,7 +453,8 @@ if (
                                 <Label
                                   htmlFor="product_price"
                                   className="sr-only"
-                                ><span  className="text-danger">* </span>
+                                >
+                                  <span className="text-danger">* </span>
                                   Price
                                 </Label>
                                 <Input
@@ -496,7 +490,9 @@ if (
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_status"><span  className="text-danger">* </span>Status</Label>
+                            <Label htmlFor="product_status">
+                              <span className="text-danger">* </span>Status
+                            </Label>
                             <Select
                               onValueChange={(value) =>
                                 handleSelectChange("product_status", value)
@@ -526,12 +522,14 @@ if (
                       x-chunk="dashboard-07-chunk-4"
                     >
                       <CardHeader>
-                        <CardTitle><span  className="text-danger">* </span>Product Images</CardTitle>
+                        <CardTitle>
+                          <span className="text-danger">* </span>Product Images
+                        </CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 gap-2">
-                            {selectedImages.map((image, idx) => (
+                            {image_urls.map((image, idx) => (
                               <img
                                 key={idx}
                                 alt={`Product image ${idx + 1}`}
@@ -541,7 +539,7 @@ if (
                                 width="84"
                               />
                             ))}
-                            {selectedImages.length < 4 && (
+                            {image_urls.length < 4 && (
                               <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">
                                 <Upload className="h-4 w-4 text-muted-foreground" />
                                 <input

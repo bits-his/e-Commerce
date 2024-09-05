@@ -11,6 +11,7 @@ import {
   Users,
   UserPlus2,
   Store,
+  NotebookPen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import "./sidenav.css";
@@ -33,9 +34,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidenav-container hidden border-r bg-dark md:block">
-      <div
-        className="flex h-full max-h-screen flex-col gap-2"
-      >
+      <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
           <Link
             className="flex items-center gap-2 text-white justify-center font-semibold"
@@ -55,10 +54,10 @@ const Sidebar = () => {
             <NavLink
               className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
                 pathname === "/admin-dashboard" ||
-                  pathname === "/seller-dashboard"
+                pathname === "/seller-dashboard"
                   ? "text-primary bg-muted/90"
                   : "bg-white text-dark"
-                }`}
+              }`}
               to={
                 pathname.startsWith("/admin-dashboard")
                   ? "/admin-dashboard"
@@ -178,7 +177,7 @@ const Sidebar = () => {
                   open={pathname.includes("/product-mgmt")}
                 />
                 {/* adding subcategory */}
-                
+
                 {/* <DropdownBtn
                   title={
                     <>
@@ -191,18 +190,18 @@ const Sidebar = () => {
                  // isActive={activeDropdown === "Product Management"}
                   open={pathname.includes("/seller-dashboard")}
                 /> */}
-                
+
                 <NavLink
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                pathname === "/seller-dashboard/category"
-                  ? "text-primary bg-muted/90"
-                  : "bg-white text-dark"
-                }`}
-              to={"/seller-dashboard/category" }
-            >
-              <Package className="h-4 w-4" />
-              Category
-            </NavLink>
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
+                    pathname === "/seller-dashboard/category"
+                      ? "text-primary bg-muted/90"
+                      : "bg-white text-dark"
+                  }`}
+                  to={"/seller-dashboard/category"}
+                >
+                  <NotebookPen className="h-4 w-4" />
+                  Category
+                </NavLink>
 
                 <DropdownBtn
                   title={
@@ -233,7 +232,7 @@ const Sidebar = () => {
                   ]}
                   onToggle={() => handleToggle("Order notifiction")}
                   isActive={activeDropdown === "Order notifiction"}
-                // open={pathname.includes("/product-mgmt")}
+                  // open={pathname.includes("/product-mgmt")}
                 />
               </>
             )}

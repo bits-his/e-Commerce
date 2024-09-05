@@ -1,7 +1,7 @@
 import { CardContent } from '@/components/ui/card'
 import React from 'react'
 import { CardHeader, CardTitle, Card } from 'react-bootstrap'
-import { Form, FormGroup, Label, Input } from 'reactstrap'
+import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
 function Category() {
   return (
@@ -14,48 +14,35 @@ function Category() {
     
    <div className=" items-center">
    <Form>
-    <FormGroup col-md={6}>
+   <div className='row'>
+   <FormGroup className="col-md-6">
+    <Label for="category">
+      Add Product
+    </Label>
+    <Input
+      id="category"
+      name="category"
+      // className=" rounded-lg bg-background  sm:w-[100px] md:w-[200px] lg:w-[300px]"
+      placeholder="Add the product here"
+      type="text"
+    />
+  </FormGroup>
+  <FormGroup className="col-md-6">
     <Label for="category">
       Add Product Category
     </Label>
     <Input
       id="category"
       name="category"
-      
+      // className="rounded-lg bg-background  sm:w-[100px] md:w-[200px] lg:w-[300px]"
       placeholder="Add the product category here"
       type="text"
     />
   </FormGroup>
-  <FormGroup>
-    <Label for="exampleSelect">
-      Select
-    </Label>
-    <Input
-      id="exampleSelect"
-      name="select"
-      className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[200px] lg:w-[300px]"
-      type="select"
-    >
-     
-      <option disabled selected>Select Product category</option>
-      <option>
-        1
-      </option>
-      <option>
-        2
-      </option>
-      <option>
-        3
-      </option>
-      <option>
-        4
-      </option>
-      <option>
-        5
-      </option>
-    </Input>
-  </FormGroup>
+   </div>
+   <Button>Add Product</Button>
     </Form>
+    
    </div>
       </CardContent>
     </Card>
