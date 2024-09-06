@@ -199,6 +199,7 @@ const Sidebar = () => {
                   Category
                 </NavLink>
 
+                {/* categories adding button */}
                 <NavLink
                   className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
                     pathname === "/seller-dashboard/orders/total"
