@@ -20,6 +20,8 @@ import ApprovedOrders from './pages/seller_Dashboard/orders/ApprovedOrders'
 import TotalOrders from './pages/seller_Dashboard/orders/TotalOrders'
 import Pending_vendor from './pages/admin_dashboard/vendors/Pending_vendors';
 import Vendors from "./pages/admin_dashboard/vendors/Vendors"
+import Category from './pages/seller_Dashboard/product-mgnt/Category'
+import { CategoryScale } from 'chart.js'
 const App = () => {
 
   return (
@@ -67,6 +69,11 @@ const App = () => {
                   <Route path="addproduct" element={<AddProductPage />} />
                 </Route>
               </Route>
+              
+                <Route path='category'>
+                  <Route index element={<Category />} />
+                  <Route path="sub-category" element={<AddProductPage />} />
+                </Route>
               <Route path='storemangement'>
                 <Route path='storeprofile' element={<Storeprofile />} />
                 {/* <Route path='storepayment' element={<Storepayment />}/> */}

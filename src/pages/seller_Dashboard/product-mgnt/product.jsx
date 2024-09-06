@@ -40,7 +40,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
 import img from "./placeholder.svg";
-import { _get, _post, _put, _delete, separator } from "../../../utils/Helper";
+import {
+  _get,
+  _post,
+  _put,
+  _delete,
+  separator,
+  server_url,
+} from "../../../utils/Helper";
 import { Spinner } from "reactstrap";
 
 export default function ProductsPage() {
@@ -56,7 +63,7 @@ export default function ProductsPage() {
   const [subCategories, setSubCategories] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
 
-  const [newProduct, setNewProduct] = useState({
+  const initialProductState = {
     product_name: "",
     product_description: "",
     product_category: "",
@@ -64,7 +71,15 @@ export default function ProductsPage() {
     product_price: 0,
     product_quantity: 0,
     product_status: "available",
-  });
+    image_urls: [],
+  };
+
+  const [newProduct, setNewProduct] = useState(initialProductState);
+
+  const resetForm = () => {
+    setNewProduct(initialProductState);
+    setImage_urls([]);
+  };
 
   const getProduct = () => {
     _get(
@@ -95,7 +110,7 @@ export default function ProductsPage() {
       }
     );
   };
-  
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -160,40 +175,32 @@ export default function ProductsPage() {
     setImage_urls((prevImages) => [...prevImages, ...files]);
   };
 
-  const handleAddProduct = async (e) => {
+  const handleAddProduct = (e) => {
     e.preventDefault();
     setLoading(true);
+    const formData = new FormData();
 
-    const imageUrls = await Promise.all(
-      image_urls.map((image) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = (error) => reject(error);
-          reader.readAsDataURL(image); // Convert image to base64 URL
-        });
-      })
-    );
-    // setProducts([...products, newProduct]);
-    const obj = { ...newProduct, shop_id: parseInt(userDetails), image_urls: imageUrls, };
+    Object.keys(newProduct).forEach((i) => formData.append(i, newProduct[i]));
+    image_urls.forEach((image) => formData.append("images", image));
+    formData.append("shop_id", parseInt(userDetails));
 
-    _post(
-      "api/products",
-      obj,
-      (res) => {
+    fetch(`${server_url}/api/products`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((raw) => raw.json())
+      .then((res) => {
         setLoading(false);
-        // console.log(obj)
         getProduct();
         toast.success("New product added");
         setShowForm(false);
-      },
-
-      (err) => {
+        resetForm()
+      })
+      .catch((err) => {
         setLoading(false);
         toast.error("An error occurred!");
         console.log(err);
-      }
-    );
+      });
   };
 
   const handleEditButtonClick = (product) => {
@@ -262,8 +269,6 @@ export default function ProductsPage() {
   return (
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
-        {/* {JSON.stringify(parseInt("hhjhj"))} */}
-
         <div className="flex flex-col sm:gap-4 sm:py-4">
           {showForm ? (
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -288,7 +293,13 @@ export default function ProductsPage() {
                       onClick={editMode ? handleEditProduct : handleAddProduct}
                       disabled={Loading}
                     >
-                      {Loading ? <><Spinner className="h-4 w-4"/></> : <>Save Product</>}
+                      {Loading ? (
+                        <>
+                          <Spinner className="h-4 w-4" />
+                        </>
+                      ) : (
+                        <>Save Product</>
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -305,7 +316,9 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_name">Name</Label>
+                            <Label htmlFor="product_name">
+                              <span className="text-danger">* </span>Name
+                            </Label>
                             <Input
                               id="product_name"
                               type="text"
@@ -321,6 +334,8 @@ export default function ProductsPage() {
                           </div>
                           <div className="grid gap-3">
                             <Label htmlFor="product_description">
+                              {" "}
+                              <span className="text-danger">* </span>
                               Description
                             </Label>
                             <Textarea
@@ -346,7 +361,9 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6 sm:grid-cols-3">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_category">Category</Label>
+                            <Label htmlFor="product_category">
+                              <span className="text-danger">* </span>Category
+                            </Label>
                             <Select
                               onValueChange={(value) =>
                                 handleSelectChange("product_category", value)
@@ -360,10 +377,7 @@ export default function ProductsPage() {
                               </SelectTrigger>
                               <SelectContent>
                                 {categories.map((category, idx) => (
-                                  <SelectItem
-                                    key={idx}
-                                    value={category.name}
-                                  >
+                                  <SelectItem key={idx} value={category.name}>
                                     {category.name}
                                   </SelectItem>
                                 ))}
@@ -402,7 +416,9 @@ export default function ProductsPage() {
                     </Card>
                     <Card x-chunk="dashboard-07-chunk-1">
                       <CardHeader>
-                        <CardTitle>Stock</CardTitle>
+                        <CardTitle>
+                          <span className="text-danger">* </span>Stock
+                        </CardTitle>
                         <CardDescription>Quantity of product</CardDescription>
                       </CardHeader>
                       <CardContent>
@@ -420,7 +436,7 @@ export default function ProductsPage() {
                                   htmlFor="product_quantity"
                                   className="sr-only"
                                 >
-                                  Stock
+                                  <span className="text-danger">* </span>
                                 </Label>
                                 <Input
                                   id="product_quantity"
@@ -438,6 +454,7 @@ export default function ProductsPage() {
                                   htmlFor="product_price"
                                   className="sr-only"
                                 >
+                                  <span className="text-danger">* </span>
                                   Price
                                 </Label>
                                 <Input
@@ -473,7 +490,9 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-6">
                           <div className="grid gap-3">
-                            <Label htmlFor="product_status">Status</Label>
+                            <Label htmlFor="product_status">
+                              <span className="text-danger">* </span>Status
+                            </Label>
                             <Select
                               onValueChange={(value) =>
                                 handleSelectChange("product_status", value)
@@ -503,7 +522,9 @@ export default function ProductsPage() {
                       x-chunk="dashboard-07-chunk-4"
                     >
                       <CardHeader>
-                        <CardTitle>Product Images</CardTitle>
+                        <CardTitle>
+                          <span className="text-danger">* </span>Product Images
+                        </CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="grid gap-2">
