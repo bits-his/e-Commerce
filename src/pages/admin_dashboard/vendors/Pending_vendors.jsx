@@ -22,9 +22,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { _get } from "@/utils/Helper";
 import { customerstatus } from "@/utils/Cusromer";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { _post } from "@/utils/Helper";
 import { _delete } from "@/utils/Helper";
+import toast from "react-hot-toast";
 
 export default function Pending_customer({ args, id }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -64,7 +65,7 @@ export default function Pending_customer({ args, id }) {
             obj,
             (res) => {
                 if (res.success) {
-                    toast.success("venue updated successfully");
+                    toast.success("vendor updated successfully");
                     get_customers();
                 } else { 
                     toast.error("Error updating venue status");
@@ -79,15 +80,15 @@ export default function Pending_customer({ args, id }) {
     };
 
   const handledeleteusers = (id) => {
-  if (window.confirm("Are you sure you want to delete this user?")) {
+  if (window.confirm("Are you sure you want to reject this user request?")) {
     _delete(
       `api/deleterejectuser?id=${id}`,
       { id },
-      (response) => {
-        if (response.success) {
-          toast.success("User deleted successfully");;  // Refresh the list after deletion
-          window.location.reload();  
-          get_customers()// Refresh the page after deletion
+      (res) => {
+        if (res.success) {
+          toast.success("User rejected successfully"); 
+            get_customers();
+          window.location.reload(); 
         }
       },
       (err) => {

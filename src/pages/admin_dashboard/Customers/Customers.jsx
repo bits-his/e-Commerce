@@ -32,7 +32,7 @@ export default function Pending_customer(args) {
 
   const get_customers = () => {
     _get(
-      "api/getusersbyrole",
+      "api/getcustomers",
       (response) => {
         if (response.success) {
           setP_customers(response.results)
@@ -52,7 +52,7 @@ export default function Pending_customer(args) {
 
   const filteredCustomers = p_customers.filter(
     (customer) =>
-      customer.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      customer.fullname.toLowerCase().includes(searchQuery.toLowerCase()) ||
       customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       customer.phone.includes(searchQuery)
   );
@@ -97,7 +97,7 @@ export default function Pending_customer(args) {
                   <TableHead>Name</TableHead>
                   <TableHead className="hidden md:table-cell ">Email</TableHead>
                   <TableHead className="hidden md:table-cell">Phone</TableHead>
-                  <TableHead className="hidden md:table-cell ">Shop Name</TableHead>
+                  {/* <TableHead className="hidden md:table-cell ">Shop Name</TableHead> */}
                   <TableHead className="hidden md:table-cell ">Shop Address</TableHead>
                   <TableHead className="">Action</TableHead>
                 </TableRow>
@@ -113,19 +113,19 @@ export default function Pending_customer(args) {
                     filteredCustomers.map((customer) => (
                       <TableRow key={customer.id}>
                         <TableCell>{customer.id}</TableCell>
-                        <TableCell>{customer.username}</TableCell>
+                        <TableCell>{customer.fullname}</TableCell>
                         <TableCell className="hidden md:table-cell">
                           {customer.email}
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
-                          {customer.shopcontact}
+                          {customer.phone}
                         </TableCell>
                         <TableCell className="hidden md:table-cell ">
-                          {customer.shopname}
+                          {customer.address}
                         </TableCell>
-                        <TableCell className="hidden md:table-cell ">
+                        {/* <TableCell className="hidden md:table-cell ">
                           {customer.shopaddress}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell>
                           <div className="justify-center items-center gap-2 md:flex sm:flex cursor-   pointer">
                             <FaEllipsisH />
