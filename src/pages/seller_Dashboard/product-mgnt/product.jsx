@@ -180,38 +180,38 @@ export default function ProductsPage() {
   const handleAddProduct = (e) => {
     e.preventDefault();
     // Form validation start here
-        if (
-        (!newProduct.product_name || newProduct.product_name.trim() === "") ||
-        (!newProduct.product_description || newProduct.product_description.trim() === "")
-        ) {
-        toast.error("Please fill in the product details.");
-        return;
-        }
+    if (
+      !newProduct.product_name ||
+      newProduct.product_name.trim() === "" ||
+      !newProduct.product_description ||
+      newProduct.product_description.trim() === ""
+    ) {
+      toast.error("Please fill in the product details.");
+      return;
+    }
 
-        if (
-        (!newProduct.product_category || newProduct.product_category.trim() === "") 
-        ) {
-        toast.error("Please select the product category.");
-        return;
-        }
-        if (
-        (!newProduct.product_quantity || newProduct.product_quantity.trim() === "") 
-        ) {
-        toast.error("Please Indicate the number of items available in stock.");
-        return;
-        }
-        if (
-        (!newProduct.product_price || newProduct.product_price.trim() === "") 
-        ) {
-        toast.error("Please Indicate the price of the item.");
-        return;
-        } 
-        if (
-        (!newProduct.product_status || newProduct.product_status.trim() === "") 
-        ) {
-        toast.error("Please Indicate status of the product.");
-        return;
-        }
+    if (
+      !newProduct.product_category ||
+      newProduct.product_category.trim() === ""
+    ) {
+      toast.error("Please select the product category.");
+      return;
+    }
+    if (
+      !newProduct.product_quantity ||
+      newProduct.product_quantity.trim() === ""
+    ) {
+      toast.error("Please Indicate the number of items available in stock.");
+      return;
+    }
+    if (!newProduct.product_price || newProduct.product_price.trim() === "") {
+      toast.error("Please Indicate the price of the item.");
+      return;
+    }
+    if (!newProduct.product_status || newProduct.product_status.trim() === "") {
+      toast.error("Please Indicate status of the product.");
+      return;
+    }
 
     setLoading(true);
     const formData = new FormData();
@@ -230,7 +230,7 @@ export default function ProductsPage() {
         getProduct();
         toast.success("New product added");
         setShowForm(false);
-        resetForm()
+        resetForm();
       })
       .catch((err) => {
         setLoading(false);
@@ -303,12 +303,18 @@ export default function ProductsPage() {
   );
 
   useEffect(() => {
-    setAvailable(products.filter(product => product.product_status === 'available'))
-  , [products]})
+    setAvailable(
+      products.filter((product) => product.product_status === "available")
+    ),
+      [products];
+  });
 
   useEffect(() => {
-    setOutOfStock(products.filter(product => product.product_status === 'out of stock'))
-  , [products]})
+    setOutOfStock(
+      products.filter((product) => product.product_status === "out of stock")
+    ),
+      [products];
+  });
 
   return (
     <>
@@ -606,18 +612,18 @@ export default function ProductsPage() {
                     Discard
                   </Button>
                   <Button
-                      size="sm"
-                      onClick={editMode ? handleEditProduct : handleAddProduct}
-                      disabled={Loading}
-                    >
-                      {Loading ? (
-                        <>
-                          <Spinner className="h-4 w-4" />
-                        </>
-                      ) : (
-                        <>Save Product</>
-                      )}
-                    </Button>
+                    size="sm"
+                    onClick={editMode ? handleEditProduct : handleAddProduct}
+                    disabled={Loading}
+                  >
+                    {Loading ? (
+                      <>
+                        <Spinner className="h-4 w-4" />
+                      </>
+                    ) : (
+                      <>Save Product</>
+                    )}
+                  </Button>
                 </div>
               </div>
             </main>
