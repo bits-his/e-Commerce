@@ -572,11 +572,18 @@ export default function ProductsPage() {
                     Discard
                   </Button>
                   <Button
-                    size="sm"
-                    onClick={editMode ? handleEditProduct : handleAddProduct}
-                  >
-                    Save Product
-                  </Button>
+                      size="sm"
+                      onClick={editMode ? handleEditProduct : handleAddProduct}
+                      disabled={Loading}
+                    >
+                      {Loading ? (
+                        <>
+                          <Spinner className="h-4 w-4" />
+                        </>
+                      ) : (
+                        <>Save Product</>
+                      )}
+                    </Button>
                 </div>
               </div>
             </main>
