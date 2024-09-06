@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DropdownBtn from "../components/DropdownBtn";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Bell,
   Home,
@@ -11,16 +11,19 @@ import {
   Users,
   UserPlus2,
   Store,
-  NotebookPen
+  NotebookPen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import "./sidenav.css";
 import toast from "react-hot-toast";
+import { Spinner } from "reactstrap";
 
 const Sidebar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const { pathname } = location;
+  const [loading, setLoading] = useState(false);
 
   const handleToggle = (dropdownName) => {
     setActiveDropdown((prevActive) =>
@@ -29,7 +32,13 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    toast.error("Working on logout");
+    setLoading(true);
+    localStorage.clear("@@token");
+    navigate("/");
+    toast("Goodbye!", {
+      icon: "👏",
+    });
+    setLoading(false);
   };
 
   return (
@@ -178,19 +187,6 @@ const Sidebar = () => {
                 />
                 {/* adding subcategory */}
 
-                {/* <DropdownBtn
-                  title={
-                    <>
-                      <Package className="h-4 w-4" /> Category
-                    </>
-                  }
-                  items={["Category"]}
-                  links={["/seller-dashboard/category", ""]}
-                  onToggle={() => handleToggle("Product Management")}
-                 // isActive={activeDropdown === "Product Management"}
-                  open={pathname.includes("/seller-dashboard")}
-                /> */}
-
                 <NavLink
                   className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
                     pathname === "/seller-dashboard/category"
@@ -203,7 +199,19 @@ const Sidebar = () => {
                   Category
                 </NavLink>
 
-                <DropdownBtn
+                <NavLink
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
+                    pathname === "/seller-dashboard/orders/total"
+                      ? "text-primary bg-muted/90"
+                      : "bg-white text-dark"
+                  }`}
+                  to={"/seller-dashboard/orders/total"}
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  Orders
+                </NavLink>
+
+                {/* <DropdownBtn
                   title={
                     <>
                       <ShoppingCart className="h-4 w-4" /> Orders
@@ -218,7 +226,7 @@ const Sidebar = () => {
                   onToggle={() => handleToggle("Order management")}
                   isActive={activeDropdown === "Order management"}
                   open={pathname.includes("/orders")}
-                />
+                /> */}
                 <DropdownBtn
                   title={
                     <>
@@ -243,8 +251,9 @@ const Sidebar = () => {
             size="sm"
             className="w-full bg-destructive hover:bg-destructive/50"
             onClick={handleLogout}
+            disabled={loading}
           >
-            Logout
+            {loading ? <Spinner className="w-4 h-4" /> : <>Logout</>}
           </Button>
         </div>
       </div>

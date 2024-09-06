@@ -67,17 +67,22 @@ function Registration() {
     e.preventDefault();
 
     //Form validation
-    if(formData.role === "vendor") {
-      if (!formData.shopname||!formData.shopaddress||!formData.shopcontact||!formData.email){
+    if (formData.role === "vendor") {
+      if (
+        !formData.shopname ||
+        !formData.shopaddress ||
+        !formData.shopcontact ||
+        !formData.email
+      ) {
         toast.error("Please fill in the shop details");
         return;
       }
-  
-      if (!formData.firstname||!formData.lastname||!formData.username){
+
+      if (!formData.firstname || !formData.lastname || !formData.username) {
         toast.error("Please fill in the shop owner details");
         return;
       }
-      if(!formData.password ||!formData.confirmPassword){
+      if (!formData.password || !formData.confirmPassword) {
         toast.error("Please fill your password");
         return;
       }
@@ -85,16 +90,16 @@ function Registration() {
         setLoading(true);
         const obj = { ...formData };
         delete obj.confirmPassword;
-  
+
         _post(
           "api/users/create",
           obj,
           (res) => {
             setLoading(false);
-            toast.success("Created Successfully");
+            toast.loading("Created Successfully, await admin approval");
             navigate("/");
           },
-  
+
           (err) => {
             setLoading(false);
             toast.error("An error occurred!");
@@ -105,20 +110,23 @@ function Registration() {
         toast.error("Password input does not match!");
       }
     } else {
-
-      if (!formData.firstname||!formData.lastname||!formData.username||!formData.email){
+      if (
+        !formData.firstname ||
+        !formData.lastname ||
+        !formData.username ||
+        !formData.email
+      ) {
         toast.error("Please fill in the your details");
         return;
       }
-      if(!formData.password||!formData.confirmPassword){
+      if (!formData.password || !formData.confirmPassword) {
         toast.error("please fill your password");
-        
       }
       if (formData.password === formData.confirmPassword) {
         setLoading(true);
         const obj = { ...formData };
         delete obj.confirmPassword;
-  
+
         _post(
           "api/users/create",
           obj,
@@ -127,7 +135,7 @@ function Registration() {
             toast.success("Created Successfully");
             navigate("/");
           },
-  
+
           (err) => {
             setLoading(false);
             toast.error("An error occurred!");
@@ -137,16 +145,8 @@ function Registration() {
       } else {
         toast.error("Password input does not match!");
       }
-
-
-
-    };
-
-
-
-
-
     }
+  };
 
   const handleGoogleSignUp = () => {
     toast.error("Can't sign up with google now");
