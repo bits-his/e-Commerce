@@ -1,0 +1,112 @@
+.shop-registration-form {
+  max-width: 800px;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin-top: 30px;
+}
+
+.shop-registration-form h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 1.6em;
+  font-weight: 700;
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #444;
+}
+
+input,
+textarea {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 1em;
+  width: 100%;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 6px rgba(0, 86, 179, 0.3);
+  outline: none;
+}
+
+.dropzone {
+  padding: 25px;
+  border: 2px dashed #0056b3;
+  border-radius: 8px;
+  background: #f0f8ff;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.dropzone:hover {
+  background: #e0f7ff;
+  border-color: #004a8c;
+}
+
+.dropzone p {
+  margin: 0;
+  color: #666;
+  font-size: 1em;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button.primary {
+  background-color: #000;
+  color: #fff;
+}
+
+button.secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+button.primary:hover {
+  background-color: #000;
+}
+
+button.secondary:hover {
+  background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+  .shop-registration-form {
+    padding: 20px;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

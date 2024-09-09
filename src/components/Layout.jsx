@@ -1,31 +1,18 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import SideNav from './Sidenav';
-import Header from './header';
-import useIsPhoneSize from '../utils/useIsPhoneSize';
+import { Outlet } from "react-router-dom";
+import SideNav from "./Sidenav";
+import Header from "./header";
 
 export default function Layout() {
-    const isPhoneSize = useIsPhoneSize();
 
-    return (
-        <div style={{ display: 'flex' }}>
-            {isPhoneSize ? (
-                <>
-                    <SideNav style={{ flex: '0 0 200px' }} className='d-none' />
-                    <div style={{ flex: '1' }}>
-                        <Header/>
-                        <Outlet />
-                    </div>
-                </>
-            ):(
-                <>
-                    <SideNav style={{ flex: '0 0 200px'}} />
-                    <div style={{ flex: '1' }}>
-                        <Header/>
-                        <Outlet />
-                    </div>
-                </>
-            )}
+  return (
+    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+      <SideNav />
+      <div className="flex flex-col">
+        <Header />
+        <div className="overflow-auto flex-1">
+          <Outlet />
         </div>
-    );
+      </div>
+    </div>
+  );
 }

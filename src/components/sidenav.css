@@ -1,10 +1,22 @@
 .side-nav {
   width: 260px;
   height: 100vh;
-  overflow-y: auto;
   position: relative;
   top: 0;
   left: 0;
+}
+
+.sidenav-container {
+  height: 100vh; 
+  overflow-y: auto; 
+  position: sticky;
+  top: 0;
+}
+
+
+.main-outlet {
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .brand-logo {
@@ -12,6 +24,10 @@
   width: 50%;
   height: 100px;
   background-color: black;
+}
+
+.nav-list{
+  overflow-y: auto;
 }
 
 .norm-btn {
@@ -55,6 +71,8 @@
 .nav-container {
   overflow-y: auto;
 }
+
+
 
 .logout-main {
   position: absolute;

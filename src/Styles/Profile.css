@@ -1,0 +1,30 @@
+
+.profile-container {
+  padding: 30px;
+}
+
+.profile-card {
+  background-color: #fff;
+
+  padding: 20px;
+  height: 100vh;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+.label{
+  font-weight: 600;
+  padding-top: 1rem;
+}
+.mb-3 {
+  margin-top: 30px;
+}
+
+.mt-3 {
+  margin-top: 16px;
+}
