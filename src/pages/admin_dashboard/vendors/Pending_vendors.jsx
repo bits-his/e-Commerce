@@ -25,6 +25,7 @@ import { customerstatus } from "@/utils/Cusromer";
 import { toast } from "react-toastify";
 import { _post } from "@/utils/Helper";
 import { _delete } from "@/utils/Helper";
+import Email from "./Email"
 
 export default function Pending_customer({ args, id }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -221,6 +222,7 @@ export default function Pending_customer({ args, id }) {
                   )}
                 </TableBody>
               </Table>
+              {/* <Email /> */}
             </CardContent>
           </Card>
 
