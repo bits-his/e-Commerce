@@ -348,7 +348,7 @@ export default function ProductsPage() {
                           <Spinner className="h-4 w-4" />
                         </>
                       ) : (
-                        <>Save Product</>
+                        editMode?(<>Save Product</>):(<>Update Product</>) 
                       )}
                     </Button>
                   </div>
@@ -621,7 +621,7 @@ export default function ProductsPage() {
                         <Spinner className="h-4 w-4" />
                       </>
                     ) : (
-                      <>Save Product</>
+                      editMode?(<>Save Product</>):(<>Update Product</>) 
                     )}
                   </Button>
                 </div>
@@ -709,6 +709,7 @@ export default function ProductsPage() {
                                     height="64"
                                     src={img}
                                     width="64"
+                                    loading="lazy"
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
@@ -815,6 +816,7 @@ export default function ProductsPage() {
                                     height="64"
                                     src={img}
                                     width="64"
+                                    loading="lazy"
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
@@ -921,6 +923,7 @@ export default function ProductsPage() {
                                     height="64"
                                     src={img}
                                     width="64"
+                                    loading="lazy"
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
