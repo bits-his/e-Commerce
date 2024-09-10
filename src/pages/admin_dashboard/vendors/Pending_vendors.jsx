@@ -234,14 +234,21 @@ export default function Pending_customer({ args, id }) {
               {selectedCustomer && (
                 <div>
                   <p>
-                    <strong>Name:</strong> {selectedCustomer.username}
+                    <strong>User Name:</strong> {selectedCustomer.username}
                   </p>
                   <p>
                     <strong>Email:</strong> {selectedCustomer.email}
                   </p>
                   <p>
-                    <strong>Phone:</strong> {selectedCustomer.phone}
+                    <strong>Shop Contact:</strong> {selectedCustomer.shopcontact}
                   </p>
+                  <p>
+                    <strong>Shop Name:</strong> {selectedCustomer.shopname}
+                  </p>
+                  <p>
+                    <strong>Shop Address:</strong> {selectedCustomer.shopaddress}
+                  </p>
+                  
                 </div>
               )}
             </ModalBody>
