@@ -22,10 +22,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { _get } from "@/utils/Helper";
 import { customerstatus } from "@/utils/Cusromer";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { _post } from "@/utils/Helper";
 import { _delete } from "@/utils/Helper";
 import Email from "./Email"
+import toast from "react-hot-toast";
 
 export default function Pending_customer({ args, id }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -65,7 +66,7 @@ export default function Pending_customer({ args, id }) {
             obj,
             (res) => {
                 if (res.success) {
-                    toast.success("venue updated successfully");
+                    toast.success("vendor updated successfully");
                     get_customers();
                 } else { 
                     toast.error("Error updating venue status");
