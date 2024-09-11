@@ -1,10 +1,15 @@
 import { useLocation } from "react-router-dom";
 
+<<<<<<< HEAD
 export const server_url = "http://localhost:3000";
 //  export const server_url = "http://192.168.1.64:3000";
 // export const server_url = "http://192.168.1.64:3002";
 // export const server_url = "http://192.168.1.64:3000";
 // export const server_url = "https://kasuwa-backend.onrender.com"
+=======
+// export const server_url = "http://192.168.1.64:3002";
+export const server_url = "https://kasuwa-backend.onrender.com"
+>>>>>>> 758fd10b053602494f9e9f4da1dbccaa5047d4be
 //  export const server_url = "http://192.168.1.82:3002";
 
 export const _post = (url, data, success = (f) => f, error = (f) => f) => {
