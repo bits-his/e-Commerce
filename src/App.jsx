@@ -21,6 +21,7 @@ import TotalOrders from './pages/seller_Dashboard/orders/TotalOrders'
 import Pending_vendor from './pages/admin_dashboard/vendors/Pending_vendors';
 import Vendors from "./pages/admin_dashboard/vendors/Vendors"
 import Category from './pages/seller_Dashboard/product-mgnt/Category'
+import AllOrders from './pages/admin_dashboard/AllOrders'
 import { CategoryScale } from 'chart.js'
 const App = () => {
 
@@ -44,6 +45,7 @@ const App = () => {
                 <Route path='vendor' element={<Vendors />} />
                 <Route path='pending-vendor' element={<Pending_vendor />} />
               </Route>
+              <Route path="orders" element={<AllOrders />} />
               <Route path='reports' >
                 <Route path='sales' element={<Product />} />
                 <Route path='product-performance' element={<Product />} />
@@ -59,8 +61,8 @@ const App = () => {
             </Route>
             <Route path="/seller-dashboard" >
               <Route index element={<Sellerdashboard />} />
-              <Route path="orders/pending" element={<PendingOrders />} />
-              <Route path="orders/approved" element={<ApprovedOrders />} />
+              {/* <Route path="orders/pending" element={<PendingOrders />} />
+              <Route path="orders/approved" element={<ApprovedOrders />} /> */}
               <Route path="orders/total" element={<TotalOrders />} />
 
               <Route path='product-mgmt' >
