@@ -111,6 +111,17 @@ const Sidebar = () => {
                   open={pathname.includes("/vendor-mgmt")}
                   baseLink="/vendor-mgmt"
                 />
+                <NavLink
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
+                    pathname === "/admin-dashboard/orders"
+                      ? "text-primary bg-muted/90"
+                      : "bg-white text-dark"
+                  }`}
+                  to={"/admin-dashboard/orders"}
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  Orders
+                </NavLink>
                 <DropdownBtn
                   title={
                     <>

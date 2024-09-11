@@ -177,22 +177,17 @@ function Header() {
                   isActive={activeDropdown === "Product Management"}
                   open={pathname.includes("/product-mgmt")}
                 />
-                <DropdownBtn
-                  title={
-                    <>
-                      <ShoppingCart className="h-4 w-4" /> Orders
-                    </>
-                  }
-                  items={["Total order", "Aproved order", "Pending order"]}
-                  links={[
-                    "/seller-dashboard/orders/total",
-                    "/seller-dashboard/orders/approved",
-                    "/seller-dashboard/orders/pending",
-                  ]}
-                  onToggle={() => handleToggle("Order management")}
-                  isActive={activeDropdown === "Order management"}
-                  open={pathname.includes("/orders")}
-                />
+                <NavLink
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
+                    pathname === "/seller-dashboard/orders/total"
+                      ? "text-primary bg-muted/90"
+                      : "bg-white text-dark"
+                  }`}
+                  to={"/seller-dashboard/orders/total"}
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  Orders
+                </NavLink>
                 <DropdownBtn
                   title={
                     <>

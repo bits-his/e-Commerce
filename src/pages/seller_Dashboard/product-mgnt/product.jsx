@@ -348,7 +348,7 @@ export default function ProductsPage() {
                           <Spinner className="h-4 w-4" />
                         </>
                       ) : (
-                        editMode?(<>Save Product</>):(<>Update Product</>) 
+                        <>{editMode ? "Update Product" : "Save Product"}</>
                       )}
                     </Button>
                   </div>
@@ -707,7 +707,7 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={img}
+                                    src={product.image_urls[0]}
                                     width="64"
                                     loading="lazy"
                                   />
@@ -814,7 +814,7 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={img}
+                                    src={product.image_urls[0]}
                                     width="64"
                                     loading="lazy"
                                   />
@@ -921,7 +921,7 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={img}
+                                    src={product.image_urls[0]}
                                     width="64"
                                     loading="lazy"
                                   />

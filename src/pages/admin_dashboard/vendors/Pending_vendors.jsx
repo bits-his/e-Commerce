@@ -22,9 +22,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { _get } from "@/utils/Helper";
 import { customerstatus } from "@/utils/Cusromer";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { _post } from "@/utils/Helper";
 import { _delete } from "@/utils/Helper";
+import toast from "react-hot-toast";
 
 export default function Pending_customer({ args, id }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -64,7 +65,7 @@ export default function Pending_customer({ args, id }) {
             obj,
             (res) => {
                 if (res.success) {
-                    toast.success("venue updated successfully");
+                    toast.success("vendor updated successfully");
                     get_customers();
                 } else { 
                     toast.error("Error updating venue status");
@@ -232,14 +233,21 @@ export default function Pending_customer({ args, id }) {
               {selectedCustomer && (
                 <div>
                   <p>
-                    <strong>Name:</strong> {selectedCustomer.username}
+                    <strong>User Name:</strong> {selectedCustomer.username}
                   </p>
                   <p>
                     <strong>Email:</strong> {selectedCustomer.email}
                   </p>
                   <p>
-                    <strong>Phone:</strong> {selectedCustomer.phone}
+                    <strong>Shop Contact:</strong> {selectedCustomer.shopcontact}
                   </p>
+                  <p>
+                    <strong>Shop Name:</strong> {selectedCustomer.shopname}
+                  </p>
+                  <p>
+                    <strong>Shop Address:</strong> {selectedCustomer.shopaddress}
+                  </p>
+                  
                 </div>
               )}
             </ModalBody>
