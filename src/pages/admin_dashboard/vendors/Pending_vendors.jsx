@@ -81,15 +81,15 @@ export default function Pending_customer({ args, id }) {
     };
 
   const handledeleteusers = (id) => {
-  if (window.confirm("Are you sure you want to delete this user?")) {
+  if (window.confirm("Are you sure you want to reject this user request?")) {
     _delete(
       `api/deleterejectuser?id=${id}`,
       { id },
-      (response) => {
-        if (response.success) {
-          toast.success("User deleted successfully");;  // Refresh the list after deletion
-          window.location.reload();  
-          get_customers()// Refresh the page after deletion
+      (res) => {
+        if (res.success) {
+          toast.success("User rejected successfully"); 
+            get_customers();
+          window.location.reload(); 
         }
       },
       (err) => {
