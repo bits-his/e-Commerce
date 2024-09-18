@@ -598,6 +598,7 @@ export default function ProductsPage() {
                                   className="hidden"
                                   accept="image/*"
                                   onChange={handleImageChange}
+                                  
                                 />
                               </label>
                             )}
@@ -621,7 +622,7 @@ export default function ProductsPage() {
                         <Spinner className="h-4 w-4" />
                       </>
                     ) : (
-                      editMode?(<>Save Product</>):(<>Update Product</>) 
+                      <>Save Product</>
                     )}
                   </Button>
                 </div>
@@ -709,7 +710,6 @@ export default function ProductsPage() {
                                     height="64"
                                     src={product.image_urls[0]}
                                     width="64"
-                                    loading="lazy"
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
@@ -816,7 +816,6 @@ export default function ProductsPage() {
                                     height="64"
                                     src={product.image_urls[0]}
                                     width="64"
-                                    loading="lazy"
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
@@ -923,7 +922,6 @@ export default function ProductsPage() {
                                     height="64"
                                     src={product.image_urls[0]}
                                     width="64"
-                                    loading="lazy"
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
