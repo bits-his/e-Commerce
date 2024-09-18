@@ -42,7 +42,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidenav-container hidden border-r bg-dark md:block">
+    <div className="sidenav-container hidden border-r md:block" style={{backgroundColor: "#36454F"}}>
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
           <Link
@@ -54,7 +54,7 @@ const Sidebar = () => {
             }
           >
             <Package2 className="h-8 w-8" />
-            <span className="">Kasua</span>
+            <span className="">Kasuwa Mall</span>
           </Link>
         </div>
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import NoLayout from './components/NoLayout'
@@ -24,6 +24,10 @@ import Category from './pages/seller_Dashboard/product-mgnt/Category'
 import AllOrders from './pages/admin_dashboard/AllOrders'
 import { CategoryScale } from 'chart.js'
 const App = () => {
+  useEffect(() => {
+    document.title = "KASUWA MALL";
+  }, []);
+
 
   return (
     <>

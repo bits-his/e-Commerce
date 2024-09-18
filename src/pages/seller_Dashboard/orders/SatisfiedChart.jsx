@@ -21,6 +21,8 @@ const chartData = [
   { month: "March", desktop: 237, mobile: 120 },
   { month: "April", desktop: 73, mobile: 190 },
   { month: "May", desktop: 209, mobile: 130 },
+  { month: "June", desktop: 120, mobile: 90 },
+  { month: "July", desktop: 170, mobile: 100 },
 ]
 
 const chartConfig = {
@@ -41,7 +43,7 @@ export default function SatisfiedChart() {
   return (
     <Card className="h-100 my-auto">
       <CardHeader>
-        <CardTitle>Rating</CardTitle>
+        <CardTitle>Monthly Orders</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -94,7 +96,7 @@ export default function SatisfiedChart() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="leading-none text-muted-foreground">
-          Showing total rating of customers
+          Showing monthly orders
         </div>
       </CardFooter>
     </Card>

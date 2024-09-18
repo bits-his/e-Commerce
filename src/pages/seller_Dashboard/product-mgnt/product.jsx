@@ -390,7 +390,7 @@ export default function ProductsPage() {
                             </Label>
                             <Textarea
                               id="product_description"
-                              placeholder="Lorem ipsum."
+                              placeholder="Description about product"
                               className="min-h-32"
                               value={
                                 editMode
