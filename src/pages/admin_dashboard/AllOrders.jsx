@@ -31,7 +31,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { _get } from "@/utils/Helper";
+import { _get, globalColor } from "@/utils/Helper";
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -172,7 +172,7 @@ const AllOrders = () => {
                           {order.status === "Completed" ? (
                             <Badge variant="success">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge variant="warning">{order.status}</Badge>
+                            <Badge style={{backgroundColor: "#FFFDD0"}}>{order.status}</Badge>
                           ) : (
                             <Badge variant="destructive">{order.status}</Badge>
                           )}
@@ -182,6 +182,7 @@ const AllOrders = () => {
                         </TableCell>
                         <TableCell>
                           <Button
+                          style={{background: globalColor.colors1}}
                             color="warning"
                             onClick={() => handleViewClick(order)}
                           >
@@ -222,6 +223,7 @@ const AllOrders = () => {
                     <TableHead className="hidden md:table-cell text-center">
                       Order date
                     </TableHead>
+                    <TableHead className="text-center">Shop ID</TableHead>
                     <TableHead className="text-center">Status</TableHead>
                     <TableHead className="hidden md:table-cell text-center">
                       Total
@@ -255,7 +257,7 @@ const AllOrders = () => {
                           {order.status === "Completed" ? (
                             <Badge variant="success">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge variant="warning">{order.status}</Badge>
+                            <Badge style={{backgroundColor: "#FFFDD0"}}>{order.status}</Badge>
                           ) : (
                             <Badge variant="destructive">{order.status}</Badge>
                           )}

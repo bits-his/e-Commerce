@@ -46,22 +46,22 @@ const Sidebar = () => {
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
           <Link
-            className="flex items-center gap-2 text-white justify-center font-semibold"
+            className="flex items-center gap-2 text-white justify-center w-100 font-semibold" 
             to={
               pathname.startsWith("/admin-dashboard")
                 ? "/admin-dashboard"
                 : "/seller-dashboard"
             }
           >
-            <Package2 className="h-8 w-8" />
-            <span className="">Kasuwa Mall</span>
+            {/* <Package2 className="h-8 w-8" /> */}
+            <span style={{fontWeight: "800"}} className="text-lg">KASUWA MALL</span>
           </Link>
         </div>
 
         <div className="flex-1 mt-3">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
             <NavLink
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-base transition-all ${
                 pathname === "/admin-dashboard" ||
                 pathname === "/seller-dashboard"
                   ? "text-primary bg-muted/90"
@@ -112,7 +112,7 @@ const Sidebar = () => {
                   baseLink="/vendor-mgmt"
                 />
                 <NavLink
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
+                  className={`flex items-center gap-3 text-base rounded-lg px-3 py-2 transition-all mt-2 ${
                     pathname === "/admin-dashboard/orders"
                       ? "text-primary bg-muted/90"
                       : "bg-white text-dark"
@@ -199,7 +199,7 @@ const Sidebar = () => {
                 {/* adding subcategory */}
 
                 <NavLink
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
+                  className={`flex items-center gap-3 rounded-lg text-base px-3 py-2 transition-all mt-2 ${
                     pathname === "/seller-dashboard/category"
                       ? "text-primary bg-muted/90"
                       : "bg-white text-dark"
@@ -212,7 +212,7 @@ const Sidebar = () => {
 
                 {/* categories adding button */}
                 <NavLink
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
+                  className={`flex items-center gap-3 rounded-lg text-base px-3 py-2 transition-all mt-2 ${
                     pathname === "/seller-dashboard/orders/total"
                       ? "text-primary bg-muted/90"
                       : "bg-white text-dark"
@@ -261,7 +261,7 @@ const Sidebar = () => {
         <div className="mt-auto p-4">
           <Button
             size="sm"
-            className="w-full bg-destructive hover:bg-destructive/50"
+            className="w-full bg-destructive hover:bg-destructive/50 text-base"
             onClick={handleLogout}
             disabled={loading}
           >
