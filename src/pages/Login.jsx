@@ -48,7 +48,7 @@ function Login() {
           toast.success("Logged Successful"); 
           navigate("/admin-dashboard"); 
         } else { 
-          toast.error("Invalid credentials"); 
+          toast.error("User not found"); 
         } 
       }, 
       (err) => { 

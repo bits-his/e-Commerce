@@ -102,7 +102,7 @@ const TotalOrders = () => {
   });
   const sortedComplete = completed.filter(
     (complete) =>
-      complete.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      complete.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       complete.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -288,7 +288,7 @@ const TotalOrders = () => {
                           {order.shop_id}
                         </TableHead>
                         <TableCell className="text-center">
-                          {order.status === "Completed" ? (
+                          {order.status === "Approved" ? (
                             <Badge variant="success">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
                             <Badge variant="warning">{order.status}</Badge>

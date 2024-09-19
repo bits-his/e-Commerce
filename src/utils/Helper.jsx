@@ -1,13 +1,15 @@
 import { useLocation } from "react-router-dom";
 
-export const server_url = "http://192.168.1.64:3002";
-
 export const globalColor = {
-  colors1: "#ggggst", 
-  colors2: "#345fgd"
+  color1: "#000080", 
+  color2: "#000000",
+  color3: "#F4C430"
 };
+
+// export const server_url = "http://192.168.1.64:3002";
 // export const server_url = "https://kasuwa-backend.onrender.com"
 //  export const server_url = "http://192.168.1.82:3002";
+export const server_url = "http://localhost:3002";
 
 export const _post = (url, data, success = (f) => f, error = (f) => f) => {
   const token = localStorage.getItem("@@token");
