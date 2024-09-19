@@ -5,6 +5,11 @@ export const server_url = "http://localhost:3002";
 //  export const server_url = "http://192.168.1.64:3000";
 // export const server_url = "http://192.168.1.64:3002";
 // export const server_url = "http://192.168.1.64:3000";
+
+export const globalColor = {
+  colors1: "#ggggst", 
+  colors2: "#345fgd"
+};
 // export const server_url = "https://kasuwa-backend.onrender.com"
 //  export const server_url = "http://192.168.1.82:3002";
 
