@@ -96,7 +96,7 @@ function Registration() {
           obj,
           (res) => {
             setLoading(false);
-            toast.loading("Created Successfully, await admin approval");
+            toast.success("Created Successfully, await admin approval");
             navigate("/");
           },
 
@@ -159,9 +159,9 @@ function Registration() {
         className="w-[400px]"
         onValueChange={handleTabChange}
       >
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="vendor">Vendor</TabsTrigger>
-          <TabsTrigger value="admin">Admin</TabsTrigger>
+        <TabsList className="grid w-full ">
+          <TabsTrigger value="vendor">Vendor Registeration</TabsTrigger>
+          {/* <TabsTrigger value="admin">Admin</TabsTrigger> */}
         </TabsList>
         <TabsContent value="vendor">
           <Card>
@@ -362,7 +362,7 @@ function Registration() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="admin">
+        {/* <TabsContent value="admin">
           <Card>
             <CardHeader>
               <CardTitle className="text-center">Admin sign-up</CardTitle>
@@ -506,7 +506,7 @@ function Registration() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </main>
   );

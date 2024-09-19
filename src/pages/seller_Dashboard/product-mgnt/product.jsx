@@ -169,7 +169,7 @@ export default function ProductsPage() {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    if (files.length + image_urls.length > 4) {
+    if (files.length + image_urls.length > 10) {
       toast.error("You can only upload up to 4 images.");
       return;
     }
@@ -390,7 +390,7 @@ export default function ProductsPage() {
                             </Label>
                             <Textarea
                               id="product_description"
-                              placeholder="Lorem ipsum."
+                              placeholder="Description about product"
                               className="min-h-32"
                               value={
                                 editMode
@@ -589,7 +589,7 @@ export default function ProductsPage() {
                                 width="84"
                               />
                             ))}
-                            {image_urls.length < 4 && (
+                            {image_urls.length < 10 && (
                               <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">
                                 <Upload className="h-4 w-4 text-muted-foreground" />
                                 <input
@@ -708,9 +708,9 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls[0]}
+                                    src={product.image_urls.split(",")[0]}
                                     width="64"
-                                  />
+                                  />  
                                 </TableCell>
                                 <TableCell className="font-medium">
                                   {product.product_name}

@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 
 export const server_url = "http://localhost:3002";
+// export const server_url = "http://localhost:3005";
 //  export const server_url = "http://192.168.1.64:3000";
 // export const server_url = "http://192.168.1.64:3002";
 // export const server_url = "http://192.168.1.64:3000";

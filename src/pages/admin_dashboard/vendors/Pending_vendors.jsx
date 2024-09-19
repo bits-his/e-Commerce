@@ -25,6 +25,7 @@ import { customerstatus } from "@/utils/Cusromer";
 // import { toast } from "react-toastify";
 import { _post } from "@/utils/Helper";
 import { _delete } from "@/utils/Helper";
+import Email from "./Email"
 import toast from "react-hot-toast";
 
 export default function Pending_customer({ args, id }) {
@@ -222,6 +223,7 @@ export default function Pending_customer({ args, id }) {
                   )}
                 </TableBody>
               </Table>
+              {/* <Email /> */}
             </CardContent>
           </Card>
 

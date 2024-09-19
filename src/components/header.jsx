@@ -43,14 +43,14 @@ function Header() {
 
 
   return (
-    <header className="sticky top-0 z-50 flex h-14 items-center gap-4 border-0 bg-dark px-4 lg:h-[60px] lg:px-6">
+    <header className="sticky top-0 z-50 flex h-14 items-center gap-4 border-0 px-4 lg:h-[60px] lg:px-6" style={{backgroundColor: "#36454F"}}>
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
             <Menu className="h-5 w-5" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="flex bg-dark flex-col">
+        <SheetContent side="left" className="flex flex-col" style={{backgroundColor: "#36454F"}}>
           <nav className="grid gap-2 text-lg font-medium mt-4">
             <NavLink
               className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
