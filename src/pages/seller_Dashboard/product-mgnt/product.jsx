@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   PlusCircle,
   ChevronLeft,
@@ -64,6 +64,8 @@ export default function ProductsPage() {
   const [available, setAvailable] = useState([]);
   const [outOfStock, setOutOfStock] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
+
+  const navigate = useNavigate()
 
   const initialProductState = {
     product_name: "",
@@ -169,7 +171,7 @@ export default function ProductsPage() {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    if (files.length + image_urls.length > 4) {
+    if (files.length + image_urls.length > 10) {
       toast.error("You can only upload up to 4 images.");
       return;
     }
@@ -258,6 +260,7 @@ export default function ProductsPage() {
           console.log(res)
         );
         setProducts(updatedProducts);
+        navigate(0);
         setShowForm(false);
         setEditMode(false);
         toast.success("Product updated successfully");
@@ -589,7 +592,7 @@ export default function ProductsPage() {
                                 width="84"
                               />
                             ))}
-                            {image_urls.length < 4 && (
+                            {image_urls.length < 10 && (
                               <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">
                                 <Upload className="h-4 w-4 text-muted-foreground" />
                                 <input
@@ -598,6 +601,7 @@ export default function ProductsPage() {
                                   className="hidden"
                                   accept="image/*"
                                   onChange={handleImageChange}
+                                  
                                 />
                               </label>
                             )}
@@ -621,7 +625,7 @@ export default function ProductsPage() {
                         <Spinner className="h-4 w-4" />
                       </>
                     ) : (
-                      editMode?(<>Save Product</>):(<>Update Product</>) 
+                      <>Save Product</>
                     )}
                   </Button>
                 </div>
@@ -707,10 +711,9 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls[0]}
+                                    src={product.image_urls.split(",")[0]}
                                     width="64"
-                                    loading="lazy"
-                                  />
+                                  />  
                                 </TableCell>
                                 <TableCell className="font-medium">
                                   {product.product_name}
@@ -814,9 +817,8 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls[0]}
+                                    src={product.image_urls.split(",")[0]}
                                     width="64"
-                                    loading="lazy"
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
@@ -921,9 +923,8 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls[0]}
+                                    src={product.image_urls.split(",")[0]}
                                     width="64"
-                                    loading="lazy"
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
