@@ -5,7 +5,7 @@ const DropdownMenu = ({ title, items, isActive, onToggle, links, open }) => {
   return (
     <>
       <NavLink
-        className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary mt-2
+        className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary text-base mt-2
           ${open ? "bg-muted/90 text-primary" : "text-dark-foreground bg-white"}
         `}
         onClick={onToggle}
@@ -15,7 +15,7 @@ const DropdownMenu = ({ title, items, isActive, onToggle, links, open }) => {
       </NavLink>
 
       {isActive && (
-        <div className="ps-3">
+        <div className="ps-3 text-base">
           {items.map((item, index) => (
             <NavLink
               key={index}
