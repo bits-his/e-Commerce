@@ -170,9 +170,17 @@ const AllOrders = () => {
                         </TableHead>
                         <TableCell className="text-center">
                           {order.status === "Completed" ? (
-                            <Badge style={{backgroundColor: globalColor.color1}}>{order.status}</Badge>
+                            <Badge
+                              style={{ backgroundColor: globalColor.color1 }}
+                            >
+                              {order.status}
+                            </Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge style={{backgroundColor: globalColor.color1}}>{order.status}</Badge>
+                            <Badge
+                              style={{ backgroundColor: globalColor.color1 }}
+                            >
+                              {order.status}
+                            </Badge>
                           ) : (
                             <Badge variant="destructive">{order.status}</Badge>
                           )}
@@ -182,7 +190,7 @@ const AllOrders = () => {
                         </TableCell> */}
                         <TableCell>
                           <Button
-                          style={{background: globalColor.colors1}}
+                            style={{ background: globalColor.colors1 }}
                             color="warning"
                             onClick={() => handleViewClick(order)}
                           >
@@ -257,7 +265,9 @@ const AllOrders = () => {
                           {order.status === "Completed" ? (
                             <Badge variant="success">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge style={{backgroundColor: "#FFFDD0"}}>{order.status}</Badge>
+                            <Badge style={{ backgroundColor: "#FFFDD0" }}>
+                              {order.status}
+                            </Badge>
                           ) : (
                             <Badge variant="destructive">{order.status}</Badge>
                           )}
@@ -379,19 +389,26 @@ const AllOrders = () => {
               <strong>ID:</strong> {selectedOrder.id}
             </p>
             <p>
-              <strong>Customer:</strong> {selectedOrder.customer}
+              <strong>Customer:</strong> {selectedOrder.product}
             </p>
             <p>
-              <strong>Order Date:</strong> {selectedOrder.orderDate}
+              <strong>Order Date:</strong>{" "}
+              {selectedOrder.createdAt
+                .slice(0, 10)
+                .split("-")
+                .reverse()
+                .join("-")}
             </p>
             <p>
               <strong>Status:</strong> {selectedOrder.status}
             </p>
             <p>
-              <strong>Total:</strong> {selectedOrder.total}
+              <strong>Order ID:</strong>{" "}
+              {selectedOrder.order_no.replace(/\//g, "")}
             </p>
             <p>
-              <strong>Details:</strong> {selectedOrder.details}
+              <strong>Delivery ID:</strong>{" "}
+              {selectedOrder.delivery_no.replace(/\//g, "")}
             </p>
           </ModalBody>
           <ModalFooter>
