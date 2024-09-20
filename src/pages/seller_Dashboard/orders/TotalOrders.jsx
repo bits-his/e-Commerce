@@ -10,7 +10,7 @@ import {
   Col,
   Spinner,
 } from "reactstrap";
-import { FaCheck, FaEye } from "react-icons/fa";
+import { FaBan, FaCheck, FaEye } from "react-icons/fa";
 import OrdersChart from "./OrdersChart";
 import "react-toastify/dist/ReactToastify.css";
 import SatisfiedChart from "./SatisfiedChart";
@@ -215,20 +215,37 @@ const TotalOrders = () => {
                           >
                             <FaEye />
                           </Button>
-                          <Button
-                            color="success"
-                            className="me-lg-1"
-                            onClick={() =>
-                              handleValidateOrder(order.id, "Approved")
-                            }
-                            disabled={loadingOrderId === order.id}
-                          >
-                            {loadingOrderId === order.id ? (
-                              <Spinner size="sm" />
-                            ) : (
-                              <FaCheck />
-                            )}
-                          </Button>
+                          {order.status === "Pending" ? (
+                            <Button
+                              color="success"
+                              className="me-lg-1"
+                              onClick={() =>
+                                handleValidateOrder(order.id, "Approved")
+                              }
+                              disabled={loadingOrderId === order.id}
+                            >
+                              {loadingOrderId === order.id ? (
+                                <Spinner size="sm" />
+                              ) : (
+                                <FaCheck />
+                              )}
+                            </Button>
+                          ) : order.status === "Approved" ? (
+                            <Button
+                              color="danger"
+                              className="me-lg-1"
+                              onClick={() =>
+                                handleValidateOrder(order.id, "Cancelled")
+                              }
+                              disabled={loadingOrderId === order.id}
+                            >
+                              {loadingOrderId === order.id ? (
+                                <Spinner size="sm" />
+                              ) : (
+                                <FaBan />
+                              )}
+                            </Button>
+                          ) : null}
                         </TableCell>
                       </TableRow>
                     ))
@@ -388,28 +405,28 @@ const TotalOrders = () => {
                             {order.total}
                           </TableCell> */}
                           <TableCell className="d-flex justify-content-center">
-                          <Button
-                            color="warning"
-                            className="me-lg-1"
-                            onClick={() => handleViewClick(order)}
-                          >
-                            <FaEye />
-                          </Button>
-                          <Button
-                            color="success"
-                            className="me-lg-1"
-                            onClick={() =>
-                              handleValidateOrder(order.id, "Approved")
-                            }
-                            disabled={loadingOrderId === order.id}
-                          >
-                            {loadingOrderId === order.id ? (
-                              <Spinner size="sm" />
-                            ) : (
-                              <FaCheck />
-                            )}
-                          </Button>
-                        </TableCell>
+                            <Button
+                              color="warning"
+                              className="me-lg-1"
+                              onClick={() => handleViewClick(order)}
+                            >
+                              <FaEye />
+                            </Button>
+                            <Button
+                              color="success"
+                              className="me-lg-1"
+                              onClick={() =>
+                                handleValidateOrder(order.id, "Approved")
+                              }
+                              disabled={loadingOrderId === order.id}
+                            >
+                              {loadingOrderId === order.id ? (
+                                <Spinner size="sm" />
+                              ) : (
+                                <FaCheck />
+                              )}
+                            </Button>
+                          </TableCell>
                         </TableRow>
                       ))
                     )}
@@ -443,10 +460,12 @@ const TotalOrders = () => {
               <strong>Status:</strong> {selectedOrder.status}
             </p>
             <p>
-              <strong>Order ID:</strong> {selectedOrder.order_no.replace(/\//g, '')}
+              <strong>Order ID:</strong>{" "}
+              {selectedOrder.order_no.replace(/\//g, "")}
             </p>
             <p>
-              <strong>Delivery ID:</strong> {selectedOrder.delivery_no.replace(/\//g, '')}
+              <strong>Delivery ID:</strong>{" "}
+              {selectedOrder.delivery_no.replace(/\//g, "")}
             </p>
           </ModalBody>
           <ModalFooter>
