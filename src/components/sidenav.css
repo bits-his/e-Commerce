@@ -1,3 +1,17 @@
+:root {
+  --primaryColor: rgb(255, 205, 41);
+  --secondaryColor: rgb(243, 112, 33);
+
+  --mycolor1: #a7bed3;
+  --mycolor2: #D2D2CF;
+  --mycolor3: #36454F;
+
+  --grpcolor1: #a52a2a;
+  --grpcolor2: #542b2b;
+  --grpcolor3: #f2eadb;
+
+}
+
 .side-nav {
   width: 260px;
   height: 100vh;
@@ -11,7 +25,17 @@
   overflow-y: auto; 
   position: sticky;
   top: 0;
+  background: var(--grpcolor2);
 }
+
+  .navlink-items{
+    background: var(--grpcolor1) !important;
+    color: var(--grpcolor3) !important;
+  }
+    .navlink-items-2 {
+      background: var(--grpcolor3) !important;
+      color: var(--grpcolor3) !important;
+    }
 
 
 .main-outlet {
