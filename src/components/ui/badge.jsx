@@ -30,9 +30,10 @@ const badgeVariants = cva(
 function Badge({
   className,
   variant,
+  style,
   ...props
 }) {
-  return (<div className={cn(badgeVariants({ variant }), className)} {...props} />);
+  return (<div className={cn(badgeVariants({ variant }), className)} style={{}} {...props} />);
 }
 
 export { Badge, badgeVariants }

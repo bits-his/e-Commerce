@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   PlusCircle,
   ChevronLeft,
@@ -64,6 +64,8 @@ export default function ProductsPage() {
   const [available, setAvailable] = useState([]);
   const [outOfStock, setOutOfStock] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
+
+  const navigate = useNavigate()
 
   const initialProductState = {
     product_name: "",
@@ -258,6 +260,7 @@ export default function ProductsPage() {
           console.log(res)
         );
         setProducts(updatedProducts);
+        navigate(0);
         setShowForm(false);
         setEditMode(false);
         toast.success("Product updated successfully");
@@ -814,7 +817,7 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls[0]}
+                                    src={product.image_urls.split(",")[0]}
                                     width="64"
                                   />
                                 </TableCell>
@@ -920,7 +923,7 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls[0]}
+                                    src={product.image_urls.split(",")[0]}
                                     width="64"
                                   />
                                 </TableCell>

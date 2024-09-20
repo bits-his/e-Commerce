@@ -41,46 +41,41 @@ const TotalOrders = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [completed, setCompleted] = useState([]);
-  const [error, setError] = useState(null);
   const [pending, setPending] = useState([]);
-  const [loading, setLoading] = useState(false)
-  let userDetails = localStorage.getItem("@@toke_$$_45598");
+  const [loadingOrderId, setLoadingOrderId] = useState(null);
+  const [error, setError] = useState(null);
 
+  const userDetails = localStorage.getItem("@@toke_$$_45598");
+
+  // Fetch all orders
   const getAllOrders = () => {
     _get(
       `api/gerordersbyshopid?shop_id=${parseInt(userDetails)}`,
-      (resp) => {
-        setOrders(resp.results);
-        console.log(userDetails);
-      },
-      (err) => {
-        setError(err);
-      }
+      (resp) => setOrders(resp.results),
+      (err) => setError(err)
     );
   };
 
+  // Approve order function
   const handleValidateOrder = (id, status) => {
-    setLoading(true)
+    setLoadingOrderId(id); 
 
-    const obj = {
-      id,
-      status,
-    };
+    const obj = { id, status };
 
     _put(
       "api/aproveorder",
       obj,
       (res) => {
+        setLoadingOrderId(null);
         if (res.success) {
-          setLoading(false)
-          toast.success("vendor updated successfully");
+          toast.success("Order updated successfully");
           getAllOrders();
         } else {
-          toast.error("Error updating venue status");
+          toast.error("Error updating order status");
         }
       },
       (err) => {
-        setLoading(false);
+        setLoadingOrderId(null);
         toast.error("An error occurred while updating status");
         console.error(err);
       }
@@ -91,38 +86,35 @@ const TotalOrders = () => {
     getAllOrders();
   }, []);
 
-  const filteredOrders = orders.filter(
-    (order) => order.product.toLowerCase().includes(searchQuery.toLowerCase())
-    // || order.status.toLowerCase().includes(searchQuery.toLowerCase())
+
+  const filteredOrders = orders.filter((order) =>
+    order.product.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   useEffect(() => {
-    setCompleted(orders.filter((order) => order.status === "Approved")),
-      [orders];
-  });
-  const sortedComplete = completed.filter(
-    (complete) =>
-      complete.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      complete.status.toLowerCase().includes(searchQuery.toLowerCase())
+    setCompleted(orders.filter((order) => order.status === "Approved"));
+    setPending(orders.filter((order) => order.status === "Pending"));
+  }, [orders]);
+
+  const sortedCompleted = completed.filter(
+    (order) =>
+      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  useEffect(() => {
-    setPending(orders.filter((order) => order.status === "Pending")), [orders];
-  });
   const sortedPending = pending.filter(
-    (pend) =>
-      pend.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      pend.status.toLowerCase().includes(searchQuery.toLowerCase())
+    (order) =>
+      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const toggleModal = () => {
-    setModal(!modal);
-  };
+  const toggleModal = () => setModal(!modal);
 
   const handleViewClick = (order) => {
     setSelectedOrder(order);
     toggleModal();
   };
+
 
   return (
     <Container fluid>
@@ -209,21 +201,27 @@ const TotalOrders = () => {
                         {/* <TableCell className="hidden md:table-cell text-center">
                           {order.total}
                         </TableCell> */}
-                        <TableCell>
+                        <TableCell className="d-flex justify-content-center">
                           <Button
                             color="warning"
+                            className="me-lg-1"
                             onClick={() => handleViewClick(order)}
                           >
                             <FaEye />
                           </Button>
                           <Button
                             color="success"
+                            className="me-lg-1"
                             onClick={() =>
                               handleValidateOrder(order.id, "Approved")
                             }
-                            disabled={loading}
+                            disabled={loadingOrderId === order.id}
                           >
-                            {loading ? <Spinner/>:<FaCheck />}
+                            {loadingOrderId === order.id ? (
+                              <Spinner size="sm" />
+                            ) : (
+                              <FaCheck />
+                            )}
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -266,14 +264,14 @@ const TotalOrders = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sortedComplete.length === 0 ? (
+                  {sortedCompleted.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan="6" className="text-center">
                         No order
                       </TableCell>
                     </TableRow>
                   ) : (
-                    sortedComplete.map((order) => (
+                    sortedCompleted.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.id}</TableCell>
                         <TableCell>{order.product}</TableCell>
@@ -288,7 +286,7 @@ const TotalOrders = () => {
                           {order.shop_id}
                         </TableHead>
                         <TableCell className="text-center">
-                          {order.status === "Completed" ? (
+                          {order.status === "Approved" ? (
                             <Badge variant="success">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
                             <Badge variant="warning">{order.status}</Badge>
@@ -383,14 +381,29 @@ const TotalOrders = () => {
                           {/* <TableCell className="hidden md:table-cell text-center">
                             {order.total}
                           </TableCell> */}
-                          <TableCell>
-                            <Button
-                              color="warning"
-                              onClick={() => handleViewClick(order)}
-                            >
-                              <FaEye />
-                            </Button>
-                          </TableCell>
+                          <TableCell className="d-flex justify-content-center">
+                          <Button
+                            color="warning"
+                            className="me-lg-1"
+                            onClick={() => handleViewClick(order)}
+                          >
+                            <FaEye />
+                          </Button>
+                          <Button
+                            color="success"
+                            className="me-lg-1"
+                            onClick={() =>
+                              handleValidateOrder(order.id, "Approved")
+                            }
+                            disabled={loadingOrderId === order.id}
+                          >
+                            {loadingOrderId === order.id ? (
+                              <Spinner size="sm" />
+                            ) : (
+                              <FaCheck />
+                            )}
+                          </Button>
+                        </TableCell>
                         </TableRow>
                       ))
                     )}
@@ -423,12 +436,12 @@ const TotalOrders = () => {
             <p>
               <strong>Status:</strong> {selectedOrder.status}
             </p>
-            {/* <p>
-              <strong>Total:</strong> {selectedOrder.total}
+            <p>
+              <strong>Order ID:</strong> {selectedOrder.order_no.replace(/\//g, '')}
             </p>
             <p>
-              <strong>Details:</strong> {selectedOrder.details}
-            </p> */}
+              <strong>Delivery ID:</strong> {selectedOrder.delivery_no.replace(/\//g, '')}
+            </p>
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={toggleModal}>

@@ -140,9 +140,9 @@ const AllOrders = () => {
                     </TableHead>
                     <TableHead className="text-center">Shop ID</TableHead>
                     <TableHead className="text-center">Status</TableHead>
-                    <TableHead className="hidden md:table-cell text-center">
+                    {/* <TableHead className="hidden md:table-cell text-center">
                       Total
-                    </TableHead>
+                    </TableHead> */}
                     <TableHead className="text-center">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -170,16 +170,16 @@ const AllOrders = () => {
                         </TableHead>
                         <TableCell className="text-center">
                           {order.status === "Completed" ? (
-                            <Badge variant="success">{order.status}</Badge>
+                            <Badge style={{backgroundColor: globalColor.color1}}>{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge style={{backgroundColor: "#FFFDD0"}}>{order.status}</Badge>
+                            <Badge style={{backgroundColor: globalColor.color1}}>{order.status}</Badge>
                           ) : (
                             <Badge variant="destructive">{order.status}</Badge>
                           )}
                         </TableCell>
-                        <TableCell className="hidden md:table-cell text-center">
+                        {/* <TableCell className="hidden md:table-cell text-center">
                           {order.total}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell>
                           <Button
                           style={{background: globalColor.colors1}}
@@ -225,9 +225,9 @@ const AllOrders = () => {
                     </TableHead>
                     <TableHead className="text-center">Shop ID</TableHead>
                     <TableHead className="text-center">Status</TableHead>
-                    <TableHead className="hidden md:table-cell text-center">
+                    {/* <TableHead className="hidden md:table-cell text-center">
                       Total
-                    </TableHead>
+                    </TableHead> */}
                     <TableHead className="text-center">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -262,9 +262,9 @@ const AllOrders = () => {
                             <Badge variant="destructive">{order.status}</Badge>
                           )}
                         </TableCell>
-                        <TableCell className="hidden md:table-cell text-center">
+                        {/* <TableCell className="hidden md:table-cell text-center">
                           {order.total}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell>
                           <Button
                             color="warning"
