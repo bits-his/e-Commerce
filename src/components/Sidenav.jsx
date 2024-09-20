@@ -42,7 +42,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidenav-container hidden border-r md:block" style={{backgroundColor: "#36454F"}}>
+    <div className="sidenav-container hidden border-r md:block" style={{backgroundColor: ""}}>
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
           <Link
@@ -64,8 +64,8 @@ const Sidebar = () => {
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-base transition-all ${
                 pathname === "/admin-dashboard" ||
                 pathname === "/seller-dashboard"
-                  ? "text-primary bg-muted/90"
-                  : "bg-white text-dark"
+                  ? " navlink-items-2 text-dark"
+                  : "navlink-items"
               }`}
               to={
                 pathname.startsWith("/admin-dashboard")
@@ -114,8 +114,8 @@ const Sidebar = () => {
                 <NavLink
                   className={`flex items-center gap-3 text-base rounded-lg px-3 py-2 transition-all mt-2 ${
                     pathname === "/admin-dashboard/orders"
-                      ? "text-primary bg-muted/90"
-                      : "bg-white text-dark"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
                   }`}
                   to={"/admin-dashboard/orders"}
                 >
@@ -201,8 +201,8 @@ const Sidebar = () => {
                 <NavLink
                   className={`flex items-center gap-3 rounded-lg text-base px-3 py-2 transition-all mt-2 ${
                     pathname === "/seller-dashboard/category"
-                      ? "text-primary bg-muted/90"
-                      : "bg-white text-dark"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
                   }`}
                   to={"/seller-dashboard/category"}
                 >
@@ -214,8 +214,8 @@ const Sidebar = () => {
                 <NavLink
                   className={`flex items-center gap-3 rounded-lg text-base px-3 py-2 transition-all mt-2 ${
                     pathname === "/seller-dashboard/orders/total"
-                      ? "text-primary bg-muted/90"
-                      : "bg-white text-dark"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
                   }`}
                   to={"/seller-dashboard/orders/total"}
                 >
