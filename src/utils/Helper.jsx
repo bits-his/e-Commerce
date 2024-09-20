@@ -7,7 +7,8 @@ export const globalColor = {
 };
 
 // export const server_url = "http://192.168.1.64:3002";
-export const server_url = "http://62.72.0.209:3112";
+// export const server_url = "http://62.72.0.209:3112";
+export const server_url = "https://kasuwa-backend.onrender.com";
 //  export const server_url = "http://192.168.1.82:3002";
 // export const server_url = "http://localhost:3002";
 
