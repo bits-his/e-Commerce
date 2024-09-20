@@ -161,7 +161,6 @@ function Registration() {
       >
         <TabsList className="grid w-full ">
           <TabsTrigger value="vendor">Vendor Registeration</TabsTrigger>
-          {/* <TabsTrigger value="admin">Admin</TabsTrigger> */}
         </TabsList>
         <TabsContent value="vendor">
           <Card>
@@ -203,10 +202,10 @@ function Registration() {
                       id="shopcontact"
                       name="shopcontact"
                       type="number"
-                      placeholder="7012345678"
+                      placeholder="07012345678"
                       value={formData.shopcontact}
                       onChange={handleChange}
-                      className="block w-full rounded-md border-0 py-1.5 pl-12 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -240,7 +239,7 @@ function Registration() {
                     <Input
                       id="firstname"
                       name="firstname"
-                      placeholder="John"
+                      placeholder="Abubakar"
                       value={formData.firstname}
                       onChange={handleChange}
                       required
@@ -251,7 +250,7 @@ function Registration() {
                     <Input
                       id="lastname"
                       name="lastname"
-                      placeholder="Doe"
+                      placeholder="Abdulmalik"
                       value={formData.lastname}
                       onChange={handleChange}
                       required
@@ -264,7 +263,7 @@ function Registration() {
                   <Input
                     id="username"
                     name="username"
-                    placeholder="user"
+                    // placeholder="user"
                     value={formData.username}
                     onChange={handleChange}
                     required

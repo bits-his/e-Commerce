@@ -65,7 +65,7 @@ function Login() {
 
   return (
     <>
-      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[100vh]">
+      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[100vh] login-bg">
         <Card className="mx-auto min-w-[23rem]">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Login</CardTitle>
@@ -77,7 +77,7 @@ function Login() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="sample@example.com"
                   required
                   name="email"
                   onChange={(e) => setEmail(e.target.value)}
@@ -87,7 +87,7 @@ function Login() {
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                   <Link
-                    to="/forgot-password"
+                    to="/"
                     className="ml-auto inline-block text-sm underline"
                   >
                     Forgot your password?
