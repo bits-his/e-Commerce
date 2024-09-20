@@ -178,7 +178,7 @@ function Registration() {
                   <Input
                     id="shopname"
                     name="shopname"
-                    placeholder="Phisherman's accessories"
+                    placeholder="Shop name"
                     value={formData.shopname}
                     onChange={handleChange}
                     required
@@ -189,7 +189,7 @@ function Registration() {
                   <Textarea
                     id="shopaddress"
                     name="shopaddress"
-                    placeholder="no. 1, Phisherman avenue, Shago tara"
+                    placeholder="Shop address"
                     value={formData.shopaddress}
                     onChange={handleChange}
                     required
@@ -199,9 +199,6 @@ function Registration() {
                 <div className="grid gap-2">
                   <Label htmlFor="shopcontact">Shop contact</Label>
                   <div className="relative mt-2 rounded-md shadow-sm">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                      <span className="text-gray-500 sm:text-sm">+234</span>
-                    </div>
                     <input
                       id="shopcontact"
                       name="shopcontact"
