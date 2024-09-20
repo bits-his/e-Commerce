@@ -157,10 +157,13 @@ const TotalOrders = () => {
                 {/* {JSON.stringify(orders)} */}
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Id</TableHead>
+                    <TableHead>S/N</TableHead>
                     <TableHead>Name</TableHead>
                     <TableHead className="hidden md:table-cell text-center">
                       Order date
+                    </TableHead>
+                    <TableHead className="hidden md:table-cell text-center">
+                      Order Number
                     </TableHead>
                     <TableHead className="text-center">Shop ID</TableHead>
                     <TableHead className="text-center">Status</TableHead>
@@ -186,6 +189,9 @@ const TotalOrders = () => {
                             .reverse()
                             .join("-")}
                         </TableCell>
+                        <TableHead className="text-center">
+                          {order.order_no}
+                        </TableHead>
                         <TableHead className="text-center">
                           {order.shop_id}
                         </TableHead>
