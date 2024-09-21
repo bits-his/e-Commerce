@@ -410,6 +410,11 @@ const AllOrders = () => {
               <strong>Delivery ID:</strong>{" "}
               {selectedOrder.delivery_no.replace(/\//g, "")}
             </p>
+            <p>
+              <strong>Image Ordered</strong>{" "}
+              <img src={selectedOrder.order_image} alt="" />
+              
+            </p>
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={toggleModal}>
