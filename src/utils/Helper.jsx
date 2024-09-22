@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
 
 export const globalColor = {
-  color1: "#a52a2a",
-  color2: "#542b2b", 
-  color3: "#f2eadb",
+  grpcolor1: '#a52a2a',
+  grpcolor2: '#542b2b',
+  grpcolor3: '#f2eadb',
 };
 
 // export const server_url = "http://192.168.1.64:3002";

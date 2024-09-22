@@ -118,18 +118,19 @@ function Login() {
                   </button>
                 </div>
               </div>
-              <Button
+              <button
                 type="submit"
-                className="w-full"
+                className="w-full btn login-btn"
                 onClick={handleLogin}
                 disabled={Loading}
+                style={{backgroundColor: "#a52a2a"}}
               >
                 {Loading ? (
                   <Spinner className="h-5 w-5" />
                 ) : (
                   <b className="text-white">Login</b>
                 )}
-              </Button>
+              </button>
               <Button
                 variant="outline"
                 className="w-full"
