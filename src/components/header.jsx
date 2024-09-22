@@ -25,6 +25,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import "../Styles/Header.css";
 import toast from "react-hot-toast";
+import { globalColor } from "@/utils/Helper";
 
 function Header() {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -230,16 +231,21 @@ function Header() {
         </form>
       </div>
       <div className="space-x-2">
-        <Button variant="outline" size="icon" className="h-8 w-8 rounded-full">
+        <button 
+          size="icon" className="rounded-full p-1" 
+          style={{backgroundColor: globalColor.grpcolor1, color: globalColor.grpcolor3}}
+        >
           <Bell className="h-4 w-4" />
-        </Button>
+        </button>
 
         <DropdownMenu className="ml-auto">
           <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
+            <button 
+              className="rounded-full p-2" 
+              style={{backgroundColor: globalColor.grpcolor1, color: globalColor.grpcolor3}}
+            >
               <CircleUser className="h-5 w-5" />
-              <span className="sr-only">Toggle user menu</span>
-            </Button>
+            </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
