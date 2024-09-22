@@ -19,6 +19,12 @@ const badgeVariants = cva(
           "border-0 bg-warning text-white hover:bg-warning/80",
         success: 
           "border-0 bg-success text-white hover:bg-success/80",
+        color1: 
+          "border-0 bg-[#a52a2a] text-white hover:bg-[#a52a2a]/80",
+        color2: 
+          "border-0 bg-[#542b2b] text-white hover:bg-[#542b2b]/80",
+        color3: 
+          "border-0 bg-[#f2eadb] text-black hover:bg-[#f2eadb]/80",
       },
     },
     defaultVariants: {

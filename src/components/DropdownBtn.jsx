@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
-const DropdownMenu = ({ title, items, isActive, onToggle, links, open }) => {
+const DropdownMenu = ({ title, items, isActive, onToggle, links, open, closeSheet }) => {
   return (
     <>
       <NavLink
@@ -25,6 +25,7 @@ const DropdownMenu = ({ title, items, isActive, onToggle, links, open }) => {
                   : `flex items-center gap-3 rounded-lg navlink-items px-3 py-2 transition-all mt-2`
               }
               to={links[index]}
+              onClick={closeSheet}
             >
               {item}
             </NavLink>

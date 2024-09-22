@@ -197,11 +197,11 @@ const TotalOrders = () => {
                         </TableHead>
                         <TableCell className="text-center">
                           {order.status === "Approved" ? (
-                            <Badge variant="success">{order.status}</Badge>
+                            <Badge variant="color3">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge variant="warning">{order.status}</Badge>
+                            <Badge variant="color1">{order.status}</Badge>
                           ) : (
-                            <Badge variant="destructive">{order.status}</Badge>
+                            <Badge variant="color2">{order.status}</Badge>
                           )}
                         </TableCell>
                         {/* <TableCell className="hidden md:table-cell text-center">
@@ -310,11 +310,11 @@ const TotalOrders = () => {
                         </TableHead>
                         <TableCell className="text-center">
                           {order.status === "Approved" ? (
-                            <Badge variant="success">{order.status}</Badge>
+                            <Badge variant="color3">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge variant="warning">{order.status}</Badge>
+                            <Badge variant="color1">{order.status}</Badge>
                           ) : (
-                            <Badge variant="destructive">{order.status}</Badge>
+                            <Badge variant="color2">{order.status}</Badge>
                           )}
                         </TableCell>
                         {/* <TableCell className="hidden md:table-cell text-center">
@@ -392,11 +392,11 @@ const TotalOrders = () => {
                           </TableHead>
                           <TableCell className="text-center">
                             {order.status === "Completed" ? (
-                              <Badge variant="success">{order.status}</Badge>
+                              <Badge variant="color3">{order.status}</Badge>
                             ) : order.status === "Pending" ? (
-                              <Badge variant="warning">{order.status}</Badge>
+                              <Badge variant="color1">{order.status}</Badge>
                             ) : (
-                              <Badge variant="destructive">
+                              <Badge variant="color2">
                                 {order.status}
                               </Badge>
                             )}
@@ -461,11 +461,15 @@ const TotalOrders = () => {
             </p>
             <p>
               <strong>Order ID:</strong>{" "}
-              {selectedOrder.order_no.replace(/\//g, "")}
+              {selectedOrder.order_no}
             </p>
             <p>
               <strong>Delivery ID:</strong>{" "}
-              {selectedOrder.delivery_no.replace(/\//g, "")}
+              {selectedOrder.delivery_no}
+            </p>
+            <p>
+              <strong>Image Ordered</strong>{" "}
+              <img src={selectedOrder.order_image} alt="" />
             </p>
           </ModalBody>
           <ModalFooter>

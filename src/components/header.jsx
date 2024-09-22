@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import DropdownBtn from "../components/DropdownBtn";
 import {
   Bell,
@@ -12,6 +12,7 @@ import {
   UserPlus2,
   Store,
   CircleUser,
+  NotebookPen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,10 +27,14 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import "../Styles/Header.css";
 import toast from "react-hot-toast";
 import { globalColor } from "@/utils/Helper";
+import { Spinner } from "reactstrap";
 
 function Header() {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { pathname } = location;
 
   const handleToggle = (dropdownName) => {
@@ -38,33 +43,55 @@ function Header() {
     );
   };
 
-  const handleLogout = () => {
-    toast.error("Working on logout");
+  const closeSheet = () => {
+    setIsSheetOpen(false);
   };
 
+  const handleLogout = () => {
+    setLoading(true);
+    localStorage.clear("@@token");
+    navigate("/");
+    toast("Goodbye!", {
+      icon: "👏",
+    });
+    setLoading(false);
+  };
 
   return (
-    <header className="sticky top-0 z-50 flex h-14 items-center gap-4 border-0 px-4 lg:h-[60px] lg:px-6" style={{backgroundColor: "#542b2b  "}}>
-      <Sheet>
+    <header
+      className="sticky top-0 z-50 flex h-14 items-center gap-4 border-0 px-4 lg:h-[60px] lg:px-6"
+      style={{ backgroundColor: "#542b2b" }}
+    >
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-            <Menu className="h-5 w-5" />
+          <Button
+            variant="outline"
+            size="icon"
+            className="shrink-0 md:hidden border-0"
+            style={{ backgroundColor: "#a52a2a", color: "#f2eadb" }}
+          >
+            <Menu className="h-6 w-6" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="flex flex-col" style={{backgroundColor: "#36454F"}}>
+        <SheetContent
+          side="left"
+          className="flex flex-col"
+          style={{ backgroundColor: "#542b2b" }}
+        >
           <nav className="grid gap-2 text-lg font-medium mt-4">
             <NavLink
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-base transition-all ${
                 pathname === "/admin-dashboard" ||
                 pathname === "/seller-dashboard"
-                  ? "text-primary bg-muted/90"
-                  : "bg-white text-dark"
+                  ? " navlink-items-2 text-dark"
+                  : "navlink-items"
               }`}
               to={
                 pathname.startsWith("/admin-dashboard")
                   ? "/admin-dashboard"
                   : "/seller-dashboard"
               }
+              onClick={closeSheet}
             >
               <Home className="h-4 w-4" />
               Dashboard
@@ -87,6 +114,7 @@ function Header() {
                   isActive={activeDropdown === "Customer Management"}
                   open={pathname.includes("/customer-mgmt")}
                   baseLink="/customer-mgmt"
+                  closeSheet={closeSheet}
                 />
                 <DropdownBtn
                   title={
@@ -103,7 +131,20 @@ function Header() {
                   isActive={activeDropdown === "vendor Management"}
                   open={pathname.includes("/vendor-mgmt")}
                   baseLink="/vendor-mgmt"
+                  closeSheet={closeSheet}
                 />
+                <NavLink
+                  className={`flex items-center gap-3 text-base rounded-lg px-3 py-2 transition-all mt-2 ${
+                    pathname === "/admin-dashboard/orders"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
+                  }`}
+                  to={"/admin-dashboard/orders"}
+                  onClick={closeSheet}
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  Orders
+                </NavLink>
                 <DropdownBtn
                   title={
                     <>
@@ -126,6 +167,7 @@ function Header() {
                   isActive={activeDropdown === "Reports"}
                   open={pathname.includes("/reports")}
                   baseLink="/reports"
+                  closeSheet={closeSheet}
                 />
                 <DropdownBtn
                   title={
@@ -143,6 +185,7 @@ function Header() {
                   isActive={activeDropdown === "User Management"}
                   open={pathname.includes("/user-mgmt")}
                   baseLink="/user-mgmt"
+                  closeSheet={closeSheet}
                 />
               </>
             )}
@@ -164,6 +207,7 @@ function Header() {
                   onToggle={() => handleToggle("Store Management")}
                   isActive={activeDropdown === "Store Management"}
                   open={pathname.includes("/storemangement")}
+                  closeSheet={closeSheet}
                 />
 
                 <DropdownBtn
@@ -177,18 +221,53 @@ function Header() {
                   onToggle={() => handleToggle("Product Management")}
                   isActive={activeDropdown === "Product Management"}
                   open={pathname.includes("/product-mgmt")}
+                  closeSheet={closeSheet}
                 />
+                {/* adding subcategory */}
+
                 <NavLink
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all mt-2 ${
+                  className={`flex items-center gap-3 rounded-lg text-base px-3 py-2 transition-all mt-2 ${
+                    pathname === "/seller-dashboard/category"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
+                  }`}
+                  to={"/seller-dashboard/category"}
+                  onClick={closeSheet}
+                >
+                  <NotebookPen className="h-4 w-4" />
+                  Category
+                </NavLink>
+
+                {/* categories adding button */}
+                <NavLink
+                  className={`flex items-center gap-3 rounded-lg text-base px-3 py-2 transition-all mt-2 ${
                     pathname === "/seller-dashboard/orders/total"
-                      ? "text-primary bg-muted/90"
-                      : "bg-white text-dark"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
                   }`}
                   to={"/seller-dashboard/orders/total"}
+                  onClick={closeSheet}
                 >
                   <ShoppingCart className="h-4 w-4" />
                   Orders
                 </NavLink>
+
+                {/* <DropdownBtn
+                  title={
+                    <>
+                      <ShoppingCart className="h-4 w-4" /> Orders
+                    </>
+                  }
+                  items={["Total order", "Aproved order", "Pending order"]}
+                  links={[
+                    "/seller-dashboard/orders/total",
+                    "/seller-dashboard/orders/approved",
+                    "/seller-dashboard/orders/pending",
+                  ]}
+                  onToggle={() => handleToggle("Order management")}
+                  isActive={activeDropdown === "Order management"}
+                  open={pathname.includes("/orders")}
+                /> */}
                 <DropdownBtn
                   title={
                     <>
@@ -202,6 +281,7 @@ function Header() {
                   ]}
                   onToggle={() => handleToggle("Order notifiction")}
                   isActive={activeDropdown === "Order notifiction"}
+                  closeSheet={closeSheet}
                   // open={pathname.includes("/product-mgmt")}
                 />
               </>
@@ -210,10 +290,11 @@ function Header() {
           <div className="mt-auto">
             <Button
               size="sm"
-              className="w-full bg-destructive hover:bg-destructive/50"
+              className="w-full bg-destructive hover:bg-destructive/50 text-base"
               onClick={handleLogout}
+              disabled={loading}
             >
-              Logout
+              {loading ? <Spinner className="w-4 h-4" /> : <>Logout</>}
             </Button>
           </div>
         </SheetContent>
@@ -231,18 +312,25 @@ function Header() {
         </form>
       </div>
       <div className="space-x-2">
-        <button 
-          size="icon" className="rounded-full p-1" 
-          style={{backgroundColor: globalColor.grpcolor1, color: globalColor.grpcolor3}}
+        <button
+          size="icon"
+          className="rounded-full p-1"
+          style={{
+            backgroundColor: globalColor.grpcolor1,
+            color: globalColor.grpcolor3,
+          }}
         >
           <Bell className="h-4 w-4" />
         </button>
 
         <DropdownMenu className="ml-auto">
           <DropdownMenuTrigger asChild>
-            <button 
-              className="rounded-full p-2" 
-              style={{backgroundColor: globalColor.grpcolor1, color: globalColor.grpcolor3}}
+            <button
+              className="rounded-full p-2"
+              style={{
+                backgroundColor: globalColor.grpcolor1,
+                color: globalColor.grpcolor3,
+              }}
             >
               <CircleUser className="h-5 w-5" />
             </button>
