@@ -405,11 +405,11 @@ const AllOrders = () => {
             </p>
             <p>
               <strong>Order ID:</strong>{" "}
-              {selectedOrder.order_no.replace(/\//g, "")}
+              {selectedOrder.order_no}
             </p>
             <p>
               <strong>Delivery ID:</strong>{" "}
-              {selectedOrder.delivery_no.replace(/\//g, "")}
+              {selectedOrder.delivery_no}
             </p>
             <p>
               <strong>Image Ordered</strong>{" "}

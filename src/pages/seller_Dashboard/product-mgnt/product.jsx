@@ -641,7 +641,7 @@ export default function ProductsPage() {
                     <TabsTrigger value="out-of-stock">Out of stock</TabsTrigger>
                   </TabsList>
                   <div className="ml-auto flex items-center gap-2">
-                    <div className="relative ml-auto flex-1 md:grow-0">
+                    <div className="relative ml-auto flex-1 md:grow-0 hidden md:inline">
                       <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input
                         type="search"
