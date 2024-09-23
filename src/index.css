@@ -72,10 +72,10 @@
   
 }
 
-/* .login-bg {
-  background-image: url("./assets/bg-image.png");
+.background-icon {
+  background-image: url("./assets/background-image.webp");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 60%;
   background-position: center;
   height: 100%;
-} */
+}

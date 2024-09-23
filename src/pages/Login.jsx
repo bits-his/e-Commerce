@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import "../Styles/Login.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Spinner } from "reactstrap";
-import { _post } from "../utils/Helper";
+import { _post, globalColor } from "../utils/Helper";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -65,7 +65,7 @@ function Login() {
 
   return (
     <>
-      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[100vh] login-bg">
+      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 min-h-[100vh] background-icon" style={{backgroundColor: globalColor.grpcolor3}}>
         <Card className="mx-auto min-w-[23rem]">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Login</CardTitle>
