@@ -35,7 +35,8 @@ export default function Pending_customer(args) {
       "api/getcutomers",
       (response) => {
         if (response.success) {
-          setP_customers(response.results);
+          setP_customers(response.results)
+          console.log(p_customers)
         } else {
           alert("Error on getting users");
         }

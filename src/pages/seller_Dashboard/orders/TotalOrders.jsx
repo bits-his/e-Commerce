@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import {
   Container,
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
@@ -32,9 +31,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { _get, _post, _put } from "@/utils/Helper";
 import toast from "react-hot-toast";
-import "../../style.css"
+import "../../style.css";
 
 const TotalOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -59,7 +59,7 @@ const TotalOrders = () => {
 
   // Approve order function
   const handleValidateOrder = (id, status) => {
-    setLoadingOrderId(id); 
+    setLoadingOrderId(id);
 
     const obj = { id, status };
 
@@ -86,7 +86,6 @@ const TotalOrders = () => {
   useEffect(() => {
     getAllOrders();
   }, []);
-
 
   const filteredOrders = orders.filter((order) =>
     order.product.toLowerCase().includes(searchQuery.toLowerCase())
@@ -115,7 +114,6 @@ const TotalOrders = () => {
     setSelectedOrder(order);
     toggleModal();
   };
-
 
   return (
     <Container fluid>
@@ -210,7 +208,7 @@ const TotalOrders = () => {
                         </TableCell> */}
                         <TableCell className="d-flex justify-content-center">
                           <Button
-                            color="warning"
+                            variant="color3"
                             className="me-lg-1"
                             onClick={() => handleViewClick(order)}
                           >
@@ -218,7 +216,7 @@ const TotalOrders = () => {
                           </Button>
                           {order.status === "Pending" ? (
                             <Button
-                              color="success"
+                              variant="color1"
                               className="me-lg-1"
                               onClick={() =>
                                 handleValidateOrder(order.id, "Approved")
@@ -233,7 +231,7 @@ const TotalOrders = () => {
                             </Button>
                           ) : order.status === "Approved" ? (
                             <Button
-                              color="danger"
+                              variant="color2"
                               className="me-lg-1"
                               onClick={() =>
                                 handleValidateOrder(order.id, "Cancelled")
@@ -323,11 +321,43 @@ const TotalOrders = () => {
                         </TableCell> */}
                         <TableCell>
                           <Button
-                            color="warning"
+                            variant="color3"
+                            className="me-lg-1"
                             onClick={() => handleViewClick(order)}
                           >
                             <FaEye />
                           </Button>
+                          {order.status === "Pending" ? (
+                            <Button
+                              variant="color1"
+                              className="me-lg-1"
+                              onClick={() =>
+                                handleValidateOrder(order.id, "Approved")
+                              }
+                              disabled={loadingOrderId === order.id}
+                            >
+                              {loadingOrderId === order.id ? (
+                                <Spinner size="sm" />
+                              ) : (
+                                <FaCheck />
+                              )}
+                            </Button>
+                          ) : order.status === "Approved" ? (
+                            <Button
+                              variant="color2"
+                              className="me-lg-1"
+                              onClick={() =>
+                                handleValidateOrder(order.id, "Cancelled")
+                              }
+                              disabled={loadingOrderId === order.id}
+                            >
+                              {loadingOrderId === order.id ? (
+                                <Spinner size="sm" />
+                              ) : (
+                                <FaBan />
+                              )}
+                            </Button>
+                          ) : null}
                         </TableCell>
                       </TableRow>
                     ))
@@ -397,9 +427,7 @@ const TotalOrders = () => {
                             ) : order.status === "Pending" ? (
                               <Badge variant="color1">{order.status}</Badge>
                             ) : (
-                              <Badge variant="color2">
-                                {order.status}
-                              </Badge>
+                              <Badge variant="color2">{order.status}</Badge>
                             )}
                           </TableCell>
                           {/* <TableCell className="hidden md:table-cell text-center">
@@ -407,26 +435,43 @@ const TotalOrders = () => {
                           </TableCell> */}
                           <TableCell className="d-flex justify-content-center">
                             <Button
-                              color="warning"
+                              variant="color3"
                               className="me-lg-1"
                               onClick={() => handleViewClick(order)}
                             >
                               <FaEye />
                             </Button>
-                            <Button
-                              color="success"
-                              className="me-lg-1"
-                              onClick={() =>
-                                handleValidateOrder(order.id, "Approved")
-                              }
-                              disabled={loadingOrderId === order.id}
-                            >
-                              {loadingOrderId === order.id ? (
-                                <Spinner size="sm" />
-                              ) : (
-                                <FaCheck />
-                              )}
-                            </Button>
+                            {order.status === "Pending" ? (
+                              <Button
+                                variant="color1"
+                                className="me-lg-1"
+                                onClick={() =>
+                                  handleValidateOrder(order.id, "Approved")
+                                }
+                                disabled={loadingOrderId === order.id}
+                              >
+                                {loadingOrderId === order.id ? (
+                                  <Spinner size="sm" />
+                                ) : (
+                                  <FaCheck />
+                                )}
+                              </Button>
+                            ) : order.status === "Approved" ? (
+                              <Button
+                                variant="color2"
+                                className="me-lg-1"
+                                onClick={() =>
+                                  handleValidateOrder(order.id, "Cancelled")
+                                }
+                                disabled={loadingOrderId === order.id}
+                              >
+                                {loadingOrderId === order.id ? (
+                                  <Spinner size="sm" />
+                                ) : (
+                                  <FaBan />
+                                )}
+                              </Button>
+                            ) : null}
                           </TableCell>
                         </TableRow>
                       ))
@@ -461,12 +506,10 @@ const TotalOrders = () => {
               <strong>Status:</strong> {selectedOrder.status}
             </p>
             <p>
-              <strong>Order ID:</strong>{" "}
-              {selectedOrder.order_no}
+              <strong>Order ID:</strong> {selectedOrder.order_no}
             </p>
             <p>
-              <strong>Delivery ID:</strong>{" "}
-              {selectedOrder.delivery_no}
+              <strong>Delivery ID:</strong> {selectedOrder.delivery_no}
             </p>
             <p>
               <strong>Image Ordered</strong>{" "}

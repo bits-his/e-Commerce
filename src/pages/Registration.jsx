@@ -160,7 +160,7 @@ function Registration() {
         onValueChange={handleTabChange}
       >
         <TabsList className="grid w-full ">
-          <TabsTrigger value="vendor">Vendor Registeration</TabsTrigger>
+          <TabsTrigger value="vendor">Vendor Registration</TabsTrigger>
         </TabsList>
         <TabsContent value="vendor">
           <Card>
