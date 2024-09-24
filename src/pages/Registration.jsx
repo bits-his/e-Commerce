@@ -18,7 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { _post } from "../utils/Helper";
+import { _post, globalColor } from "../utils/Helper";
 
 function Registration() {
   const [formData, setFormData] = useState({
@@ -153,7 +153,7 @@ function Registration() {
   };
 
   return (
-    <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[100vh]">
+    <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 min-h-[100vh] background-icon" style={{backgroundColor: globalColor.grpcolor3}}>
       <Tabs
         defaultValue="vendor"
         className="w-[400px]"
@@ -328,18 +328,19 @@ function Registration() {
                   </div>
                 </div>
 
-                <Button
+                <button
                   type="submit"
-                  className="w-full"
+                  className="w-full btn"
                   onClick={handleSubmit}
                   disabled={Loading}
+                  style={{backgroundColor: "#a52a2a"}}
                 >
                   {Loading ? (
                     <Spinner className="h-5 w-5" />
                   ) : (
                     <b className="text-white">Register</b>
                   )}
-                </Button>
+                </button>
                 <Button
                   variant="outline"
                   className="w-full"

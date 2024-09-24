@@ -646,7 +646,7 @@ export default function ProductsPage() {
                       <Input
                         type="search"
                         placeholder="Search..."
-                        className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[200px] lg:w-[300px]"
+                        className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[150px] lg:w-[300px]"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                       />
