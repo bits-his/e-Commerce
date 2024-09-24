@@ -32,7 +32,7 @@ export default function Pending_customer(args) {
 
   const get_customers = () => {
     _get(
-      "api/getcustomers",
+      "api/getcutomers",
       (response) => {
         if (response.success) {
           setP_customers(response.results)
@@ -51,11 +51,12 @@ export default function Pending_customer(args) {
   }, []);
 
   const filteredCustomers = p_customers.filter(
-    (customer) =>
-      customer.fullname.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      customer.phone.includes(searchQuery)
-  );
+  (customer) =>
+    (customer.fullname && customer.fullname.toLowerCase().includes(searchQuery.toLowerCase())) ||
+    (customer.email && customer.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
+    (customer.phone && customer.phone.includes(searchQuery))
+);
+
 
   const handleView = (customer) => {
     setSelectedCustomer(customer);
@@ -98,7 +99,7 @@ export default function Pending_customer(args) {
                   <TableHead className="hidden md:table-cell ">Email</TableHead>
                   <TableHead className="hidden md:table-cell">Phone</TableHead>
                   {/* <TableHead className="hidden md:table-cell ">Shop Name</TableHead> */}
-                  <TableHead className="hidden md:table-cell ">Shop Address</TableHead>
+                  <TableHead className="hidden md:table-cell ">Address</TableHead>
                   <TableHead className="">Action</TableHead>
                 </TableRow>
               </TableHeader>
@@ -110,10 +111,10 @@ export default function Pending_customer(args) {
                                         </TableCell>
                   </TableRow>
                 ) : (
-                    filteredCustomers.map((customer) => (
+                    filteredCustomers.map((customer,index) => (
                       <TableRow key={customer.id}>
-                        <TableCell>{customer.id}</TableCell>
-                        <TableCell>{customer.fullname}</TableCell>
+                        <TableCell><div>{index + 1}</div></TableCell>
+                        <TableCell>{customer.username}</TableCell>
                         <TableCell className="hidden md:table-cell">
                           {customer.email}
                         </TableCell>
