@@ -130,7 +130,7 @@ const TotalOrders = () => {
         <div className="flex items-center">
           <TabsList>
             <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="Completed">Completed</TabsTrigger>
+            <TabsTrigger value="approved">Approved</TabsTrigger>
             <TabsTrigger value="pending">Pending</TabsTrigger>
           </TabsList>
         </div>
@@ -188,7 +188,7 @@ const TotalOrders = () => {
                             .reverse()
                             .join("-")}
                         </TableCell>
-                        <TableHead className="text-center">
+                        <TableHead className="hidden md:table-cell text-center">
                           {order.order_no}
                         </TableHead>
                         <TableHead className="text-center">
@@ -254,7 +254,7 @@ const TotalOrders = () => {
             </CardContent>
           </Card>
         </TabsContent>
-        <TabsContent value="Completed">
+        <TabsContent value="approved">
           <Card x-chunk="dashboard-06-chunk-0">
             <CardHeader>
               <div className="flex items-center">
@@ -519,7 +519,7 @@ const TotalOrders = () => {
             </p>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={toggleModal}>
+            <Button variant="color2" onClick={toggleModal}>
               Close
             </Button>
           </ModalFooter>
