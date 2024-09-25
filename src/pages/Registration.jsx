@@ -97,7 +97,6 @@ function Registration() {
           (res) => {
             setLoading(false);
             if (res.success) {
-
               toast.success("Created Successfully, await admin approval");
               navigate("/");
             } else {
@@ -107,11 +106,11 @@ function Registration() {
 
           },
 
-          (err) => {
-            setLoading(false);
-            toast.error("An error occurred!");
-            console.log(err);
-          }
+          // (err) => {
+          //   setLoading(false);
+          //   toast.error("An error occurred!");
+          //   console.log(err);
+          // }
         );
       } else {
         toast.error("Password input does not match!");
