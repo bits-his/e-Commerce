@@ -513,10 +513,6 @@ const TotalOrders = () => {
             </p>
             <p>
               <strong>Image Ordered</strong>{" "}
-              <img src={selectedOrder.order_image} alt="" />
-            </p>
-            <p>
-              <strong>Image Ordered</strong>{" "}
               <div class="modal-image">
                 <img src={selectedOrder.order_image} alt="" />
               </div>
