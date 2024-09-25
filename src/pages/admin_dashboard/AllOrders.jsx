@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import {
   Container,
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
@@ -31,6 +30,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { _get, globalColor } from "@/utils/Helper";
 import "../style.css"
 
@@ -192,7 +192,7 @@ const AllOrders = () => {
                         <TableCell>
                           <Button
                             style={{ background: globalColor.colors1 }}
-                            color="warning"
+                            variant="color3"
                             onClick={() => handleViewClick(order)}
                           >
                             <FaEye />
