@@ -66,7 +66,6 @@ function Registration() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //Form validation
     if (formData.role === "vendor") {
       if (
         !formData.shopname ||
