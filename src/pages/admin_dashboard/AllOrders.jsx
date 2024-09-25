@@ -193,6 +193,7 @@ const AllOrders = () => {
                           <Button
                             style={{ background: globalColor.colors1 }}
                             variant="color3"
+                            size="sm"
                             onClick={() => handleViewClick(order)}
                           >
                             <FaEye />
@@ -278,7 +279,8 @@ const AllOrders = () => {
                         </TableCell> */}
                         <TableCell>
                           <Button
-                            color="warning"
+                            variant="color3"
+                            size="sm"
                             onClick={() => handleViewClick(order)}
                           >
                             <FaEye />
@@ -321,9 +323,6 @@ const AllOrders = () => {
                       </TableHead>
                       <TableHead className="text-center">Shop ID</TableHead>
                       <TableHead className="text-center">Status</TableHead>
-                      <TableHead className="hidden md:table-cell text-center">
-                        Total
-                      </TableHead>
                       <TableHead className="text-center">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -360,12 +359,10 @@ const AllOrders = () => {
                               </Badge>
                             )}
                           </TableCell>
-                          <TableCell className="hidden md:table-cell text-center">
-                            {order.total}
-                          </TableCell>
                           <TableCell>
                             <Button
-                              color="warning"
+                              variant="color3"
+                              size="sm"
                               onClick={() => handleViewClick(order)}
                             >
                               <FaEye />
