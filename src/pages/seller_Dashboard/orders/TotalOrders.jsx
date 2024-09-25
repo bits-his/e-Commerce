@@ -34,6 +34,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { _get, _post, _put } from "@/utils/Helper";
 import toast from "react-hot-toast";
+import "../../style.css"
 
 const TotalOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -470,6 +471,12 @@ const TotalOrders = () => {
             <p>
               <strong>Image Ordered</strong>{" "}
               <img src={selectedOrder.order_image} alt="" />
+            </p>
+            <p>
+              <strong>Image Ordered</strong>{" "}
+              <div class="modal-image">
+                <img src={selectedOrder.order_image} alt="" />
+              </div>
             </p>
           </ModalBody>
           <ModalFooter>

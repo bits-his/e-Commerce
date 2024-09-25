@@ -32,6 +32,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { _get, globalColor } from "@/utils/Helper";
+import "../style.css"
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -412,8 +413,9 @@ const AllOrders = () => {
             </p>
             <p>
               <strong>Image Ordered</strong>{" "}
-              <img src={selectedOrder.order_image} alt="" />
-              
+              <div class="modal-image">
+                <img src={selectedOrder.order_image} alt="" />
+              </div>
             </p>
           </ModalBody>
           <ModalFooter>
