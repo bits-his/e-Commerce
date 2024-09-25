@@ -342,6 +342,7 @@ export default function ProductsPage() {
                       Discard
                     </Button>
                     <Button
+                      variant="color1"
                       size="sm"
                       onClick={editMode ? handleEditProduct : handleAddProduct}
                       disabled={Loading}
@@ -616,6 +617,7 @@ export default function ProductsPage() {
                     Discard
                   </Button>
                   <Button
+                    variant="color1"
                     size="sm"
                     onClick={editMode ? handleEditProduct : handleAddProduct}
                     disabled={Loading}
@@ -652,6 +654,7 @@ export default function ProductsPage() {
                       />
                     </div>
                     <Button
+                      variant="color1"
                       size="sm"
                       className="h-8 gap-1"
                       onClick={() => {
@@ -720,11 +723,11 @@ export default function ProductsPage() {
                                 </TableCell>
                                 <TableCell className="text-center">
                                   {product.product_status === "available" ? (
-                                    <Badge variant="outline">
+                                    <Badge variant="color3">
                                       {product.product_status}
                                     </Badge>
                                   ) : (
-                                    <Badge variant="destructive">
+                                    <Badge variant="color2">
                                       Out of Stock
                                     </Badge>
                                   )}

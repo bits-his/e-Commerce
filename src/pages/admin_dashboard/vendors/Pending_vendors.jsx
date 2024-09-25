@@ -191,7 +191,7 @@ export default function Pending_customer({ args, id }) {
                         <TableCell>
                           <div className="justify-center items-center gap-2 md:flex sm:flex">
                             <Button
-                              variant="warning"
+                              variant="color1"
                               size="icon"
                               className=" w-90 p-2"
                               onClick={() => handleView(customer)}
@@ -199,7 +199,7 @@ export default function Pending_customer({ args, id }) {
                               View
                             </Button>
                             <Button
-                              variant="success"
+                              variant="color3"
                               size="icon"
                               className="w-90 p-2"
                               onClick={() =>
@@ -209,7 +209,7 @@ export default function Pending_customer({ args, id }) {
                               Approve
                             </Button>
                             <Button
-                              variant="destructive"
+                              variant="color2"
                               size="icon"
                               className="w-90 p-2"
                               onClick={() => handledeleteusers(customer.id)}

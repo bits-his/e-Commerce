@@ -171,18 +171,18 @@ const AllOrders = () => {
                         <TableCell className="text-center">
                           {order.status === "Completed" ? (
                             <Badge
-                              style={{ backgroundColor: globalColor.color1 }}
+                              variant="color3"
                             >
                               {order.status}
                             </Badge>
                           ) : order.status === "Pending" ? (
                             <Badge
-                              style={{ backgroundColor: globalColor.color1 }}
+                              variant="color1"
                             >
                               {order.status}
                             </Badge>
                           ) : (
-                            <Badge variant="destructive">{order.status}</Badge>
+                            <Badge variant="color2">{order.status}</Badge>
                           )}
                         </TableCell>
                         {/* <TableCell className="hidden md:table-cell text-center">
@@ -263,13 +263,13 @@ const AllOrders = () => {
                         </TableHead>
                         <TableCell className="text-center">
                           {order.status === "Completed" ? (
-                            <Badge variant="success">{order.status}</Badge>
+                            <Badge variant="color3">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge style={{ backgroundColor: "#FFFDD0" }}>
+                            <Badge variant="color1">
                               {order.status}
                             </Badge>
                           ) : (
-                            <Badge variant="destructive">{order.status}</Badge>
+                            <Badge variant="color2">{order.status}</Badge>
                           )}
                         </TableCell>
                         {/* <TableCell className="hidden md:table-cell text-center">
@@ -350,11 +350,11 @@ const AllOrders = () => {
                           </TableHead>
                           <TableCell className="text-center">
                             {order.status === "Completed" ? (
-                              <Badge variant="success">{order.status}</Badge>
+                              <Badge variant="color3">{order.status}</Badge>
                             ) : order.status === "Pending" ? (
-                              <Badge variant="warning">{order.status}</Badge>
+                              <Badge variant="color1">{order.status}</Badge>
                             ) : (
-                              <Badge variant="destructive">
+                              <Badge variant="color2">
                                 {order.status}
                               </Badge>
                             )}
