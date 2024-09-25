@@ -96,8 +96,15 @@ function Registration() {
           obj,
           (res) => {
             setLoading(false);
-            toast.success("Created Successfully, await admin approval");
-            navigate("/");
+            if (res.success) {
+
+              toast.success("Created Successfully, await admin approval");
+              navigate("/");
+            } else {
+              console.log(res)
+              toast.error(res.message);
+             }
+
           },
 
           (err) => {
