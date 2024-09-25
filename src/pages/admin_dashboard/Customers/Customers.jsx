@@ -28,7 +28,7 @@ export default function Pending_customer(args) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [p_customers, setP_customers] = useState([])
+  const [p_customers, setP_customers] = useState([]);
 
   const get_customers = () => {
     _get(
@@ -38,26 +38,27 @@ export default function Pending_customer(args) {
           setP_customers(response.results)
           console.log(p_customers)
         } else {
-          alert("Error on getting users")
+          alert("Error on getting users");
         }
       },
       (error) => {
-        alert("Error on getting users")
+        alert("Error on getting users");
       }
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     get_customers();
   }, []);
 
   const filteredCustomers = p_customers.filter(
-  (customer) =>
-    (customer.fullname && customer.fullname.toLowerCase().includes(searchQuery.toLowerCase())) ||
-    (customer.email && customer.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
-    (customer.phone && customer.phone.includes(searchQuery))
-);
-
+    (customer) =>
+      (customer.fullname &&
+        customer.fullname.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (customer.email &&
+        customer.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (customer.phone && customer.phone.includes(searchQuery))
+  );
 
   const handleView = (customer) => {
     setSelectedCustomer(customer);
@@ -100,7 +101,9 @@ export default function Pending_customer(args) {
                   <TableHead className="hidden md:table-cell ">Email</TableHead>
                   <TableHead className="hidden md:table-cell">Phone</TableHead>
                   {/* <TableHead className="hidden md:table-cell ">Shop Name</TableHead> */}
-                  <TableHead className="hidden md:table-cell ">Address</TableHead>
+                  <TableHead className="hidden md:table-cell ">
+                    Address
+                  </TableHead>
                   <TableHead className="">Action</TableHead>
                 </TableRow>
               </TableHeader>
@@ -109,33 +112,35 @@ export default function Pending_customer(args) {
                   <TableRow>
                     <TableCell colSpan="7" className="text-center">
                       No customers found
-                                        </TableCell>
+                    </TableCell>
                   </TableRow>
                 ) : (
-                    filteredCustomers.map((customer,index) => (
-                      <TableRow key={customer.id}>
-                        <TableCell><div>{index + 1}</div></TableCell>
-                        <TableCell>{customer.username}</TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          {customer.email}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          {customer.phone}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell ">
-                          {customer.address}
-                        </TableCell>
-                        {/* <TableCell className="hidden md:table-cell ">
+                  filteredCustomers.map((customer, index) => (
+                    <TableRow key={customer.id}>
+                      <TableCell>
+                        <div>{index + 1}</div>
+                      </TableCell>
+                      <TableCell>{customer.username}</TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {customer.email}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {customer.phone}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell ">
+                        {customer.address}
+                      </TableCell>
+                      {/* <TableCell className="hidden md:table-cell ">
                           {customer.shopaddress}
                         </TableCell> */}
-                        <TableCell>
-                          <div className="justify-center items-center gap-2 md:flex sm:flex cursor-   pointer">
-                            <FaEllipsisH />
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
+                      <TableCell>
+                        <div className="justify-center items-center gap-2 md:flex sm:flex cursor-   pointer">
+                          <FaEllipsisH />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </CardContent>
@@ -146,16 +151,22 @@ export default function Pending_customer(args) {
           <ModalBody>
             {selectedCustomer && (
               <div>
-                <p><strong>Name:</strong> {selectedCustomer.username}</p>
-                <p><strong>Email:</strong> {selectedCustomer.email}</p>
-                <p><strong>Phone:</strong> {selectedCustomer.phone}</p>
+                <p>
+                  <strong>Name:</strong> {selectedCustomer.username}
+                </p>
+                <p>
+                  <strong>Email:</strong> {selectedCustomer.email}
+                </p>
+                <p>
+                  <strong>Phone:</strong> {selectedCustomer.phone}
+                </p>
               </div>
             )}
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={handleCloseModal}>
               Close
-                        </Button>
+            </Button>
           </ModalFooter>
         </Modal>
       </main>

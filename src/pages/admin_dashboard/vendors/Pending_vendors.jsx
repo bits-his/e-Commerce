@@ -33,6 +33,7 @@ export default function Pending_customer({ args, id }) {
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [p_customers, setP_customers] = useState([])
+    // const [loading, setLoading]
 
     const get_customers = () => {
         _get(

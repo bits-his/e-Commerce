@@ -209,10 +209,10 @@ const TotalOrders = () => {
                         <TableCell className="d-flex justify-content-center">
                           <Button
                             variant="color3"
-                            className="me-lg-1"
+                            className="me-lg-1 w-8 h-8"
                             onClick={() => handleViewClick(order)}
                           >
-                            <FaEye />
+                            <FaEye className="w-4 h-4"/>
                           </Button>
                           {order.status === "Pending" ? (
                             <Button

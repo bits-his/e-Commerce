@@ -50,12 +50,13 @@ function Login() {
         } else { 
           toast.error("User not found"); 
         } 
-      }, 
-      (err) => { 
-        setLoading(false); 
-        toast.error("An error occurred!"); 
-        console.log(err); 
-      } 
+      }
+
+      // (err) => { 
+      //   setLoading(false); 
+      //   toast.error("An error occurred!"); 
+      //   console.log(err); 
+      // } 
     ); 
   };
 

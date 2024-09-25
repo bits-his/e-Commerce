@@ -95,15 +95,21 @@ function Registration() {
           obj,
           (res) => {
             setLoading(false);
-            toast.success("Created Successfully, await admin approval");
-            navigate("/");
+            if (res.success) {
+              toast.success("Created Successfully, await admin approval");
+              navigate("/");
+            } else {
+              console.log(res)
+              toast.error(res.message);
+             }
+
           },
 
-          (err) => {
-            setLoading(false);
-            toast.error("An error occurred!");
-            console.log(err);
-          }
+          // (err) => {
+          //   setLoading(false);
+          //   toast.error("An error occurred!");
+          //   console.log(err);
+          // }
         );
       } else {
         toast.error("Password input does not match!");
