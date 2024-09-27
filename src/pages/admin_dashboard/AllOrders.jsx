@@ -7,6 +7,7 @@ import {
   ModalBody,
   ModalFooter,
   Col,
+  Spinner,
 } from "reactstrap";
 import { FaEye } from "react-icons/fa";
 import OrdersChart from "../seller_Dashboard/orders/OrdersChart";
@@ -32,7 +33,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { _get, globalColor } from "@/utils/Helper";
-import "../style.css"
+import "../style.css";
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -42,16 +43,20 @@ const AllOrders = () => {
   const [completed, setCompleted] = useState([]);
   const [pending, setPending] = useState([]);
   const [error, setError] = useState(null);
+  const [fetching, setFetching] = useState(false);
 
   const getAllOrders = () => {
+    setFetching(true);
     _get(
       "api/getorders",
       (resp) => {
         setOrders(resp.results);
         console.log(orders);
+        setFetching(false);
       },
       (err) => {
         setError(err);
+        setFetching(false);
       }
     );
   };
@@ -148,7 +153,13 @@ const AllOrders = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredOrders.length === 0 ? (
+                  {fetching ? (
+                    <TableRow>
+                      <TableCell colSpan="7" className="text-center">
+                        <Spinner />
+                      </TableCell>
+                    </TableRow>
+                  ) : filteredOrders.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan="6" className="text-center">
                         No order
@@ -171,17 +182,9 @@ const AllOrders = () => {
                         </TableHead>
                         <TableCell className="text-center">
                           {order.status === "Completed" ? (
-                            <Badge
-                              variant="color3"
-                            >
-                              {order.status}
-                            </Badge>
+                            <Badge variant="color3">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge
-                              variant="color1"
-                            >
-                              {order.status}
-                            </Badge>
+                            <Badge variant="color1">{order.status}</Badge>
                           ) : (
                             <Badge variant="color2">{order.status}</Badge>
                           )}
@@ -242,7 +245,13 @@ const AllOrders = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sortedComplete.length === 0 ? (
+                  {fetching ? (
+                    <TableRow>
+                      <TableCell colSpan="7" className="text-center">
+                        <Spinner />
+                      </TableCell>
+                    </TableRow>
+                  ) : sortedComplete.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan="6" className="text-center">
                         No order
@@ -267,9 +276,7 @@ const AllOrders = () => {
                           {order.status === "Completed" ? (
                             <Badge variant="color3">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge variant="color1">
-                              {order.status}
-                            </Badge>
+                            <Badge variant="color1">{order.status}</Badge>
                           ) : (
                             <Badge variant="color2">{order.status}</Badge>
                           )}
@@ -327,7 +334,13 @@ const AllOrders = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sortedPending.length === 0 ? (
+                    {fetching ? (
+                      <TableRow>
+                        <TableCell colSpan="7" className="text-center">
+                          <Spinner />
+                        </TableCell>
+                      </TableRow>
+                    ) : sortedPending.length === 0 ? (
                       <TableRow>
                         <TableCell colSpan="6" className="text-center">
                           No order
@@ -354,9 +367,7 @@ const AllOrders = () => {
                             ) : order.status === "Pending" ? (
                               <Badge variant="color1">{order.status}</Badge>
                             ) : (
-                              <Badge variant="color2">
-                                {order.status}
-                              </Badge>
+                              <Badge variant="color2">{order.status}</Badge>
                             )}
                           </TableCell>
                           <TableCell>
@@ -401,12 +412,10 @@ const AllOrders = () => {
               <strong>Status:</strong> {selectedOrder.status}
             </p>
             <p>
-              <strong>Order ID:</strong>{" "}
-              {selectedOrder.order_no}
+              <strong>Order ID:</strong> {selectedOrder.order_no}
             </p>
             <p>
-              <strong>Delivery ID:</strong>{" "}
-              {selectedOrder.delivery_no}
+              <strong>Delivery ID:</strong> {selectedOrder.delivery_no}
             </p>
             <p>
               <strong>Image Ordered</strong>{" "}

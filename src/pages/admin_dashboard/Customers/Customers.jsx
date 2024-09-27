@@ -6,9 +6,10 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Spinner,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
-import { Search, Pencil, Eye } from "lucide-react";
+import { Search, Pencil, Eye, EllipsisVertical } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -18,6 +19,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { _get } from "@/utils/Helper";
@@ -29,20 +36,25 @@ export default function Pending_customer(args) {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [p_customers, setP_customers] = useState([]);
+  const [fetching, setFetching] = useState(false);
 
   const get_customers = () => {
+    setFetching(true);
     _get(
       "api/getcutomers",
       (response) => {
         if (response.success) {
-          setP_customers(response.results)
-          console.log(p_customers)
+          setP_customers(response.results);
+          console.log(p_customers);
+          setFetching(false);
         } else {
           alert("Error on getting users");
+          setFetching(false);
         }
       },
       (error) => {
         alert("Error on getting users");
+        setFetching(false);
       }
     );
   };
@@ -98,8 +110,7 @@ export default function Pending_customer(args) {
                 <TableRow>
                   <TableHead>ID</TableHead>
                   <TableHead>Name</TableHead>
-                  <TableHead className="hidden md:table-cell ">Email</TableHead>
-                  <TableHead className="hidden md:table-cell">Phone</TableHead>
+                  <TableHead>Phone</TableHead>
                   {/* <TableHead className="hidden md:table-cell ">Shop Name</TableHead> */}
                   <TableHead className="hidden md:table-cell ">
                     Address
@@ -108,7 +119,13 @@ export default function Pending_customer(args) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredCustomers.length === 0 ? (
+                {fetching ? (
+                  <TableRow>
+                    <TableCell colSpan="7" className="text-center">
+                      <Spinner />
+                    </TableCell>
+                  </TableRow>
+                ) : filteredCustomers.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan="7" className="text-center">
                       No customers found
@@ -120,13 +137,13 @@ export default function Pending_customer(args) {
                       <TableCell>
                         <div>{index + 1}</div>
                       </TableCell>
-                      <TableCell>{customer.username}</TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        {customer.email}
+                      <TableCell>
+                        <div className="font-medium">{customer.username}</div>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          {customer.email}
+                        </div>
                       </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        {customer.phone}
-                      </TableCell>
+                      <TableCell>{customer.phone}</TableCell>
                       <TableCell className="hidden md:table-cell ">
                         {customer.address}
                       </TableCell>
@@ -135,7 +152,16 @@ export default function Pending_customer(args) {
                         </TableCell> */}
                       <TableCell>
                         <div className="justify-center items-center gap-2 md:flex sm:flex cursor-   pointer">
-                          <FaEllipsisH />
+                          <DropdownMenu>
+                            <DropdownMenuTrigger>
+                              <EllipsisVertical className="h-4 w-4" />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                              <DropdownMenuItem className="mx-auto">
+                                <Eye className="me-2"/>View
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
                       </TableCell>
                     </TableRow>

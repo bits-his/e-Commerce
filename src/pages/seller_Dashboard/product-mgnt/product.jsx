@@ -72,8 +72,8 @@ export default function ProductsPage() {
     product_description: "",
     product_category: "",
     product_subcategory: "",
-    product_price: 0,
-    product_quantity: 0,
+    product_price: null,
+    product_quantity: null,
     product_status: "available",
     image_urls: [],
   };
@@ -172,7 +172,7 @@ export default function ProductsPage() {
     const files = Array.from(e.target.files);
 
     if (files.length + image_urls.length > 10) {
-      toast.error("You can only upload up to 4 images.");
+      toast.error("You can only upload up to 10 images.");
       return;
     }
 
@@ -508,7 +508,7 @@ export default function ProductsPage() {
                                   htmlFor="product_price"
                                   className="sr-only"
                                 >
-                                  <span className="text-danger">* </span>
+                                  <span className="text-destructive">* </span>
                                   Price
                                 </Label>
                                 <Input
@@ -528,12 +528,12 @@ export default function ProductsPage() {
                           </TableBody>
                         </Table>
                       </CardContent>
-                      {/* <CardFooter className="justify-center border-t p-4">
+                      <CardFooter className="justify-center border-t p-4">
                         <Button size="sm" variant="ghost" className="gap-1">
                           <PlusCircle className="h-3.5 w-3.5" />
                           Add Variant
                         </Button>
-                      </CardFooter> */}
+                      </CardFooter>
                     </Card>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">

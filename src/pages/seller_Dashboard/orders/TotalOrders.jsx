@@ -44,16 +44,24 @@ const TotalOrders = () => {
   const [completed, setCompleted] = useState([]);
   const [pending, setPending] = useState([]);
   const [loadingOrderId, setLoadingOrderId] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const userDetails = localStorage.getItem("@@toke_$$_45598");
 
   // Fetch all orders
   const getAllOrders = () => {
+    setLoading(true);
     _get(
       `api/gerordersbyshopid?shop_id=${parseInt(userDetails)}`,
-      (resp) => setOrders(resp.results),
-      (err) => setError(err)
+      (resp) => {
+        setOrders(resp.results);
+        setLoading(false);
+      },
+      (err) => {
+        setError(err);
+        setLoading(false);
+      }
     );
   };
 
@@ -170,7 +178,13 @@ const TotalOrders = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredOrders.length === 0 ? (
+                  {loading ? (
+                    <TableRow>
+                      <TableCell colSpan="7" className="text-center">
+                        <Spinner />
+                      </TableCell>
+                    </TableRow>
+                  ) : filteredOrders.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan="6" className="text-center">
                         No order
