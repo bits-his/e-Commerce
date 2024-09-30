@@ -244,18 +244,19 @@ function Registration() {
                     <Input
                       id="firstname"
                       name="firstname"
-                      placeholder="Abubakar"
+                      // placeholder="Abubakar"
                       value={formData.firstname}
                       onChange={handleChange}
                       required
                     />
                   </div>
+                  
                   <div className="grid gap-2">
                     <Label htmlFor="lastname">Last name</Label>
                     <Input
                       id="lastname"
                       name="lastname"
-                      placeholder="Abdulmalik"
+                      // placeholder="Abdulmalik"
                       value={formData.lastname}
                       onChange={handleChange}
                       required

@@ -7,6 +7,7 @@ import {
   Search,
   Pencil,
   Trash2,
+  X,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -177,6 +178,12 @@ export default function ProductsPage() {
     }
 
     setImage_urls((prevImages) => [...prevImages, ...files]);
+  };
+
+  const removeImage = (indexToRemove) => {
+    setImage_urls((prevImages) =>
+      prevImages.filter((_, idx) => idx !== indexToRemove)
+    );
   };
 
   const handleAddProduct = (e) => {
@@ -512,7 +519,9 @@ export default function ProductsPage() {
                                   <span>
                                     {editMode
                                       ? parseFloat(
-                                          separator(currentProduct?.product_price)
+                                          separator(
+                                            currentProduct?.product_price
+                                          )
                                         ).toFixed(2)
                                       : separator(newProduct.product_price)}
                                   </span>
@@ -590,14 +599,38 @@ export default function ProductsPage() {
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 gap-2">
                             {image_urls.map((image, idx) => (
-                              <img
-                                key={idx}
-                                alt={`Product image ${idx + 1}`}
-                                className="aspect-square w-full rounded-md object-cover"
-                                height="84"
-                                src={URL.createObjectURL(image)}
-                                width="84"
-                              />
+                              <div key={idx} style={{ position: 'relative', display: 'inline-block' }}>
+                                <img
+                                  key={idx}
+                                  alt={`Product image ${idx + 1}`}
+                                  className="aspect-square w-full rounded-md object-cover"
+                                  height="84"
+                                  src={URL.createObjectURL(image)}
+                                  width="84"
+                                />
+                                <button
+                                  onClick={() => removeImage(idx)}
+                                  style={{
+                                    position: "absolute",
+                                    top: "5px",
+                                    right: "5px",
+                                    background: "#a52a2a",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "50%",
+                                    cursor: "pointer",
+                                    width: "20px",
+                                    height: "20px",
+                                    textAlign: "center",
+                                    fontSize: "14px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center"
+                                  }}
+                                >
+                                  <X className="w-3 h-3"/>
+                                </button>
+                              </div>
                             ))}
                             {image_urls.length < 10 && (
                               <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">
