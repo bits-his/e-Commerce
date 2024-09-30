@@ -118,6 +118,9 @@ export default function Pending_customer(args) {
                   <TableHead className="hidden md:table-cell">
                     Shop Name
                   </TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Shop Address
+                  </TableHead>
                   <TableHead className="">Action</TableHead>
                 </TableRow>
               </TableHeader>
@@ -125,7 +128,7 @@ export default function Pending_customer(args) {
                 {loading ? (
                   <TableRow>
                     <TableCell colSpan="7" className="text-center">
-                      <Spinner/>
+                      <Spinner />
                     </TableCell>
                   </TableRow>
                 ) : filteredCustomers.length === 0 ? (
@@ -149,6 +152,9 @@ export default function Pending_customer(args) {
                       <TableCell>{customer.shopcontact}</TableCell>
                       <TableCell className="hidden md:table-cell ">
                         {customer.shopname}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell ">
+                        {customer.shopaddress}
                       </TableCell>
                       <TableCell className="justify-center items-center gap-2 md:flex sm:flex">
                         <DropdownMenu>
