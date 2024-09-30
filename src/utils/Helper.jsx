@@ -6,8 +6,8 @@ export const globalColor = {
   grpcolor3: '#f2eadb',
 };
 
-export const server_url = "http://192.168.1.64:3000";
-// export const server_url = "https://server.brainstorm.ng/kasuwa-backend";
+// export const server_url = "http://192.168.1.64:3000";
+export const server_url = "https://server.brainstorm.ng/kasuwa-backend";
 // export const server_url = "https://kasuwa-backend.min.com";
 //  export const server_url = "http://192.168.1.82:3002";
 // export const server_url = "http://localhost:3002";

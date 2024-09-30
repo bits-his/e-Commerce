@@ -488,7 +488,7 @@ export default function ProductsPage() {
                               <TableCell>
                                 <Label
                                   htmlFor="product_quantity"
-                                  className="sr-only"
+                                  
                                 >
                                   <span className="text-danger">* </span>
                                 </Label>

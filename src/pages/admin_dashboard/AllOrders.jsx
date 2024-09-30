@@ -65,25 +65,25 @@ const AllOrders = () => {
     getAllOrders();
   }, []);
 
-  const filteredOrders = orders.filter(
+  const filteredOrders = orders?.filter(
     (order) => order.product.toLowerCase().includes(searchQuery.toLowerCase())
     // || order.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   useEffect(() => {
-    setCompleted(orders.filter((order) => order.status === "Completed")),
+    setCompleted(orders?.filter((order) => order.status === "Completed")),
       [orders];
   });
-  const sortedComplete = completed.filter(
+  const sortedComplete = completed?.filter(
     (complete) =>
       complete.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       complete.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   useEffect(() => {
-    setPending(orders.filter((order) => order.status === "Pending")), [orders];
+    setPending(orders?.filter((order) => order.status === "Pending")), [orders];
   });
-  const sortedPending = pending.filter(
+  const sortedPending = pending?.filter(
     (pend) =>
       pend.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       pend.status.toLowerCase().includes(searchQuery.toLowerCase())
@@ -108,7 +108,6 @@ const AllOrders = () => {
           <SatisfiedChart />
         </Col>
       </div>
-      {/* {JSON.stringify(orders)} */}
 
       <Tabs defaultValue="all">
         <div className="flex items-center">
@@ -160,13 +159,7 @@ const AllOrders = () => {
                           <Spinner />
                         </TableCell>
                       </TableRow>
-                    ) : filteredOrders.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan="6" className="text-center">
-                          No order
-                        </TableCell>
-                      </TableRow>
-                    ) : (
+                    ) : filteredOrders?.length > 0 ? (
                       filteredOrders?.map((order) => (
                         <TableRow key={order.id}>
                           <TableCell>{order.id}</TableCell>
@@ -205,6 +198,12 @@ const AllOrders = () => {
                           </TableCell>
                         </TableRow>
                       ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan="6" className="text-center">
+                          No order
+                        </TableCell>
+                      </TableRow>
                     )}
                   </TableBody>
                 </Table>
@@ -253,14 +252,8 @@ const AllOrders = () => {
                         <Spinner />
                       </TableCell>
                     </TableRow>
-                  ) : sortedComplete.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan="6" className="text-center">
-                        No order
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    sortedComplete.map((order) => (
+                  ) : sortedComplete?.length > 0 ? (
+                    sortedComplete?.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.id}</TableCell>
                         <TableCell>{order.product}</TableCell>
@@ -297,6 +290,12 @@ const AllOrders = () => {
                         </TableCell>
                       </TableRow>
                     ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan="6" className="text-center">
+                        No order
+                      </TableCell>
+                    </TableRow>
                   )}
                 </TableBody>
               </Table>
@@ -342,13 +341,7 @@ const AllOrders = () => {
                           <Spinner />
                         </TableCell>
                       </TableRow>
-                    ) : sortedPending.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan="6" className="text-center">
-                          No order
-                        </TableCell>
-                      </TableRow>
-                    ) : (
+                    ) : sortedPending?.length === 0 ? (
                       sortedPending?.map((order) => (
                         <TableRow key={order.id}>
                           <TableCell>{order.id}</TableCell>
@@ -383,6 +376,12 @@ const AllOrders = () => {
                           </TableCell>
                         </TableRow>
                       ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan="6" className="text-center">
+                          No order
+                        </TableCell>
+                      </TableRow>
                     )}
                   </TableBody>
                 </Table>
