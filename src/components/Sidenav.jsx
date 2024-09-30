@@ -167,22 +167,17 @@ const Sidebar = () => {
 
             {pathname.startsWith("/seller-dashboard") && (
               <>
-                <DropdownBtn
-                  title={
-                    <>
-                      <Store className="h-4 w-4" /> Store
-                    </>
-                  }
-                  items={["Store profile"]}
-                  links={[
-                    "/seller-dashboard/storemangement/storeprofile",
-                    "/seller-dashboard/storemangement/storepayment",
-                    "/seller-dashboard/storemangement/ordermanagement",
-                  ]}
-                  onToggle={() => handleToggle("Store Management")}
-                  isActive={activeDropdown === "Store Management"}
-                  open={pathname.includes("/storemangement")}
-                />
+                <NavLink
+                  className={`flex items-center gap-3 text-base rounded-lg px-3 py-2 transition-all mt-2 ${
+                    pathname === "/seller-dashboard/storeprofile"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
+                  }`}
+                  to={"/seller-dashboard/storeprofile"}
+                >
+                  <Store className="h-4 w-4" />
+                  Store
+                </NavLink>
 
                 <DropdownBtn
                   title={

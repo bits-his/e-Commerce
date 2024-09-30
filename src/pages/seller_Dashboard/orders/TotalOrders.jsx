@@ -186,7 +186,7 @@ const TotalOrders = () => {
                     </TableRow>
                   ) : filteredOrders.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan="6" className="text-center">
+                      <TableCell colSpan="7" className="text-center">
                         No order
                       </TableCell>
                     </TableRow>

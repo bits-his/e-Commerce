@@ -35,6 +35,7 @@ export default function Pending_customer({ args, id }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [p_customers, setP_customers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingById, setLoadingById] = useState(null);
 
   const get_customers = () => {
     setLoading(true);
@@ -60,25 +61,30 @@ export default function Pending_customer({ args, id }) {
     get_customers();
   }, []);
 
-  const handlechangestatus = (id, status) => {
+  const handlechangestatus = (id, status, email, username, shopname) => {
+    setLoadingById(id);
     const obj = {
       id,
       status,
+      email,
+      username,
+      shopname
     };
 
     _post(
       "api/updatestatus",
       obj,
       (res) => {
+        setLoadingById(null);
         if (res.success) {
-          toast.success("vendor updated successfully");
+          toast.success("vendor status updated");
           get_customers();
         } else {
-          toast.error("Error updating venue status");
+          toast.error("Error updating vendor status");
         }
       },
       (err) => {
-        setLoading(false);
+        setLoadingById(null);
         toast.error("An error occurred while updating status");
         console.error(err);
       }
@@ -204,10 +210,11 @@ export default function Pending_customer({ args, id }) {
                             size="sm"
                             className="w-90 p-2"
                             onClick={() =>
-                              handlechangestatus(customer.id, "approved")
+                              handlechangestatus(customer.id, "approved", customer.email, customer.username, customer.shopname)
                             }
+                            disabled={loadingById === customer.id}
                           >
-                            Approve
+                            {loadingById === customer.id ? <><Spinner size="sm"/></>:<>Approve</>}
                           </Button>
                           <Button
                             variant="color2"
