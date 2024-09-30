@@ -64,8 +64,15 @@ export default function ProductsPage() {
   const [available, setAvailable] = useState([]);
   const [outOfStock, setOutOfStock] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
+  // const [newsizeProduct, setNewsizeProduct] = useState({
+  //   product_category: "",
+  //   product_subcategory: "",
+  //   size: "",
+  // });
+  const [showSizeInput, setShowSizeInput] = useState(false);
+  // const [error, setError] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const initialProductState = {
     product_name: "",
@@ -76,6 +83,7 @@ export default function ProductsPage() {
     product_quantity: 0,
     product_status: "available",
     image_urls: [],
+    size: "",
   };
 
   const [newProduct, setNewProduct] = useState(initialProductState);
@@ -144,17 +152,31 @@ export default function ProductsPage() {
     if (editMode) {
       setCurrentProduct((prevData) => ({
         ...prevData,
-        [id]: value,
+        [id]: value, // Updates the field by its ID (e.g., product_size)
       }));
     } else {
       setNewProduct((prevData) => ({
         ...prevData,
-        [id]: value,
+        [id]: value, // Updates the field by its ID (e.g., product_size)
       }));
     }
   };
 
+  // const handleSelectChange = (id, value) => {
+  //   if (editMode) {
+  //     setCurrentProduct((prevData) => ({
+  //       ...prevData,
+  //       [id]: value,
+  //     }));
+  //   } else {
+  //     setNewProduct((prevData) => ({
+  //       ...prevData,
+  //       [id]: value,
+  //     }));
+  //   }
+  // };
   const handleSelectChange = (id, value) => {
+    // Update the product state depending on editMode
     if (editMode) {
       setCurrentProduct((prevData) => ({
         ...prevData,
@@ -165,6 +187,19 @@ export default function ProductsPage() {
         ...prevData,
         [id]: value,
       }));
+    }
+
+    // Check if the category and subcategory meet the conditions to show the size input
+    if (
+      id === "product_subcategory" &&
+      value === "Yard" &&
+      newProduct.product_category === "Fabric"
+    ) {
+      setShowSizeInput(true); // Show the size input if category is Shoes and subcategory is Timber
+    } else if (id === "product_category" && value !== "Fabric") {
+      setShowSizeInput(false); // Hide the size input if the category is not Shoes
+    } else {
+      setShowSizeInput(false); // Hide the size input for other cases
     }
   };
 
@@ -465,6 +500,22 @@ export default function ProductsPage() {
                               </SelectContent>
                             </Select>
                           </div>
+                          {showSizeInput && (
+                            <div className="grid gap-3">
+                              <Label htmlFor="product_size">Size</Label>
+                              <Input
+                                id="product_size" // Make sure the input's id matches the key in your state
+                                type="text"
+                                value={
+                                  editMode
+                                    ? currentProduct?.product_size
+                                    : newProduct.product_size
+                                } // Match with state
+                                placeholder="Enter size"
+                                onChange={handleInputChange} // Correct input handler
+                              />
+                            </div>
+                          )}
                         </div>
                       </CardContent>
                     </Card>
@@ -602,7 +653,6 @@ export default function ProductsPage() {
                                   className="hidden"
                                   accept="image/*"
                                   onChange={handleImageChange}
-                                  
                                 />
                               </label>
                             )}
@@ -716,7 +766,7 @@ export default function ProductsPage() {
                                     height="64"
                                     src={product.image_urls.split(",")[0]}
                                     width="64"
-                                  />  
+                                  />
                                 </TableCell>
                                 <TableCell className="font-medium">
                                   {product.product_name}
@@ -727,9 +777,7 @@ export default function ProductsPage() {
                                       {product.product_status}
                                     </Badge>
                                   ) : (
-                                    <Badge variant="color2">
-                                      Out of Stock
-                                    </Badge>
+                                    <Badge variant="color2">Out of Stock</Badge>
                                   )}
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell text-end">
