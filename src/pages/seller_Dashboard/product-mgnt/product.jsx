@@ -70,6 +70,7 @@ export default function ProductsPage() {
   //   size: "",
   // });
   const [showSizeInput, setShowSizeInput] = useState(false);
+  const [showSizeInputchange, setShowSizeInputchange] = useState(false);
   // const [error, setError] = useState(null);
 
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ export default function ProductsPage() {
     product_quantity: 0,
     product_status: "available",
     image_urls: [],
-    size: "",
+    product_size: "",
   };
 
   const [newProduct, setNewProduct] = useState(initialProductState);
@@ -147,61 +148,56 @@ export default function ProductsPage() {
   }, [newProduct.product_category]);
 
   const handleInputChange = (e) => {
-    const { id, value } = e.target;
+  const { id, value } = e.target;
 
-    if (editMode) {
-      setCurrentProduct((prevData) => ({
-        ...prevData,
-        [id]: value, // Updates the field by its ID (e.g., product_size)
-      }));
-    } else {
-      setNewProduct((prevData) => ({
-        ...prevData,
-        [id]: value, // Updates the field by its ID (e.g., product_size)
-      }));
-    }
-  };
+  if (editMode) {
+    setCurrentProduct((prevData) => ({
+      ...prevData,
+      [id]: value, // Updates the field by its ID (e.g., product_size)
+    }));
+  } else {
+    setNewProduct((prevData) => ({
+      ...prevData,
+      [id]: value, // Updates the field by its ID (e.g., product_size)
+    }));
+  }
+};
 
-  // const handleSelectChange = (id, value) => {
-  //   if (editMode) {
-  //     setCurrentProduct((prevData) => ({
-  //       ...prevData,
-  //       [id]: value,
-  //     }));
-  //   } else {
-  //     setNewProduct((prevData) => ({
-  //       ...prevData,
-  //       [id]: value,
-  //     }));
-  //   }
-  // };
   const handleSelectChange = (id, value) => {
-    // Update the product state depending on editMode
-    if (editMode) {
-      setCurrentProduct((prevData) => ({
-        ...prevData,
-        [id]: value,
-      }));
-    } else {
-      setNewProduct((prevData) => ({
-        ...prevData,
-        [id]: value,
-      }));
-    }
+  // Update the product state depending on editMode
+  if (editMode) {
+    setCurrentProduct((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  } else {
+    setNewProduct((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  }
 
-    // Check if the category and subcategory meet the conditions to show the size input
-    if (
-      id === "product_subcategory" &&
-      value === "Yard" &&
-      newProduct.product_category === "Fabric"
-    ) {
-      setShowSizeInput(true); // Show the size input if category is Shoes and subcategory is Timber
-    } else if (id === "product_category" && value !== "Fabric") {
-      setShowSizeInput(false); // Hide the size input if the category is not Shoes
-    } else {
-      setShowSizeInput(false); // Hide the size input for other cases
-    }
-  };
+  // Check if the category and subcategory meet the conditions to show the size input
+  if (
+    id === "product_subcategory" &&
+    value === "Yard" &&
+    newProduct.product_category === "Fabric"
+  ) {
+    setShowSizeInput(true); // Show the size input if category is Fabric and subcategory is Yard
+  } else if (id === "product_category" && value !== "Fabric") {
+    setShowSizeInput(false); // Hide the size input if the category is not Fabric
+  }
+
+  // Toggle between custom size input and predefined sizes based on "Others" selection
+  if (id === "product_size" && value === "Others") {
+    setShowSizeInputchange(true); // Show the text input for custom size
+  } else if (id === "product_subcategory" && value !== "Yard") {
+    setShowSizeInput(false); // Hide the size input if the category is not Fabric
+  } else {
+    setShowSizeInputchange(false); // Hide the custom input field if another size is selected
+  }
+};
+
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -266,6 +262,7 @@ export default function ProductsPage() {
         setLoading(false);
         getProduct();
         toast.success("New product added");
+        console.log(formData)
         setShowForm(false);
         resetForm();
       })
@@ -295,6 +292,7 @@ export default function ProductsPage() {
           console.log(res)
         );
         setProducts(updatedProducts);
+        console.log(updatedProducts)
         navigate(0);
         setShowForm(false);
         setEditMode(false);
@@ -502,18 +500,44 @@ export default function ProductsPage() {
                           </div>
                           {showSizeInput && (
                             <div className="grid gap-3">
-                              <Label htmlFor="product_size">Size</Label>
-                              <Input
-                                id="product_size" // Make sure the input's id matches the key in your state
-                                type="text"
-                                value={
-                                  editMode
-                                    ? currentProduct?.product_size
-                                    : newProduct.product_size
-                                } // Match with state
-                                placeholder="Enter size"
-                                onChange={handleInputChange} // Correct input handler
-                              />
+                              <Label htmlFor="product_size">Measurement</Label>
+                              {!showSizeInputchange ? (
+                                <Select
+                                  onValueChange={(value) =>
+                                    handleSelectChange("product_size", value)
+                                  }
+                                >
+                                  <SelectTrigger
+                                    id="product_size"
+                                    aria-label="Select size"
+                                  >
+                                    <SelectValue placeholder="Select size" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="1 Yard">
+                                      Per 1 Yard
+                                    </SelectItem>
+                                    <SelectItem value="5 Yard">
+                                      Per 5 Yard
+                                    </SelectItem>
+                                    <SelectItem value="Others">
+                                      Others
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              ) : (
+                                <Input
+                                  id="product_size"
+                                  type="text"
+                                  value={
+                                    editMode
+                                      ? currentProduct?.product_size
+                                      : newProduct.product_size
+                                  }
+                                  placeholder="Enter your measurement"
+                                  onChange={handleInputChange} // Handle input for custom size
+                                />
+                              )}
                             </div>
                           )}
                         </div>
