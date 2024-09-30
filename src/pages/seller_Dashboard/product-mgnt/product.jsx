@@ -7,6 +7,7 @@ import {
   Search,
   Pencil,
   Trash2,
+  X,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -80,8 +81,8 @@ export default function ProductsPage() {
     product_description: "",
     product_category: "",
     product_subcategory: "",
-    product_price: 0,
-    product_quantity: 0,
+    product_price: null,
+    product_quantity: null,
     product_status: "available",
     image_urls: [],
     product_size: "",
@@ -203,11 +204,17 @@ export default function ProductsPage() {
     const files = Array.from(e.target.files);
 
     if (files.length + image_urls.length > 10) {
-      toast.error("You can only upload up to 4 images.");
+      toast.error("You can only upload up to 10 images.");
       return;
     }
 
     setImage_urls((prevImages) => [...prevImages, ...files]);
+  };
+
+  const removeImage = (indexToRemove) => {
+    setImage_urls((prevImages) =>
+      prevImages.filter((_, idx) => idx !== indexToRemove)
+    );
   };
 
   const handleAddProduct = (e) => {
@@ -563,7 +570,7 @@ export default function ProductsPage() {
                               <TableCell>
                                 <Label
                                   htmlFor="product_quantity"
-                                  className="sr-only"
+                                  className="mb-2"
                                 >
                                   <span className="text-danger">* </span>
                                 </Label>
@@ -581,10 +588,18 @@ export default function ProductsPage() {
                               <TableCell>
                                 <Label
                                   htmlFor="product_price"
-                                  className="sr-only"
+                                  className="d-flex justify-content-between mb-2"
                                 >
-                                  <span className="text-danger">* </span>
-                                  Price
+                                  <span className="text-destructive">* </span>
+                                  <span>
+                                    {editMode
+                                      ? parseFloat(
+                                          separator(
+                                            currentProduct?.product_price
+                                          )
+                                        ).toFixed(2)
+                                      : separator(newProduct.product_price)}
+                                  </span>
                                 </Label>
                                 <Input
                                   id="product_price"
@@ -603,12 +618,12 @@ export default function ProductsPage() {
                           </TableBody>
                         </Table>
                       </CardContent>
-                      {/* <CardFooter className="justify-center border-t p-4">
+                      <CardFooter className="justify-center border-t p-4">
                         <Button size="sm" variant="ghost" className="gap-1">
                           <PlusCircle className="h-3.5 w-3.5" />
                           Add Variant
                         </Button>
-                      </CardFooter> */}
+                      </CardFooter>
                     </Card>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
@@ -659,14 +674,38 @@ export default function ProductsPage() {
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 gap-2">
                             {image_urls.map((image, idx) => (
-                              <img
-                                key={idx}
-                                alt={`Product image ${idx + 1}`}
-                                className="aspect-square w-full rounded-md object-cover"
-                                height="84"
-                                src={URL.createObjectURL(image)}
-                                width="84"
-                              />
+                              <div key={idx} style={{ position: 'relative', display: 'inline-block' }}>
+                                <img
+                                  key={idx}
+                                  alt={`Product image ${idx + 1}`}
+                                  className="aspect-square w-full rounded-md object-cover"
+                                  height="84"
+                                  src={URL.createObjectURL(image)}
+                                  width="84"
+                                />
+                                <button
+                                  onClick={() => removeImage(idx)}
+                                  style={{
+                                    position: "absolute",
+                                    top: "5px",
+                                    right: "5px",
+                                    background: "#a52a2a",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "50%",
+                                    cursor: "pointer",
+                                    width: "20px",
+                                    height: "20px",
+                                    textAlign: "center",
+                                    fontSize: "14px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center"
+                                  }}
+                                >
+                                  <X className="w-3 h-3"/>
+                                </button>
+                              </div>
                             ))}
                             {image_urls.length < 10 && (
                               <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">

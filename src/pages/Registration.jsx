@@ -66,7 +66,6 @@ function Registration() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //Form validation
     if (formData.role === "vendor") {
       if (
         !formData.shopname ||
@@ -245,18 +244,19 @@ function Registration() {
                     <Input
                       id="firstname"
                       name="firstname"
-                      placeholder="Abubakar"
+                      // placeholder="Abubakar"
                       value={formData.firstname}
                       onChange={handleChange}
                       required
                     />
                   </div>
+                  
                   <div className="grid gap-2">
                     <Label htmlFor="lastname">Last name</Label>
                     <Input
                       id="lastname"
                       name="lastname"
-                      placeholder="Abdulmalik"
+                      // placeholder="Abdulmalik"
                       value={formData.lastname}
                       onChange={handleChange}
                       required
@@ -347,13 +347,13 @@ function Registration() {
                     <b className="text-white">Register</b>
                   )}
                 </button>
-                <Button
+                {/* <Button
                   variant="outline"
                   className="w-full"
                   onClick={handleGoogleSignUp}
                 >
                   Sign up with Google
-                </Button>
+                </Button> */}
               </div>
               <div className="mt-4 text-center text-sm">
                 Already have an account?{" "}

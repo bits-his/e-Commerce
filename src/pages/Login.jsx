@@ -39,23 +39,30 @@ function Login() {
       (res) => { 
         setLoading(false); 
         // alert(JSON.stringify(res.userDetails)) 
-        let data = res?.userDetails.id 
-        localStorage.setItem("@@toke_$$_45598",JSON.stringify(data)) 
-        if (res.role === "vendor") { 
-          toast.success("Logged Successful"); 
-          navigate("/seller-dashboard"); 
-        } else if (res.role === "admin") { 
-          toast.success("Logged Successful"); 
-          navigate("/admin-dashboard"); 
-        } else { 
-          toast.error("User not found"); 
-        } 
-      }, 
-      (err) => { 
-        setLoading(false); 
-        toast.error("An error occurred!"); 
-        console.log(err); 
-      } 
+        if(res.success){
+          let data = res?.userDetails.id 
+          localStorage.setItem("@@toke_$$_45598",JSON.stringify(data)) 
+          if (res.role === "vendor") { 
+            toast.success("Logged Successful"); 
+            navigate("/seller-dashboard"); 
+          } else if (res.role === "admin") { 
+            toast.success("Logged Successful"); 
+            navigate("/admin-dashboard"); 
+          } else { 
+            toast.error("User not found"); 
+          } 
+        }
+        else{
+          console.log(res)
+          toast.error(res.email)
+        }
+      }
+
+      // (err) => { 
+      //   setLoading(false); 
+      //   toast.error("An error occurred!"); 
+      //   console.log(err); 
+      // } 
     ); 
   };
 
@@ -131,13 +138,13 @@ function Login() {
                   <b className="text-white">Login</b>
                 )}
               </button>
-              <Button
+              {/* <Button
                 variant="outline"
                 className="w-full"
                 onClick={handleGoogleSignIn}
               >
                 Login with Google
-              </Button>
+              </Button> */}
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}

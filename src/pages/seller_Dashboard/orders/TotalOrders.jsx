@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Search } from "lucide-react";
+import { Ban, Check, Eye, Search } from "lucide-react";
 import {
   Container,
   Modal,
@@ -44,16 +44,24 @@ const TotalOrders = () => {
   const [completed, setCompleted] = useState([]);
   const [pending, setPending] = useState([]);
   const [loadingOrderId, setLoadingOrderId] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const userDetails = localStorage.getItem("@@toke_$$_45598");
 
   // Fetch all orders
   const getAllOrders = () => {
+    setLoading(true);
     _get(
       `api/gerordersbyshopid?shop_id=${parseInt(userDetails)}`,
-      (resp) => setOrders(resp.results),
-      (err) => setError(err)
+      (resp) => {
+        setOrders(resp.results);
+        setLoading(false);
+      },
+      (err) => {
+        setError(err);
+        setLoading(false);
+      }
     );
   };
 
@@ -170,9 +178,15 @@ const TotalOrders = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredOrders.length === 0 ? (
+                  {loading ? (
                     <TableRow>
-                      <TableCell colSpan="6" className="text-center">
+                      <TableCell colSpan="7" className="text-center">
+                        <Spinner />
+                      </TableCell>
+                    </TableRow>
+                  ) : filteredOrders.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan="7" className="text-center">
                         No order
                       </TableCell>
                     </TableRow>
@@ -210,14 +224,16 @@ const TotalOrders = () => {
                           <Button
                             variant="color3"
                             className="me-lg-1"
+                            size="sm"
                             onClick={() => handleViewClick(order)}
                           >
-                            <FaEye />
+                            <Eye className="w-4 h-4" />
                           </Button>
                           {order.status === "Pending" ? (
                             <Button
                               variant="color1"
                               className="me-lg-1"
+                              size="sm"
                               onClick={() =>
                                 handleValidateOrder(order.id, "Approved")
                               }
@@ -226,13 +242,14 @@ const TotalOrders = () => {
                               {loadingOrderId === order.id ? (
                                 <Spinner size="sm" />
                               ) : (
-                                <FaCheck />
+                                <Check className="w-4 h-4" />
                               )}
                             </Button>
                           ) : order.status === "Approved" ? (
                             <Button
                               variant="color2"
                               className="me-lg-1"
+                              size="sm"
                               onClick={() =>
                                 handleValidateOrder(order.id, "Cancelled")
                               }
@@ -241,7 +258,7 @@ const TotalOrders = () => {
                               {loadingOrderId === order.id ? (
                                 <Spinner size="sm" />
                               ) : (
-                                <FaBan />
+                                <Ban className="w-4 h-4" />
                               )}
                             </Button>
                           ) : null}
@@ -322,14 +339,16 @@ const TotalOrders = () => {
                         <TableCell>
                           <Button
                             variant="color3"
+                            size="sm"
                             className="me-lg-1"
                             onClick={() => handleViewClick(order)}
                           >
-                            <FaEye />
+                            <Eye className="w-4 h-4" />
                           </Button>
                           {order.status === "Pending" ? (
                             <Button
                               variant="color1"
+                              size="sm"
                               className="me-lg-1"
                               onClick={() =>
                                 handleValidateOrder(order.id, "Approved")
@@ -339,12 +358,13 @@ const TotalOrders = () => {
                               {loadingOrderId === order.id ? (
                                 <Spinner size="sm" />
                               ) : (
-                                <FaCheck />
+                                <Check className="w-4 h-4" />
                               )}
                             </Button>
                           ) : order.status === "Approved" ? (
                             <Button
                               variant="color2"
+                              size="sm"
                               className="me-lg-1"
                               onClick={() =>
                                 handleValidateOrder(order.id, "Cancelled")
@@ -354,7 +374,7 @@ const TotalOrders = () => {
                               {loadingOrderId === order.id ? (
                                 <Spinner size="sm" />
                               ) : (
-                                <FaBan />
+                                <Ban className="w-4 h-4" />
                               )}
                             </Button>
                           ) : null}
@@ -436,15 +456,17 @@ const TotalOrders = () => {
                           <TableCell className="d-flex justify-content-center">
                             <Button
                               variant="color3"
-                              className="me-lg-1"
+                              size="sm"
+                              className="me-lg-1 "
                               onClick={() => handleViewClick(order)}
                             >
-                              <FaEye />
+                              <Eye className="w-4 h-4" />
                             </Button>
                             {order.status === "Pending" ? (
                               <Button
                                 variant="color1"
                                 className="me-lg-1"
+                                size="sm"
                                 onClick={() =>
                                   handleValidateOrder(order.id, "Approved")
                                 }
@@ -453,13 +475,14 @@ const TotalOrders = () => {
                                 {loadingOrderId === order.id ? (
                                   <Spinner size="sm" />
                                 ) : (
-                                  <FaCheck />
+                                  <Check className="w-4 h-4" />
                                 )}
                               </Button>
                             ) : order.status === "Approved" ? (
                               <Button
                                 variant="color2"
                                 className="me-lg-1"
+                                size="sm"
                                 onClick={() =>
                                   handleValidateOrder(order.id, "Cancelled")
                                 }
@@ -468,7 +491,7 @@ const TotalOrders = () => {
                                 {loadingOrderId === order.id ? (
                                   <Spinner size="sm" />
                                 ) : (
-                                  <FaBan />
+                                  <Ban className="w-4 h-4" />
                                 )}
                               </Button>
                             ) : null}

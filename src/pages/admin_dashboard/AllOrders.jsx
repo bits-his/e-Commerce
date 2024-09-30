@@ -7,6 +7,7 @@ import {
   ModalBody,
   ModalFooter,
   Col,
+  Spinner,
 } from "reactstrap";
 import { FaEye } from "react-icons/fa";
 import OrdersChart from "../seller_Dashboard/orders/OrdersChart";
@@ -32,7 +33,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { _get, globalColor } from "@/utils/Helper";
-import "../style.css"
+import "../style.css";
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -42,16 +43,20 @@ const AllOrders = () => {
   const [completed, setCompleted] = useState([]);
   const [pending, setPending] = useState([]);
   const [error, setError] = useState(null);
+  const [fetching, setFetching] = useState(false);
 
   const getAllOrders = () => {
+    setFetching(true);
     _get(
       "api/getorders",
       (resp) => {
         setOrders(resp.results);
         console.log(orders);
+        setFetching(false);
       },
       (err) => {
         setError(err);
+        setFetching(false);
       }
     );
   };
@@ -60,25 +65,25 @@ const AllOrders = () => {
     getAllOrders();
   }, []);
 
-  const filteredOrders = orders.filter(
+  const filteredOrders = orders?.filter(
     (order) => order.product.toLowerCase().includes(searchQuery.toLowerCase())
     // || order.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   useEffect(() => {
-    setCompleted(orders.filter((order) => order.status === "Completed")),
+    setCompleted(orders?.filter((order) => order.status === "Completed")),
       [orders];
   });
-  const sortedComplete = completed.filter(
+  const sortedComplete = completed?.filter(
     (complete) =>
       complete.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       complete.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   useEffect(() => {
-    setPending(orders.filter((order) => order.status === "Pending")), [orders];
+    setPending(orders?.filter((order) => order.status === "Pending")), [orders];
   });
-  const sortedPending = pending.filter(
+  const sortedPending = pending?.filter(
     (pend) =>
       pend.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       pend.status.toLowerCase().includes(searchQuery.toLowerCase())
@@ -103,7 +108,6 @@ const AllOrders = () => {
           <SatisfiedChart />
         </Col>
       </div>
-      {/* {JSON.stringify(orders)} */}
 
       <Tabs defaultValue="all">
         <div className="flex items-center">
@@ -131,78 +135,79 @@ const AllOrders = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Id</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead className="hidden md:table-cell text-center">
-                      Order date
-                    </TableHead>
-                    <TableHead className="text-center">Shop ID</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                    {/* <TableHead className="hidden md:table-cell text-center">
+              <div className="relative w-full overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Id</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead className="hidden md:table-cell text-center">
+                        Order date
+                      </TableHead>
+                      <TableHead className="text-center">Shop ID</TableHead>
+                      <TableHead className="text-center">Status</TableHead>
+                      {/* <TableHead className="hidden md:table-cell text-center">
                       Total
                     </TableHead> */}
-                    <TableHead className="text-center">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredOrders.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan="6" className="text-center">
-                        No order
-                      </TableCell>
+                      <TableHead className="text-center">Actions</TableHead>
                     </TableRow>
-                  ) : (
-                    filteredOrders?.map((order) => (
-                      <TableRow key={order.id}>
-                        <TableCell>{order.id}</TableCell>
-                        <TableCell>{order.product}</TableCell>
-                        <TableCell className="hidden md:table-cell text-center">
-                          {order.createdAt
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join("-")}
-                        </TableCell>
-                        <TableHead className="text-center">
-                          {order.shop_id}
-                        </TableHead>
-                        <TableCell className="text-center">
-                          {order.status === "Completed" ? (
-                            <Badge
-                              variant="color3"
-                            >
-                              {order.status}
-                            </Badge>
-                          ) : order.status === "Pending" ? (
-                            <Badge
-                              variant="color1"
-                            >
-                              {order.status}
-                            </Badge>
-                          ) : (
-                            <Badge variant="color2">{order.status}</Badge>
-                          )}
-                        </TableCell>
-                        {/* <TableCell className="hidden md:table-cell text-center">
-                          {order.total}
-                        </TableCell> */}
-                        <TableCell>
-                          <Button
-                            style={{ background: globalColor.colors1 }}
-                            variant="color3"
-                            onClick={() => handleViewClick(order)}
-                          >
-                            <FaEye />
-                          </Button>
+                  </TableHeader>
+                  <TableBody>
+                    {fetching ? (
+                      <TableRow>
+                        <TableCell colSpan="7" className="text-center">
+                          <Spinner />
                         </TableCell>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
+                    ) : filteredOrders?.length > 0 ? (
+                      filteredOrders?.map((order) => (
+                        <TableRow key={order.id}>
+                          <TableCell>{order.id}</TableCell>
+                          <TableCell>{order.product}</TableCell>
+                          <TableCell className="hidden md:table-cell text-center">
+                            {order.createdAt
+                              .slice(0, 10)
+                              .split("-")
+                              .reverse()
+                              .join("-")}
+                          </TableCell>
+                          <TableHead className="text-center">
+                            {order.shop_id}
+                          </TableHead>
+                          <TableCell className="text-center">
+                            {order.status === "Completed" ? (
+                              <Badge variant="color3">{order.status}</Badge>
+                            ) : order.status === "Pending" ? (
+                              <Badge variant="color1">{order.status}</Badge>
+                            ) : (
+                              <Badge variant="color2">{order.status}</Badge>
+                            )}
+                          </TableCell>
+                          {/* <TableCell className="hidden md:table-cell text-center">
+                          {order.total}
+                        </TableCell> */}
+                          <TableCell>
+                            <Button
+                              style={{ background: globalColor.colors1 }}
+                              variant="color3"
+                              size="sm"
+                              onClick={() => handleViewClick(order)}
+                            >
+                              <FaEye />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan="6" className="text-center">
+                          No order
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -241,14 +246,14 @@ const AllOrders = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sortedComplete.length === 0 ? (
+                  {fetching ? (
                     <TableRow>
-                      <TableCell colSpan="6" className="text-center">
-                        No order
+                      <TableCell colSpan="7" className="text-center">
+                        <Spinner />
                       </TableCell>
                     </TableRow>
-                  ) : (
-                    sortedComplete.map((order) => (
+                  ) : sortedComplete?.length > 0 ? (
+                    sortedComplete?.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.id}</TableCell>
                         <TableCell>{order.product}</TableCell>
@@ -266,9 +271,7 @@ const AllOrders = () => {
                           {order.status === "Completed" ? (
                             <Badge variant="color3">{order.status}</Badge>
                           ) : order.status === "Pending" ? (
-                            <Badge variant="color1">
-                              {order.status}
-                            </Badge>
+                            <Badge variant="color1">{order.status}</Badge>
                           ) : (
                             <Badge variant="color2">{order.status}</Badge>
                           )}
@@ -278,7 +281,8 @@ const AllOrders = () => {
                         </TableCell> */}
                         <TableCell>
                           <Button
-                            color="warning"
+                            variant="color3"
+                            size="sm"
                             onClick={() => handleViewClick(order)}
                           >
                             <FaEye />
@@ -286,6 +290,12 @@ const AllOrders = () => {
                         </TableCell>
                       </TableRow>
                     ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan="6" className="text-center">
+                        No order
+                      </TableCell>
+                    </TableRow>
                   )}
                 </TableBody>
               </Table>
@@ -321,20 +331,17 @@ const AllOrders = () => {
                       </TableHead>
                       <TableHead className="text-center">Shop ID</TableHead>
                       <TableHead className="text-center">Status</TableHead>
-                      <TableHead className="hidden md:table-cell text-center">
-                        Total
-                      </TableHead>
                       <TableHead className="text-center">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sortedPending.length === 0 ? (
+                    {fetching ? (
                       <TableRow>
-                        <TableCell colSpan="6" className="text-center">
-                          No order
+                        <TableCell colSpan="7" className="text-center">
+                          <Spinner />
                         </TableCell>
                       </TableRow>
-                    ) : (
+                    ) : sortedPending?.length === 0 ? (
                       sortedPending?.map((order) => (
                         <TableRow key={order.id}>
                           <TableCell>{order.id}</TableCell>
@@ -355,17 +362,13 @@ const AllOrders = () => {
                             ) : order.status === "Pending" ? (
                               <Badge variant="color1">{order.status}</Badge>
                             ) : (
-                              <Badge variant="color2">
-                                {order.status}
-                              </Badge>
+                              <Badge variant="color2">{order.status}</Badge>
                             )}
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell text-center">
-                            {order.total}
                           </TableCell>
                           <TableCell>
                             <Button
-                              color="warning"
+                              variant="color3"
+                              size="sm"
                               onClick={() => handleViewClick(order)}
                             >
                               <FaEye />
@@ -373,6 +376,12 @@ const AllOrders = () => {
                           </TableCell>
                         </TableRow>
                       ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan="6" className="text-center">
+                          No order
+                        </TableCell>
+                      </TableRow>
                     )}
                   </TableBody>
                 </Table>
@@ -404,12 +413,10 @@ const AllOrders = () => {
               <strong>Status:</strong> {selectedOrder.status}
             </p>
             <p>
-              <strong>Order ID:</strong>{" "}
-              {selectedOrder.order_no}
+              <strong>Order ID:</strong> {selectedOrder.order_no}
             </p>
             <p>
-              <strong>Delivery ID:</strong>{" "}
-              {selectedOrder.delivery_no}
+              <strong>Delivery ID:</strong> {selectedOrder.delivery_no}
             </p>
             <p>
               <strong>Image Ordered</strong>{" "}
