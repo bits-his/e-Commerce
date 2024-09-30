@@ -65,7 +65,7 @@ export default function ProductsPage() {
   const [outOfStock, setOutOfStock] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const initialProductState = {
     product_name: "",
@@ -488,7 +488,7 @@ export default function ProductsPage() {
                               <TableCell>
                                 <Label
                                   htmlFor="product_quantity"
-                                  
+                                  className="mb-2"
                                 >
                                   <span className="text-danger">* </span>
                                 </Label>
@@ -506,10 +506,16 @@ export default function ProductsPage() {
                               <TableCell>
                                 <Label
                                   htmlFor="product_price"
-                                  className="sr-only"
+                                  className="d-flex justify-content-between mb-2"
                                 >
                                   <span className="text-destructive">* </span>
-                                  Price
+                                  <span>
+                                    {editMode
+                                      ? parseFloat(
+                                          separator(currentProduct?.product_price)
+                                        ).toFixed(2)
+                                      : separator(newProduct.product_price)}
+                                  </span>
                                 </Label>
                                 <Input
                                   id="product_price"
@@ -602,7 +608,6 @@ export default function ProductsPage() {
                                   className="hidden"
                                   accept="image/*"
                                   onChange={handleImageChange}
-                                  
                                 />
                               </label>
                             )}
@@ -716,7 +721,7 @@ export default function ProductsPage() {
                                     height="64"
                                     src={product.image_urls.split(",")[0]}
                                     width="64"
-                                  />  
+                                  />
                                 </TableCell>
                                 <TableCell className="font-medium">
                                   {product.product_name}
@@ -727,9 +732,7 @@ export default function ProductsPage() {
                                       {product.product_status}
                                     </Badge>
                                   ) : (
-                                    <Badge variant="color2">
-                                      Out of Stock
-                                    </Badge>
+                                    <Badge variant="color2">Out of Stock</Badge>
                                   )}
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell text-end">
