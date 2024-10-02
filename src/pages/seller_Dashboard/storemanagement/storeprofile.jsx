@@ -15,13 +15,12 @@ import pic2 from "../storemanagement/pics/pic2.jpg";
 import pic3 from "../storemanagement/pics/pic3.jpg";
 import pic4 from "../storemanagement/pics/pic4.jpg";
 import logo from "../storemanagement/pics/brand.jpg";
-import Skeleton from "react-loading-skeleton";
 import { Alert, Input } from "reactstrap";
 import { globalColor, _get, separator } from "@/utils/Helper";
 import { Search } from "lucide-react";
 import { FaStar } from "react-icons/fa";
+import Skeleton from "react-loading-skeleton";
 let userDetails = localStorage.getItem("@@toke_$$_45598");
-import defaultImg from '../../../assets/No-Image-Placeholder.jpg'
 
 // const products = [
 //   {
@@ -219,7 +218,7 @@ const Storeprofile = () => {
                   <div className="ratio ratio-1x1 bg-light overflow-hidden rounded-top">
                     <img
                       alt={item.product_name}
-                      src={item.image_urls ? item.image_urls.split(",")[0] : defaultImg}
+                      src={item.image_urls.split(",")[0]}
                       className="w-100 h-100 object-fit-cover"
                     />
                   </div>

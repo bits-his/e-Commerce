@@ -73,7 +73,7 @@ function Login() {
   return (
     <>
       <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 min-h-[100vh] background-icon" style={{backgroundColor: globalColor.grpcolor3}}>
-        <Card className="mx-auto min-w-[23rem]">
+        <Card className="mx-auto min-w-[20rem]">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Login</CardTitle>
           </CardHeader>
