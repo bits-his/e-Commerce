@@ -77,7 +77,13 @@ const OrderView = () => {
     (pend) =>
       pend.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       pend.status.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  );
+  
+   const navigate = useNavigate()
+
+   const goBack = () => {
+    navigate(-1);
+  };
 
     if (!order) {
     return <div>No order details found.</div>;
@@ -87,6 +93,16 @@ const OrderView = () => {
   return (
     <div>
       <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[92vh]">
+        <div>
+        <Button
+          onClick={goBack}
+            className="mb-3 d-flex align-items-center"
+            style={{backgroundColor: 'rgba(255,255,255'}}
+        >
+          <FaArrowLeft className="me-2" />
+          Back
+          </Button>
+        </div>
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader className="">
             <div className="flex-items-center justify-between">

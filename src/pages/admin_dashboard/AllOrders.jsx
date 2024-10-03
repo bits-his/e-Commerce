@@ -66,8 +66,8 @@ const AllOrders = () => {
   }, []);
 
   const filteredOrders = orders?.filter(
-    (order) => order.product.toLowerCase().includes(searchQuery.toLowerCase())
-    // || order.status.toLowerCase().includes(searchQuery.toLowerCase())
+    (order) => order.product?.toLowerCase().includes(searchQuery?.toLowerCase())
+    // || order.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   useEffect(() => {
@@ -77,14 +77,14 @@ const AllOrders = () => {
 
   const sortedCompleted = completed.filter(
     (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
+      order.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      order.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   const sortedPending = pending.filter(
     (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
+      order.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      order.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   const toggleModal = () => {
@@ -164,10 +164,10 @@ const AllOrders = () => {
                           <TableCell>{order.product}</TableCell>
                           <TableCell className="hidden md:table-cell text-center">
                             {order.createdAt
-                              .slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("-")}
+                              ?.slice(0, 10)
+                              ?.split("-")
+                              ?.reverse()
+                              ?.join("-")}
                           </TableCell>
                           <TableHead className="text-center">
                             {order.shop_id}
@@ -257,10 +257,10 @@ const AllOrders = () => {
                         <TableCell>{order.product}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
                           {order.createdAt
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join("-")}
+                            ?.slice(0, 10)
+                            ?.split("-")
+                            ?.reverse()
+                            ?.join("-")}
                         </TableCell>
                         <TableHead className="text-center">
                           {order.shop_id}
@@ -352,10 +352,10 @@ const AllOrders = () => {
                           <TableCell>{order.product}</TableCell>
                           <TableCell className="hidden md:table-cell text-center">
                             {order.createdAt
-                              .slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("-")}
+                              ?.slice(0, 10)
+                              ?.split("-")
+                              ?.reverse()
+                              ?.join("-")}
                           </TableCell>
                           <TableHead className="text-center">
                             {order.shop_id}
@@ -402,10 +402,10 @@ const AllOrders = () => {
             <p>
               <strong>Order Date:</strong>{" "}
               {selectedOrder.createdAt
-                .slice(0, 10)
-                .split("-")
-                .reverse()
-                .join("-")}
+                ?.slice(0, 10)
+                ?.split("-")
+                ?.reverse()
+                ?.join("-")}
             </p>
             <p>
               <strong>Status:</strong> {selectedOrder.status}
