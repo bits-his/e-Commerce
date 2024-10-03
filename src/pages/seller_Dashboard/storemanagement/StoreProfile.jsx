@@ -21,6 +21,7 @@ import { globalColor, _get, separator } from "@/utils/Helper";
 import { Search } from "lucide-react";
 import { FaStar } from "react-icons/fa";
 let userDetails = localStorage.getItem("@@toke_$$_45598");
+import defaultImg from '../../../assets/No-Image-Placeholder.jpg'
 
 // const products = [
 //   {
@@ -218,7 +219,7 @@ const Storeprofile = () => {
                   <div className="ratio ratio-1x1 bg-light overflow-hidden rounded-top">
                     <img
                       alt={item.product_name}
-                      src={item.image_urls.split(",")[0]}
+                      src={item.image_urls ? item.image_urls.split(",")[0] : defaultImg}
                       className="w-100 h-100 object-fit-cover"
                     />
                   </div>

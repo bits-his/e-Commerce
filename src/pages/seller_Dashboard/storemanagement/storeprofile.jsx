@@ -121,7 +121,8 @@ const Storeprofile = () => {
     // Save the updated profile details
     handleClose();
   };
-return (
+
+  return (
     <Container className="mt-3">
       <Card className="m-0">
         <div className="d-flex justify-content-between align-items-center p-3">
@@ -185,7 +186,9 @@ return (
           />
         </div>
       </div>
-<Row>
+
+      
+      <Row>
         {loading ? (
           <div className="row row-cols-2 row-cols-sm-3 row-cols-lg-5 row-cols-xl-6 g-3">
             {skeleton.map((index) => (
@@ -229,7 +232,7 @@ return (
                       {[0, 1, 2, 3, 4].map((rating) => (
                         <FaStar
                           key={rating}
-                          className={text-warning}
+                          className={`text-warning`}
                           style={{
                             height: "20px",
                             width: "20px",
@@ -259,7 +262,8 @@ return (
           </Alert>
         )}
       </Row>
-<Modal show={show} onHide={handleClose}>
+
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>

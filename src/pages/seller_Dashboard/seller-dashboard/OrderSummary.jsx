@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import { CardBody, CardText } from "reactstrap";
 import { FaClipboardList, FaCheckCircle, FaListAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { DollarSign, TableOfContents, Loader, PackageCheck } from "lucide-react";
+import {
+  DollarSign,
+  TableOfContents,
+  Loader,
+  PackageCheck,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { _get } from "@/utils/Helper";
 
 const orderTypes = [
   {
@@ -28,21 +34,51 @@ const orderTypes = [
 
 const OrderSummary = () => {
   const [orderCounts, setOrderCounts] = useState({});
-  const navigate = useNavigate(); // Initialize navigate for navigation
+  const navigate = useNavigate();
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const userDetails = localStorage.getItem("@@toke_$$_45598");
+
+  const getAllOrders = () => {
+    setLoading(true);
+    _get(
+      `api/gerordersbyshopid?shop_id=${parseInt(userDetails)}`,
+      (resp) => {
+        setOrders(resp.results);
+        setLoading(false);
+        console.log(orders);
+      },
+      (err) => {
+        setError(err);
+        setLoading(false);
+      }
+    );
+  };
 
   useEffect(() => {
-    // Set static counts for the cards
+    getAllOrders();
+  }, []);
+
+  useEffect(() => {
+    const totalOrders = orders.length;
+    const approvedOrders = orders.filter(
+      (order) => order.status === "Approved"
+    ).length;
+    const pendingOrders = orders.filter(
+      (order) => order.status === "Pending"
+    ).length;
+
     const counts = {
-      total: 5,
-      approved: 2,
-      pending: 2,
+      total: totalOrders,
+      approved: approvedOrders,
+      pending: pendingOrders,
     };
 
     setOrderCounts(counts);
-  }, []);
+  }, [orders]);
 
   const handleCardClick = (type) => {
-    navigate(`/seller-dashboard/orders/${type}`); // Navigate to the specific order type page
+    navigate(`/seller-dashboard/orders/total`); // Navigate to the specific order type page
   };
 
   return (

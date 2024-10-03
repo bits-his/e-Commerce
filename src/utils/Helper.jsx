@@ -7,10 +7,14 @@ export const globalColor = {
 };
 
 // export const server_url = "http://192.168.1.64:3002";
+<<<<<<< HEAD
 // export const server_url = "https://server.brainstorm.ng/kasuwa-backend";
+=======
+export const server_url = "https://server.brainstorm.ng/kasuwa-backend";
+>>>>>>> 6e8876a410144cc15cddfa1882558a10a5b58ea6
 // export const server_url = "https://kasuwa-backend.min.com";
 //  export const server_url = "http://192.168.1.82:3002";
-export const server_url = "http://localhost:3002";
+// export const server_url = "http://localhost:3002";
 
 export const _post = (url, data, success = (f) => f, error = (f) => f) => {
   const token = localStorage.getItem("@@token");

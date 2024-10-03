@@ -50,6 +50,7 @@ import {
   server_url,
 } from "../../../utils/Helper";
 import { Spinner } from "reactstrap";
+import defaultImg from '../../../assets/No-Image-Placeholder.jpg'
 
 export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
@@ -827,7 +828,7 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls.split(",")[0]}
+                                    src={product.image_urls ? product.image_urls.split(",")[0] : defaultImg}
                                     width="64"
                                   />
                                 </TableCell>
