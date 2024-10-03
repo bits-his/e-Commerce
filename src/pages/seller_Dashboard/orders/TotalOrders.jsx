@@ -97,7 +97,7 @@ const TotalOrders = () => {
     getAllOrders();
   }, []);
 
-  const filteredOrders = orders.filter((order) =>
+  const filteredOrders = orders?.filter((order) =>
     order?.product?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
@@ -106,13 +106,13 @@ const TotalOrders = () => {
     setPending(orders?.filter((order) => order.status === "Pending"));
   }, [orders]);
 
-  const sortedCompleted = completed.filter(
+  const sortedCompleted = completed?.filter(
     (order) =>
       order?.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       order?.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
-  const sortedPending = pending.filter(
+  const sortedPending = pending?.filter(
     (order) =>
       order?.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       order?.status?.toLowerCase().includes(searchQuery?.toLowerCase())
@@ -120,11 +120,11 @@ const TotalOrders = () => {
 
   const toggleModal = () => setModal(!modal);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleViewClick = (order) => {
     setSelectedOrder(order);
-    navigate("orders-view", { state: { order } })
+    navigate("orders-view", { state: { order } });
     toggleModal();
   };
 
@@ -156,7 +156,7 @@ const TotalOrders = () => {
                   <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
                     type="search"
-                    placeholder="Search name..."
+                    placeholder="Search..."
                     className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[200px] lg:w-[300px]"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -190,19 +190,14 @@ const TotalOrders = () => {
                         <Spinner />
                       </TableCell>
                     </TableRow>
-                  ) : orders.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan="7" className="text-center">
-                        No order
-                      </TableCell>
-                    </TableRow>
-                  ) : (
+                  ) : orders?.length > 0 ? (
                     orders?.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.customer_id}</TableCell>
                         <TableCell>{order.username}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
-                          {order.createdAt
+                          {
+                            order.createdAt
                             // .slice(0, 10)
                             // .split("-")
                             // .reverse()
@@ -272,6 +267,12 @@ const TotalOrders = () => {
                         </TableCell>
                       </TableRow>
                     ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan="7" className="text-center">
+                        No order
+                      </TableCell>
+                    </TableRow>
                   )}
                 </TableBody>
               </Table>
@@ -299,38 +300,35 @@ const TotalOrders = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Id</TableHead>
+                    <TableHead>S/N</TableHead>
                     <TableHead>Name</TableHead>
                     <TableHead className="hidden md:table-cell text-center">
                       Order date
                     </TableHead>
-                    <TableHead className="text-center">Shop ID</TableHead>
+                    <TableHead className="hidden md:table-cell text-center">
+                      Order Number
+                    </TableHead>
                     <TableHead className="text-center">Status</TableHead>
                     <TableHead className="text-center">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sortedCompleted.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan="6" className="text-center">
-                        No order
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    sortedCompleted.map((order) => (
+                  {sortedCompleted?.length > 0 ? (
+                    sortedCompleted?.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.id}</TableCell>
                         <TableCell>{order.product}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
-                          {order.createdAt
+                          {
+                            order.createdAt
                             // .slice(0, 10)
                             // .split("-")
                             // .reverse()
                             // .join("-")
                           }
                         </TableCell>
-                        <TableHead className="text-center">
-                          {order.shop_id}
+                        <TableHead className="hidden md:table-cell text-center">
+                          {order.order_no}
                         </TableHead>
                         <TableCell className="text-center">
                           {order.status === "Approved" ? (
@@ -389,6 +387,12 @@ const TotalOrders = () => {
                         </TableCell>
                       </TableRow>
                     ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan="6" className="text-center">
+                        No order
+                      </TableCell>
+                    </TableRow>
                   )}
                 </TableBody>
               </Table>
@@ -417,38 +421,35 @@ const TotalOrders = () => {
                 <Table className="min-w-full">
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Id</TableHead>
+                      <TableHead>S/N</TableHead>
                       <TableHead>Name</TableHead>
                       <TableHead className="hidden md:table-cell text-center">
                         Order date
                       </TableHead>
-                      <TableHead className="text-center">Shop ID</TableHead>
+                      <TableHead className="hidden md:table-cell text-center">
+                        Order Number
+                      </TableHead>
                       <TableHead className="text-center">Status</TableHead>
                       <TableHead className="text-center">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sortedPending.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan="6" className="text-center">
-                          No order
-                        </TableCell>
-                      </TableRow>
-                    ) : (
+                    {sortedPending?.length > 0 ? (
                       sortedPending?.map((order) => (
                         <TableRow key={order.id}>
                           <TableCell>{order.id}</TableCell>
                           <TableCell>{order.product}</TableCell>
                           <TableCell className="hidden md:table-cell text-center">
-                            {order.createdAt
+                            {
+                              order.createdAt
                               // .slice(0, 10)
                               // .split("-")
                               // .reverse()
                               // .join("-")
                             }
                           </TableCell>
-                          <TableHead className="text-center">
-                            {order.shop_id}
+                          <TableHead className="hidden md:table-cell text-center">
+                            {order.order_no}
                           </TableHead>
                           <TableCell className="text-center">
                             {order.status === "Completed" ? (
@@ -507,6 +508,12 @@ const TotalOrders = () => {
                           </TableCell>
                         </TableRow>
                       ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan="6" className="text-center">
+                          No order
+                        </TableCell>
+                      </TableRow>
                     )}
                   </TableBody>
                 </Table>
@@ -528,7 +535,8 @@ const TotalOrders = () => {
             </p>
             <p>
               <strong>Order Date:</strong>{" "}
-              {selectedOrder.createdAt
+              {
+                selectedOrder.createdAt
                 // .slice(0, 10)
                 // .split("-")
                 // .reverse()
