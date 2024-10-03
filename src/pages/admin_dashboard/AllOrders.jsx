@@ -34,6 +34,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { _get, globalColor } from "@/utils/Helper";
 import "../style.css";
+import { useNavigate } from "react-router-dom";
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -51,7 +52,8 @@ const AllOrders = () => {
       "api/getorders",
       (resp) => {
         setOrders(resp.results);
-        console.log(orders);
+        
+        console.log(resp.results);
         setFetching(false);
       },
       (err) => {
@@ -66,8 +68,8 @@ const AllOrders = () => {
   }, []);
 
   const filteredOrders = orders?.filter(
-    (order) => order.product.toLowerCase().includes(searchQuery.toLowerCase())
-    // || order.status.toLowerCase().includes(searchQuery.toLowerCase())
+    (order) => order.product?.toLowerCase().includes(searchQuery?.toLowerCase())
+    || order.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   useEffect(() => {
@@ -76,8 +78,8 @@ const AllOrders = () => {
   });
   const sortedComplete = completed?.filter(
     (complete) =>
-      complete.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      complete.status.toLowerCase().includes(searchQuery.toLowerCase())
+      complete.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      complete.status.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   useEffect(() => {
@@ -85,18 +87,20 @@ const AllOrders = () => {
   });
   const sortedPending = pending?.filter(
     (pend) =>
-      pend.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      pend.status.toLowerCase().includes(searchQuery.toLowerCase())
+      pend.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      pend.status.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   const toggleModal = () => {
     setModal(!modal);
   };
 
+  const navigate = useNavigate()
+
   const handleViewClick = (order) => {
-    setSelectedOrder(order);
-    toggleModal();
-  };
+  setSelectedOrder(order);
+  navigate("orders-view", { state: { order } }); // Redirects to the detailed view
+};
 
   return (
     <Container fluid>
@@ -108,7 +112,7 @@ const AllOrders = () => {
           <SatisfiedChart />
         </Col>
       </div>
-
+      {/* {JSON.stringify(orders)} */}
       <Tabs defaultValue="all">
         <div className="flex items-center">
           <TabsList>
@@ -144,7 +148,7 @@ const AllOrders = () => {
                       <TableHead className="hidden md:table-cell text-center">
                         Order date
                       </TableHead>
-                      <TableHead className="text-center">Shop ID</TableHead>
+                      <TableHead className="">Email</TableHead>
                       <TableHead className="text-center">Status</TableHead>
                       {/* <TableHead className="hidden md:table-cell text-center">
                       Total
@@ -162,17 +166,18 @@ const AllOrders = () => {
                     ) : filteredOrders?.length > 0 ? (
                       filteredOrders?.map((order) => (
                         <TableRow key={order.id}>
-                          <TableCell>{order.id}</TableCell>
-                          <TableCell>{order.product}</TableCell>
+                          <TableCell>{order.customer_id}</TableCell>
+                          <TableCell>{order.username}</TableCell>
                           <TableCell className="hidden md:table-cell text-center">
                             {order.createdAt
-                              .slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("-")}
+                              // .slice(0, 10)
+                              // .split("-")
+                              // .reverse()
+                              // .join("-")
+                            }
                           </TableCell>
-                          <TableHead className="text-center">
-                            {order.shop_id}
+                          <TableHead className="">
+                            {order.email}
                           </TableHead>
                           <TableCell className="text-center">
                             {order.status === "Completed" ? (
@@ -259,10 +264,11 @@ const AllOrders = () => {
                         <TableCell>{order.product}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
                           {order.createdAt
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join("-")}
+                            // // .slice(0, 10)
+                            // .split("-")
+                            // .reverse()
+                            // .join("-")
+                          }
                         </TableCell>
                         <TableHead className="text-center">
                           {order.shop_id}
@@ -348,10 +354,11 @@ const AllOrders = () => {
                           <TableCell>{order.product}</TableCell>
                           <TableCell className="hidden md:table-cell text-center">
                             {order.createdAt
-                              .slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("-")}
+                              // .slice(0, 10)
+                              // .split("-")
+                              // .reverse()
+                              // .join("-")
+                            }
                           </TableCell>
                           <TableHead className="text-center">
                             {order.shop_id}
@@ -367,12 +374,13 @@ const AllOrders = () => {
                           </TableCell>
                           <TableCell>
                             <Button
-                              variant="color3"
-                              size="sm"
-                              onClick={() => handleViewClick(order)}
-                            >
-                              <FaEye />
-                            </Button>
+  style={{ background: globalColor.colors1 }}
+  variant="color3"
+  size="sm"
+  onClick={() => handleViewClick(order)} // This triggers the view action when clicked
+>
+  <FaEye /> {/* Eye icon used for viewing details */}
+</Button>
                           </TableCell>
                         </TableRow>
                       ))
@@ -404,10 +412,11 @@ const AllOrders = () => {
             <p>
               <strong>Order Date:</strong>{" "}
               {selectedOrder.createdAt
-                .slice(0, 10)
-                .split("-")
-                .reverse()
-                .join("-")}
+                // .slice(0, 10)
+                // .split("-")
+                // .reverse()
+                // .join("-")
+              }
             </p>
             <p>
               <strong>Status:</strong> {selectedOrder.status}

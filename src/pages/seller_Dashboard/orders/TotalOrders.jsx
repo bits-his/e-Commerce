@@ -35,6 +35,7 @@ import { Button } from "@/components/ui/button";
 import { _get, _post, _put } from "@/utils/Helper";
 import toast from "react-hot-toast";
 import "../../style.css";
+import { useNavigate } from "react-router-dom";
 
 const TotalOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -57,6 +58,7 @@ const TotalOrders = () => {
       (resp) => {
         setOrders(resp.results);
         setLoading(false);
+        console.log(resp.results);
       },
       (err) => {
         setError(err);
@@ -96,30 +98,33 @@ const TotalOrders = () => {
   }, []);
 
   const filteredOrders = orders.filter((order) =>
-    order.product.toLowerCase().includes(searchQuery.toLowerCase())
+    order?.product?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   useEffect(() => {
-    setCompleted(orders.filter((order) => order.status === "Approved"));
-    setPending(orders.filter((order) => order.status === "Pending"));
+    setCompleted(orders?.filter((order) => order.status === "Approved"));
+    setPending(orders?.filter((order) => order.status === "Pending"));
   }, [orders]);
 
   const sortedCompleted = completed.filter(
     (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
+      order?.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      order?.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   const sortedPending = pending.filter(
     (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
+      order?.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      order?.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   const toggleModal = () => setModal(!modal);
 
+  const navigate = useNavigate()
+
   const handleViewClick = (order) => {
     setSelectedOrder(order);
+    navigate("orders-view", { state: { order } })
     toggleModal();
   };
 
@@ -159,6 +164,7 @@ const TotalOrders = () => {
                 </div>
               </div>
             </CardHeader>
+            {/* {JSON.stringify(orders)} */}
             <CardContent>
               <Table>
                 {/* {JSON.stringify(orders)} */}
@@ -172,7 +178,7 @@ const TotalOrders = () => {
                     <TableHead className="hidden md:table-cell text-center">
                       Order Number
                     </TableHead>
-                    <TableHead className="text-center">Shop ID</TableHead>
+                    {/* <TableHead className="text-center"></TableHead> */}
                     <TableHead className="text-center">Status</TableHead>
                     <TableHead className="text-center">Actions</TableHead>
                   </TableRow>
@@ -184,30 +190,31 @@ const TotalOrders = () => {
                         <Spinner />
                       </TableCell>
                     </TableRow>
-                  ) : filteredOrders.length === 0 ? (
+                  ) : orders.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan="7" className="text-center">
                         No order
                       </TableCell>
                     </TableRow>
                   ) : (
-                    filteredOrders?.map((order) => (
+                    orders?.map((order) => (
                       <TableRow key={order.id}>
-                        <TableCell>{order.id}</TableCell>
-                        <TableCell>{order.product}</TableCell>
+                        <TableCell>{order.customer_id}</TableCell>
+                        <TableCell>{order.username}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
                           {order.createdAt
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join("-")}
+                            // .slice(0, 10)
+                            // .split("-")
+                            // .reverse()
+                            // .join("-")
+                          }
                         </TableCell>
                         <TableHead className="hidden md:table-cell text-center">
                           {order.order_no}
                         </TableHead>
-                        <TableHead className="text-center">
+                        {/* <TableHead className="text-center">
                           {order.shop_id}
-                        </TableHead>
+                        </TableHead> */}
                         <TableCell className="text-center">
                           {order.status === "Approved" ? (
                             <Badge variant="color3">{order.status}</Badge>
@@ -316,10 +323,11 @@ const TotalOrders = () => {
                         <TableCell>{order.product}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
                           {order.createdAt
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join("-")}
+                            // .slice(0, 10)
+                            // .split("-")
+                            // .reverse()
+                            // .join("-")
+                          }
                         </TableCell>
                         <TableHead className="text-center">
                           {order.shop_id}
@@ -433,10 +441,11 @@ const TotalOrders = () => {
                           <TableCell>{order.product}</TableCell>
                           <TableCell className="hidden md:table-cell text-center">
                             {order.createdAt
-                              .slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("-")}
+                              // .slice(0, 10)
+                              // .split("-")
+                              // .reverse()
+                              // .join("-")
+                            }
                           </TableCell>
                           <TableHead className="text-center">
                             {order.shop_id}
@@ -520,10 +529,11 @@ const TotalOrders = () => {
             <p>
               <strong>Order Date:</strong>{" "}
               {selectedOrder.createdAt
-                .slice(0, 10)
-                .split("-")
-                .reverse()
-                .join("-")}
+                // .slice(0, 10)
+                // .split("-")
+                // .reverse()
+                // .join("-")
+              }
             </p>
             <p>
               <strong>Status:</strong> {selectedOrder.status}

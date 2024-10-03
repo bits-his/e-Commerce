@@ -105,6 +105,7 @@ const Sidebar = () => {
                   links={[
                     "/admin-dashboard/vendor-mgmt/vendor",
                     "/admin-dashboard/vendor-mgmt/pending-vendor",
+                    "/admin-dashboard/vendor-mgmt/vendor-view",
                   ]}
                   onToggle={() => handleToggle("vendor Management")}
                   isActive={activeDropdown === "vendor Management"}

@@ -41,7 +41,7 @@ export default function Pending_customer(args) {
   const get_customers = () => {
     setFetching(true);
     _get(
-      "api/getcutomers",
+      "api/getwhereroleuser",
       (response) => {
         if (response.success) {
           setP_customers(response.results);

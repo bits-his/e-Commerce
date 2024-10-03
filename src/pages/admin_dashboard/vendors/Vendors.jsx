@@ -44,7 +44,7 @@ export default function Pending_customer(args) {
   const [p_customers, setP_customers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const get_customers = () => {
+  const get_customers = (role) => {
     setLoading(true);
     _get(
       "api/getapproveusers",
@@ -85,8 +85,12 @@ export default function Pending_customer(args) {
     setSelectedCustomer(null);
   };
 
-  const navigate = useNavigate();
-
+    
+    const navigate = useNavigate();
+    
+const handleViewclick = (customer) => {
+        navigate("vendor-view", { state: { customer } })
+    }
   return (
     <>
       <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[92vh]">
@@ -164,6 +168,10 @@ export default function Pending_customer(args) {
                           <DropdownMenuContent>
                             <DropdownMenuItem>Warn</DropdownMenuItem>
                             <DropdownMenuItem>Suspend</DropdownMenuItem>
+                            <DropdownMenuItem className="mx-auto" onClick={() => handleViewclick(customer)}>
+                              {/* <Eye className="me-2" /> */}
+                              View
+                            </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TableCell>

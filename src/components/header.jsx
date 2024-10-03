@@ -126,6 +126,7 @@ function Header() {
                   links={[
                     "/admin-dashboard/vendor-mgmt/vendor",
                     "/admin-dashboard/vendor-mgmt/pending-vendor",
+                    "/admin-dashboard/vendor-mgmt/vendor-view",
                   ]}
                   onToggle={() => handleToggle("vendor Management")}
                   isActive={activeDropdown === "vendor Management"}
@@ -135,7 +136,7 @@ function Header() {
                 />
                 <NavLink
                   className={`flex items-center gap-3 text-base rounded-lg px-3 py-2 transition-all mt-2 ${
-                    pathname === "/admin-dashboard/orders"
+                    pathname === pathname === "/admin-dashboard/orders" || pathname === "/admin-dashboard/orders-view"
                       ? "navlink-items-2 text-dark"
                       : "navlink-items"
                   }`}
