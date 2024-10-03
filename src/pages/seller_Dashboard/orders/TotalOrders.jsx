@@ -236,7 +236,7 @@ const TotalOrders = () => {
                           >
                             <Eye className="w-4 h-4" />
                           </Button>
-                          {order.status === "Pending" ? (
+                          {/* {order.status === "Pending" ? (
                             <Button
                               variant="color1"
                               className="me-lg-1"
@@ -268,7 +268,7 @@ const TotalOrders = () => {
                                 <Ban className="w-4 h-4" />
                               )}
                             </Button>
-                          ) : null}
+                          ) : null} */}
                         </TableCell>
                       </TableRow>
                     ))
@@ -353,7 +353,7 @@ const TotalOrders = () => {
                           >
                             <Eye className="w-4 h-4" />
                           </Button>
-                          {order.status === "Pending" ? (
+                          {/* {order.status === "Pending" ? (
                             <Button
                               variant="color1"
                               size="sm"
@@ -385,7 +385,7 @@ const TotalOrders = () => {
                                 <Ban className="w-4 h-4" />
                               )}
                             </Button>
-                          ) : null}
+                          ) : null} */}
                         </TableCell>
                       </TableRow>
                     ))
