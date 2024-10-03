@@ -73,7 +73,6 @@ const AllOrders = () => {
   );
 
   useEffect(() => {
-<<<<<<< HEAD
     setCompleted(orders?.filter((order) => order.status === "Completed")),
       [orders];
   });
@@ -90,22 +89,6 @@ const AllOrders = () => {
     (pend) =>
       pend.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       pend.status.toLowerCase().includes(searchQuery?.toLowerCase())
-=======
-    setCompleted(orders.filter((order) => order.status === "Approved"));
-    setPending(orders.filter((order) => order.status === "Pending"));
-  }, [orders]);
-
-  const sortedCompleted = completed.filter(
-    (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const sortedPending = pending.filter(
-    (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
->>>>>>> 6e8876a410144cc15cddfa1882558a10a5b58ea6
   );
 
   const toggleModal = () => {
@@ -274,8 +257,8 @@ const AllOrders = () => {
                         <Spinner />
                       </TableCell>
                     </TableRow>
-                  ) : sortedCompleted?.length > 0 ? (
-                    sortedCompleted?.map((order) => (
+                  ) : sortedComplete?.length > 0 ? (
+                    sortedComplete?.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.id}</TableCell>
                         <TableCell>{order.product}</TableCell>
@@ -365,12 +348,6 @@ const AllOrders = () => {
                         </TableCell>
                       </TableRow>
                     ) : sortedPending?.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan="6" className="text-center">
-                          No order
-                        </TableCell>
-                      </TableRow>
-                    ) : (
                       sortedPending?.map((order) => (
                         <TableRow key={order.id}>
                           <TableCell>{order.id}</TableCell>
@@ -387,7 +364,7 @@ const AllOrders = () => {
                             {order.shop_id}
                           </TableHead>
                           <TableCell className="text-center">
-                            {order.status === "Approved" ? (
+                            {order.status === "Completed" ? (
                               <Badge variant="color3">{order.status}</Badge>
                             ) : order.status === "Pending" ? (
                               <Badge variant="color1">{order.status}</Badge>
@@ -407,6 +384,12 @@ const AllOrders = () => {
                           </TableCell>
                         </TableRow>
                       ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan="6" className="text-center">
+                          No order
+                        </TableCell>
+                      </TableRow>
                     )}
                   </TableBody>
                 </Table>
