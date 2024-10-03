@@ -15,12 +15,13 @@ import pic2 from "../storemanagement/pics/pic2.jpg";
 import pic3 from "../storemanagement/pics/pic3.jpg";
 import pic4 from "../storemanagement/pics/pic4.jpg";
 import logo from "../storemanagement/pics/brand.jpg";
+import Skeleton from "react-loading-skeleton";
 import { Alert, Input } from "reactstrap";
 import { globalColor, _get, separator } from "@/utils/Helper";
 import { Search } from "lucide-react";
 import { FaStar } from "react-icons/fa";
-import Skeleton from "react-loading-skeleton";
 let userDetails = localStorage.getItem("@@toke_$$_45598");
+import defaultImg from '../../../assets/No-Image-Placeholder.jpg'
 
 // const products = [
 //   {
@@ -120,8 +121,7 @@ const Storeprofile = () => {
     // Save the updated profile details
     handleClose();
   };
-
-  return (
+return (
     <Container className="mt-3">
       <Card className="m-0">
         <div className="d-flex justify-content-between align-items-center p-3">
@@ -185,9 +185,7 @@ const Storeprofile = () => {
           />
         </div>
       </div>
-
-      
-      <Row>
+<Row>
         {loading ? (
           <div className="row row-cols-2 row-cols-sm-3 row-cols-lg-5 row-cols-xl-6 g-3">
             {skeleton.map((index) => (
@@ -218,7 +216,7 @@ const Storeprofile = () => {
                   <div className="ratio ratio-1x1 bg-light overflow-hidden rounded-top">
                     <img
                       alt={item.product_name}
-                      src={item.image_urls.split(",")[0]}
+                      src={item.image_urls ? item.image_urls.split(",")[0] : defaultImg}
                       className="w-100 h-100 object-fit-cover"
                     />
                   </div>
@@ -231,7 +229,7 @@ const Storeprofile = () => {
                       {[0, 1, 2, 3, 4].map((rating) => (
                         <FaStar
                           key={rating}
-                          className={`text-warning`}
+                          className={text-warning}
                           style={{
                             height: "20px",
                             width: "20px",
@@ -261,8 +259,7 @@ const Storeprofile = () => {
           </Alert>
         )}
       </Row>
-
-      <Modal show={show} onHide={handleClose}>
+<Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>

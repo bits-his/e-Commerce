@@ -203,7 +203,7 @@ export default function ProductsPage() {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    if (files.length + image_urls.length > 10) {
+    if (files.length + image_urls.length > 20) {
       toast.error("You can only upload up to 10 images.");
       return;
     }
@@ -707,7 +707,7 @@ export default function ProductsPage() {
                                 </button>
                               </div>
                             ))}
-                            {image_urls.length < 10 && (
+                            {image_urls.length < 20 && (
                               <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">
                                 <Upload className="h-4 w-4 text-muted-foreground" />
                                 <input
