@@ -60,13 +60,13 @@ const OrderSummary = () => {
   }, []);
 
   useEffect(() => {
-    const totalOrders = orders.length;
-    const approvedOrders = orders.filter(
+    const totalOrders = orders?.length;
+    const approvedOrders = orders?.filter(
       (order) => order.status === "Approved"
-    ).length;
-    const pendingOrders = orders.filter(
+    )?.length;
+    const pendingOrders = orders?.filter(
       (order) => order.status === "Pending"
-    ).length;
+    )?.length;
 
     const counts = {
       total: totalOrders,

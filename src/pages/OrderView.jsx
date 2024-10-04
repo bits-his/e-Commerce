@@ -7,7 +7,7 @@ import {
   ModalFooter,
   Spinner,
 } from "reactstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { _get, globalColor } from "@/utils/Helper";
 import { Badge, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { FaEye } from "react-icons/fa";
+import { FaArrowLeft, FaEye } from "react-icons/fa";
 
 const OrderView = () => {
    const [orders, setOrders] = useState([]);

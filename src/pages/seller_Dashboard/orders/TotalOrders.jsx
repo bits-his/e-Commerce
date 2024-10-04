@@ -97,7 +97,7 @@ const TotalOrders = () => {
     getAllOrders();
   }, []);
 
-  const filteredOrders = orders.filter((order) =>
+  const filteredOrders = orders?.filter((order) =>
     order?.product?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
@@ -106,13 +106,13 @@ const TotalOrders = () => {
     setPending(orders?.filter((order) => order.status === "Pending"));
   }, [orders]);
 
-  const sortedCompleted = completed.filter(
+  const sortedCompleted = completed?.filter(
     (order) =>
       order?.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       order?.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
-  const sortedPending = pending.filter(
+  const sortedPending = pending?.filter(
     (order) =>
       order?.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       order?.status?.toLowerCase().includes(searchQuery?.toLowerCase())
@@ -190,7 +190,7 @@ const TotalOrders = () => {
                         <Spinner />
                       </TableCell>
                     </TableRow>
-                  ) : orders.length === 0 ? (
+                  ) : orders?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan="7" className="text-center">
                         No order
@@ -203,10 +203,10 @@ const TotalOrders = () => {
                         <TableCell>{order.username}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
                           {order.createdAt
-                            // .slice(0, 10)
-                            // .split("-")
-                            // .reverse()
-                            // .join("-")
+                            ?.slice(0, 10)
+                            ?.split("-")
+                            ?.reverse()
+                            ?.join("-")
                           }
                         </TableCell>
                         <TableHead className="hidden md:table-cell text-center">
@@ -310,14 +310,14 @@ const TotalOrders = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sortedCompleted.length === 0 ? (
+                  {sortedCompleted?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan="6" className="text-center">
                         No order
                       </TableCell>
                     </TableRow>
                   ) : (
-                    sortedCompleted.map((order) => (
+                    sortedCompleted?.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.id}</TableCell>
                         <TableCell>{order.product}</TableCell>
@@ -428,7 +428,7 @@ const TotalOrders = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sortedPending.length === 0 ? (
+                    {sortedPending?.length === 0 ? (
                       <TableRow>
                         <TableCell colSpan="6" className="text-center">
                           No order
