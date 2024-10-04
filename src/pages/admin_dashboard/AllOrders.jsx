@@ -34,6 +34,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { _get, globalColor } from "@/utils/Helper";
 import "../style.css";
+import { useNavigate } from "react-router-dom";
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -51,7 +52,8 @@ const AllOrders = () => {
       "api/getorders",
       (resp) => {
         setOrders(resp.results);
-        console.log(orders);
+        
+        console.log(resp.results);
         setFetching(false);
       },
       (err) => {
@@ -66,35 +68,39 @@ const AllOrders = () => {
   }, []);
 
   const filteredOrders = orders?.filter(
-    (order) => order.product.toLowerCase().includes(searchQuery.toLowerCase())
-    // || order.status.toLowerCase().includes(searchQuery.toLowerCase())
+    (order) => order.product?.toLowerCase().includes(searchQuery?.toLowerCase())
+    || order.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   useEffect(() => {
-    setCompleted(orders.filter((order) => order.status === "Approved"));
-    setPending(orders.filter((order) => order.status === "Pending"));
-  }, [orders]);
-
-  const sortedCompleted = completed.filter(
-    (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
+    setCompleted(orders?.filter((order) => order.status === "Completed")),
+      [orders];
+  });
+  const sortedComplete = completed?.filter(
+    (complete) =>
+      complete.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      complete.status.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
-  const sortedPending = pending.filter(
-    (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
+  useEffect(() => {
+    setPending(orders?.filter((order) => order.status === "Pending")), [orders];
+  });
+  const sortedPending = pending?.filter(
+    (pend) =>
+      pend.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      pend.status.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   const toggleModal = () => {
     setModal(!modal);
   };
 
+  const navigate = useNavigate()
+
   const handleViewClick = (order) => {
-    setSelectedOrder(order);
-    toggleModal();
-  };
+  setSelectedOrder(order);
+  navigate("orders-view", { state: { order } }); // Redirects to the detailed view
+};
 
   return (
     <Container fluid>
@@ -106,7 +112,7 @@ const AllOrders = () => {
           <SatisfiedChart />
         </Col>
       </div>
-
+      {/* {JSON.stringify(orders)} */}
       <Tabs defaultValue="all">
         <div className="flex items-center">
           <TabsList>
@@ -132,6 +138,7 @@ const AllOrders = () => {
                 </div>
               </div>
             </CardHeader>
+            {/* {JSON.stringify(orders)} */}
             <CardContent>
               <div className="relative w-full overflow-x-auto">
                 <Table>
@@ -142,7 +149,7 @@ const AllOrders = () => {
                       <TableHead className="hidden md:table-cell text-center">
                         Order date
                       </TableHead>
-                      <TableHead className="text-center">Shop ID</TableHead>
+                      <TableHead className="">Email</TableHead>
                       <TableHead className="text-center">Status</TableHead>
                       {/* <TableHead className="hidden md:table-cell text-center">
                       Total
@@ -160,17 +167,18 @@ const AllOrders = () => {
                     ) : filteredOrders?.length > 0 ? (
                       filteredOrders?.map((order) => (
                         <TableRow key={order.id}>
-                          <TableCell>{order.id}</TableCell>
-                          <TableCell>{order.product}</TableCell>
+                          <TableCell>{order.customer_id}</TableCell>
+                          <TableCell>{order.username}</TableCell>
                           <TableCell className="hidden md:table-cell text-center">
                             {order.createdAt
-                              .slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("-")}
+                              ?.slice(0, 10)
+                              ?.split("-")
+                              ?.reverse()
+                              ?.join("-")
+                            }
                           </TableCell>
-                          <TableHead className="text-center">
-                            {order.shop_id}
+                          <TableHead className="">
+                            {order.email}
                           </TableHead>
                           <TableCell className="text-center">
                             {order.status === "Completed" ? (
@@ -250,17 +258,18 @@ const AllOrders = () => {
                         <Spinner />
                       </TableCell>
                     </TableRow>
-                  ) : sortedCompleted?.length > 0 ? (
-                    sortedCompleted?.map((order) => (
+                  ) : sortedComplete?.length > 0 ? (
+                    sortedComplete?.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.id}</TableCell>
                         <TableCell>{order.product}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
                           {order.createdAt
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join("-")}
+                            // // .slice(0, 10)
+                            // .split("-")
+                            // .reverse()
+                            // .join("-")
+                          }
                         </TableCell>
                         <TableHead className="text-center">
                           {order.shop_id}
@@ -340,28 +349,23 @@ const AllOrders = () => {
                         </TableCell>
                       </TableRow>
                     ) : sortedPending?.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan="6" className="text-center">
-                          No order
-                        </TableCell>
-                      </TableRow>
-                    ) : (
                       sortedPending?.map((order) => (
                         <TableRow key={order.id}>
                           <TableCell>{order.id}</TableCell>
                           <TableCell>{order.product}</TableCell>
                           <TableCell className="hidden md:table-cell text-center">
                             {order.createdAt
-                              .slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("-")}
+                              // .slice(0, 10)
+                              // .split("-")
+                              // .reverse()
+                              // .join("-")
+                            }
                           </TableCell>
                           <TableHead className="text-center">
                             {order.shop_id}
                           </TableHead>
                           <TableCell className="text-center">
-                            {order.status === "Approved" ? (
+                            {order.status === "Completed" ? (
                               <Badge variant="color3">{order.status}</Badge>
                             ) : order.status === "Pending" ? (
                               <Badge variant="color1">{order.status}</Badge>
@@ -371,15 +375,22 @@ const AllOrders = () => {
                           </TableCell>
                           <TableCell>
                             <Button
-                              variant="color3"
-                              size="sm"
-                              onClick={() => handleViewClick(order)}
-                            >
-                              <FaEye />
-                            </Button>
+  style={{ background: globalColor.colors1 }}
+  variant="color3"
+  size="sm"
+  onClick={() => handleViewClick(order)} // This triggers the view action when clicked
+>
+  <FaEye /> {/* Eye icon used for viewing details */}
+</Button>
                           </TableCell>
                         </TableRow>
                       ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan="6" className="text-center">
+                          No order
+                        </TableCell>
+                      </TableRow>
                     )}
                   </TableBody>
                 </Table>
@@ -402,10 +413,11 @@ const AllOrders = () => {
             <p>
               <strong>Order Date:</strong>{" "}
               {selectedOrder.createdAt
-                .slice(0, 10)
-                .split("-")
-                .reverse()
-                .join("-")}
+                // .slice(0, 10)
+                // .split("-")
+                // .reverse()
+                // .join("-")
+              }
             </p>
             <p>
               <strong>Status:</strong> {selectedOrder.status}

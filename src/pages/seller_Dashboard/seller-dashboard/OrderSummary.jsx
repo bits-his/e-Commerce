@@ -63,10 +63,10 @@ const OrderSummary = () => {
     const totalOrders = orders?.length;
     const approvedOrders = orders?.filter(
       (order) => order.status === "Approved"
-    ).length;
+    )?.length;
     const pendingOrders = orders?.filter(
       (order) => order.status === "Pending"
-    ).length;
+    )?.length;
 
     const counts = {
       total: totalOrders,

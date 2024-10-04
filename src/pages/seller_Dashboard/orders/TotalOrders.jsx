@@ -190,18 +190,23 @@ const TotalOrders = () => {
                         <Spinner />
                       </TableCell>
                     </TableRow>
-                  ) : orders?.length > 0 ? (
+                  ) : orders?.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan="7" className="text-center">
+                        No order
+                      </TableCell>
+                    </TableRow>
+                  ) : (
                     orders?.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.customer_id}</TableCell>
                         <TableCell>{order.username}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
-                          {
-                            order.createdAt
-                            // .slice(0, 10)
-                            // .split("-")
-                            // .reverse()
-                            // .join("-")
+                          {order.createdAt
+                            ?.slice(0, 10)
+                            ?.split("-")
+                            ?.reverse()
+                            ?.join("-")
                           }
                         </TableCell>
                         <TableHead className="hidden md:table-cell text-center">
@@ -231,7 +236,7 @@ const TotalOrders = () => {
                           >
                             <Eye className="w-4 h-4" />
                           </Button>
-                          {order.status === "Pending" ? (
+                          {/* {order.status === "Pending" ? (
                             <Button
                               variant="color1"
                               className="me-lg-1"
@@ -263,7 +268,7 @@ const TotalOrders = () => {
                                 <Ban className="w-4 h-4" />
                               )}
                             </Button>
-                          ) : null}
+                          ) : null} */}
                         </TableCell>
                       </TableRow>
                     ))
@@ -313,7 +318,13 @@ const TotalOrders = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sortedCompleted?.length > 0 ? (
+                  {sortedCompleted?.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan="6" className="text-center">
+                        No order
+                      </TableCell>
+                    </TableRow>
+                  ) : (
                     sortedCompleted?.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.id}</TableCell>
@@ -351,7 +362,7 @@ const TotalOrders = () => {
                           >
                             <Eye className="w-4 h-4" />
                           </Button>
-                          {order.status === "Pending" ? (
+                          {/* {order.status === "Pending" ? (
                             <Button
                               variant="color1"
                               size="sm"
@@ -383,7 +394,7 @@ const TotalOrders = () => {
                                 <Ban className="w-4 h-4" />
                               )}
                             </Button>
-                          ) : null}
+                          ) : null} */}
                         </TableCell>
                       </TableRow>
                     ))
@@ -434,7 +445,13 @@ const TotalOrders = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sortedPending?.length > 0 ? (
+                    {sortedPending?.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan="6" className="text-center">
+                          No order
+                        </TableCell>
+                      </TableRow>
+                    ) : (
                       sortedPending?.map((order) => (
                         <TableRow key={order.id}>
                           <TableCell>{order.id}</TableCell>
