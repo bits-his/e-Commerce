@@ -52,7 +52,7 @@ const AllOrders = () => {
       "api/getorders",
       (resp) => {
         setOrders(resp.results);
-        
+
         console.log(resp.results);
         setFetching(false);
       },
@@ -68,8 +68,9 @@ const AllOrders = () => {
   }, []);
 
   const filteredOrders = orders?.filter(
-    (order) => order.product?.toLowerCase().includes(searchQuery?.toLowerCase())
-    || order.status?.toLowerCase().includes(searchQuery?.toLowerCase())
+    (order) =>
+      order.product?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      order.status?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   useEffect(() => {
@@ -95,12 +96,12 @@ const AllOrders = () => {
     setModal(!modal);
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleViewClick = (order) => {
-  setSelectedOrder(order);
-  navigate("orders-view", { state: { order } }); // Redirects to the detailed view
-};
+    setSelectedOrder(order);
+    navigate("orders-view", { state: { order } }); // Redirects to the detailed view
+  };
 
   return (
     <Container fluid>
@@ -174,12 +175,9 @@ const AllOrders = () => {
                               ?.slice(0, 10)
                               ?.split("-")
                               ?.reverse()
-                              ?.join("-")
-                            }
+                              ?.join("-")}
                           </TableCell>
-                          <TableHead className="">
-                            {order.email}
-                          </TableHead>
+                          <TableHead className="">{order.email}</TableHead>
                           <TableCell className="text-center">
                             {order.status === "Completed" ? (
                               <Badge variant="color3">{order.status}</Badge>
@@ -264,7 +262,8 @@ const AllOrders = () => {
                         <TableCell>{order.id}</TableCell>
                         <TableCell>{order.product}</TableCell>
                         <TableCell className="hidden md:table-cell text-center">
-                          {order.createdAt
+                          {
+                            order.createdAt
                             // // .slice(0, 10)
                             // .split("-")
                             // .reverse()
@@ -354,7 +353,8 @@ const AllOrders = () => {
                           <TableCell>{order.id}</TableCell>
                           <TableCell>{order.product}</TableCell>
                           <TableCell className="hidden md:table-cell text-center">
-                            {order.createdAt
+                            {
+                              order.createdAt
                               // .slice(0, 10)
                               // .split("-")
                               // .reverse()
@@ -375,13 +375,14 @@ const AllOrders = () => {
                           </TableCell>
                           <TableCell>
                             <Button
-  style={{ background: globalColor.colors1 }}
-  variant="color3"
-  size="sm"
-  onClick={() => handleViewClick(order)} // This triggers the view action when clicked
->
-  <FaEye /> {/* Eye icon used for viewing details */}
-</Button>
+                              style={{ background: globalColor.colors1 }}
+                              variant="color3"
+                              size="sm"
+                              onClick={() => handleViewClick(order)} // This triggers the view action when clicked
+                            >
+                              <FaEye />{" "}
+                              {/* Eye icon used for viewing details */}
+                            </Button>
                           </TableCell>
                         </TableRow>
                       ))
@@ -412,7 +413,8 @@ const AllOrders = () => {
             </p>
             <p>
               <strong>Order Date:</strong>{" "}
-              {selectedOrder.createdAt
+              {
+                selectedOrder.createdAt
                 // .slice(0, 10)
                 // .split("-")
                 // .reverse()
