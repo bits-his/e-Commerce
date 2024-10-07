@@ -28,6 +28,8 @@ import "../Styles/Header.css";
 import toast from "react-hot-toast";
 import { globalColor } from "@/utils/Helper";
 import { Spinner } from "reactstrap";
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/action/authAction";
 
 function Header() {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -35,6 +37,7 @@ function Header() {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { pathname } = location;
 
   const handleToggle = (dropdownName) => {
@@ -49,7 +52,7 @@ function Header() {
 
   const handleLogout = () => {
     setLoading(true);
-    localStorage.clear("@@token");
+    dispatch(logout());
     navigate("/");
     toast("Goodbye!", {
       icon: "👏",
@@ -193,23 +196,18 @@ function Header() {
 
             {pathname.startsWith("/seller-dashboard") && (
               <>
-                <DropdownBtn
-                  title={
-                    <>
-                      <Store className="h-4 w-4" /> Store
-                    </>
-                  }
-                  items={["Store profile"]}
-                  links={[
-                    "/seller-dashboard/storemangement/storeprofile",
-                    "/seller-dashboard/storemangement/storepayment",
-                    "/seller-dashboard/storemangement/ordermanagement",
-                  ]}
-                  onToggle={() => handleToggle("Store Management")}
-                  isActive={activeDropdown === "Store Management"}
-                  open={pathname.includes("/storemangement")}
-                  closeSheet={closeSheet}
-                />
+                <NavLink
+                  className={`flex items-center gap-3 text-base rounded-lg px-3 py-2 transition-all mt-2 ${
+                    pathname === "/seller-dashboard/storeprofile"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
+                  }`}
+                  to={"/seller-dashboard/storeprofile"}
+                  onClick={closeSheet}
+                >
+                  <Store className="h-4 w-4" />
+                  Store
+                </NavLink>
 
                 <DropdownBtn
                   title={

@@ -25,74 +25,78 @@ import { CategoryScale } from "chart.js";
 import VendorView from "./pages/admin_dashboard/vendors/VendorView";
 import OrderView from "./pages/OrderView";
 import VendorOrderView from "./pages/seller_Dashboard/orders/VendorOrderView";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 const App = () => (
   <>
-    <BrowserRouter>
-      <Routes>
-        <Route element={<NoLayout />}>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Registration />} />
-        </Route>
-
-        <Route element={<Layout />}>
-          <Route path="/admin-dashboard">
-            <Route index element={<AdminDashboard />} />
-            <Route path="customer-mgmt">
-              <Route path="customers" element={<Customers />} />
-              <Route path="customer-reviews" element={<Product />} />
-            </Route>
-            <Route path="vendor-mgmt">
-              <Route path="vendor">
-                <Route index element={<Vendors />} />
-                <Route path="vendor-view" element={<VendorView />} />
-              </Route>
-              <Route path="pending-vendor" element={<Pending_vendor />} />
-            </Route>
-            <Route path="orders">
-              <Route index element={<AllOrders />} />
-              <Route path="orders-view" element={<OrderView />} />
-            </Route>
-            <Route path="reports">
-              <Route path="sales" element={<Product />} />
-              <Route path="product-performance" element={<Product />} />
-              <Route path="inventory" element={<Inventory />} />
-              <Route path="traffic" element={<Product />} />
-            </Route>
-            <Route path="user-mgmt">
-              <Route path="all" element={<Product />} />
-              <Route path="admin" element={<Product />} />
-              <Route path="logs" element={<Product />} />
-              <Route path="profile" element={<Profile />} />
-            </Route>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<NoLayout />}>
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Registration />} />
           </Route>
-          <Route path="/seller-dashboard">
-            <Route index element={<Sellerdashboard />} />
-            {/* <Route path="orders/pending" element={<PendingOrders />} />
-        <Route path="orders/approved" element={<ApprovedOrders />} /> */}
-            {/* <Route path="orders/total" element={<TotalOrders />} /> */}
-            <Route path="orders/total">
-              <Route index element={<TotalOrders />} />
-              <Route path="orders-view" element={<VendorOrderView />} />
-            </Route>
 
-            <Route path="product-mgmt">
-              <Route path="product">
-                <Route index element={<Productmgnt />} />
-                <Route path="addproduct" element={<AddProductPage />} />
+          <Route element={<Layout />}>
+            <Route path="/admin-dashboard">
+              <Route index element={<AdminDashboard />} />
+              <Route path="customer-mgmt">
+                <Route path="customers" element={<Customers />} />
+                <Route path="customer-reviews" element={<Product />} />
+              </Route>
+              <Route path="vendor-mgmt">
+                <Route path="vendor">
+                  <Route index element={<Vendors />} />
+                  <Route path="vendor-view" element={<VendorView />} />
+                </Route>
+                <Route path="pending-vendor" element={<Pending_vendor />} />
+              </Route>
+              <Route path="orders">
+                <Route index element={<AllOrders />} />
+                <Route path="orders-view" element={<OrderView />} />
+              </Route>
+              <Route path="reports">
+                <Route path="sales" element={<Product />} />
+                <Route path="product-performance" element={<Product />} />
+                <Route path="inventory" element={<Inventory />} />
+                <Route path="traffic" element={<Product />} />
+              </Route>
+              <Route path="user-mgmt">
+                <Route path="all" element={<Product />} />
+                <Route path="admin" element={<Product />} />
+                <Route path="logs" element={<Product />} />
+                <Route path="profile" element={<Profile />} />
               </Route>
             </Route>
+            <Route path="/seller-dashboard">
+              <Route index element={<Sellerdashboard />} />
+              {/* <Route path="orders/pending" element={<PendingOrders />} />
+          <Route path="orders/approved" element={<ApprovedOrders />} /> */}
+              {/* <Route path="orders/total" element={<TotalOrders />} /> */}
+              <Route path="orders/total">
+                <Route index element={<TotalOrders />} />
+                <Route path="orders-view" element={<VendorOrderView />} />
+              </Route>
 
-            <Route path="category">
-              <Route index element={<Category />} />
-              <Route path="sub-category" element={<AddProductPage />} />
+              <Route path="product-mgmt">
+                <Route path="product">
+                  <Route index element={<Productmgnt />} />
+                  <Route path="addproduct" element={<AddProductPage />} />
+                </Route>
+              </Route>
+
+              <Route path="category">
+                <Route index element={<Category />} />
+                <Route path="sub-category" element={<AddProductPage />} />
+              </Route>
+
+              <Route path="storeprofile" element={<Storeprofile />} />
             </Route>
-
-            <Route path="storeprofile" element={<Storeprofile />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </>
 );
 
