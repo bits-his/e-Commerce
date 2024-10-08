@@ -22,6 +22,7 @@ import { Search } from "lucide-react";
 import { FaStar } from "react-icons/fa";
 let userDetails = localStorage.getItem("@@toke_$$_45598");
 import defaultImg from '../../../assets/No-Image-Placeholder.jpg'
+import { useSelector } from "react-redux";
 
 // const products = [
 //   {
@@ -85,6 +86,8 @@ const Storeprofile = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const user = useSelector((state) => state.auth.user);
+
   const getProduct = () => {
     setLoading(true)
     _get(
@@ -94,7 +97,7 @@ const Storeprofile = () => {
         setLoading(false);
       },
       (err) => {
-        setError(err);
+        setMessage(err.message);
         setLoading(false);
       }
     );
@@ -140,8 +143,8 @@ const Storeprofile = () => {
               style={{ height: "5rem" }}
             />
             <div>
-              <h6 className="mb-0">{profile.shopName}</h6>
-              <p className="mb-0">{profile.shopAddress}</p>
+              <div className="font-medium">{user.shopname}</div>
+              <div className="text-sm text-muted-foreground md:inline">{user.shopaddress}</div>
             </div>
           </div>
         </Card.Header>
@@ -161,8 +164,8 @@ const Storeprofile = () => {
             </Col>
             <Col>
               <h4 className="mb-0">Contacts</h4>
-              <small className="text-muted">{profile.contactName}</small> <br />
-              <small className="text-muted">{profile.contactPhone}</small>
+              <small className="text-muted">{user.firstname}</small> <br />
+              <small className="text-muted">{user.shopcontact}</small>
             </Col>
             <Col>
               <h4 className="mb-0">Address</h4>

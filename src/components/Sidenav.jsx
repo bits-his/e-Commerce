@@ -17,6 +17,8 @@ import { Button } from "@/components/ui/button";
 import "./sidenav.css";
 import toast from "react-hot-toast";
 import { Spinner } from "reactstrap";
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/action/authAction";
 
 const Sidebar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -24,6 +26,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { pathname } = location;
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleToggle = (dropdownName) => {
     setActiveDropdown((prevActive) =>
@@ -33,7 +36,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     setLoading(true);
-    localStorage.clear("@@token");
+    dispatch(logout());
     navigate("/");
     toast("Goodbye!", {
       icon: "👏",

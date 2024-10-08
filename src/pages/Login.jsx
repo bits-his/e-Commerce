@@ -1,78 +1,42 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import "../Styles/Login.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import { useDispatch, useSelector } from "react-redux";  // Import Redux hooks
+import { login } from "../redux/action/authAction";  // Import login action
 import { Spinner } from "reactstrap";
-import { _post, globalColor } from "../utils/Helper";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [Loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  // Select loading state from Redux store
+  const { loading } = useSelector((state) => state.auth);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleLogin = async (e) => { 
-    e.preventDefault(); 
-    setLoading(true); 
- 
-    const obj = { email, password }; 
- 
-    _post( 
-      "api/users/login", 
-      obj, 
-      (res) => { 
-        setLoading(false); 
-        // alert(JSON.stringify(res.userDetails)) 
-        if(res.success){
-          let data = res?.userDetails.id 
-          localStorage.setItem("@@toke_$$_45598",JSON.stringify(data)) 
-          if (res.role === "vendor") { 
-            toast.success("Logged Successful"); 
-            navigate("/seller-dashboard"); 
-          } else if (res.role === "admin") { 
-            toast.success("Logged Successful"); 
-            navigate("/admin-dashboard"); 
-          } else { 
-            toast.error("User not found"); 
-          } 
-        }
-        else{
-          console.log(res)
-          toast.error(res.email)
-        }
-      }
-
-      // (err) => { 
-      //   setLoading(false); 
-      //   toast.error("An error occurred!"); 
-      //   console.log(err); 
-      // } 
-    ); 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    
+    // Dispatch the login action (which handles API call)
+    dispatch(login(email, password, navigate));
   };
 
   const handleGoogleSignIn = () => {
-    toast.error("can't login with google now");
+    toast.error("Can't login with Google now");
   };
 
   return (
     <>
-      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 min-h-[100vh] background-icon" style={{backgroundColor: globalColor.grpcolor3}}>
+      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 min-h-[100vh] background-icon">
         <Card className="mx-auto min-w-[20rem]">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Login</CardTitle>
@@ -93,10 +57,7 @@ function Login() {
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <Link
-                    to="/"
-                    className="ml-auto inline-block text-sm underline"
-                  >
+                  <Link to="/" className="ml-auto inline-block text-sm underline">
                     Forgot your password?
                   </Link>
                 </div>
@@ -109,7 +70,6 @@ function Login() {
                       name="password"
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                   <button
@@ -129,25 +89,18 @@ function Login() {
                 type="submit"
                 className="w-full btn login-btn"
                 onClick={handleLogin}
-                disabled={Loading}
+                disabled={loading}
                 style={{backgroundColor: "#a52a2a"}}
               >
-                {Loading ? (
+                {loading ? (
                   <Spinner className="h-5 w-5" />
                 ) : (
                   <b className="text-white">Login</b>
                 )}
               </button>
-              {/* <Button
-                variant="outline"
-                className="w-full"
-                onClick={handleGoogleSignIn}
-              >
-                Login with Google
-              </Button> */}
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
+              Don't have an account?{" "}
               <Link to="register" className="underline">
                 Sign up
               </Link>

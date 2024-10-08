@@ -39,12 +39,17 @@ import {
 import "../admin_dashboard/Admindashboard.css";
 import { Row } from "reactstrap";
 import AdminChart from "./AdminChart";
+import { useSelector } from "react-redux";
 
 const AdminDashboard = () => {
+
+  const userName = useSelector((state) => state.auth.user.username);
+
   return (
     <>
       <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8">
         <div className="mx-auto grid w-full max-w-6xl gap-2">
+          <div className="font-medium">Welcome {userName}!</div>
           <h1 className="text-3xl font-semibold">Dashboard</h1>
         </div>
         <AdminChart />
