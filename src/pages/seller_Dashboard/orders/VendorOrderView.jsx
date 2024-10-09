@@ -34,17 +34,16 @@ const VendorOrderView = () => {
   const [error, setError] = useState(null);
   const [fetching, setFetching] = useState(false);
 
-  const location = useLocation();
+     const location = useLocation();
   const order = location.state?.order;
-  const userDetails = localStorage.getItem("@@toke_$$_45598");
 
-  // Fetch all orders associated with the shop
   const getAllOrders = () => {
     setFetching(true);
     _get(
-      `api/getshoporders?shop_id=${parseInt(userDetails)}`,
-      (resp) => {
+      `api/gerordersbycustomerid?custormer_id=${order.customer_id}`,
+      (resp) => { 
         setOrders(resp.results);
+        console.log(orders);
         setFetching(false);
       },
       (err) => {
@@ -53,6 +52,10 @@ const VendorOrderView = () => {
       }
     );
   };
+
+  useEffect(() => {
+    getAllOrders();
+  }, []);
 
   // Handle order validation (status updates)
   const handleValidateOrder = (id, status) => {
@@ -181,6 +184,9 @@ const VendorOrderView = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead className="hidden w-[100px] sm:table-cell">
+                      <span className="sr-only">Image</span>
+                    </TableHead>
                     <TableHead>Item</TableHead>
                     <TableHead>Quantity</TableHead>
                     <TableHead>Order date</TableHead>
@@ -193,9 +199,19 @@ const VendorOrderView = () => {
                   {filteredOrders.length > 0 ? (
                     filteredOrders.map((order) => (
                       <TableRow key={order.id}>
+                        <TableCell>
+                        <img
+                          src={order.order_image}
+                          alt={order.product}
+                          className="aspect-square rounded-md object-cover"
+                          width="64"
+                          height="64"
+                        />
+                        {/* {orders?.customer_id} */}
+                      </TableCell>
                         <TableCell>{order.product}</TableCell>
                         <TableCell>{order.quantity}</TableCell>
-                        <TableCell>{order.createdAt.slice(0, 10)}</TableCell>
+                        <TableCell>{order.createdAt?.slice(0, 10)}</TableCell>
                         <TableCell>{order.order_no}</TableCell>
                         <TableCell>{order.status}</TableCell>
                         <TableCell className="text-center">

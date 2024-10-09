@@ -522,10 +522,10 @@ export default function ProductsPage() {
                                     <SelectValue placeholder="Select size" />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    <SelectItem value="1 Yard">
+                                    <SelectItem value="Per 1 Yard">
                                       Per 1 Yard
                                     </SelectItem>
-                                    <SelectItem value="5 Yard">
+                                    <SelectItem value="Per 5 Yard">
                                       Per 5 Yard
                                     </SelectItem>
                                     <SelectItem value="Others">
