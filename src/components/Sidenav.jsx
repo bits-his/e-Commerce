@@ -238,7 +238,7 @@ const Sidebar = () => {
                   isActive={activeDropdown === "Order management"}
                   open={pathname.includes("/orders")}
                 /> */}
-                <DropdownBtn
+                {/* <DropdownBtn
                   title={
                     <>
                       <Bell className="h-4 w-4" /> Notifications
@@ -252,7 +252,7 @@ const Sidebar = () => {
                   onToggle={() => handleToggle("Order notifiction")}
                   isActive={activeDropdown === "Order notifiction"}
                   // open={pathname.includes("/product-mgmt")}
-                />
+                /> */}
               </>
             )}
           </nav>
