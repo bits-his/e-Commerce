@@ -50,7 +50,7 @@ import {
   server_url,
 } from "../../../utils/Helper";
 import { Spinner } from "reactstrap";
-import defaultImg from '../../../assets/No-Image-Placeholder.jpg'
+import defaultImg from "../../../assets/No-Image-Placeholder.jpg";
 
 export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
@@ -84,7 +84,7 @@ export default function ProductsPage() {
     product_subcategory: "",
     product_price: null,
     product_quantity: null,
-    product_status: "available",
+    product_status: "Available",
     image_urls: [],
     product_size: "",
   };
@@ -150,73 +150,88 @@ export default function ProductsPage() {
   }, [newProduct.product_category]);
 
   const handleInputChange = (e) => {
-  const { id, value } = e.target;
+    const { id, value } = e.target;
 
-  if (editMode) {
-    setCurrentProduct((prevData) => ({
-      ...prevData,
-      [id]: value, // Updates the field by its ID (e.g., product_size)
-    }));
-  } else {
-    setNewProduct((prevData) => ({
-      ...prevData,
-      [id]: value, // Updates the field by its ID (e.g., product_size)
-    }));
-  }
-};
+    if (editMode) {
+      setCurrentProduct((prevData) => ({
+        ...prevData,
+        [id]: value, // Updates the field by its ID (e.g., product_size)
+      }));
+    } else {
+      setNewProduct((prevData) => ({
+        ...prevData,
+        [id]: value, // Updates the field by its ID (e.g., product_size)
+      }));
+    }
+  };
 
   const handleSelectChange = (id, value) => {
-  // Update the product state depending on editMode
-  if (editMode) {
-    setCurrentProduct((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
-  } else {
-    setNewProduct((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
-  }
+    // Update the product state depending on editMode
+    if (editMode) {
+      setCurrentProduct((prevData) => ({
+        ...prevData,
+        [id]: value,
+      }));
+    } else {
+      setNewProduct((prevData) => ({
+        ...prevData,
+        [id]: value,
+      }));
+    }
 
-  // Check if the category and subcategory meet the conditions to show the size input
-  if (
-    id === "product_subcategory" &&
-    value === "Yard" &&
-    newProduct.product_category === "Fabric"
-  ) {
-    setShowSizeInput(true); // Show the size input if category is Fabric and subcategory is Yard
-  } else if (id === "product_category" && value !== "Fabric") {
-    setShowSizeInput(false); // Hide the size input if the category is not Fabric
-  }
+    // Check if the category and subcategory meet the conditions to show the size input
+    if (
+      id === "product_subcategory" &&
+      value === "Yard" &&
+      newProduct.product_category === "Fabric"
+    ) {
+      setShowSizeInput(true); // Show the size input if category is Fabric and subcategory is Yard
+    } else if (id === "product_category" && value !== "Fabric") {
+      setShowSizeInput(false); // Hide the size input if the category is not Fabric
+    }
 
-  // Toggle between custom size input and predefined sizes based on "Others" selection
-  if (id === "product_size" && value === "Others") {
-    setShowSizeInputchange(true); // Show the text input for custom size
-  } else if (id === "product_subcategory" && value !== "Yard") {
-    setShowSizeInput(false); // Hide the size input if the category is not Fabric
-  } else {
-    setShowSizeInputchange(false); // Hide the custom input field if another size is selected
-  }
-};
-
+    // Toggle between custom size input and predefined sizes based on "Others" selection
+    if (id === "product_size" && value === "Others") {
+      setShowSizeInputchange(true); // Show the text input for custom size
+    } else if (id === "product_subcategory" && value !== "Yard") {
+      setShowSizeInput(false); // Hide the size input if the category is not Fabric
+    } else {
+      setShowSizeInputchange(false); // Hide the custom input field if another size is selected
+    }
+  };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
     if (files.length + image_urls.length > 20) {
-      toast.error("You can only upload up to 10 images.");
+      toast.error("You can only upload up to 20 images.");
       return;
     }
 
     setImage_urls((prevImages) => [...prevImages, ...files]);
   };
 
-  const removeImage = (indexToRemove) => {
+  // const removeImage = (indexToRemove) => {
+  //   setImage_urls((prevImages) =>
+  //     prevImages.filter((_, idx) => idx !== indexToRemove)
+  //   );
+  // };
+  const removeImage = (indexToRemove, isExisting) => {
+  if (isExisting) {
+    // Handle removal of existing images in edit mode
+    setCurrentProduct((prevProduct) => ({
+      ...prevProduct,
+      image_urls: prevProduct.image_urls.filter(
+        (_, idx) => idx !== indexToRemove
+      ),
+    }));
+  } else {
+    // Handle removal of newly added images
     setImage_urls((prevImages) =>
       prevImages.filter((_, idx) => idx !== indexToRemove)
     );
-  };
+  }
+};
 
   const handleAddProduct = (e) => {
     e.preventDefault();
@@ -270,7 +285,7 @@ export default function ProductsPage() {
         setLoading(false);
         getProduct();
         toast.success("New product added");
-        console.log(formData)
+        console.log(formData);
         setShowForm(false);
         resetForm();
       })
@@ -300,7 +315,7 @@ export default function ProductsPage() {
           console.log(res)
         );
         setProducts(updatedProducts);
-        console.log(updatedProducts)
+        console.log(updatedProducts);
         navigate(0);
         setShowForm(false);
         setEditMode(false);
@@ -364,6 +379,7 @@ export default function ProductsPage() {
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
         <div className="flex flex-col sm:gap-4 sm:py-4">
+          {/* ==============add and update prodeuct================ */}
           {showForm ? (
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
               <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
@@ -398,6 +414,7 @@ export default function ProductsPage() {
                     </Button>
                   </div>
                 </div>
+                {/* =====================add product====================== */}
                 <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                     <Card x-chunk="dashboard-07-chunk-0">
@@ -463,6 +480,11 @@ export default function ProductsPage() {
                               onValueChange={(value) =>
                                 handleSelectChange("product_category", value)
                               }
+                              value={
+                                editMode
+                                  ? currentProduct?.product_category
+                                  : newProduct.product_category
+                              }
                             >
                               <SelectTrigger
                                 id="product_category"
@@ -486,6 +508,11 @@ export default function ProductsPage() {
                             <Select
                               onValueChange={(value) =>
                                 handleSelectChange("product_subcategory", value)
+                              }
+                              value={
+                                editMode
+                                  ? currentProduct?.product_subcategory
+                                  : newProduct.product_subcategory
                               }
                             >
                               <SelectTrigger
@@ -594,11 +621,11 @@ export default function ProductsPage() {
                                   <span className="text-destructive">* </span>
                                   <span>
                                     {editMode
-                                      ? parseFloat(
+                                      ? (
                                           separator(
                                             currentProduct?.product_price
                                           )
-                                        ).toFixed(2)
+                                        )
                                       : separator(newProduct.product_price)}
                                   </span>
                                 </Label>
@@ -607,9 +634,9 @@ export default function ProductsPage() {
                                   type="number"
                                   value={
                                     editMode
-                                      ? parseFloat(
+                                      ? (
                                           currentProduct?.product_price
-                                        ).toFixed(2)
+                                        )
                                       : newProduct.product_price
                                   }
                                   onChange={handleInputChange}
@@ -642,6 +669,11 @@ export default function ProductsPage() {
                               onValueChange={(value) =>
                                 handleSelectChange("product_status", value)
                               }
+                              value={
+                                editMode
+                                  ? currentProduct?.product_status
+                                  : newProduct.product_status
+                              }
                             >
                               <SelectTrigger
                                 id="product_status"
@@ -650,10 +682,10 @@ export default function ProductsPage() {
                                 <SelectValue placeholder="Select status" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="available">
+                                <SelectItem value="Available">
                                   Available
                                 </SelectItem>
-                                <SelectItem value="out of stock">
+                                <SelectItem value="Out of Stock">
                                   Out of stock
                                 </SelectItem>
                               </SelectContent>
@@ -675,7 +707,13 @@ export default function ProductsPage() {
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 gap-2">
                             {image_urls.map((image, idx) => (
-                              <div key={idx} style={{ position: 'relative', display: 'inline-block' }}>
+                              <div
+                                key={idx}
+                                style={{
+                                  position: "relative",
+                                  display: "inline-block",
+                                }}
+                              >
                                 <img
                                   key={idx}
                                   alt={`Product image ${idx + 1}`}
@@ -701,10 +739,10 @@ export default function ProductsPage() {
                                     fontSize: "14px",
                                     display: "flex",
                                     justifyContent: "center",
-                                    alignItems: "center"
+                                    alignItems: "center",
                                   }}
                                 >
-                                  <X className="w-3 h-3"/>
+                                  <X className="w-3 h-3" />
                                 </button>
                               </div>
                             ))}
@@ -828,7 +866,11 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls ? product.image_urls.split(",")[0] : defaultImg}
+                                    src={
+                                      product.image_urls
+                                        ? product.image_urls.split(",")[0]
+                                        : defaultImg
+                                    }
                                     width="64"
                                   />
                                 </TableCell>
@@ -836,13 +878,24 @@ export default function ProductsPage() {
                                   {product.product_name}
                                 </TableCell>
                                 <TableCell className="text-center">
-                                  {product.product_status === "available" ? (
+                                  {product.product_status === "Available" ? (
                                     <Badge variant="color3">
                                       {product.product_status}
                                     </Badge>
-                                  ) : (
-                                    <Badge variant="color2">Out of Stock</Badge>
-                                  )}
+                                  ) : product.product_status ===
+                                    "Out of Stock" ? (
+                                    <Badge variant="color2">
+                                      {product.product_status}
+                                    </Badge>
+                                  ) : null}
+
+                                  {/* {product.product_status === "available" ? (
+                                    <Badge variant="color3">
+                                      {product.product_status}
+                                    </Badge>
+                                  ) : (null
+                                    // <Badge variant="color2">Out of Stock</Badge>
+                                  )} */}
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell text-end">
                                   {separator(product.product_price)}
