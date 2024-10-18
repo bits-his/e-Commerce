@@ -167,7 +167,7 @@ const OrderView = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="hidden w-[100px] sm:table-cell">
+                    <TableHead className="hidden sm:table-cell">
                       <span className="sr-only">Image</span>
                     </TableHead>
                     <TableHead>Item</TableHead>
@@ -208,12 +208,6 @@ const OrderView = () => {
                       </TableHead>
                     </TableRow>
                   ))}
-
-                  <TableRow>
-                    <TableCell colSpan="6" className="text-center">
-                      No order
-                    </TableCell>
-                  </TableRow>
                 </TableBody>
               </Table>
             </div>
