@@ -138,7 +138,7 @@ const handleViewclick = (customer) => {
                 ) : filteredCustomers.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan="7" className="text-center">
-                      No customers found
+                      No vendor found
                     </TableCell>
                   </TableRow>
                 ) : (

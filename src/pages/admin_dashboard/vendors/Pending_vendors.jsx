@@ -175,7 +175,7 @@ export default function Pending_customer({ args, id }) {
                 ) : filteredCustomers.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan="7" className="text-center">
-                      No customers found
+                      No Vendor found
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -236,7 +236,7 @@ export default function Pending_customer({ args, id }) {
         </Card>
 
         <Modal isOpen={isModalOpen} toggle={handleCloseModal} {...args}>
-          <ModalHeader toggle={handleCloseModal}>Customer Details</ModalHeader>
+          <ModalHeader toggle={handleCloseModal}>Vendor Details</ModalHeader>
           <ModalBody>
             {selectedCustomer && (
               <div>
