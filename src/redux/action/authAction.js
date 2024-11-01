@@ -29,6 +29,7 @@ export const login = (email, password, navigate) => {
 
       if (success) {
         // Store token and user details in localStorage
+        // alert(JSON.stringify(userDetails.id));
         localStorage.setItem('@@toke_$$_45598', JSON.stringify(userDetails.id));
         localStorage.setItem('user', JSON.stringify(userDetails));
 

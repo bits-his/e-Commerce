@@ -22,6 +22,9 @@ import VendorView from "./pages/admin_dashboard/vendors/VendorView";
 import OrderView from "./pages/OrderView";
 import VendorOrderView from "./pages/seller_Dashboard/orders/VendorOrderView";
 import Protect from "./Protect";
+import ForgotPassword from "./pages/password/ForgotPassword";
+import ResetPassword from "./pages/password/ResetPassword";
+import CustomerView from "./pages/admin_dashboard/Customers/CustomerView";
 
 export default function AppRoute() {
   return (
@@ -33,11 +36,19 @@ export default function AppRoute() {
             <Route path="/register" element={<Registration />} />
           </Route>
 
+          {/* <Route element={<NoLayout />}>
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+          </Route> */}
+
           <Route element={<Protect element={Layout} />}>
             <Route path="/admin-dashboard">
               <Route index element={<AdminDashboard />} />
               <Route path="customer-mgmt">
-                <Route path="customers" element={<Customers />} />
+                <Route path="customers">
+                  <Route index element={<Customers />} />
+                  <Route path="customer-view" element={<CustomerView />} />
+                </Route>
                 <Route path="customer-reviews" element={<Product />} />
               </Route>
               <Route path="vendor-mgmt">

@@ -5,3 +5,13 @@
     width: 100%;
     height: 50vh;
 }
+
+.back-btn{
+    background: transparent !important;
+    border: 2px solid #542b2b;
+    color: #542b2b !important;
+}
+.back-btn:hover{
+    background:  #542b2b !important;
+    color: white !important;
+}

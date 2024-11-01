@@ -20,10 +20,11 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import PerformanceChart from "@/pages/seller_Dashboard/seller-dashboard/PerformanceChart";
-import "../../style.css"
+import "../../style.css";
 import { FaArrowLeft } from "react-icons/fa";
+import PurchaseChat from "./PurchaseChart"
 
-const VendorView = () => {
+const CustomerView = () => {
   const location = useLocation();
   const { customer } = location.state || {}; // Access customer details from the state
 
@@ -45,7 +46,7 @@ const VendorView = () => {
     toggleModal();
   };
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const goBack = () => {
     navigate(-1);
@@ -70,6 +71,7 @@ const VendorView = () => {
               <CardTitle>Vendors Details</CardTitle>
             </div>
           </CardHeader>
+          {/* {JSON.stringify(customer)} */}
           {customer ? (
             <CardContent>
               <Table>
@@ -80,7 +82,17 @@ const VendorView = () => {
                 </TableRow>
                 <TableRow>
                   <TableHead>Name</TableHead>
-                  <TableCell>{customer ? customer.username : "N/A"}</TableCell>
+                  <TableCell>
+                    {customer
+                      ? customer.firstname +
+                        " " +
+                        customer.lastname +
+                        " " +
+                        "(" +
+                        customer.username +
+                        ")"
+                      : "N/A"}
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableHead>Email</TableHead>
@@ -88,24 +100,14 @@ const VendorView = () => {
                 </TableRow>
                 <TableRow>
                   <TableHead>Phone</TableHead>
-                  <TableCell>
-                    {customer ? customer.shopcontact : "N/A"}
-                  </TableCell>
+                  <TableCell>{customer ? customer.phone : "N/A"}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableHead className="hidden md:table-cell">
-                    Shop Name
+                    Address
                   </TableHead>
                   <TableCell className="hidden md:table-cell">
-                    {customer ? customer.shopname : "N/A"}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableHead className="hidden md:table-cell">
-                    Shop Address
-                  </TableHead>
-                  <TableCell className="hidden md:table-cell">
-                    {customer ? customer.shopaddress : "N/A"}
+                    {customer ? customer.address : "N/A"}
                   </TableCell>
                 </TableRow>
               </Table>
@@ -113,9 +115,7 @@ const VendorView = () => {
                 <div className="flex-items-center justify-between py-4">
                   <CardTitle>Performance</CardTitle>
                 </div>
-                <PerformanceChart
-                  title="Sales performance"
-                />
+                <PurchaseChat title="Purchase Performance" />
               </CardHeader>
               <div
                 style={{
@@ -126,8 +126,8 @@ const VendorView = () => {
                 }}
                 className="my-4"
               >
-                <Button onClick={handleWarnClick}>Warn</Button>
-                <Button>Suspend</Button>
+                <Button onClick={handleWarnClick}>Feedback</Button>
+                {/* <Button>Suspend</Button> */}
               </div>
             </CardContent>
           ) : (
@@ -162,4 +162,4 @@ const VendorView = () => {
   );
 };
 
-export default VendorView;
+export default CustomerView;

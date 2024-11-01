@@ -98,7 +98,7 @@ export default function ProductsPage() {
 
   const getProduct = () => {
     _get(
-      `api/get-products?shop_id=${parseInt(userDetails)}`,
+      `api/get-products?shop_id=${userDetails}`,
       (resp) => {
         setProducts(resp.result[0]);
         setLoading(false);
@@ -179,24 +179,23 @@ export default function ProductsPage() {
       }));
     }
 
-    // Check if the category and subcategory meet the conditions to show the size input
     if (
       id === "product_subcategory" &&
-      value === "Yard" &&
+      (value === "Yard" || value === "Materials" || value === "Shadda" || value === "Men_Lace") &&
       newProduct.product_category === "Fabric"
     ) {
-      setShowSizeInput(true); // Show the size input if category is Fabric and subcategory is Yard
+      setShowSizeInput(true); 
     } else if (id === "product_category" && value !== "Fabric") {
-      setShowSizeInput(false); // Hide the size input if the category is not Fabric
+      setShowSizeInput(false); 
     }
 
-    // Toggle between custom size input and predefined sizes based on "Others" selection
+    
     if (id === "product_size" && value === "Others") {
-      setShowSizeInputchange(true); // Show the text input for custom size
-    } else if (id === "product_subcategory" && value !== "Yard") {
-      setShowSizeInput(false); // Hide the size input if the category is not Fabric
+      setShowSizeInputchange(true); 
+    } else if (id === "product_subcategory" && (value !== "Yard" && value !== "Materials" && value !== "Shadda" && value !== "Men_Lace")) {
+      setShowSizeInput(false); 
     } else {
-      setShowSizeInputchange(false); // Hide the custom input field if another size is selected
+      setShowSizeInputchange(false); 
     }
   };
 
@@ -274,7 +273,7 @@ export default function ProductsPage() {
 
     Object.keys(newProduct).forEach((i) => formData.append(i, newProduct[i]));
     image_urls.forEach((image) => formData.append("images", image));
-    formData.append("shop_id", parseInt(userDetails));
+    formData.append("shop_id", userDetails.slice(1, -1));
 
     fetch(`${server_url}/api/products`, {
       method: "POST",
@@ -828,7 +827,8 @@ export default function ProductsPage() {
                       <CardDescription>
                         Manage your products and view their sales performance.
                       </CardDescription>
-                    </CardHeader>
+                      </CardHeader>
+                      {/* {JSON.stringify(userDetails.slice(1, -1))} */}
                     <CardContent>
                       <Table>
                         <TableHeader>

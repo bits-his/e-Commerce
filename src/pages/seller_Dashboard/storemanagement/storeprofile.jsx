@@ -91,7 +91,7 @@ const Storeprofile = () => {
   const getProduct = () => {
     setLoading(true)
     _get(
-      `api/get-products?shop_id=${parseInt(userDetails)}`,
+      `api/get-products?shop_id=${userDetails}`,
       (resp) => {
         setProducts(resp.result[0]);
         setLoading(false);
@@ -169,14 +169,14 @@ const Storeprofile = () => {
             </Col>
             <Col>
               <h4 className="mb-0">Address</h4>
-              <small className="text-muted">{profile.shopStreet}</small> <br />
+              <small className="text-muted">{user.shopaddress}</small> <br />
               <small className="text-muted">{profile.shopCity}</small>
             </Col>
           </Row>
         </Card.Body>
       </Card>
 
-      <div className="d-flex justify-content-between align-items-center mt-4">
+      <div className="d-flex justify-content-between align-items-center mt-4 mb-3">
         <h5 className="fw-bold" style={{fontSize: '20px'}}>Products</h5>
         <div className="relative ml-auto flex-1 md:grow-0 hidden md:inline">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -244,7 +244,7 @@ const Storeprofile = () => {
                         />
                       ))}
                     </div>
-                    <p className="mt-1 mb-0 small text-muted">10 reviews</p>
+                    <p className="mt-1 mb-0 small text-muted">{item.product_quantity}</p>
                   </div>
                   <p className="mt-2 pb-3 ps-2 fw-medium text-muted small">
                     ₦{separator(item.product_price)}

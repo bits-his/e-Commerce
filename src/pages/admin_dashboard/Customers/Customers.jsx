@@ -84,6 +84,10 @@ export default function Pending_customer(args) {
 
   const navigate = useNavigate();
 
+  const handleViewclick = (customer) => {
+    navigate("customer-view", { state: { customer } });
+  };
+
   return (
     <>
       <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[92vh]">
@@ -135,7 +139,7 @@ export default function Pending_customer(args) {
                   filteredCustomers.map((customer, index) => (
                     <TableRow key={customer.id}>
                       <TableCell>
-                        <div>{index + 1}</div>
+                        <div>{customer.id}</div>
                       </TableCell>
                       <TableCell>
                         <div className="font-medium">{customer.username}</div>
@@ -157,8 +161,12 @@ export default function Pending_customer(args) {
                               <EllipsisVertical className="h-4 w-4" />
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                              <DropdownMenuItem className="mx-auto">
-                                <Eye className="me-2"/>View
+                              <DropdownMenuItem
+                                className="mx-auto"
+                                onClick={() => handleViewclick(customer)}
+                              >
+                                <Eye className="me-2" />
+                                View
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>

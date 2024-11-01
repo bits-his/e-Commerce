@@ -48,13 +48,13 @@ const TotalOrders = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const userDetails = localStorage.getItem("@@toke_$$_45598");
+  const userDetails = localStorage.getItem("@@toke_$$_45598").replace(/"/g, "");
 
   // Fetch all orders
   const getAllOrders = () => {
     setLoading(true);
     _get(
-      `api/gerordersbyshopid?shop_id=${parseInt(userDetails)}`,
+      `api/gerordersbyshopid?shop_id=${userDetails}`,
       (resp) => {
         setOrders(resp.results);
         setLoading(false);
@@ -139,6 +139,8 @@ const TotalOrders = () => {
         </Col>
       </div>
 
+      {JSON.stringify(userDetails)}
+
       <Tabs defaultValue="all">
         <div className="flex items-center">
           <TabsList>
@@ -170,7 +172,7 @@ const TotalOrders = () => {
                 {/* {JSON.stringify(orders)} */}
                 <TableHeader>
                   <TableRow>
-                    <TableHead>S/N</TableHead>
+                    <TableHead>ID</TableHead>
                     <TableHead>Name</TableHead>
                     <TableHead className="hidden md:table-cell text-center">
                       Order date

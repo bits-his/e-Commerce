@@ -34,14 +34,14 @@ const VendorOrderView = () => {
   const [error, setError] = useState(null);
   const [fetching, setFetching] = useState(false);
 
-     const location = useLocation();
+  const location = useLocation();
   const order = location.state?.order;
 
   const getAllOrders = () => {
     setFetching(true);
     _get(
       `api/gerordersbycustomerid?custormer_id=${order.customer_id}`,
-      (resp) => { 
+      (resp) => {
         setOrders(resp.results);
         console.log(orders);
         setFetching(false);
@@ -110,9 +110,9 @@ const VendorOrderView = () => {
       order.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-   const goBack = () => {
+  const goBack = () => {
     navigate(-1);
   };
 
@@ -124,13 +124,13 @@ const VendorOrderView = () => {
     <div>
       <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[92vh]">
         <div>
-        <Button
-          onClick={goBack}
+          <Button
+            onClick={goBack}
             className="mb-3 d-flex align-items-center"
-            style={{backgroundColor: 'rgba(255,255,255'}}
-        >
-          <FaArrowLeft className="me-2" />
-          Back
+            style={{ backgroundColor: "rgba(255,255,255" }}
+          >
+            <FaArrowLeft className="me-2" />
+            Back
           </Button>
         </div>
         <Card>
@@ -200,15 +200,15 @@ const VendorOrderView = () => {
                     filteredOrders.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>
-                        <img
-                          src={order.order_image}
-                          alt={order.product}
-                          className="aspect-square rounded-md object-cover"
-                          width="64"
-                          height="64"
-                        />
-                        {/* {orders?.customer_id} */}
-                      </TableCell>
+                          <img
+                            src={order.order_image}
+                            alt={order.product}
+                            className="aspect-square rounded-md object-cover"
+                            width="64"
+                            height="64"
+                          />
+                          {/* {orders?.customer_id} */}
+                        </TableCell>
                         <TableCell>{order.product}</TableCell>
                         <TableCell>{order.quantity}</TableCell>
                         <TableCell>{order.createdAt?.slice(0, 10)}</TableCell>
