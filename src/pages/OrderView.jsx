@@ -39,7 +39,7 @@ const OrderView = () => {
   const getAllOrders = () => {
     setFetching(true);
     _get(
-      `api/gerordersbycustomerid?custormer_id=${order.customer_id}`,
+      `api/gerordersbycustomerid?customer_id=${order.customer_id}`,
       (resp) => {
         setOrders(resp.results);
         console.log(orders);

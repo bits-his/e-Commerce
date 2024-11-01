@@ -139,8 +139,6 @@ const TotalOrders = () => {
         </Col>
       </div>
 
-      {JSON.stringify(userDetails)}
-
       <Tabs defaultValue="all">
         <div className="flex items-center">
           <TabsList>
