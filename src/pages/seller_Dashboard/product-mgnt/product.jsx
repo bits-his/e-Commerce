@@ -373,6 +373,7 @@ export default function ProductsPage() {
     ),
       [products];
   });
+  
 
   return (
     <>

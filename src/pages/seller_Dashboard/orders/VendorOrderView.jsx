@@ -126,8 +126,8 @@ const VendorOrderView = () => {
         <div>
         <Button
           onClick={goBack}
-            className="mb-3 d-flex align-items-center"
-            style={{backgroundColor: 'rgba(255,255,255'}}
+            className=" d-flex align-items-center back-btn"
+            style={{ backgroundColor: "#542b2b" }}
         >
           <FaArrowLeft className="me-2" />
           Back

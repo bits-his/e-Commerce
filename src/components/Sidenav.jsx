@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { Spinner } from "reactstrap";
 import { useDispatch } from "react-redux";
 import { logout } from "@/redux/action/authAction";
+import kasuwalogo from '../assets/KASUWAMALL cut.png'
 
 const Sidebar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -47,19 +48,27 @@ const Sidebar = () => {
   return (
     <div className="sidenav-container hidden border-r md:block" style={{backgroundColor: ""}}>
       <div className="flex h-full max-h-screen flex-col gap-2">
-        <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
+        <div className="flex h-15 items-center px-4 lg:h-[70px] lg:px-6">
           <Link
-            className="flex items-center gap-2 text-white justify-center w-100 font-semibold" 
+            className="d-flex justify-content-center align-items-center text-white pt-2 px-5 font-semibold" 
             to={
               pathname.startsWith("/admin-dashboard")
                 ? "/admin-dashboard"
                 : "/seller-dashboard"
             }
+            style={{width: '100%', height:"70px"}}
           >
             {/* <Package2 className="h-8 w-8" /> */}
-            <span style={{fontWeight: "800"}} className="text-lg">KASUWA MALL</span>
+            <img src={kasuwalogo} alt="Kasuwa logo" style={{
+              height: "100%",
+              width: "100%",
+              // borderRadius: "50%",
+              // objectFit: "cover"
+            }}/>
+            {/* <span style={{fontWeight: "800"}} className="text-lg">KASUWA MALL</span> */}
           </Link>
         </div>
+        <hr />
 
         <div className="flex-1 mt-3">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
