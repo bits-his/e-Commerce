@@ -16,7 +16,7 @@ import Inventory from "./pages/admin_dashboard/Inventory";
 import TotalOrders from "./pages/seller_Dashboard/orders/TotalOrders";
 import Pending_vendor from "./pages/admin_dashboard/vendors/Pending_vendors";
 import Vendors from "./pages/admin_dashboard/vendors/Vendors";
-import Category from "./pages/seller_Dashboard/product-mgnt/Category";
+import Category from "./pages/admin_dashboard/Category/Category";
 import AllOrders from "./pages/admin_dashboard/AllOrders";
 import VendorView from "./pages/admin_dashboard/vendors/VendorView";
 import OrderView from "./pages/OrderView";
@@ -25,6 +25,7 @@ import Protect from "./Protect";
 import ForgotPassword from "./pages/password/ForgotPassword";
 import ResetPassword from "./pages/password/ResetPassword";
 import CustomerView from "./pages/admin_dashboard/Customers/CustomerView";
+import Addnewcategory from "./pages/admin_dashboard/Category/Addnewcategory";
 
 export default function AppRoute() {
   return (
@@ -62,6 +63,11 @@ export default function AppRoute() {
                 <Route index element={<AllOrders />} />
                 <Route path="orders-view" element={<OrderView />} />
               </Route>
+              <Route path="category">
+                <Route index element={<Category />} />
+                <Route path="add_category" element={<Addnewcategory />} />
+                <Route path="edit_category" element={<Addnewcategory />} />
+              </Route>
               <Route path="reports">
                 <Route path="sales" element={<Product />} />
                 <Route path="product-performance" element={<Product />} />
@@ -90,11 +96,6 @@ export default function AppRoute() {
                   <Route index element={<Productmgnt />} />
                   <Route path="addproduct" element={<AddProductPage />} />
                 </Route>
-              </Route>
-
-              <Route path="category">
-                <Route index element={<Category />} />
-                <Route path="sub-category" element={<AddProductPage />} />
               </Route>
 
               <Route path="storeprofile" element={<Storeprofile />} />

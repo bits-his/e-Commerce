@@ -135,6 +135,20 @@ const Sidebar = () => {
                   <ShoppingCart className="h-4 w-4" />
                   Orders
                 </NavLink>
+                {/* adding subcategory */}
+
+                <NavLink
+                  className={`flex items-center gap-3 rounded-lg text-base px-3 py-2 transition-all mt-2 ${
+                    pathname === "/admin-dashboard/category"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
+                  }`}
+                  to={"/admin-dashboard/category"}
+                >
+                  <NotebookPen className="h-4 w-4" />
+                  Category
+                </NavLink>
+
                 <DropdownBtn
                   title={
                     <>
@@ -204,19 +218,7 @@ const Sidebar = () => {
                   isActive={activeDropdown === "Product Management"}
                   open={pathname.includes("/product-mgmt")}
                 />
-                {/* adding subcategory */}
-
-                <NavLink
-                  className={`flex items-center gap-3 rounded-lg text-base px-3 py-2 transition-all mt-2 ${
-                    pathname === "/seller-dashboard/category"
-                      ? "navlink-items-2 text-dark"
-                      : "navlink-items"
-                  }`}
-                  to={"/seller-dashboard/category"}
-                >
-                  <NotebookPen className="h-4 w-4" />
-                  Category
-                </NavLink>
+                
 
                 {/* categories adding button */}
                 <NavLink

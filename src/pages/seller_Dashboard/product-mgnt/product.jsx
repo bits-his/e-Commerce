@@ -181,21 +181,29 @@ export default function ProductsPage() {
 
     if (
       id === "product_subcategory" &&
-      (value === "Yard" || value === "Materials" || value === "Shadda" || value === "Men_Lace") &&
+      (value === "Yard" ||
+        value === "Materials" ||
+        value === "Shadda" ||
+        value === "Men_Lace") &&
       newProduct.product_category === "Fabric"
     ) {
-      setShowSizeInput(true); 
+      setShowSizeInput(true);
     } else if (id === "product_category" && value !== "Fabric") {
-      setShowSizeInput(false); 
+      setShowSizeInput(false);
     }
 
-    
     if (id === "product_size" && value === "Others") {
-      setShowSizeInputchange(true); 
-    } else if (id === "product_subcategory" && (value !== "Yard" && value !== "Materials" && value !== "Shadda" && value !== "Men_Lace")) {
-      setShowSizeInput(false); 
+      setShowSizeInputchange(true);
+    } else if (
+      id === "product_subcategory" &&
+      value !== "Yard" &&
+      value !== "Materials" &&
+      value !== "Shadda" &&
+      value !== "Men_Lace"
+    ) {
+      setShowSizeInput(false);
     } else {
-      setShowSizeInputchange(false); 
+      setShowSizeInputchange(false);
     }
   };
 
@@ -216,21 +224,21 @@ export default function ProductsPage() {
   //   );
   // };
   const removeImage = (indexToRemove, isExisting) => {
-  if (isExisting) {
-    // Handle removal of existing images in edit mode
-    setCurrentProduct((prevProduct) => ({
-      ...prevProduct,
-      image_urls: prevProduct.image_urls.filter(
-        (_, idx) => idx !== indexToRemove
-      ),
-    }));
-  } else {
-    // Handle removal of newly added images
-    setImage_urls((prevImages) =>
-      prevImages.filter((_, idx) => idx !== indexToRemove)
-    );
-  }
-};
+    if (isExisting) {
+      // Handle removal of existing images in edit mode
+      setCurrentProduct((prevProduct) => ({
+        ...prevProduct,
+        image_urls: prevProduct.image_urls.filter(
+          (_, idx) => idx !== indexToRemove
+        ),
+      }));
+    } else {
+      // Handle removal of newly added images
+      setImage_urls((prevImages) =>
+        prevImages.filter((_, idx) => idx !== indexToRemove)
+      );
+    }
+  };
 
   const handleAddProduct = (e) => {
     e.preventDefault();
@@ -373,7 +381,6 @@ export default function ProductsPage() {
     ),
       [products];
   });
-  
 
   return (
     <>
@@ -494,8 +501,11 @@ export default function ProductsPage() {
                               </SelectTrigger>
                               <SelectContent>
                                 {categories.map((category, idx) => (
-                                  <SelectItem key={idx} value={category.name}>
-                                    {category.name}
+                                  <SelectItem
+                                    key={idx}
+                                    value={category.ctgry_name}
+                                  >
+                                    {category.ctgry_name}
                                   </SelectItem>
                                 ))}
                               </SelectContent>
@@ -525,9 +535,9 @@ export default function ProductsPage() {
                                 {subCategories.map((subCategory, idx) => (
                                   <SelectItem
                                     key={idx}
-                                    value={subCategory.type_name}
+                                    value={subCategory.sub_ctgry_name}
                                   >
-                                    {subCategory.type_name}
+                                    {subCategory.sub_ctgry_name}
                                   </SelectItem>
                                 ))}
                               </SelectContent>
@@ -621,11 +631,7 @@ export default function ProductsPage() {
                                   <span className="text-destructive">* </span>
                                   <span>
                                     {editMode
-                                      ? (
-                                          separator(
-                                            currentProduct?.product_price
-                                          )
-                                        )
+                                      ? separator(currentProduct?.product_price)
                                       : separator(newProduct.product_price)}
                                   </span>
                                 </Label>
@@ -634,9 +640,7 @@ export default function ProductsPage() {
                                   type="number"
                                   value={
                                     editMode
-                                      ? (
-                                          currentProduct?.product_price
-                                        )
+                                      ? currentProduct?.product_price
                                       : newProduct.product_price
                                   }
                                   onChange={handleInputChange}
@@ -828,8 +832,8 @@ export default function ProductsPage() {
                       <CardDescription>
                         Manage your products and view their sales performance.
                       </CardDescription>
-                      </CardHeader>
-                      {/* {JSON.stringify(userDetails.slice(1, -1))} */}
+                    </CardHeader>
+                    {/* {JSON.stringify(userDetails.slice(1, -1))} */}
                     <CardContent>
                       <Table>
                         <TableHeader>
