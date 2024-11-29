@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Eye, EyeOff } from "lucide-react";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -36,14 +37,15 @@ function Login() {
 
   return (
     <>
-      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 min-h-[100vh] background-icon">
-        <Card className="mx-auto min-w-[20rem]">
+      <main className="flex flex-1 flex-col justify-center items-center gap-4 py-4 md:gap-8 md:p-8 min-h-[100vh] background-icon pb-5">
+        <Card className="mx-auto min-w-[400px] pb-5">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Login</CardTitle>
           </CardHeader>
+          <hr style={{marginTop:"-1rem",padding:'10px'}} />
           <CardContent>
-            <div className="grid gap-4">
-              <div className="grid gap-2">
+            <div className="">
+              <div className="">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -54,7 +56,7 @@ function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="grid gap-2">
+              <div className="mt-2">
                 <Label htmlFor="password">Password</Label>
                 <div className="mt-2 flex rounded-md shadow-sm">
                   <div className="relative flex flex-grow items-stretch focus-within:z-10">
@@ -69,17 +71,17 @@ function Login() {
                   <button
                     type="button"
                     onClick={togglePasswordVisibility}
-                    className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                   >
                     {passwordVisible ? (
-                      <i className="fas fa-eye h-5 w-5 text-gray-400"></i>
-                    ) : (
-                      <i className="fas fa-eye-slash h-5 w-5 text-gray-400"></i>
+                      <Eye />
+                      ) : (
+                        <EyeOff />
                     )}
                   </button>
                 </div>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center mt-2 mb-3 ">
                 <Link to="/" className="ml-auto inline-block text-sm underline">
                   Forgot your password?
                 </Link>
