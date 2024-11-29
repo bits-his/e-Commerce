@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { _post, globalColor } from "../utils/Helper";
+import { Eye, EyeOff } from "lucide-react";
 
 function Registration() {
   const [formData, setFormData] = useState({
@@ -180,53 +181,106 @@ function Registration() {
         </TabsList>
         <TabsContent value="vendor">
           <Card>
-            <CardHeader>
-              <CardTitle className="text-xl text-center">
-                Shop owners details
-              </CardTitle>
-              <CardDescription>
-                {/* <div className="space-y-1">
-                      <h4 className="text-sm text-center font-medium leading-none">
-                        Shop owners details
-                      </h4>
-                    </div> */}
-              </CardDescription>
-            </CardHeader>
-            <hr
-              className="border-2"
-              style={{ marginTop: "-1rem", marginBottom: "-1rem" }}
-            />
-            <CardContent className="space-y-2 pt-2">
-              <div className="grid gap-4 pt-3">
+            <CardContent className="space-y-2 pt-0">
+              <div className="grid gap-4 ">
                 {step === 1 && (
                   <div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="grid gap-2">
-                        <Label htmlFor="firstname">First name</Label>
-                        <Input
-                          id="firstname"
-                          name="firstname"
-                          // placeholder="Abubakar"
-                          value={formData.firstname}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-
-                      <div className="grid gap-2">
-                        <Label htmlFor="lastname">Last name</Label>
-                        <Input
-                          id="lastname"
-                          name="lastname"
-                          // placeholder="Abdulmalik"
-                          value={formData.lastname}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
+                    <CardHeader>
+                      <CardTitle className="text-xl text-center">
+                        Shop details
+                      </CardTitle>
+                      <CardDescription></CardDescription>
+                    </CardHeader>
+                    <hr className="p-2" style={{ marginTop: "-1rem" }} />
+                    <div className="">
+                      <Label htmlFor="shopname">Shop name</Label>
+                      <Input
+                        id="shopname"
+                        name="shopname"
+                        placeholder="Shop name"
+                        value={formData.shopname}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
-
-                    <div className="grid gap-2">
+                    <div className="">
+                      <Label htmlFor="shopcontact">Shop contact</Label>
+                      <Input
+                        id="shopcontact"
+                        name="shopcontact"
+                        type="number"
+                        placeholder="07012345678"
+                        value={formData.shopcontact}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="">
+                      <Label htmlFor="shopaddress">Shop address</Label>
+                      <Textarea
+                        id="shopaddress"
+                        name="shopaddress"
+                        placeholder="Shop address"
+                        value={formData.shopaddress}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="">
+                      <Label htmlFor="email">Email</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="mide@example.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex justify-content-center mt-3">
+                      <button
+                        type="submit"
+                        style={{ backgroundColor: globalColor.grpcolor1 }}
+                        onClick={handleNext}
+                        className="p-2 px-4 border-0 rounded text-light w-50"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {step === 2 && (
+                  <div>
+                    <CardHeader>
+                      <CardTitle className="text-xl text-center">
+                        Shop owner details
+                      </CardTitle>
+                      <CardDescription></CardDescription>
+                    </CardHeader>
+                    <hr className="p-2" style={{ marginTop: "-1rem" }} />
+                    <div className="">
+                      <Label htmlFor="firstname">First name</Label>
+                      <Input
+                        id="firstname"
+                        name="firstname"
+                        // placeholder="Abubakar"
+                        value={formData.firstname}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="">
+                      <Label htmlFor="lastname">Last name</Label>
+                      <Input
+                        id="lastname"
+                        name="lastname"
+                        // placeholder="Abdulmalik"
+                        value={formData.lastname}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="">
                       <Label htmlFor="username">Username</Label>
                       <Input
                         id="username"
@@ -237,10 +291,8 @@ function Registration() {
                         required
                       />
                     </div>
-
-                    <div className="grid gap-2">
+                    <div className="">
                       <Label htmlFor="password">Password</Label>
-
                       <div className="mt-2 flex rounded-md shadow-sm">
                         <div className="relative flex flex-grow items-stretch focus-within:z-10">
                           <Input
@@ -256,18 +308,18 @@ function Registration() {
                         <button
                           type="button"
                           onClick={togglePasswordVisibility}
-                          className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 d-flex justify-content-center align-items-center"
                         >
                           {passwordVisible ? (
-                            <i className="fas fa-eye h-5 w-5 text-gray-400"></i>
+                            <Eye />
                           ) : (
-                            <i className="fas fa-eye-slash h-5 w-5 text-gray-400"></i>
+                            <EyeOff />
                           )}
                         </button>
                       </div>
                     </div>
 
-                    <div className="grid gap-2">
+                    <div className="">
                       <Label htmlFor="confirmPassword">Confirm Password</Label>
 
                       <div className="mt-2 flex rounded-md shadow-sm">
@@ -285,90 +337,42 @@ function Registration() {
                         <button
                           type="button"
                           onClick={togglePasswordVisibility}
-                          className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 d-flex justify-content-center align-items-center"
                         >
                           {passwordVisible ? (
-                            <i className="fas fa-eye h-5 w-5 text-gray-400"></i>
+                            <Eye />
                           ) : (
-                            <i className="fas fa-eye-slash h-5 w-5 text-gray-400"></i>
+                            <EyeOff />
                           )}
                         </button>
                       </div>
                     </div>
-                <Button onClick={handleNext}>Next</Button>
-
+                    <div className="d-flex justify-content-between align-items-center p-2 pt-3">
+                      <button
+                        type="submit"
+                        style={{ backgroundColor: globalColor.grpcolor1 }}
+                        className="p-2 px-4 btn border-0 rounded text-light w-40"
+                        onClick={handlePrevious}
+                      >
+                        Back
+                      </button>
+                      <button
+                        type="submit"
+                        className="w-40 btn p-2"
+                        onClick={handleSubmit}
+                        disabled={Loading}
+                        style={{ backgroundColor: "#a52a2a" }}
+                      >
+                        {Loading ? (
+                          <Spinner className="h-5 w-5" />
+                        ) : (
+                          <b className="text-white">Register</b>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 )}
-                {step === 2 && (
-                  <div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="shopname">Shop name</Label>
-                      <Input
-                        id="shopname"
-                        name="shopname"
-                        placeholder="Shop name"
-                        value={formData.shopname}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="shopaddress">Shop address</Label>
-                      <Textarea
-                        id="shopaddress"
-                        name="shopaddress"
-                        placeholder="Shop address"
-                        value={formData.shopaddress}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
 
-                    <div className="grid gap-2">
-                      <Label htmlFor="shopcontact">Shop contact</Label>
-                      <div className="relative mt-2 rounded-md shadow-sm">
-                        <input
-                          id="shopcontact"
-                          name="shopcontact"
-                          type="number"
-                          placeholder="07012345678"
-                          value={formData.shopcontact}
-                          onChange={handleChange}
-                          className="block w-full rounded-md border-0 py-1.5 pl-4 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid gap-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        name="email"
-                        placeholder="mide@example.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                <Button onClick={handlePrevious}>Back</Button>
-
-
-                    <button
-                      type="submit"
-                      className="w-full btn"
-                      onClick={handleSubmit}
-                      disabled={Loading}
-                      style={{ backgroundColor: "#a52a2a" }}
-                    >
-                      {Loading ? (
-                        <Spinner className="h-5 w-5" />
-                      ) : (
-                        <b className="text-white">Register</b>
-                      )}
-                    </button>
-                  </div>
-                )}
                 {/* <Button
                   variant="outline"
                   className="w-full"
@@ -396,7 +400,7 @@ function Registration() {
             <CardContent className="space-y-2">
               <div className="grid gap-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-2">
+                  <div className="">
                     <Label htmlFor="firstname">First name</Label>
                     <Input
                       id="firstname"
@@ -407,7 +411,7 @@ function Registration() {
                       required
                     />
                   </div>
-                  <div className="grid gap-2">
+                  <div className="">
                     <Label htmlFor="lastname">Last name</Label>
                     <Input
                       id="lastname"
@@ -420,7 +424,7 @@ function Registration() {
                   </div>
                 </div>
 
-                <div className="grid gap-2">
+                <div className="">
                   <Label htmlFor="username">Username</Label>
                   <Input
                     id="username"
@@ -432,7 +436,7 @@ function Registration() {
                   />
                 </div>
 
-                <div className="grid gap-2">
+                <div className="">
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
@@ -445,7 +449,7 @@ function Registration() {
                   />
                 </div>
 
-                <div className="grid gap-2">
+                <div className="">
                   <Label htmlFor="password">Password</Label>
 
                   <div className="mt-2 flex rounded-md shadow-sm">
@@ -474,7 +478,7 @@ function Registration() {
                   </div>
                 </div>
 
-                <div className="grid gap-2">
+                <div className="">
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
 
                   <div className="mt-2 flex rounded-md shadow-sm">

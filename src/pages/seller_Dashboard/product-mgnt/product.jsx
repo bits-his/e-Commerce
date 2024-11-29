@@ -60,7 +60,7 @@ export default function ProductsPage() {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [image_urls, setImage_urls] = useState([]);
+  const [prod_images, setprod_images] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [available, setAvailable] = useState([]);
@@ -73,32 +73,35 @@ export default function ProductsPage() {
   // });
   const [showSizeInput, setShowSizeInput] = useState(false);
   const [showSizeInputchange, setShowSizeInputchange] = useState(false);
+  const [query_type, setQuery_type] = useState();
   // const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const initialProductState = {
-    product_name: "",
-    product_description: "",
-    product_category: "",
-    product_subcategory: "",
-    product_price: null,
-    product_quantity: null,
-    product_status: "Available",
-    image_urls: [],
-    product_size: "",
+    prod_name: "",
+    prod_des: "",
+    category_id: "",// product_category: "", 
+    sub_ctgry_id: "",// product_subcategory: "",
+    prod_price: null,
+    prod_qty: null,
+    prod_status: "Available",
+    prod_images: [],//prod_images
+    prod_size: "",
+    query_type: "insert_product",
+    // prod_images : prod_images,
   };
 
   const [newProduct, setNewProduct] = useState(initialProductState);
 
   const resetForm = () => {
     setNewProduct(initialProductState);
-    setImage_urls([]);
+    setprod_images([]);
   };
 
   const getProduct = () => {
     _get(
-      `api/get-products?shop_id=${userDetails}`,
+      `api/get-products?shop_id="${userDetails.slice(1, -1)}"`,
       (resp) => {
         setProducts(resp.result[0]);
         setLoading(false);
@@ -131,9 +134,9 @@ export default function ProductsPage() {
   }, []);
 
   const getSubCategories = () => {
-    const category = newProduct.product_category;
+    const category = newProduct.category_id;
     _get(
-      `api/categories/types?category=${category}`,
+      `api/subcategories?category=${category}`,
       (resp) => {
         setSubCategories(resp.results[0]);
       },
@@ -144,10 +147,10 @@ export default function ProductsPage() {
   };
 
   useEffect(() => {
-    if (newProduct.product_category) {
+    if (newProduct.category_id) {
       getSubCategories();
     }
-  }, [newProduct.product_category]);
+  }, [newProduct.category_id]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -155,12 +158,12 @@ export default function ProductsPage() {
     if (editMode) {
       setCurrentProduct((prevData) => ({
         ...prevData,
-        [id]: value, // Updates the field by its ID (e.g., product_size)
+        [id]: value, 
       }));
     } else {
       setNewProduct((prevData) => ({
         ...prevData,
-        [id]: value, // Updates the field by its ID (e.g., product_size)
+        [id]: value, 
       }));
     }
   };
@@ -178,24 +181,29 @@ export default function ProductsPage() {
         [id]: value,
       }));
     }
-
+// alert(categories.ctgry_name)
     if (
-      id === "product_subcategory" &&
+      id === "sub_ctgry_id" &&
       (value === "Yard" ||
         value === "Materials" ||
         value === "Shadda" ||
         value === "Men_Lace") &&
-      newProduct.product_category === "Fabric"
+      newProduct.ctgry_name === "Fabric"
     ) {
       setShowSizeInput(true);
-    } else if (id === "product_category" && value !== "Fabric") {
+    } else if (
+      value !== "Yard" &&
+      value !== "Materials" &&
+      value !== "Shadda" &&
+      value !== "Men_Lace"
+    ) {
       setShowSizeInput(false);
     }
 
-    if (id === "product_size" && value === "Others") {
+    if (id === "prod_size" && value === "Others") {
       setShowSizeInputchange(true);
     } else if (
-      id === "product_subcategory" &&
+      id === "sub_ctgry_id" &&
       value !== "Yard" &&
       value !== "Materials" &&
       value !== "Shadda" &&
@@ -210,16 +218,16 @@ export default function ProductsPage() {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    if (files.length + image_urls.length > 20) {
+    if (files.length + prod_images.length > 20) {
       toast.error("You can only upload up to 20 images.");
       return;
     }
 
-    setImage_urls((prevImages) => [...prevImages, ...files]);
+    setprod_images((prevImages) => [...prevImages, ...files]);
   };
 
   // const removeImage = (indexToRemove) => {
-  //   setImage_urls((prevImages) =>
+  //   setprod_images((prevImages) =>
   //     prevImages.filter((_, idx) => idx !== indexToRemove)
   //   );
   // };
@@ -228,13 +236,13 @@ export default function ProductsPage() {
       // Handle removal of existing images in edit mode
       setCurrentProduct((prevProduct) => ({
         ...prevProduct,
-        image_urls: prevProduct.image_urls.filter(
+        prod_images: prevProduct.prod_images.filter(
           (_, idx) => idx !== indexToRemove
         ),
       }));
     } else {
       // Handle removal of newly added images
-      setImage_urls((prevImages) =>
+      setprod_images((prevImages) =>
         prevImages.filter((_, idx) => idx !== indexToRemove)
       );
     }
@@ -244,46 +252,46 @@ export default function ProductsPage() {
     e.preventDefault();
     // Form validation start here
     if (
-      !newProduct.product_name ||
-      newProduct.product_name.trim() === "" ||
-      !newProduct.product_description ||
-      newProduct.product_description.trim() === ""
+      !newProduct.prod_name ||
+      newProduct.prod_name.trim() === "" ||
+      !newProduct.prod_des ||
+      newProduct.prod_des.trim() === ""
     ) {
       toast.error("Please fill in the product details.");
       return;
     }
 
     if (
-      !newProduct.product_category ||
-      newProduct.product_category.trim() === ""
+      !newProduct.category_id ||
+      newProduct.category_id.trim() === ""
     ) {
       toast.error("Please select the product category.");
       return;
     }
     if (
-      !newProduct.product_quantity ||
-      newProduct.product_quantity.trim() === ""
+      !newProduct.prod_qty ||
+      newProduct.prod_qty.trim() === ""
     ) {
       toast.error("Please Indicate the number of items available in stock.");
       return;
     }
-    if (!newProduct.product_price || newProduct.product_price.trim() === "") {
+    if (!newProduct.prod_price || newProduct.prod_price.trim() === "") {
       toast.error("Please Indicate the price of the item.");
       return;
     }
-    if (!newProduct.product_status || newProduct.product_status.trim() === "") {
+    if (!newProduct.prod_status || newProduct.prod_status.trim() === "") {
       toast.error("Please Indicate status of the product.");
       return;
     }
-
+setQuery_type("insert_product")
     setLoading(true);
     const formData = new FormData();
 
     Object.keys(newProduct).forEach((i) => formData.append(i, newProduct[i]));
-    image_urls.forEach((image) => formData.append("images", image));
+    prod_images.forEach((image) => formData.append("images", image));
     formData.append("shop_id", userDetails.slice(1, -1));
 
-    fetch(`${server_url}/api/products`, {
+    fetch(`${server_url}/api/products-category-new`, {
       method: "POST",
       body: formData,
     })
@@ -335,12 +343,12 @@ export default function ProductsPage() {
     );
   };
 
-  const handleDeleteProduct = (id) => {
+  const handleDeleteProduct = (product_id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       _delete(
-        `api/products/${id}`,
+        `api/products/${product_id}`,
         (res) => {
-          setProducts(products.filter((product) => product.id !== id));
+          setProducts(products.filter((product) => product.product_id !== product_id));
           toast.success("Product deleted successfully");
         },
         (err) => {
@@ -365,7 +373,7 @@ export default function ProductsPage() {
   };
 
   const filteredProducts = products.filter((product) =>
-    product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+    product.product_name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   useEffect(() => {
@@ -439,14 +447,14 @@ export default function ProductsPage() {
                               <span className="text-danger">* </span>Name
                             </Label>
                             <Input
-                              id="product_name"
+                              id="prod_name"
                               type="text"
                               className="w-full"
                               placeholder="Gamer Gear Pro Controller"
                               value={
                                 editMode
-                                  ? currentProduct?.product_name
-                                  : newProduct.product_name
+                                  ? currentProduct?.prod_name
+                                  : newProduct.prod_name
                               }
                               onChange={handleInputChange}
                             />
@@ -458,13 +466,13 @@ export default function ProductsPage() {
                               Description
                             </Label>
                             <Textarea
-                              id="product_description"
+                              id="prod_des"
                               placeholder="Description about product"
                               className="min-h-32"
                               value={
                                 editMode
-                                  ? currentProduct?.product_description
-                                  : newProduct.product_description
+                                  ? currentProduct?.prod_des
+                                  : newProduct.prod_des
                               }
                               onChange={handleInputChange}
                             />
@@ -485,16 +493,16 @@ export default function ProductsPage() {
                             </Label>
                             <Select
                               onValueChange={(value) =>
-                                handleSelectChange("product_category", value)
+                                handleSelectChange("category_id", value)
                               }
                               value={
                                 editMode
-                                  ? currentProduct?.product_category
-                                  : newProduct.product_category
+                                  ? currentProduct?.category_id
+                                  : newProduct.category_id
                               }
                             >
                               <SelectTrigger
-                                id="product_category"
+                                id="category_id"
                                 aria-label="Select category"
                               >
                                 <SelectValue placeholder="Select category" />
@@ -511,22 +519,23 @@ export default function ProductsPage() {
                               </SelectContent>
                             </Select>
                           </div>
+                          {/* {JSON.stringify(categories.map((item)=>item.ctgry_name))} */}
                           <div className="grid gap-3">
                             <Label htmlFor="product_subcategory">
                               Subcategory (optional)
                             </Label>
                             <Select
                               onValueChange={(value) =>
-                                handleSelectChange("product_subcategory", value)
+                                handleSelectChange("sub_ctgry_id", value)
                               }
                               value={
                                 editMode
-                                  ? currentProduct?.product_subcategory
-                                  : newProduct.product_subcategory
+                                  ? currentProduct?.sub_ctgry_id
+                                  : newProduct.sub_ctgry_id
                               }
                             >
                               <SelectTrigger
-                                id="product_subcategory"
+                                id="sub_ctgry_id"
                                 aria-label="Select subcategory"
                               >
                                 <SelectValue placeholder="Select subcategory" />
@@ -543,17 +552,21 @@ export default function ProductsPage() {
                               </SelectContent>
                             </Select>
                           </div>
-                          {showSizeInput && (
+                          {/* {JSON.stringify(newProduct.sub_ctgry_id)} */}
+                           {(newProduct.sub_ctgry_id === "Yard" ||
+                            newProduct.sub_ctgry_id === "Materials" ||
+                            newProduct.sub_ctgry_id === "Shadda" ||
+                            newProduct.sub_ctgry_id === "Men_Lace") && (
                             <div className="grid gap-3">
-                              <Label htmlFor="product_size">Measurement</Label>
+                              <Label htmlFor="prod_size">Measurement</Label>
                               {!showSizeInputchange ? (
                                 <Select
                                   onValueChange={(value) =>
-                                    handleSelectChange("product_size", value)
+                                    handleSelectChange("prod_size", value)
                                   }
                                 >
                                   <SelectTrigger
-                                    id="product_size"
+                                    id="prod_size"
                                     aria-label="Select size"
                                   >
                                     <SelectValue placeholder="Select size" />
@@ -572,12 +585,12 @@ export default function ProductsPage() {
                                 </Select>
                               ) : (
                                 <Input
-                                  id="product_size"
+                                  id="prod_size"
                                   type="text"
                                   value={
                                     editMode
-                                      ? currentProduct?.product_size
-                                      : newProduct.product_size
+                                      ? currentProduct?.prod_size
+                                      : newProduct.prod_size
                                   }
                                   placeholder="Enter your measurement"
                                   onChange={handleInputChange} // Handle input for custom size
@@ -613,12 +626,12 @@ export default function ProductsPage() {
                                   <span className="text-danger">* </span>
                                 </Label>
                                 <Input
-                                  id="product_quantity"
+                                  id="prod_qty"
                                   type="number"
                                   value={
                                     editMode
-                                      ? currentProduct?.product_quantity
-                                      : newProduct.product_quantity
+                                      ? currentProduct?.prod_qty
+                                      : newProduct.prod_qty
                                   }
                                   onChange={handleInputChange}
                                 />
@@ -631,17 +644,17 @@ export default function ProductsPage() {
                                   <span className="text-destructive">* </span>
                                   <span>
                                     {editMode
-                                      ? separator(currentProduct?.product_price)
-                                      : separator(newProduct.product_price)}
+                                      ? separator(currentProduct?.prod_price)
+                                      : separator(newProduct.prod_price)}
                                   </span>
                                 </Label>
                                 <Input
-                                  id="product_price"
+                                  id="prod_price"
                                   type="number"
                                   value={
                                     editMode
-                                      ? currentProduct?.product_price
-                                      : newProduct.product_price
+                                      ? currentProduct?.prod_price
+                                      : newProduct.prod_price
                                   }
                                   onChange={handleInputChange}
                                 />
@@ -671,16 +684,16 @@ export default function ProductsPage() {
                             </Label>
                             <Select
                               onValueChange={(value) =>
-                                handleSelectChange("product_status", value)
+                                handleSelectChange("prod_status", value)
                               }
                               value={
                                 editMode
-                                  ? currentProduct?.product_status
-                                  : newProduct.product_status
+                                  ? currentProduct?.prod_status
+                                  : newProduct.prod_status
                               }
                             >
                               <SelectTrigger
-                                id="product_status"
+                                id="prod_status"
                                 aria-label="Select status"
                               >
                                 <SelectValue placeholder="Select status" />
@@ -710,7 +723,7 @@ export default function ProductsPage() {
                       <CardContent>
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 gap-2">
-                            {image_urls.map((image, idx) => (
+                            {prod_images.map((image, idx) => (
                               <div
                                 key={idx}
                                 style={{
@@ -750,7 +763,7 @@ export default function ProductsPage() {
                                 </button>
                               </div>
                             ))}
-                            {image_urls.length < 20 && (
+                            {prod_images.length < 20 && (
                               <label className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer">
                                 <Upload className="h-4 w-4 text-muted-foreground" />
                                 <input
@@ -790,6 +803,7 @@ export default function ProductsPage() {
               </div>
             </main>
           ) : (
+  // ======================================================products view=================================================================
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
               <Tabs defaultValue="all">
                 <div className="flex items-center">
@@ -828,12 +842,13 @@ export default function ProductsPage() {
                 <TabsContent value="all">
                   <Card x-chunk="dashboard-06-chunk-0">
                     <CardHeader>
-                      <CardTitle>Products</CardTitle>
+                        <CardTitle>Products </CardTitle>
+                        {/* {JSON.stringify(products)} */}
                       <CardDescription>
                         Manage your products and view their sales performance.
                       </CardDescription>
                     </CardHeader>
-                    {/* {JSON.stringify(userDetails.slice(1, -1))} */}
+                    {JSON.stringify(userDetails.slice(1, -1))}
                     <CardContent>
                       <Table>
                         <TableHeader>
@@ -857,14 +872,14 @@ export default function ProductsPage() {
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {filteredProducts.length === 0 ? (
+                          {products.length === 0 ? (
                             <TableRow>
                               <TableCell colSpan="6" className="text-center">
                                 No product(s)
                               </TableCell>
                             </TableRow>
                           ) : (
-                            filteredProducts.map((product, idx) => (
+                            products.map((product, idx) => (
                               <TableRow key={idx}>
                                 <TableCell className="hidden sm:table-cell p-2">
                                   <img
@@ -873,24 +888,24 @@ export default function ProductsPage() {
                                     height="64"
                                     src={
                                       product.image_urls
-                                        ? product.image_urls.split(",")[0]
+                                        ? product.image_urls?.split(",")[0]
                                         : defaultImg
                                     }
                                     width="64"
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
-                                  {product.product_name}
+                                  {product.name}
                                 </TableCell>
                                 <TableCell className="text-center">
-                                  {product.product_status === "Available" ? (
+                                  {product.prod_status === "Available" ? (
                                     <Badge variant="color3">
-                                      {product.product_status}
+                                      {product.prod_status}
                                     </Badge>
-                                  ) : product.product_status ===
+                                  ) : product.prod_status ===
                                     "Out of Stock" ? (
                                     <Badge variant="color2">
-                                      {product.product_status}
+                                      {product.prod_status}
                                     </Badge>
                                   ) : null}
 
@@ -903,10 +918,10 @@ export default function ProductsPage() {
                                   )} */}
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell text-end">
-                                  {separator(product.product_price)}
+                                  {separator(product.price)}
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell text-center">
-                                  {product.product_quantity}
+                                  {product.qty}
                                 </TableCell>
                                 <TableCell className="p-2">
                                   <div className="justify-center items-center gap-2 md:flex sm:flex">
@@ -925,7 +940,7 @@ export default function ProductsPage() {
                                       size="icon"
                                       className="h-7 w-7"
                                       onClick={() =>
-                                        handleDeleteProduct(product.id)
+                                        handleDeleteProduct(product.product_id)
                                       }
                                     >
                                       <Trash2 className="h-4 w-4" />
@@ -990,7 +1005,7 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls.split(",")[0]}
+                                    src={product.prod_images.split(",")[0]}
                                     width="64"
                                   />
                                 </TableCell>
@@ -1096,7 +1111,7 @@ export default function ProductsPage() {
                                     alt="Product image"
                                     className="aspect-square rounded-md object-cover"
                                     height="64"
-                                    src={product.image_urls.split(",")[0]}
+                                    src={product.prod_images.split(",")[0]}
                                     width="64"
                                   />
                                 </TableCell>
