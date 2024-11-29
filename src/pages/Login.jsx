@@ -42,7 +42,7 @@ function Login() {
           <CardHeader>
             <CardTitle className="text-2xl text-center">Login</CardTitle>
           </CardHeader>
-          <hr style={{marginTop:"-1rem",padding:'10px'}} />
+          {/* <hr style={{marginTop:"-1rem",padding:'10px'}} /> */}
           <CardContent>
             <div className="">
               <div className="">

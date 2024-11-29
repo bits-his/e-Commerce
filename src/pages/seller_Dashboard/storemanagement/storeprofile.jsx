@@ -91,7 +91,7 @@ const Storeprofile = () => {
   const getProduct = () => {
     setLoading(true)
     _get(
-      `api/get-products?shop_id=${userDetails}`,
+      `api/get-products?shop_id="${userDetails.slice(1, -1)}"`,
       (resp) => {
         setProducts(resp.result[0]);
         setLoading(false);
@@ -108,7 +108,7 @@ const Storeprofile = () => {
   }, []);
 
   const filteredProducts = products.filter((product) =>
-    product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+    product.product_name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleChange = (e) => {
@@ -210,9 +210,9 @@ const Storeprofile = () => {
               </div>
             ))}
           </div>
-        ) : filteredProducts?.length > 0 ? (
+        ) : products?.length > 0 ? (
           <div className="row row-cols-2 row-cols-sm-3 row-cols-lg-5 row-cols-xl-6 g-3 mt-0">
-            {filteredProducts?.map((item, idx) => (
+            {products?.map((item, idx) => (
               <div
                 key={idx}
                 className="text-decoration-none"
@@ -221,14 +221,14 @@ const Storeprofile = () => {
                 <div className="shadow rounded">
                   <div className="ratio ratio-1x1 bg-light overflow-hidden rounded-top">
                     <img
-                      alt={item.product_name}
+                      alt={item.name}
                       src={item.image_urls ? item.image_urls.split(",")[0] : defaultImg}
                       className="w-100 h-100 object-fit-cover"
                     />
                   </div>
                   <h5 className="mt-3 mb-3 ps-2 fw-large text-dark">
-                    {item.product_name.charAt(0).toUpperCase() +
-                      item.product_name.slice(1)}
+                    {item.name.charAt(0).toUpperCase() +
+                      item.name.slice(1)}
                   </h5>
                   <div className="mt-2 ps-2 d-flex flex-column">
                     <div className="d-flex rating">
@@ -244,10 +244,10 @@ const Storeprofile = () => {
                         />
                       ))}
                     </div>
-                    <p className="mt-1 mb-0 small text-muted">{item.product_quantity}</p>
+                    <p className="mt-1 mb-0 small text-muted">{item.qty}</p>
                   </div>
                   <p className="mt-2 pb-3 ps-2 fw-medium text-muted small">
-                    ₦{separator(item.product_price)}
+                    ₦{separator(item.price)}
                   </p>
                 </div>
               </div>
