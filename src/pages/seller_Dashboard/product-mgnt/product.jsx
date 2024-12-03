@@ -848,7 +848,7 @@ setQuery_type("insert_product")
                         Manage your products and view their sales performance.
                       </CardDescription>
                     </CardHeader>
-                    {JSON.stringify(userDetails.slice(1, -1))}
+                    {/* {JSON.stringify(userDetails.slice(1, -1))} */}
                     <CardContent>
                       <Table>
                         <TableHeader>
