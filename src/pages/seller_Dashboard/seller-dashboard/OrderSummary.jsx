@@ -42,7 +42,7 @@ const OrderSummary = () => {
   const getAllOrders = () => {
     setLoading(true);
     _get(
-      `api/gerordersbyshopid?shop_id=${parseInt(userDetails)}`,
+      `api/gerordersbyshopid?shop_id="${userDetails.slice(1, -1)}"`,
       (resp) => {
         setOrders(resp.results);
         setLoading(false);
@@ -84,6 +84,7 @@ const OrderSummary = () => {
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+        {/* {JSON.stringify(userDetails.slice(1,-1))} */}
         {orderTypes.map(({ type, title, icon, description }) => (
           <Card
             x-chunk="dashboard-01-chunk-0"
