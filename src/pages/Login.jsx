@@ -1,9 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux"; // Import Redux hooks
-import { login } from "../redux/action/authAction"; // Import login action
+import { useDispatch, useSelector } from "react-redux";  // Import Redux hooks
+import { login } from "../redux/action/authAction";  // Import login action
 import { Spinner } from "reactstrap";
+// eslint-disable-next-line no-unused-vars
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,7 +18,7 @@ function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  
   // Select loading state from Redux store
   const { loading } = useSelector((state) => state.auth);
 
@@ -25,7 +28,6 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     // Dispatch the login action (which handles API call)
     dispatch(login(email, password, navigate));
   };
@@ -55,7 +57,13 @@ function Login() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <Link to="/" className="ml-auto inline-block text-sm underline">
+                    Forgot your password?
+                  </Link>
+                </div>
+
                 <div className="mt-2 flex rounded-md shadow-sm">
                   <div className="relative flex flex-grow items-stretch focus-within:z-10">
                     <Input
@@ -79,17 +87,12 @@ function Login() {
                   </button>
                 </div>
               </div>
-              <div className="flex items-center">
-                <Link to="/" className="ml-auto inline-block text-sm underline">
-                  Forgot your password?
-                </Link>
-              </div>
               <button
                 type="submit"
                 className="w-full btn login-btn"
                 onClick={handleLogin}
                 disabled={loading}
-                style={{ backgroundColor: "#a52a2a" }}
+                style={{backgroundColor: "#a52a2a"}}
               >
                 {loading ? (
                   <Spinner className="h-5 w-5" />
