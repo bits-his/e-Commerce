@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   PlusCircle,
   ChevronLeft,
@@ -51,6 +51,7 @@ import {
 } from "../../../utils/Helper";
 import { Spinner } from "reactstrap";
 import defaultImg from "../../../assets/No-Image-Placeholder.jpg";
+import imageCompression from "browser-image-compression";
 
 export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
@@ -86,9 +87,10 @@ export default function ProductsPage() {
     prod_price: null,
     prod_qty: null,
     prod_status: "Available",
-    prod_images: [],//prod_images
+    prod_images: prod_images,
     prod_size: "",
     query_type: "insert_product",
+    upload_type: "base64",
     // prod_images : prod_images,
   };
 
@@ -158,12 +160,12 @@ export default function ProductsPage() {
     if (editMode) {
       setCurrentProduct((prevData) => ({
         ...prevData,
-        [id]: value, 
+        [id]: value,
       }));
     } else {
       setNewProduct((prevData) => ({
         ...prevData,
-        [id]: value, 
+        [id]: value,
       }));
     }
   };
@@ -181,7 +183,7 @@ export default function ProductsPage() {
         [id]: value,
       }));
     }
-// alert(categories.ctgry_name)
+    // alert(categories.ctgry_name)
     if (
       id === "sub_ctgry_id" &&
       (value === "Yard" ||
@@ -215,15 +217,36 @@ export default function ProductsPage() {
     }
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
-
+  
     if (files.length + prod_images.length > 20) {
       toast.error("You can only upload up to 20 images.");
       return;
     }
-
-    setprod_images((prevImages) => [...prevImages, ...files]);
+  
+    const compressedImages = await Promise.all(
+      files.map(async (file) => {
+        try {
+          const options = {
+            maxSizeMB: 1, // Maximum file size in MB
+            maxWidthOrHeight: 1024, // Maximum width or height
+            useWebWorker: true, // Use web worker for faster compression
+          };
+          const compressedFile = await imageCompression(file, options);
+          return compressedFile;
+        } catch (error) {
+          console.error("Image compression error:", error);
+          toast.error("Failed to compress one or more images.");
+          return null;
+        }
+      })
+    );
+  
+    // Filter out any failed compressions (null values)
+    const validCompressedImages = compressedImages.filter((image) => image !== null);
+  
+    setprod_images((prevImages) => [...prevImages, ...validCompressedImages]);
   };
 
   // const removeImage = (indexToRemove) => {
@@ -250,7 +273,8 @@ export default function ProductsPage() {
 
   const handleAddProduct = (e) => {
     e.preventDefault();
-    // Form validation start here
+  
+    // Validate required fields
     if (
       !newProduct.prod_name ||
       newProduct.prod_name.trim() === "" ||
@@ -260,49 +284,68 @@ export default function ProductsPage() {
       toast.error("Please fill in the product details.");
       return;
     }
-
-    if (
-      !newProduct.category_id ||
-      newProduct.category_id.trim() === ""
-    ) {
+  
+    if (!newProduct.category_id || newProduct.category_id.trim() === "") {
       toast.error("Please select the product category.");
       return;
     }
-    if (
-      !newProduct.prod_qty ||
-      newProduct.prod_qty.trim() === ""
-    ) {
-      toast.error("Please Indicate the number of items available in stock.");
+  
+    if (!newProduct.prod_qty || newProduct.prod_qty.trim() === "") {
+      toast.error("Please indicate the number of items available in stock.");
       return;
     }
+  
     if (!newProduct.prod_price || newProduct.prod_price.trim() === "") {
-      toast.error("Please Indicate the price of the item.");
+      toast.error("Please indicate the price of the item.");
       return;
     }
+  
     if (!newProduct.prod_status || newProduct.prod_status.trim() === "") {
-      toast.error("Please Indicate status of the product.");
+      toast.error("Please indicate the status of the product.");
       return;
     }
-setQuery_type("insert_product")
+  
+    // Prepare for submission
+    setQuery_type("insert_product");
     setLoading(true);
     const formData = new FormData();
-
-    Object.keys(newProduct).forEach((i) => formData.append(i, newProduct[i]));
-    prod_images.forEach((image) => formData.append("images", image));
+  
+    // Add product fields to formData
+    Object.keys(newProduct).forEach((key) => {
+      if (newProduct[key]) {
+        formData.append(key, newProduct[key]);
+      }
+    });
+  
+    // Append images directly
+    if (prod_images && prod_images.length > 0) {
+      prod_images.forEach((image) => {
+        formData.append("images", image); // Ensure 'images' is the key that Multer expects
+      });
+    }
+  
     formData.append("shop_id", userDetails.slice(1, -1));
-
+  
+    // Submit the form
     fetch(`${server_url}/api/products-category-new`, {
       method: "POST",
       body: formData,
     })
       .then((raw) => raw.json())
       .then((res) => {
-        setLoading(false);
-        getProduct();
-        toast.success("New product added");
-        console.log(formData);
-        setShowForm(false);
-        resetForm();
+        if (res.success) {
+          setLoading(false);
+          getProduct();
+          toast.success("New product added");
+          console.log(formData);
+          console.log(res, "res from server insert");
+          setShowForm(false);
+          resetForm();
+        } else {
+          setLoading(false);
+          toast.error("An error occurred while adding the product!");
+          console.log(res, "res from server insert");
+        }
       })
       .catch((err) => {
         setLoading(false);
@@ -553,51 +596,51 @@ setQuery_type("insert_product")
                             </Select>
                           </div>
                           {/* {JSON.stringify(newProduct.sub_ctgry_id)} */}
-                           {(newProduct.sub_ctgry_id === "Yard" ||
+                          {(newProduct.sub_ctgry_id === "Yard" ||
                             newProduct.sub_ctgry_id === "Materials" ||
                             newProduct.sub_ctgry_id === "Shadda" ||
                             newProduct.sub_ctgry_id === "Men_Lace") && (
-                            <div className="grid gap-3">
-                              <Label htmlFor="prod_size">Measurement</Label>
-                              {!showSizeInputchange ? (
-                                <Select
-                                  onValueChange={(value) =>
-                                    handleSelectChange("prod_size", value)
-                                  }
-                                >
-                                  <SelectTrigger
-                                    id="prod_size"
-                                    aria-label="Select size"
+                              <div className="grid gap-3">
+                                <Label htmlFor="prod_size">Measurement</Label>
+                                {!showSizeInputchange ? (
+                                  <Select
+                                    onValueChange={(value) =>
+                                      handleSelectChange("prod_size", value)
+                                    }
                                   >
-                                    <SelectValue placeholder="Select size" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    <SelectItem value="Per 1 Yard">
-                                      Per 1 Yard
-                                    </SelectItem>
-                                    <SelectItem value="Per 5 Yard">
-                                      Per 5 Yard
-                                    </SelectItem>
-                                    <SelectItem value="Others">
-                                      Others
-                                    </SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              ) : (
-                                <Input
-                                  id="prod_size"
-                                  type="text"
-                                  value={
-                                    editMode
-                                      ? currentProduct?.prod_size
-                                      : newProduct.prod_size
-                                  }
-                                  placeholder="Enter your measurement"
-                                  onChange={handleInputChange} // Handle input for custom size
-                                />
-                              )}
-                            </div>
-                          )}
+                                    <SelectTrigger
+                                      id="prod_size"
+                                      aria-label="Select size"
+                                    >
+                                      <SelectValue placeholder="Select size" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="Per 1 Yard">
+                                        Per 1 Yard
+                                      </SelectItem>
+                                      <SelectItem value="Per 5 Yard">
+                                        Per 5 Yard
+                                      </SelectItem>
+                                      <SelectItem value="Others">
+                                        Others
+                                      </SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                ) : (
+                                  <Input
+                                    id="prod_size"
+                                    type="text"
+                                    value={
+                                      editMode
+                                        ? currentProduct?.prod_size
+                                        : newProduct.prod_size
+                                    }
+                                    placeholder="Enter your measurement"
+                                    onChange={handleInputChange} // Handle input for custom size
+                                  />
+                                )}
+                              </div>
+                            )}
                         </div>
                       </CardContent>
                     </Card>
@@ -803,7 +846,7 @@ setQuery_type("insert_product")
               </div>
             </main>
           ) : (
-  // ======================================================products view=================================================================
+            // ======================================================products view=================================================================
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
               <Tabs defaultValue="all">
                 <div className="flex items-center">
@@ -842,8 +885,8 @@ setQuery_type("insert_product")
                 <TabsContent value="all">
                   <Card x-chunk="dashboard-06-chunk-0">
                     <CardHeader>
-                        <CardTitle>Products </CardTitle>
-                        {/* {JSON.stringify(products)} */}
+                      <CardTitle>Products </CardTitle>
+                      {/* {JSON.stringify(products)} */}
                       <CardDescription>
                         Manage your products and view their sales performance.
                       </CardDescription>

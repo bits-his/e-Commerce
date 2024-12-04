@@ -52,7 +52,8 @@ function Header() {
 
   const handleLogout = () => {
     setLoading(true);
-    dispatch(logout());
+    dispatch(
+    ));
     navigate("/");
     toast("Goodbye!", {
       icon: "👏",
