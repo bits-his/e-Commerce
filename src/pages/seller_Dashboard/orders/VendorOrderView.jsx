@@ -26,7 +26,6 @@ import toast from "react-hot-toast";
 
 const VendorOrderView = () => {
   const [orders, setOrders] = useState([]);
-  const [modal, setModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [loadingOrderId, setLoadingOrderId] = useState(null); // for spinner when an action is pending
   const [completed, setCompleted] = useState([]);
@@ -77,6 +76,7 @@ const VendorOrderView = () => {
       },
       (err) => {
         setLoadingOrderId(null);
+        console.(err);
         toast.error("An error occurred while updating status");
       }
     );
@@ -96,18 +96,6 @@ const VendorOrderView = () => {
   // Search functionality to filter the orders
   const filteredOrders = orders?.filter((order) =>
     order.product.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const sortedCompleted = completed.filter(
-    (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const sortedPending = pending.filter(
-    (order) =>
-      order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const navigate = useNavigate()
@@ -177,7 +165,7 @@ const VendorOrderView = () => {
             </Table>
 
             <CardHeader>
-              <CardTitle>Ordered Items</CardTitle>
+              <CardTitle>Ordered Itemhs</CardTitle>
             </CardHeader>
 
             <div className="relative w-full overflow-x-auto">

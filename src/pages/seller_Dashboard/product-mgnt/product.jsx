@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -82,8 +83,8 @@ export default function ProductsPage() {
   const initialProductState = {
     prod_name: "",
     prod_des: "",
-    category_id: "",// product_category: "", 
-    sub_ctgry_id: "",// product_subcategory: "",
+    category_id: "",
+    sub_ctgry_id: subCategories?.sub_ctgry_id,
     prod_price: null,
     prod_qty: null,
     prod_status: "Available",
@@ -136,7 +137,7 @@ export default function ProductsPage() {
   }, []);
 
   const getSubCategories = () => {
-    const category = newProduct.category_id;
+    const category = newProduct.ctgry_id;
     _get(
       `api/subcategories?category=${category}`,
       (resp) => {
@@ -149,10 +150,10 @@ export default function ProductsPage() {
   };
 
   useEffect(() => {
-    if (newProduct.category_id) {
+    if (newProduct.ctgry_id) {
       getSubCategories();
     }
-  }, [newProduct.category_id]);
+  }, [newProduct.ctgry_id]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -219,12 +220,12 @@ export default function ProductsPage() {
 
   const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
-  
+
     if (files.length + prod_images.length > 20) {
       toast.error("You can only upload up to 20 images.");
       return;
     }
-  
+
     const compressedImages = await Promise.all(
       files.map(async (file) => {
         try {
@@ -242,10 +243,10 @@ export default function ProductsPage() {
         }
       })
     );
-  
+
     // Filter out any failed compressions (null values)
     const validCompressedImages = compressedImages.filter((image) => image !== null);
-  
+
     setprod_images((prevImages) => [...prevImages, ...validCompressedImages]);
   };
 
@@ -273,7 +274,7 @@ export default function ProductsPage() {
 
   const handleAddProduct = (e) => {
     e.preventDefault();
-  
+
     // Validate required fields
     if (
       !newProduct.prod_name ||
@@ -284,48 +285,48 @@ export default function ProductsPage() {
       toast.error("Please fill in the product details.");
       return;
     }
-  
+
     if (!newProduct.category_id || newProduct.category_id.trim() === "") {
       toast.error("Please select the product category.");
       return;
     }
-  
+
     if (!newProduct.prod_qty || newProduct.prod_qty.trim() === "") {
       toast.error("Please indicate the number of items available in stock.");
       return;
     }
-  
+
     if (!newProduct.prod_price || newProduct.prod_price.trim() === "") {
       toast.error("Please indicate the price of the item.");
       return;
     }
-  
+
     if (!newProduct.prod_status || newProduct.prod_status.trim() === "") {
       toast.error("Please indicate the status of the product.");
       return;
     }
-  
+
     // Prepare for submission
     setQuery_type("insert_product");
     setLoading(true);
     const formData = new FormData();
-  
+
     // Add product fields to formData
     Object.keys(newProduct).forEach((key) => {
       if (newProduct[key]) {
         formData.append(key, newProduct[key]);
       }
     });
-  
+
     // Append images directly
     if (prod_images && prod_images.length > 0) {
       prod_images.forEach((image) => {
         formData.append("images", image); // Ensure 'images' is the key that Multer expects
       });
     }
-  
+
     formData.append("shop_id", userDetails.slice(1, -1));
-  
+
     // Submit the form
     fetch(`${server_url}/api/products-category-new`, {
       method: "POST",
@@ -393,6 +394,7 @@ export default function ProductsPage() {
         (res) => {
           setProducts(products.filter((product) => product.product_id !== product_id));
           toast.success("Product deleted successfully");
+          console.log(res, "res from server");
         },
         (err) => {
           toast.error("An error occurred while deleting the product");
@@ -414,10 +416,6 @@ export default function ProductsPage() {
     setCurrentProduct(null);
     toast.success("Discarded!");
   };
-
-  const filteredProducts = products.filter((product) =>
-    product.product_name?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   useEffect(() => {
     setAvailable(
@@ -554,7 +552,7 @@ export default function ProductsPage() {
                                 {categories.map((category, idx) => (
                                   <SelectItem
                                     key={idx}
-                                    value={category.ctgry_name}
+                                    value={category.ctgry_id}
                                   >
                                     {category.ctgry_name}
                                   </SelectItem>
@@ -618,6 +616,9 @@ export default function ProductsPage() {
                                       <SelectItem value="Per 1 Yard">
                                         Per 1 Yard
                                       </SelectItem>
+                                      <SelectItem value="Per 3 Yard">
+                                        Per 3 Yard
+                                      </SelectItem>
                                       <SelectItem value="Per 5 Yard">
                                         Per 5 Yard
                                       </SelectItem>
@@ -636,7 +637,7 @@ export default function ProductsPage() {
                                         : newProduct.prod_size
                                     }
                                     placeholder="Enter your measurement"
-                                    onChange={handleInputChange} // Handle input for custom size
+                                    onChange={handleInputChange}
                                   />
                                 )}
                               </div>
