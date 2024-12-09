@@ -22,8 +22,6 @@ import VendorView from "./pages/admin_dashboard/vendors/VendorView";
 import OrderView from "./pages/OrderView";
 import VendorOrderView from "./pages/seller_Dashboard/orders/VendorOrderView";
 import Protect from "./Protect";
-import ForgotPassword from "./pages/password/ForgotPassword";
-import ResetPassword from "./pages/password/ResetPassword";
 import CustomerView from "./pages/admin_dashboard/Customers/CustomerView";
 import Addnewcategory from "./pages/admin_dashboard/Category/Addnewcategory";
 

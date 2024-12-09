@@ -29,7 +29,6 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Dispatch the login action (which handles API call)
     dispatch(login(email, password, navigate));
   };
 
