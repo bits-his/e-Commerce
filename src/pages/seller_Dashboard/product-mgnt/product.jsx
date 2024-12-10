@@ -85,10 +85,11 @@ export default function ProductsPage() {
   const initialProductState = {
     prod_name: "",
     prod_des: "",
-    ctgry_id: categories?.ctgry_id,
-    sub_ctgry_id: subCategories?.sub_ctgry_id,
+    category_id: "",
+    sub_category_id: "",
     prod_price: null,
     prod_qty: null,
+    qty_des: "",
     prod_status: "Available",
     prod_images: prod_images,
     prod_size: "",
@@ -153,14 +154,16 @@ export default function ProductsPage() {
   };
 
   useEffect(() => {
-    console.log(categories);
+    console.log(newProduct.ctgry_id, "jhaglkfdjh;kJHSDFKLJASHDFKJSD");
     if (newProduct.ctgry_id) {
       getSubCategories();
     }
   }, [newProduct.ctgry_id]);
 
   const handleInputChange = (e) => {
+
     const { id, value } = e.target;
+    console.log(value, "id value");
 
     if (editMode) {
       setCurrentProduct((prevData) => ({
@@ -177,6 +180,8 @@ export default function ProductsPage() {
 
   const handleSelectChange = (id, value) => {
     // Update the product state depending on editMode
+    console.log(value, "id value");
+
     if (editMode) {
       setCurrentProduct((prevData) => ({
         ...prevData,
@@ -278,6 +283,7 @@ export default function ProductsPage() {
 
   const handleAddProduct = (e) => {
     e.preventDefault();
+    console.log(newProduct, "newProduct from form");
 
     // Validate required fields
     if (
@@ -330,7 +336,7 @@ export default function ProductsPage() {
     }
 
     formData.append("shop_id", userDetails.slice(1, -1));
-
+    console.log(formData, "formdata from form");
     // Submit the form
     fetch(`${server_url}/api/products-category-new`, {
       method: "POST",
@@ -543,7 +549,7 @@ export default function ProductsPage() {
                               value={
                                 editMode
                                   ? currentProduct?.ctgry_id
-                                  : newProduct.ctgry_id
+                                  : newProduct.category_id
                               }
                             >
                               <SelectTrigger
@@ -661,6 +667,7 @@ export default function ProductsPage() {
                           <TableHeader>
                             <TableRow>
                               <TableHead>Item Quantity</TableHead>
+                              <TableHead>Quantity Description</TableHead>
                               <TableHead>Price</TableHead>
                             </TableRow>
                           </TableHeader>
@@ -683,6 +690,35 @@ export default function ProductsPage() {
                                   }
                                   onChange={handleInputChange}
                                 />
+                              </TableCell>
+                              <TableCell>
+                                <Label
+                                  htmlFor="qty_des"
+                                  className="mb-2"
+                                >
+                                  <span className="text-danger">* </span>
+                                </Label>
+                                <Select
+                                  onValueChange={(value) =>
+                                    handleSelectChange("qty_des", value)
+                                  }
+                                  value={newProduct.qty_des}
+                                >
+                                  <SelectTrigger
+                                    id="qty_des"
+                                    aria-label="Quantity Description"
+                                  >
+                                    <SelectValue placeholder="Qty Description" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="yard">
+                                      Yard
+                                    </SelectItem>
+                                    <SelectItem value="pieces">
+                                      Pieces
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
                               </TableCell>
                               <TableCell>
                                 <Label
