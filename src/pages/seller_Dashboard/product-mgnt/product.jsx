@@ -290,7 +290,7 @@ export default function ProductsPage() {
       return;
     }
 
-    if (!newProduct.category_id || newProduct.category_id.trim() === "") {
+    if (!newProduct.ctgry_id || newProduct.ctgry_id.trim() === "") {
       toast.error("Please select the product category.");
       return;
     }
@@ -660,7 +660,7 @@ export default function ProductsPage() {
                         <Table>
                           <TableHeader>
                             <TableRow>
-                              <TableHead>Stock</TableHead>
+                              <TableHead>Item Quantity</TableHead>
                               <TableHead>Price</TableHead>
                             </TableRow>
                           </TableHeader>
