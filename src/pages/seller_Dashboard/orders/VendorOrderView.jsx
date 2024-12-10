@@ -1,12 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Spinner,
-} from "reactstrap";
+import { Spinner } from "reactstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -18,10 +12,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { _get, _put, globalColor } from "@/utils/Helper";
-import { Badge, Check, Search, Ban } from "lucide-react"; // Added Ban for Cancel button
+import { _get, _put } from "@/utils/Helper";
+import { Check, Search, Ban } from "lucide-react"; // Added Ban for Cancel button
 import { Input } from "@/components/ui/input";
-import { FaArrowLeft, FaEye } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 const VendorOrderView = () => {
@@ -32,15 +26,17 @@ const VendorOrderView = () => {
   const [pending, setPending] = useState([]);
   const [error, setError] = useState(null);
   const [fetching, setFetching] = useState(false);
+  const [selectedOrders, setSelectedOrders] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
 
-     const location = useLocation();
+  const location = useLocation();
   const order = location.state?.order;
 
   const getAllOrders = () => {
     setFetching(true);
     _get(
       `api/gerordersbycustomerid?customer_id=${order.customer_id}`,
-      (resp) => { 
+      (resp) => {
         setOrders(resp.results);
         console.log(orders);
         setFetching(false);
@@ -59,33 +55,62 @@ const VendorOrderView = () => {
   // Handle order validation (status updates)
   const handleValidateOrder = (id, status) => {
     setLoadingOrderId(id);
-
     const obj = { id, status };
 
     _put(
-      "api/aproveorder", // Approve order or update status
+      "api/aproveorder",
       obj,
       (res) => {
         setLoadingOrderId(null);
         if (res.success) {
           toast.success(`Order ${status} successfully`);
-          getAllOrders(); // Refetch orders after update
+          getAllOrders();
         } else {
           toast.error("Error updating order status");
         }
       },
       (err) => {
         setLoadingOrderId(null);
-        console.(err);
+        console.log(err);
         toast.error("An error occurred while updating status");
       }
     );
   };
 
-  // On initial load, fetch all orders
-  useEffect(() => {
-    getAllOrders();
-  }, []);
+  // Handle bulk order validation
+  const handleBulkOrder = () => {
+    if (selectedOrders.length === 0) {
+      toast.error("Please select at least one order to update");
+      return;
+    }
+
+    selectedOrders.forEach((id) => handleValidateOrder(id, "Approved"));
+    setSelectedOrders([])
+    setSelectAll(false)
+  }
+
+  // Handle order selection
+  const handleSelectOrder = (id) => {
+    setSelectedOrders((prevSelected) => {
+      if (prevSelected.includes(id)) {
+        return prevSelected.filter((orderId) => orderId !== id);
+      } else {
+        return [...prevSelected, id];
+      }
+    })
+  }
+
+
+  // Handle select all orders
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedOrders([])
+    } else {
+      setSelectedOrders(orders.map(order => order.id))
+    }
+    setSelectAll(!selectAll)
+
+  }
 
   // Filter and categorize orders by their status
   useEffect(() => {
@@ -100,7 +125,7 @@ const VendorOrderView = () => {
 
   const navigate = useNavigate()
 
-   const goBack = () => {
+  const goBack = () => {
     navigate(-1);
   };
 
@@ -112,13 +137,13 @@ const VendorOrderView = () => {
     <div>
       <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[92vh]">
         <div>
-        <Button
-          onClick={goBack}
+          <Button
+            onClick={goBack}
             className=" d-flex align-items-center back-btn"
             style={{ backgroundColor: "#542b2b" }}
-        >
-          <FaArrowLeft className="me-2" />
-          Back
+          >
+            <FaArrowLeft className="me-2" />
+            Back
           </Button>
         </div>
         <Card>
@@ -165,13 +190,40 @@ const VendorOrderView = () => {
             </Table>
 
             <CardHeader>
-              <CardTitle>Ordered Itemhs</CardTitle>
+              <CardTitle>Ordered Item</CardTitle>
             </CardHeader>
+            {JSON.stringify(selectedOrders)}
 
+            <Button
+              variant="color1"
+              size="sm"
+              className="h-8 gap-1"
+              onClick={handleBulkOrder}
+            >
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                Approve Selected
+              </span>
+            </Button>
             <div className="relative w-full overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHeader>
+                      <Input
+                        type="checkbox"
+                        checked={selectAll}
+                        onChange={handleSelectAll}
+                        style={{
+                          width: '20px',
+                          height: '20px',
+                          marginLeft: 20,
+                          marginTop: 15,
+                          cursor: 'pointer',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px'
+                        }}
+                      />
+                    </TableHeader>
                     <TableHead className="hidden w-[100px] sm:table-cell">
                       <span className="sr-only">Image</span>
                     </TableHead>
@@ -188,15 +240,22 @@ const VendorOrderView = () => {
                     filteredOrders.map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>
-                        <img
-                          src={order.order_image}
-                          alt={order.product}
-                          className="aspect-square rounded-md object-cover"
-                          width="64"
-                          height="64"
-                        />
-                        {/* {orders?.customer_id} */}
-                      </TableCell>
+                          <input
+                            type="checkbox"
+                            checked={selectedOrders.includes(order.id)}
+                            onChange={() => handleSelectOrder(order.id)}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <img
+                            src={order.order_image}
+                            alt={order.product}
+                            className="aspect-square rounded-md object-cover"
+                            width="64"
+                            height="64"
+                          />
+                          {/* {orders?.customer_id} */}
+                        </TableCell>
                         <TableCell>{order.product}</TableCell>
                         <TableCell>{order.quantity}</TableCell>
                         <TableCell>{order.createdAt?.slice(0, 10)}</TableCell>

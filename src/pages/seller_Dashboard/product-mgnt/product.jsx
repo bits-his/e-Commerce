@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -83,7 +85,7 @@ export default function ProductsPage() {
   const initialProductState = {
     prod_name: "",
     prod_des: "",
-    category_id: "",
+    ctgry_id: categories?.ctgry_id,
     sub_ctgry_id: subCategories?.sub_ctgry_id,
     prod_price: null,
     prod_qty: null,
@@ -138,6 +140,7 @@ export default function ProductsPage() {
 
   const getSubCategories = () => {
     const category = newProduct.ctgry_id;
+    alert(category);
     _get(
       `api/subcategories?category=${category}`,
       (resp) => {
@@ -150,6 +153,7 @@ export default function ProductsPage() {
   };
 
   useEffect(() => {
+    console.log(categories);
     if (newProduct.ctgry_id) {
       getSubCategories();
     }
@@ -534,16 +538,16 @@ export default function ProductsPage() {
                             </Label>
                             <Select
                               onValueChange={(value) =>
-                                handleSelectChange("category_id", value)
+                                handleSelectChange("ctgry_id", value)
                               }
                               value={
                                 editMode
-                                  ? currentProduct?.category_id
-                                  : newProduct.category_id
+                                  ? currentProduct?.ctgry_id
+                                  : newProduct.ctgry_id
                               }
                             >
                               <SelectTrigger
-                                id="category_id"
+                                id="ctgry_id"
                                 aria-label="Select category"
                               >
                                 <SelectValue placeholder="Select category" />
