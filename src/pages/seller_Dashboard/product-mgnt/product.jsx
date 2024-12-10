@@ -140,7 +140,7 @@ export default function ProductsPage() {
 
   const getSubCategories = () => {
     const category = newProduct.ctgry_id;
-    alert(category);
+    // alert(category);
     _get(
       `api/subcategories?category=${category}`,
       (resp) => {

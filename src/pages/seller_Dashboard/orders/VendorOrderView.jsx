@@ -192,7 +192,7 @@ const VendorOrderView = () => {
             <CardHeader>
               <CardTitle>Ordered Item</CardTitle>
             </CardHeader>
-            {JSON.stringify(selectedOrders)}
+            {/* {JSON.stringify(selectedOrders)} */}
 
             <Button
               variant="color1"
