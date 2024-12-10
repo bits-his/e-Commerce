@@ -52,7 +52,7 @@ import {
   separator,
   server_url,
 } from "../../../utils/Helper";
-import { Spinner } from "reactstrap";
+import { Col, Row, Spinner } from "reactstrap";
 import defaultImg from "../../../assets/No-Image-Placeholder.jpg";
 import imageCompression from "browser-image-compression";
 
@@ -70,15 +70,10 @@ export default function ProductsPage() {
   const [available, setAvailable] = useState([]);
   const [outOfStock, setOutOfStock] = useState([]);
   let userDetails = localStorage.getItem("@@toke_$$_45598");
-  // const [newsizeProduct, setNewsizeProduct] = useState({
-  //   product_category: "",
-  //   product_subcategory: "",
-  //   size: "",
-  // });
   const [showSizeInput, setShowSizeInput] = useState(false);
   const [showSizeInputchange, setShowSizeInputchange] = useState(false);
   const [query_type, setQuery_type] = useState();
-  // const [error, setError] = useState(null);
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
 
   const navigate = useNavigate();
 
@@ -100,10 +95,32 @@ export default function ProductsPage() {
 
   const [newProduct, setNewProduct] = useState(initialProductState);
 
+  const options = ["S", "M", "L", "XL", "XXL", "XXXL"];
+  const shoesSize = ["38", "39", "40", "41", "42", "43", "44", "45"];
+  const capsSize = ["20", "21", "22", "23", "24"];
+
+
   const resetForm = () => {
     setNewProduct(initialProductState);
     setprod_images([]);
   };
+
+  const handleChange = (e) => {
+    const { name, checked } = e.target;
+
+    setSelectedCheckboxes((prev) => {
+      const ischecked = checked ? [...prev, name] : prev.filter((item) => item !== name);
+      handleSizeChange(ischecked.join(", "))
+      return ischecked;
+    })
+
+  }
+
+  const handleSizeChange = (size) => {
+    setNewProduct((prevData) => ({
+      ...prevData, prod_size: size
+    }))
+  }
 
   const getProduct = () => {
     _get(
@@ -653,6 +670,86 @@ export default function ProductsPage() {
                               </div>
                             )}
                         </div>
+                        <Row>
+                          {(
+                            newProduct.sub_ctgry_id === "Singlet" ||
+                            newProduct.sub_ctgry_id === "Under Wears" ||
+                            newProduct.sub_ctgry_id === "Kid Close"
+                          ) && (
+                              <Col md={12}>
+                                <Label>Product Size</Label>
+                                <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
+                                  {options.map((option) => (
+                                    <div key={option}>
+                                      <input
+                                        type="checkbox"
+                                        id={option}
+                                        name={option}
+                                        checked={selectedCheckboxes.includes(
+                                          option
+                                        )}
+                                        onChange={handleChange}
+                                      />
+                                      <label htmlFor={option} style={{ marginLeft: "3px" }}>
+                                        {option}
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
+                              </Col>
+                            )}
+                          {(
+                            newProduct.sub_ctgry_id === "Shoes"
+                          ) && (
+                              <Col md={12}>
+                                <Label>Product Size</Label>
+                                <div style={{ display: "flex", flexDirection: "row", gap: "13px" }}>
+                                  {shoesSize.map((option) => (
+                                    <div key={option}>
+                                      <input
+                                        type="checkbox"
+                                        id={option}
+                                        name={option}
+                                        checked={selectedCheckboxes.includes(
+                                          option
+                                        )}
+                                        onChange={handleChange}
+                                      />
+                                      <label htmlFor={option} style={{ marginLeft: "3px" }}>
+                                        {option}
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
+                              </Col>
+                            )}
+
+                          {(
+                            newProduct.sub_ctgry_id === "Caps"
+                          ) && (
+                              <Col md={12}>
+                                <Label>Product Size</Label>
+                                <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+                                  {capsSize.map((option) => (
+                                    <div key={option}>
+                                      <input
+                                        type="checkbox"
+                                        id={option}
+                                        name={option}
+                                        checked={selectedCheckboxes.includes(
+                                          option
+                                        )}
+                                        onChange={handleChange}
+                                      />
+                                      <label htmlFor={option} style={{ marginLeft: "3px" }}>
+                                        {option}
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
+                              </Col>
+                            )}
+                        </Row>
                       </CardContent>
                     </Card>
                     <Card x-chunk="dashboard-07-chunk-1">
