@@ -153,6 +153,12 @@ const OrderView = () => {
                   {order ? order.address : "N/A"}
                 </TableCell>
               </TableRow>
+              <TableRow>
+                <TableHead className="">Delivery Address</TableHead>
+                <TableCell className="">
+                  {order ? order.delivery_address : "N/A"}
+                </TableCell>
+              </TableRow>
             </Table>
             <CardHeader className="">
               <div className="flex-items-center justify-between">

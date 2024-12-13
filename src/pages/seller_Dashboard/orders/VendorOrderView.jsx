@@ -33,6 +33,8 @@ const VendorOrderView = () => {
   const [pending, setPending] = useState([]);
   const [error, setError] = useState(null);
   const [fetching, setFetching] = useState(false);
+  const userDetails = localStorage.getItem("@@toke_$$_45598").replace(/"/g, "");
+
 
      const location = useLocation();
   const order = location.state?.order;
@@ -40,7 +42,7 @@ const VendorOrderView = () => {
   const getAllOrders = () => {
     setFetching(true);
     _get(
-      `api/gerordersbycustomerid?customer_id=${order.customer_id}`,
+      `api/getorderbycustomer_shop?customer_id=${order.customer_id}&shop_id=${userDetails}`,
       (resp) => { 
         setOrders(resp.results);
         console.log(orders);
@@ -169,8 +171,8 @@ const VendorOrderView = () => {
                 <TableCell>{order ? order.phone : "N/A"}</TableCell>
               </TableRow>
               <TableRow>
-                <TableHead className="hidden md:table-cell">Address</TableHead>
-                <TableCell className="hidden md:table-cell">
+                <TableHead className="">Address</TableHead>
+                <TableCell className="">
                   {order ? order.address : "N/A"}
                 </TableCell>
               </TableRow>
