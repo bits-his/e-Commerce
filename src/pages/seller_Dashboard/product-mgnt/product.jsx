@@ -95,7 +95,7 @@ export default function ProductsPage() {
 
   const [newProduct, setNewProduct] = useState(initialProductState);
 
-  const options = ["S", "M", "L", "XL", "XXL", "XXXL"];
+  const options = ["S", "M", "L", "XL", "XXL", "XXXL", "Free Size"];
   const shoesSize = ["38", "39", "40", "41", "42", "43", "44", "45"];
   const capsSize = ["20", "21", "22", "23", "24"];
 
@@ -670,11 +670,12 @@ export default function ProductsPage() {
                               </div>
                             )}
                         </div>
-                        <Row>
+                        <Row className="m-0 p-0">
                           {(
                             newProduct.sub_ctgry_id === "Singlet" ||
                             newProduct.sub_ctgry_id === "Under Wears" ||
-                            newProduct.sub_ctgry_id === "Kid Close"
+                            newProduct.sub_ctgry_id === "Kid Close" ||
+                            newProduct.sub_ctgry_id === "Abaya"
                           ) && (
                               <Col md={12}>
                                 <Label>Product Size</Label>
