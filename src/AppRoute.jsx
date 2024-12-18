@@ -24,6 +24,7 @@ import VendorOrderView from "./pages/seller_Dashboard/orders/VendorOrderView";
 import Protect from "./Protect";
 import CustomerView from "./pages/admin_dashboard/Customers/CustomerView";
 import Addnewcategory from "./pages/admin_dashboard/Category/Addnewcategory";
+import Delivery from "./pages/admin_dashboard/Delivery/Delivery";
 
 export default function AppRoute() {
   return (
@@ -65,6 +66,10 @@ export default function AppRoute() {
                 <Route index element={<Category />} />
                 <Route path="add_category" element={<Addnewcategory />} />
                 <Route path="edit_category" element={<Addnewcategory />} />
+              </Route>
+              <Route path="delivery-management">
+                <Route index element={<Delivery />} />
+                {/* <Route path="orders-view" element={<OrderView />} /> */}
               </Route>
               <Route path="reports">
                 <Route path="sales" element={<Product />} />

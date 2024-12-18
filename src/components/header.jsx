@@ -156,8 +156,8 @@ function Header() {
                     </>
                   }
                   items={[
+                    "Reports",
                     "Sales",
-                    "Product Performance",
                     "Inventory",
                     "Traffic & Conversion",
                   ]}

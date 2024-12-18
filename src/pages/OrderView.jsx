@@ -23,6 +23,7 @@ import { Badge, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { FaArrowLeft, FaEye } from "react-icons/fa";
 import "./style.css";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const OrderView = () => {
   const [orders, setOrders] = useState([]);
@@ -31,6 +32,8 @@ const OrderView = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [completed, setCompleted] = useState([]);
   const [pending, setPending] = useState([]);
+  const [delivered, setDelivered] = useState([]);
+  const [approved, setApproved] = useState([]);
   const [error, setError] = useState(null);
   const [fetching, setFetching] = useState(false);
   const location = useLocation();
@@ -56,29 +59,40 @@ const OrderView = () => {
     getAllOrders();
   }, []);
 
-  const filteredOrders = orders?.filter(
-    (orders) => orders.product.toLowerCase().includes(searchQuery.toLowerCase())
-    // || order.status.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  };
+  // Filter orders for today's date
+  const filterTodayOrders = (ordersList) => {
+    const todayDate = getTodayDate();
+    return ordersList.filter(
+      (order) => order.createdAt.slice(0, 10) === todayDate
+    );
+  };
+
+  // const filteredOrders = (orderList) =>
+  //   orderList.filter(
+  //     (order) =>
+  //       order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       order.status.toLowerCase().includes(searchQuery.toLowerCase())
+  //   );
+
+  const filteredOrders = (orderList, isAll = false) => {
+    const baseList = isAll ? orderList : filterTodayOrders(orderList);
+    return baseList.filter(
+      (order) =>
+        order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        order.status.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
 
   useEffect(() => {
-    setCompleted(orders?.filter((orders) => orders.status === "Completed")),
-      [orders];
-  });
-  const sortedComplete = completed?.filter(
-    (complete) =>
-      complete.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      complete.status.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  useEffect(() => {
-    setPending(orders?.filter((order) => order.status === "Pending")), [orders];
-  });
-  const sortedPending = pending?.filter(
-    (pend) =>
-      pend.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      pend.status.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    setCompleted(orders.filter((order) => order.status === "Completed"));
+    setPending(orders.filter((order) => order.status === "Pending"));
+    setApproved(orders.filter((order) => order.status === "Approved"));
+    setDelivered(orders.filter((order) => order.status === "Delivered"));
+  }, [orders]);
 
   const navigate = useNavigate();
 
@@ -103,6 +117,7 @@ const OrderView = () => {
             Back
           </Button>
         </div>
+
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader className="">
             <div className="flex-items-center justify-between">
@@ -160,58 +175,160 @@ const OrderView = () => {
                 </TableCell>
               </TableRow>
             </Table>
-            <CardHeader className="">
-              <div className="flex-items-center justify-between">
-                <CardTitle>Ordered Items</CardTitle>
+            <CardHeader className=""></CardHeader>
+            {fetching ? (
+              <div className="flex justify-center items-center py-8">
+                <Spinner />
               </div>
-            </CardHeader>
-            <div className="relative w-full overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="hidden sm:table-cell">
-                      <span className="sr-only">Image</span>
-                    </TableHead>
-                    <TableHead>Item</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead className="">Order date</TableHead>
-                    <TableHead>Order Number</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-center">Shop ID</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredOrders?.map((orders) => (
-                    <TableRow key={order.id}>
-                      <TableCell>
-                        <img
-                          src={orders.order_image}
-                          alt={orders.product}
-                          className="aspect-square rounded-md object-cover"
-                          width="64"
-                          height="64"
-                        />
-                        {/* {orders?.customer_id} */}
-                      </TableCell>
-                      <TableCell>{orders?.product}</TableCell>
-                      <TableCell>{orders?.quantity}</TableCell>
-                      <TableCell className="">
-                        {orders?.createdAt.slice(0, 10)}
-                      </TableCell>
-                      <TableCell>{orders?.order_no}</TableCell>
-                      <TableCell>{orders?.status}</TableCell>
-                      <TableHead className="text-center">
-                        {orders?.shop_id}
-                      </TableHead>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+            ) : (
+              <Tabs defaultValue="pending">
+                <div className="flex items-center">
+                  <TabsList>
+                    <TabsTrigger value="pending">Pending</TabsTrigger>
+                    <TabsTrigger value="approved">Approved</TabsTrigger>
+                    <TabsTrigger value="delivered">Delivered</TabsTrigger>
+                    <TabsTrigger value="complete">Completed</TabsTrigger>
+                    <TabsTrigger value="all">All</TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="all">
+                  {filteredOrders(orders, true).length > 0 ? (
+                    <TableSection
+                      orders={filteredOrders(orders, true)}
+                      title="All Orders"
+                    />
+                  ) : (
+                    <Card className="text-center p-4">
+                      <p className="text-center text-muted">
+                        There are no orders.
+                      </p>
+                    </Card>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="complete">
+                  {filteredOrders(completed).length > 0 ? (
+                    <TableSection
+                      orders={filteredOrders(completed)}
+                      title="Completed Orders"
+                    />
+                  ) : (
+                    <Card className="text-center p-4">
+                      <p className="text-center text-muted">
+                        There are no completed orders.
+                      </p>
+                    </Card>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="approved">
+                  {filteredOrders(approved).length > 0 ? (
+                    <TableSection
+                      orders={filteredOrders(approved)}
+                      title="Approved Orders"
+                    />
+                  ) : (
+                    <Card className="text-center p-4">
+                      <p className="text-center text-muted">
+                        There are no approved orders.
+                      </p>
+                    </Card>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="pending">
+                  {filteredOrders(pending).length > 0 ? (
+                    <TableSection
+                      orders={filteredOrders(pending)}
+                      title="Pending Orders"
+                    />
+                  ) : (
+                    <Card className="text-center p-4">
+                      <p className="text-center text-muted">
+                        There are no pending orders.
+                      </p>
+                    </Card>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="delivered">
+                  {filteredOrders(delivered).length > 0 ? (
+                    <TableSection
+                      orders={filteredOrders(delivered)}
+                      title="Delivered Orders"
+                    />
+                  ) : (
+                    <Card className="text-center p-4">
+                      <p className="text-center text-muted">
+                        There are no delivered orders.
+                      </p>
+                    </Card>
+                  )}
+                </TabsContent>
+              </Tabs>
+            )}
           </CardContent>
         </Card>
       </main>
     </div>
   );
 };
+
+const TableSection = ({ orders, title, searchQuery, setSearchQuery }) => (
+  <div>
+    <CardHeader>
+      <div className="flex items-center">
+        <CardTitle>{title}</CardTitle>
+
+        <div className="relative ml-auto flex-1 md:grow-0">
+          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search name..."
+            className="w-full rounded-lg bg-background ps-4 sm:w-[100px] md:w-[200px] lg:w-[300px]"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </div>
+    </CardHeader>
+    <div className="relative w-full overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="hidden sm:table-cell">Image</TableHead>
+            <TableHead>Item</TableHead>
+            <TableHead>Quantity</TableHead>
+            <TableHead>Order Date</TableHead>
+            <TableHead>Order Number</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead className="text-center">Shop ID</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {orders.map((order) => (
+            <TableRow key={order.id}>
+              <TableCell>
+                <img
+                  src={order.order_image}
+                  alt={order.product}
+                  className="aspect-square rounded-md object-cover"
+                  width="64"
+                  height="64"
+                />
+              </TableCell>
+              <TableCell>{order.product}</TableCell>
+              <TableCell>{order.quantity}</TableCell>
+              <TableCell>{order.createdAt.slice(0, 10)}</TableCell>
+              <TableCell>{order.order_no}</TableCell>
+              <TableCell>{order.status}</TableCell>
+              <TableCell className="text-center">{order.shop_id}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  </div>
+);
+
 export default OrderView;

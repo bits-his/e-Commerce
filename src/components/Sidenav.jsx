@@ -149,6 +149,18 @@ const Sidebar = () => {
                   Category
                 </NavLink>
 
+                <NavLink 
+                  className={`flex items-center gap-3 rounded-lg text-base px-3 py-2 transition-all mt-2 ${
+                    pathname === "/admin-dashboard/delivery-management"
+                      ? "navlink-items-2 text-dark"
+                      : "navlink-items"
+                  }`}
+                  to={"/admin-dashboard/delivery-management"}
+                >
+                  <Store className="h-4 w-4" />
+                  Delivery Management
+                </NavLink>
+
                 <DropdownBtn
                   title={
                     <>
@@ -156,8 +168,8 @@ const Sidebar = () => {
                     </>
                   }
                   items={[
+                    "Reports",
                     "Sales",
-                    "Product Performance",
                     "Inventory",
                     "Traffic & Conversion",
                   ]}
