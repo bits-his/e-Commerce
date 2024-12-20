@@ -18,12 +18,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { _get, globalColor } from "@/utils/Helper";
+import { _get, _put, globalColor } from "@/utils/Helper";
 import { Badge, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { FaArrowLeft, FaEye } from "react-icons/fa";
 import "./style.css";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import toast from "react-hot-toast";
 
 const OrderView = () => {
   const [orders, setOrders] = useState([]);
@@ -38,6 +39,10 @@ const OrderView = () => {
   const [fetching, setFetching] = useState(false);
   const location = useLocation();
   const order = location.state?.order;
+  const [loadingOrderId, setLoadingOrderId] = useState(null);
+
+  const [selectedOrders, setSelectedOrders] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   const getAllOrders = () => {
     setFetching(true);
@@ -59,27 +64,43 @@ const OrderView = () => {
     getAllOrders();
   }, []);
 
+  // const getTodayDate = () => {
+  //   const today = new Date();
+  //   return today.toISOString().split("T")[0];
+  // };
+  // // Filter orders for today's date
+  // const filterTodayOrders = (ordersList) => {
+  //   const todayDate = getTodayDate();
+  //   return ordersList.filter(
+  //     (order) => order.createdAt.slice(0, 10) === todayDate
+  //   );
+  // };
+
   const getTodayDate = () => {
     const today = new Date();
     return today.toISOString().split("T")[0];
   };
-  // Filter orders for today's date
-  const filterTodayOrders = (ordersList) => {
+
+  const getDateNDaysAgo = (n) => {
+    const date = new Date();
+    date.setDate(date.getDate() - n);
+    return date.toISOString().split("T")[0];
+  };
+
+  // Filter orders from the last 3 days
+  const filterRecentOrders = (ordersList) => {
     const todayDate = getTodayDate();
+    const threeDaysAgoDate = getDateNDaysAgo(3);
+
     return ordersList.filter(
-      (order) => order.createdAt.slice(0, 10) === todayDate
+      (order) =>
+        order.createdAt.slice(0, 10) >= threeDaysAgoDate &&
+        order.createdAt.slice(0, 10) <= todayDate
     );
   };
 
-  // const filteredOrders = (orderList) =>
-  //   orderList.filter(
-  //     (order) =>
-  //       order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //       order.status.toLowerCase().includes(searchQuery.toLowerCase())
-  //   );
-
   const filteredOrders = (orderList, isAll = false) => {
-    const baseList = isAll ? orderList : filterTodayOrders(orderList);
+    const baseList = isAll ? orderList : filterRecentOrders(orderList);
     return baseList.filter(
       (order) =>
         order.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -103,6 +124,87 @@ const OrderView = () => {
   if (!order) {
     return <div>No order details found.</div>;
   }
+
+  const [activeTab, setActiveTab] = useState(false); // Track the active tab
+
+  const handleButtonClick = () => {
+    alert("Button in approved tab clicked!");
+    console.log("Button in approved tab clicked!");
+    // Add your button logic here
+  };
+
+  const handleTabChange = () => {
+    setActiveTab(!activeTab);
+  };
+
+  const handleValidateOrder = (id, status) => {
+    setLoadingOrderId(id);
+    const obj = { id, status };
+
+    _put(
+      "api/aproveorder",
+      obj,
+      (res) => {
+        setLoadingOrderId(null);
+        if (res.success) {
+          toast.success(`Order ${status} successfully`);
+          getAllOrders();
+        } else {
+          toast.error("Error updating order status");
+        }
+      },
+      (err) => {
+        setLoadingOrderId(null);
+        console.log(err);
+        toast.error("An error occurred while updating status");
+      }
+    );
+  };
+
+  // Handle bulk order validation
+ const handleBulkOrder = () => {
+  if (selectedOrders.length === 0) {
+    toast.error("Please select at least one order to update");
+    return;
+  }
+
+  // Filter the selected orders to include only those in the 'Approved' tab
+  const approvedOrders = selectedOrders.filter((id) => {
+    const order = orders.find((order) => order.id === id);
+    return order && order.status === "Approved"; // Check if the order is in the 'Approved' tab
+  });
+
+  if (approvedOrders.length === 0) {
+    toast.error("No approved orders selected for delivery");
+    return;
+  }
+
+  approvedOrders.forEach((id) => handleValidateOrder(id, "Delivered"));
+  setSelectedOrders([]);
+  setSelectAll(false);
+};
+
+
+  // Handle order selection
+  const handleSelectOrder = (id) => {
+    setSelectedOrders((prevSelected) => {
+      if (prevSelected.includes(id)) {
+        return prevSelected.filter((orderId) => orderId !== id);
+      } else {
+        return [...prevSelected, id];
+      }
+    });
+  };
+
+  // Handle select all orders
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedOrders([]);
+    } else {
+      setSelectedOrders(orders.map((order) => order.id));
+    }
+    setSelectAll(!selectAll);
+  };
 
   return (
     <div>
@@ -226,6 +328,13 @@ const OrderView = () => {
                     <TableSection
                       orders={filteredOrders(approved)}
                       title="Approved Orders"
+                      activeTab={handleTabChange}
+                      handleValidateOrder={handleValidateOrder  }
+                      handleBulkOrder={handleBulkOrder}
+                      handleSelectAll={handleSelectAll}
+                      selectAll={selectAll}
+                      selectedOrders={selectedOrders}
+                      handleSelectOrder={handleSelectOrder}
                     />
                   ) : (
                     <Card className="text-center p-4">
@@ -274,7 +383,20 @@ const OrderView = () => {
   );
 };
 
-const TableSection = ({ orders, title, searchQuery, setSearchQuery }) => (
+const TableSection = ({
+  orders,
+  title,
+  searchQuery,
+  setSearchQuery,
+  activeTab,
+  handleButtonClick,
+  handleValidateOrder,
+  handleBulkOrder,
+  handleSelectAll,
+  selectAll = false,
+  selectedOrders = [],
+  handleSelectOrder,
+}) => (
   <div>
     <CardHeader>
       <div className="flex items-center">
@@ -292,10 +414,40 @@ const TableSection = ({ orders, title, searchQuery, setSearchQuery }) => (
         </div>
       </div>
     </CardHeader>
+    {activeTab ? (
+      <Button
+        variant="color1"
+        size="sm"
+        className="h-8 gap-1"
+        onClick={handleBulkOrder}
+      >
+        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+          Deliver Selected
+        </span>
+      </Button>
+    ) : null}
     <div className="relative w-full overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
+            {activeTab ? (
+              <TableHeader>
+                <Input
+                  type="checkbox"
+                  checked={selectAll}
+                  onChange={handleSelectAll}
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    marginLeft: 20,
+                    marginTop: 15,
+                    cursor: "pointer",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                  }}
+                />
+              </TableHeader>
+            ) : null}
             <TableHead className="hidden sm:table-cell">Image</TableHead>
             <TableHead>Item</TableHead>
             <TableHead>Quantity</TableHead>
@@ -303,11 +455,23 @@ const TableSection = ({ orders, title, searchQuery, setSearchQuery }) => (
             <TableHead>Order Number</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="text-center">Shop ID</TableHead>
+            {activeTab ? (
+              <TableHead className="text-center w-[50px]">Action</TableHead>
+            ) : null}
           </TableRow>
         </TableHeader>
         <TableBody>
           {orders.map((order) => (
             <TableRow key={order.id}>
+              {activeTab ? (
+                <TableCell>
+                  <input
+                    type="checkbox"
+                    checked={selectedOrders.includes(order.id)}
+                    onChange={() => handleSelectOrder(order.id)}
+                  />
+                </TableCell>
+              ) : null}
               <TableCell>
                 <img
                   src={order.order_image}
@@ -323,6 +487,18 @@ const TableSection = ({ orders, title, searchQuery, setSearchQuery }) => (
               <TableCell>{order.order_no}</TableCell>
               <TableCell>{order.status}</TableCell>
               <TableCell className="text-center">{order.shop_id}</TableCell>
+
+              {activeTab ? (
+                <TableCell>
+                  <Button
+                    variant="color1"
+                    size="sm"
+                    onClick={() => handleValidateOrder(order.id, "Delivered")}
+                  >
+                    Deliver
+                  </Button>
+                </TableCell>
+              ) : null}
             </TableRow>
           ))}
         </TableBody>
