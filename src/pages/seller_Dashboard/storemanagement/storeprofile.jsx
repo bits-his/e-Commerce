@@ -91,7 +91,7 @@ const Storeprofile = () => {
   const getProduct = () => {
     setLoading(true)
     _get(
-      `api/get-products?shop_id="${userDetails.slice(1, -1)}"`,
+      `api/get-products?shop_id="${userDetails?.slice(1, -1)}"`,
       (resp) => {
         setProducts(resp.result[0]);
         setLoading(false);

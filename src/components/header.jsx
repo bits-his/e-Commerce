@@ -267,7 +267,7 @@ function Header() {
                   isActive={activeDropdown === "Order management"}
                   open={pathname.includes("/orders")}
                 /> */}
-                <DropdownBtn
+                {/* <DropdownBtn
                   title={
                     <>
                       <Bell className="h-4 w-4" /> Notifications
@@ -282,7 +282,7 @@ function Header() {
                   isActive={activeDropdown === "Order notifiction"}
                   closeSheet={closeSheet}
                   // open={pathname.includes("/product-mgmt")}
-                />
+                /> */}
               </>
             )}
           </nav>

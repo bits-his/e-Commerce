@@ -87,7 +87,7 @@ export default function AppRoute() {
             <Route path="/seller-dashboard">
               <Route index element={<Sellerdashboard />} />
               {/* <Route path="orders/pending" element={<PendingOrders />} />
-          <Route path="orders/approved" element={<ApprovedOrders />} /> */}
+              <Route path="orders/approved" element={<ApprovedOrders />} /> */}
               {/* <Route path="orders/total" element={<TotalOrders />} /> */}
               <Route path="orders/total">
                 <Route index element={<TotalOrders />} />
