@@ -33,6 +33,7 @@ const Veiw_Product = ({
   handleEditButtonClick,
   available,
   outOfStock,
+  loading,
 }) => {
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -223,27 +224,33 @@ const Veiw_Product = ({
                             alt="Product image"
                             className="aspect-square rounded-md object-cover"
                             height="64"
-                            src={product.prod_images.split(",")[0]}
+                            src={
+                              product.image_urls
+                                ? product.image_urls?.split(",")[0]
+                                : defaultImg
+                            }
                             width="64"
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          {product.product_name}
+                          {product.name}
                         </TableCell>
                         <TableCell className="text-center">
-                          {product.product_status === "available" ? (
-                            <Badge variant="outline">
-                              {product.product_status}
+                          {product.prod_status === "Available" ? (
+                            <Badge variant="color3">
+                              {product.prod_status}
                             </Badge>
-                          ) : (
-                            <Badge variant="destructive">Out of Stock</Badge>
-                          )}
+                          ) : product.prod_status === "Out of Stock" ? (
+                            <Badge variant="color2">
+                              {product.prod_status}
+                            </Badge>
+                          ) : null}
                         </TableCell>
                         <TableCell className="hidden md:table-cell text-end">
-                          {separator(product.product_price)}
+                          {separator(product.price)}
                         </TableCell>
                         <TableCell className="hidden md:table-cell text-center">
-                          {product.product_quantity}
+                          {product.qty}
                         </TableCell>
                         <TableCell className="p-2">
                           <div className="justify-center items-center gap-2 md:flex sm:flex">
@@ -259,7 +266,9 @@ const Veiw_Product = ({
                               variant="destructive"
                               size="icon"
                               className="h-7 w-7"
-                              onClick={() => handleDeleteProduct(product.id)}
+                              onClick={() =>
+                                handleDeleteProduct(product.product_id)
+                              }
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
@@ -285,7 +294,8 @@ const Veiw_Product = ({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Table>
+            <div className="overflow-x-auto">
+              <Table className="w-full">
                 <TableHeader>
                   <TableRow>
                     <TableHead className="hidden w-[100px] sm:table-cell">
@@ -317,27 +327,33 @@ const Veiw_Product = ({
                             alt="Product image"
                             className="aspect-square rounded-md object-cover"
                             height="64"
-                            src={product.prod_images.split(",")[0]}
+                            src={
+                              product.image_urls
+                                ? product.image_urls?.split(",")[0]
+                                : defaultImg
+                            }
                             width="64"
                           />
                         </TableCell>
-                        <TableCell className="font-medium">
-                          {product.product_name}
+                        <TableCell className="font-medium whitespace-nowrap">
+                          {product.name}
                         </TableCell>
-                        <TableCell className="text-center">
-                          {product.product_status === "available" ? (
-                            <Badge variant="outline">
-                              {product.product_status}
+                        <TableCell className="text-center whitespace-nowrap">
+                          {product.prod_status === "Available" ? (
+                            <Badge variant="color3">
+                              {product.prod_status}
                             </Badge>
-                          ) : (
-                            <Badge variant="destructive">Out of Stock</Badge>
-                          )}
+                          ) : product.prod_status === "Out of Stock" ? (
+                            <Badge variant="color2">
+                              {product.prod_status}
+                            </Badge>
+                          ) : null}
                         </TableCell>
-                        <TableCell className="hidden md:table-cell text-end">
-                          {separator(product.product_price)}
+                        <TableCell className="hidden md:table-cell text-end whitespace-nowrap">
+                          {separator(product.price)}
                         </TableCell>
                         <TableCell className="hidden md:table-cell text-center">
-                          {product.product_quantity}
+                          {product.qty}
                         </TableCell>
                         <TableCell className="p-2">
                           <div className="justify-center items-center gap-2 md:flex sm:flex">
@@ -353,7 +369,9 @@ const Veiw_Product = ({
                               variant="destructive"
                               size="icon"
                               className="h-7 w-7"
-                              onClick={() => handleDeleteProduct(product.id)}
+                              onClick={() =>
+                                handleDeleteProduct(product.product_id)
+                              }
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
@@ -363,7 +381,8 @@ const Veiw_Product = ({
                     ))
                   )}
                 </TableBody>
-              </Table>
+                              </Table>
+                          </div>
             </CardContent>
             <CardFooter>
               <div className="text-xs text-muted-foreground">pagnation</div>

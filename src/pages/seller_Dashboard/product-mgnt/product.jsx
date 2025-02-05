@@ -406,14 +406,14 @@ export default function ProductsPage() {
 
   useEffect(() => {
     setAvailable(
-      products.filter((product) => product.product_status === "available")
+      products.filter((product) => product.prod_status === "Available")
     ),
       [products];
   });
 
   useEffect(() => {
     setOutOfStock(
-      products.filter((product) => product.product_status === "out of stock")
+      products.filter((product) => product.prod_status === "Out of Stock")
     ),
       [products];
   });
@@ -461,6 +461,7 @@ export default function ProductsPage() {
                 handleEditButtonClick={handleEditButtonClick}
                 available={available}
                 outOfStock={outOfStock}
+                loading={Loading}
               />
           )}
         </div>
