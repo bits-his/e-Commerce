@@ -427,7 +427,7 @@ const TableSection = ({
       </Button>
     ) : null}
     <div className="relative w-full overflow-x-auto">
-      <Table>
+        <Table>
         <TableHeader>
           <TableRow>
             {activeTab ? (
