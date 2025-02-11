@@ -18,9 +18,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { separator } from "@/utils/Helper";
-import { Pencil, PlusCircle, Search, Trash2 } from "lucide-react";
-import React from "react";
+import { _get, separator } from "@/utils/Helper";
+import { Eye, Pencil, PlusCircle, Search, Trash2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Veiw_Product = ({
   searchQuery,
@@ -35,6 +36,38 @@ const Veiw_Product = ({
   outOfStock,
   loading,
 }) => {
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const getCategories = () => {
+    _get(
+      "api/categories",
+      (resp) => {
+        setCategories(resp.results[0]);
+      },
+      (err) => {
+        setError(err);
+      }
+    );
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const filteredProducts = products.filter((product) =>
+    product.product_name?.toLowerCase().includes(searchQuery?.toLowerCase())
+  );
+
+  const handleViewClick = (ctgry) => {
+    // alert(JSON.stringify(ctgry.ctgry_id));
+    let cat_id = ctgry.ctgry_id;
+    navigate(`product_by_category?category=${cat_id}`, { state: { ctgry } });
+    toggleModal();
+  };
+
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
       <Tabs defaultValue="all">
@@ -71,324 +104,69 @@ const Veiw_Product = ({
             </Button>
           </div>
         </div>
-        <TabsContent value="all">
-          <Card x-chunk="dashboard-06-chunk-0">
-            <CardHeader>
-              <CardTitle>Products </CardTitle>
-              {/* {JSON.stringify(products)} */}
-              <CardDescription>
-                Manage your products and view their sales performance.
-              </CardDescription>
-            </CardHeader>
-            {/* {JSON.stringify(userDetails.slice(1, -1))} */}
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="hidden w-[100px] sm:table-cell">
-                      <span className="sr-only">Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                    <TableHead className="hidden md:table-cell text-center">
-                      Price
-                    </TableHead>
-                    <TableHead className="hidden md:table-cell text-center">
-                      In stock
-                    </TableHead>
-                    <TableHead className="text-center">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {products.length === 0 ? (
+        <Tabs>
+          <TabsContent>
+            <Card x-chunk="dashboard-06-chunk-0">
+              <CardHeader>
+                <CardTitle>Products </CardTitle>
+                <CardDescription>
+                  Manage your products and view their sales performance.
+                </CardDescription>
+              </CardHeader>
+              {/* {JSON.stringify(categories)} */}
+              <CardContent style={{ overflow: "auto" }}>
+                <Table>
+                  <TableHeader>
                     <TableRow>
-                      <TableCell colSpan="6" className="text-center">
-                        No product(s)
-                      </TableCell>
+                      <TableHead className="hidden w-[100px] sm:table-cell">
+                        <span className="sr-only">Image</span>
+                      </TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead className="text-center">Actions</TableHead>
                     </TableRow>
-                  ) : (
-                    products.map((product, idx) => (
+                  </TableHeader>
+                  <TableBody>
+                    {categories.map((ctgry, idx) => (
                       <TableRow key={idx}>
-                        <TableCell className="hidden sm:table-cell p-2">
+                        <TableCell className="sm:table-cell p-2">
                           <img
                             alt="Product image"
                             className="aspect-square rounded-md object-cover"
                             height="64"
                             src={
-                              product.image_urls
-                                ? product.image_urls?.split(",")[0]
+                              ctgry.ctgry_image_urls
+                                ? ctgry.ctgry_image_urls.split(",")[0]
                                 : defaultImg
                             }
                             width="64"
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          {product.name}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {product.prod_status === "Available" ? (
-                            <Badge variant="color3">
-                              {product.prod_status}
-                            </Badge>
-                          ) : product.prod_status === "Out of Stock" ? (
-                            <Badge variant="color2">
-                              {product.prod_status}
-                            </Badge>
-                          ) : null}
-
-                          {/* {product.product_status === "available" ? (
-                                    <Badge variant="color3">
-                                      {product.product_status}
-                                    </Badge>
-                                  ) : (null
-                                    // <Badge variant="color2">Out of Stock</Badge>
-                                  )} */}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell text-end">
-                          {separator(product.price)}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell text-center">
-                          {product.qty}
+                          {ctgry.ctgry_name}
                         </TableCell>
                         <TableCell className="p-2">
                           <div className="justify-center items-center gap-2 md:flex sm:flex">
                             <Button
                               variant="warning"
                               size="icon"
-                              className="h-7 w-7"
-                              onClick={() => handleEditButtonClick(product)}
+                              className="h-7 w-10"
+                              onClick={() => handleViewClick(ctgry)}
                             >
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="destructive"
-                              size="icon"
-                              className="h-7 w-7"
-                              onClick={() =>
-                                handleDeleteProduct(product.product_id)
-                              }
-                            >
-                              <Trash2 className="h-4 w-4" />
+                              <Eye className="h-4 w-4" />
                             </Button>
                           </div>
                         </TableCell>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-            <CardFooter>
-              <div className="text-xs text-muted-foreground">pagnation</div>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="avaliable">
-          <Card x-chunk="dashboard-06-chunk-0">
-            <CardHeader>
-              <CardTitle>Products</CardTitle>
-              <CardDescription>
-                Manage your products and view their sales performance.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="hidden w-[100px] sm:table-cell">
-                      <span className="sr-only">Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                    <TableHead className="hidden md:table-cell text-center">
-                      Price
-                    </TableHead>
-                    <TableHead className="hidden md:table-cell text-center">
-                      In stock
-                    </TableHead>
-                    <TableHead className="text-center">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {available.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan="6" className="text-center">
-                        No product(s)
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    available.map((product, idx) => (
-                      <TableRow key={idx}>
-                        <TableCell className="hidden sm:table-cell p-2">
-                          <img
-                            alt="Product image"
-                            className="aspect-square rounded-md object-cover"
-                            height="64"
-                            src={
-                              product.image_urls
-                                ? product.image_urls?.split(",")[0]
-                                : defaultImg
-                            }
-                            width="64"
-                          />
-                        </TableCell>
-                        <TableCell className="font-medium">
-                          {product.name}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {product.prod_status === "Available" ? (
-                            <Badge variant="color3">
-                              {product.prod_status}
-                            </Badge>
-                          ) : product.prod_status === "Out of Stock" ? (
-                            <Badge variant="color2">
-                              {product.prod_status}
-                            </Badge>
-                          ) : null}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell text-end">
-                          {separator(product.price)}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell text-center">
-                          {product.qty}
-                        </TableCell>
-                        <TableCell className="p-2">
-                          <div className="justify-center items-center gap-2 md:flex sm:flex">
-                            <Button
-                              variant="warning"
-                              size="icon"
-                              className="h-7 w-7"
-                              onClick={() => handleEditButtonClick(product)}
-                            >
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="destructive"
-                              size="icon"
-                              className="h-7 w-7"
-                              onClick={() =>
-                                handleDeleteProduct(product.product_id)
-                              }
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-            <CardFooter>
-              <div className="text-xs text-muted-foreground">pagnation</div>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="out-of-stock">
-          <Card x-chunk="dashboard-06-chunk-0">
-            <CardHeader>
-              <CardTitle>Products</CardTitle>
-              <CardDescription>
-                Manage your products and view their sales performance.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-            <div className="overflow-x-auto">
-              <Table className="w-full">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="hidden w-[100px] sm:table-cell">
-                      <span className="sr-only">Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                    <TableHead className="hidden md:table-cell text-center">
-                      Price
-                    </TableHead>
-                    <TableHead className="hidden md:table-cell text-center">
-                      In stock
-                    </TableHead>
-                    <TableHead className="text-center">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {outOfStock.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan="6" className="text-center">
-                        No product(s)
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    outOfStock.map((product, idx) => (
-                      <TableRow key={idx}>
-                        <TableCell className="hidden sm:table-cell p-2">
-                          <img
-                            alt="Product image"
-                            className="aspect-square rounded-md object-cover"
-                            height="64"
-                            src={
-                              product.image_urls
-                                ? product.image_urls?.split(",")[0]
-                                : defaultImg
-                            }
-                            width="64"
-                          />
-                        </TableCell>
-                        <TableCell className="font-medium whitespace-nowrap">
-                          {product.name}
-                        </TableCell>
-                        <TableCell className="text-center whitespace-nowrap">
-                          {product.prod_status === "Available" ? (
-                            <Badge variant="color3">
-                              {product.prod_status}
-                            </Badge>
-                          ) : product.prod_status === "Out of Stock" ? (
-                            <Badge variant="color2">
-                              {product.prod_status}
-                            </Badge>
-                          ) : null}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell text-end whitespace-nowrap">
-                          {separator(product.price)}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell text-center">
-                          {product.qty}
-                        </TableCell>
-                        <TableCell className="p-2">
-                          <div className="justify-center items-center gap-2 md:flex sm:flex">
-                            <Button
-                              variant="warning"
-                              size="icon"
-                              className="h-7 w-7"
-                              onClick={() => handleEditButtonClick(product)}
-                            >
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="destructive"
-                              size="icon"
-                              className="h-7 w-7"
-                              onClick={() =>
-                                handleDeleteProduct(product.product_id)
-                              }
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-                              </Table>
-                          </div>
-            </CardContent>
-            <CardFooter>
-              <div className="text-xs text-muted-foreground">pagnation</div>
-            </CardFooter>
-          </Card>
-        </TabsContent>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+              <CardFooter>
+                <div className="text-xs text-muted-foreground">pagnation</div>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+        </Tabs>{" "}
       </Tabs>
     </main>
   );

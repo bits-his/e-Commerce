@@ -407,16 +407,16 @@ export default function ProductsPage() {
   useEffect(() => {
     setAvailable(
       products.filter((product) => product.prod_status === "Available")
-    ),
-      [products];
-  });
+    )
+      // [products];
+  }, [products]);
 
   useEffect(() => {
     setOutOfStock(
       products.filter((product) => product.prod_status === "Out of Stock")
-    ),
-      [products];
-  });
+    )
+      // [products];
+  }, [products]);
 
   return (
     <>

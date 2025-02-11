@@ -25,6 +25,7 @@ import Protect from "./Protect";
 import CustomerView from "./pages/admin_dashboard/Customers/CustomerView";
 import Addnewcategory from "./pages/admin_dashboard/Category/Addnewcategory";
 import Delivery from "./pages/admin_dashboard/Delivery/Delivery";
+import ProductbyCtgry from "./pages/seller_Dashboard/product-mgnt/ProductbyCtgry";
 
 export default function AppRoute() {
   return (
@@ -98,6 +99,7 @@ export default function AppRoute() {
                 <Route path="product">
                   <Route index element={<Productmgnt />} />
                   <Route path="addproduct" element={<AddProductPage />} />
+                  <Route path="product_by_category" element={<ProductbyCtgry />} />
                 </Route>
               </Route>
 
