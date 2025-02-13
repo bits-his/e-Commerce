@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -10,10 +11,10 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../storemanagement/Storeprofile.css";
-import pic1 from "../storemanagement/pics/pic1.jpg";
-import pic2 from "../storemanagement/pics/pic2.jpg";
-import pic3 from "../storemanagement/pics/pic3.jpg";
-import pic4 from "../storemanagement/pics/pic4.jpg";
+// import pic1 from "../storemanagement/pics/pic1.jpg";
+// import pic2 from "../storemanagement/pics/pic2.jpg";
+// import pic3 from "../storemanagement/pics/pic3.jpg";
+// import pic4 from "../storemanagement/pics/pic4.jpg";
 import logo from "../storemanagement/pics/brand.jpg";
 import Skeleton from "react-loading-skeleton";
 import { Alert, Input } from "reactstrap";
@@ -107,9 +108,9 @@ const Storeprofile = () => {
     getProduct();
   }, []);
 
-  const filteredProducts = products.filter((product) =>
-    product.product_name?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // const filteredProducts = products.filter((product) =>
+  //   product.product_name?.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -216,7 +217,7 @@ const Storeprofile = () => {
               <div
                 key={idx}
                 className="text-decoration-none"
-                onClick={() => handleItemClick(item.id)}
+                // onClick={() => handleItemClick(item.id)}
               >
                 <div className="shadow rounded">
                   <div className="ratio ratio-1x1 bg-light overflow-hidden rounded-top">
