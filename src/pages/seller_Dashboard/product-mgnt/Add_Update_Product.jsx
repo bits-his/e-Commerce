@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { separator } from "@/utils/Helper";
-import { ChevronLeft, PlusCircle, Upload } from "lucide-react";
+import { ChevronLeft, PlusCircle, Upload, X } from "lucide-react";
 import React from "react";
 import { Col, Row, Spinner } from "reactstrap";
 

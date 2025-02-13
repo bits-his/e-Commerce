@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
 
 export const globalColor = {
-  grpcolor1: '#a52a2a',
-  grpcolor2: '#542b2b',
-  grpcolor3: '#f2eadb',
+  grpcolor1: "#a52a2a",
+  grpcolor2: "#542b2b",
+  grpcolor3: "#f2eadb",
 };
 
 // export const server_url = "https://server.brainstorm.ng/kasuwa-backend";
@@ -67,7 +67,6 @@ export const _delete = (url, success = (f) => f, error = (f) => f) => {
     });
 };
 
-
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -125,6 +124,6 @@ export function formatNumber(n = 0) {
 }
 
 export const separator = (num) => {
-  const x = Number(num)
-  return x.toLocaleString('en-US')
-}
+  const x = Number(num);
+  return x.toLocaleString("en-US");
+};
