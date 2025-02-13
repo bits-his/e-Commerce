@@ -39,7 +39,7 @@ const ProductbyCtgry = () => {
     _get(
       `api/get-product-by-ctgry_id?ctgry_id=${cat_id}`,
       (resp) => {
-        setProducts(resp.response[0]);
+        setProducts(resp.result[0]);
         setLoading(false);
       },
       (err) => {
