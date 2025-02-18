@@ -65,7 +65,7 @@ const Veiw_Product = ({
     // alert(JSON.stringify(ctgry.ctgry_id));
     let cat_id = ctgry.ctgry_id;
     navigate(`product_by_category?category=${cat_id}`, { state: { ctgry } });
-    toggleModal();
+    // toggleModal();
   };
 
   return (

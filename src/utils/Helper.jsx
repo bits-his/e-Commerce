@@ -6,8 +6,8 @@ export const globalColor = {
   grpcolor3: "#f2eadb",
 };
 
-export const server_url = "https://server.brainstorm.ng/kasuwa-backend";
-// export const server_url = "http://localhost:3002";
+// export const server_url = "https://server.brainsto rm.ng/kasuwa-backend";
+export const server_url = "http://localhost:3002";
 
 export const _post = (url, data, success = (f) => f, error = (f) => f) => {
   const token = localStorage.getItem("@@token");

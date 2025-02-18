@@ -18,11 +18,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import useQuery, { _get, separator } from "@/utils/Helper";
+import useQuery, { _delete, _get, _put, separator } from "@/utils/Helper";
 import { ArrowLeft, Pencil, PlusCircle, Search, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import defaultImg from "@/utils/Helper";
+import toast from "react-hot-toast";
 
 const ProductbyCtgry = () => {
   const [showForm, setShowForm] = useState(false);
@@ -33,13 +34,15 @@ const ProductbyCtgry = () => {
   const [outOfStock, setOutOfStock] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [currentProduct, setCurrentProduct] = useState(null);
+
   let userDetails = localStorage.getItem("@@toke_$$_45598");
   const cat_id = useQuery().get("category");
   const getProduct = () => {
     _get(
       `api/get-product-by-ctgry_id?ctgry_id=${cat_id}`,
       (resp) => {
-        setProducts(resp.result[0]);
+        setProducts(resp.response[0]);
         setLoading(false);
       },
       (err) => {
@@ -47,6 +50,57 @@ const ProductbyCtgry = () => {
         setLoading(false);
       }
     );
+  };
+
+  const handleEditProduct = () => {
+    const obj = { ...currentProduct };
+
+    _put(
+      `api/products/${currentProduct.id}`,
+      obj,
+      (res) => {
+        const updatedProducts = products.map(
+          (product) =>
+            product.id === currentProduct.id ? res.success : product,
+          console.log(res)
+        );
+        setProducts(updatedProducts);
+        console.log(updatedProducts);
+        navigate(0);
+        setShowForm(false);
+        setEditMode(false);
+        toast.success("Product updated successfully");
+      },
+      (err) => {
+        toast.error("Failed to update product");
+        console.error(err);
+      }
+    );
+  };
+
+  const handleEditButtonClick = (product) => {
+    setCurrentProduct(product);
+    setEditMode(true);
+    setShowForm(true);
+  };
+
+  const handleDeleteProduct = (product_id) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      _delete(
+        `api/products/${product_id}`,
+        (res) => {
+          setProducts(
+            products.filter((product) => product.product_id !== product_id)
+          );
+          toast.success("Product deleted successfully");
+          console.log(res, "res from server");
+        },
+        (err) => {
+          toast.error("An error occurred while deleting the product");
+          console.log(err);
+        }
+      );
+    }
   };
 
   useEffect(() => {
