@@ -135,7 +135,7 @@ const ProductbyCtgry = () => {
         >
           <ArrowLeft /> Back
         </Button>
-        <div className="flex items-center pt-3">
+        {/* <div className="flex items-center pt-3">
           <TabsList>
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="avaliable">Available</TabsTrigger>
@@ -167,7 +167,7 @@ const ProductbyCtgry = () => {
               </span>
             </Button>
           </div>
-        </div>
+        </div> */}
         <TabsContent value="all">
           <Card x-chunk="dashboard-06-chunk-0">
             <CardHeader>
