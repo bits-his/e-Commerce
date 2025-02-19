@@ -4,17 +4,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import {
-  _get,
-  _post,
-  _put,
-  _delete,
-  server_url,
-} from "../../../utils/Helper";
+import { _get, _post, _put, _delete, server_url } from "../../../utils/Helper";
 import defaultImg from "../../../assets/No-Image-Placeholder.jpg";
 import imageCompression from "browser-image-compression";
 import Veiw_Product from "./Veiw_Product";
 import Add_Update_Product from "./Add_Update_Product";
+import AddProduct from "./product/AddProduct";
 
 export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
@@ -59,7 +54,6 @@ export default function ProductsPage() {
   const shoesSize = ["38", "39", "40", "41", "42", "43", "44", "45"];
   const capsSize = ["20", "21", "22", "23", "24"];
 
-
   const resetForm = () => {
     setNewProduct(initialProductState);
     setprod_images([]);
@@ -69,18 +63,20 @@ export default function ProductsPage() {
     const { name, checked } = e.target;
 
     setSelectedCheckboxes((prev) => {
-      const ischecked = checked ? [...prev, name] : prev.filter((item) => item !== name);
-      handleSizeChange(ischecked.join(", "))
+      const ischecked = checked
+        ? [...prev, name]
+        : prev.filter((item) => item !== name);
+      handleSizeChange(ischecked.join(", "));
       return ischecked;
-    })
-
-  }
+    });
+  };
 
   const handleSizeChange = (size) => {
     setNewProduct((prevData) => ({
-      ...prevData, prod_size: size
-    }))
-  }
+      ...prevData,
+      prod_size: size,
+    }));
+  };
 
   const getProduct = () => {
     _get(
@@ -138,7 +134,6 @@ export default function ProductsPage() {
   }, [newProduct.ctgry_id]);
 
   const handleInputChange = (e) => {
-
     const { id, value } = e.target;
     console.log(value, "id value");
 
@@ -231,7 +226,9 @@ export default function ProductsPage() {
     );
 
     // Filter out any failed compressions (null values)
-    const validCompressedImages = compressedImages.filter((image) => image !== null);
+    const validCompressedImages = compressedImages.filter(
+      (image) => image !== null
+    );
 
     setprod_images((prevImages) => [...prevImages, ...validCompressedImages]);
   };
@@ -379,7 +376,9 @@ export default function ProductsPage() {
       _delete(
         `api/products/${product_id}`,
         (res) => {
-          setProducts(products.filter((product) => product.product_id !== product_id));
+          setProducts(
+            products.filter((product) => product.product_id !== product_id)
+          );
           toast.success("Product deleted successfully");
           console.log(res, "res from server");
         },
@@ -407,15 +406,15 @@ export default function ProductsPage() {
   useEffect(() => {
     setAvailable(
       products.filter((product) => product.prod_status === "Available")
-    )
-      // [products];
+    );
+    // [products];
   }, [products]);
 
   useEffect(() => {
     setOutOfStock(
       products.filter((product) => product.prod_status === "Out of Stock")
-    )
-      // [products];
+    );
+    // [products];
   }, [products]);
 
   return (
@@ -424,18 +423,15 @@ export default function ProductsPage() {
         <div className="flex flex-col sm:gap-4 sm:py-4">
           {/* ==============add and update prodeuct================ */}
           {showForm ? (
-            <Add_Update_Product
+            <AddProduct
               handleAddProduct={handleAddProduct}
               handleBackButtonClick={handleBackButtonClick}
               handleChange={handleChange}
               handleDiscard={handleDiscard}
-              handleEditProduct={handleEditProduct}
               handleImageChange={handleImageChange}
               handleInputChange={handleInputChange}
               handleSelectChange={handleSelectChange}
-              editMode={editMode}
               Loading={Loading}
-              currentProduct={currentProduct}
               newProduct={newProduct}
               categories={categories}
               subCategories={subCategories}
@@ -447,22 +443,22 @@ export default function ProductsPage() {
               prod_images={prod_images}
               removeImage={removeImage}
               showSizeInput={showSizeInput}
-             />
+            />
           ) : (
             // ======================================================products view=================================================================
-              <Veiw_Product
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                setEditMode={setEditMode}
-                setShowForm={setShowForm}
-                products={products}
-                defaultImg={defaultImg}
-                handleDeleteProduct={handleDeleteProduct}
-                handleEditButtonClick={handleEditButtonClick}
-                available={available}
-                outOfStock={outOfStock}
-                loading={Loading}
-              />
+            <Veiw_Product
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              setEditMode={setEditMode}
+              setShowForm={setShowForm}
+              products={products}
+              defaultImg={defaultImg}
+              handleDeleteProduct={handleDeleteProduct}
+              handleEditButtonClick={handleEditButtonClick}
+              available={available}
+              outOfStock={outOfStock}
+              loading={Loading}
+            />
           )}
         </div>
       </div>

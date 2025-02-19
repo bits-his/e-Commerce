@@ -79,9 +79,9 @@ const ProductbyCtgry = () => {
   };
 
   const handleEditButtonClick = (product) => {
-    setCurrentProduct(product);
-    setEditMode(true);
-    setShowForm(true);
+    // Navigate to the edit route with the product ID
+    // navigate(`/edit_product/${product.product_id}`);
+    navigate(`edit_product/${product.product_id}`);
   };
 
   const handleDeleteProduct = (product_id) => {

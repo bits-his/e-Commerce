@@ -26,6 +26,7 @@ import CustomerView from "./pages/admin_dashboard/Customers/CustomerView";
 import Addnewcategory from "./pages/admin_dashboard/Category/Addnewcategory";
 import Delivery from "./pages/admin_dashboard/Delivery/Delivery";
 import ProductbyCtgry from "./pages/seller_Dashboard/product-mgnt/ProductbyCtgry";
+import EditProduct from "./pages/seller_Dashboard/product-mgnt/product/EditProduct";
 
 export default function AppRoute() {
   return (
@@ -99,7 +100,13 @@ export default function AppRoute() {
                 <Route path="product">
                   <Route index element={<Productmgnt />} />
                   <Route path="addproduct" element={<AddProductPage />} />
-                  <Route path="product_by_category" element={<ProductbyCtgry />} />
+                  <Route path="product_by_category">
+                    <Route index element={<ProductbyCtgry />} />
+                    <Route
+                      path="edit_product/:productId"
+                      element={<EditProduct />}
+                    />
+                  </Route>
                 </Route>
               </Route>
 
