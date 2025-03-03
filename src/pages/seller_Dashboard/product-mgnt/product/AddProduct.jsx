@@ -184,10 +184,13 @@ const AddProduct = ({
                       </SelectContent>
                     </Select>
                   </div>
-                  {(newProduct.sub_ctgry_id === "Yard" ||
-                    newProduct.sub_ctgry_id === "Materials" ||
-                    newProduct.sub_ctgry_id === "Shadda" ||
-                    newProduct.sub_ctgry_id === "Men_Lace") && (
+                  {[
+                    "Yard",
+                    "Materials",
+                    "Shadda",
+                    "Men_Lace",
+                    "Abaya",
+                  ].includes(newProduct.sub_ctgry_id) && (
                     <div className="grid gap-3">
                       <Label htmlFor="prod_size">Measurement</Label>
                       {!showSizeInputchange ? (
@@ -203,16 +206,47 @@ const AddProduct = ({
                             <SelectValue placeholder="Select size" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Per 1 Yard">
-                              Per 1 Yard
-                            </SelectItem>
-                            <SelectItem value="Per 3 Yard">
-                              Per 3 Yard
-                            </SelectItem>
-                            <SelectItem value="Per 5 Yard">
-                              Per 5 Yard
-                            </SelectItem>
-                            <SelectItem value="Others">Others</SelectItem>
+                            {newProduct.sub_ctgry_id === "Men_Lace" ? (
+                              <>
+                                <SelectItem value="Per 5 Yard">
+                                  Per 5 Yard
+                                </SelectItem>
+                                <SelectItem value="Per 10 Yard">
+                                  Per 10 Yard
+                                </SelectItem>
+                              </>
+                            ) : newProduct.sub_ctgry_id === "Abaya" ? (
+                              <>
+                                <SelectItem value="Egyptian Abaya">
+                                  Egyptian Abaya
+                                </SelectItem>
+                                <SelectItem value="Dubai Abaya">
+                                  Dubai Abaya
+                                </SelectItem>
+                                <SelectItem value="Moroccan Abaya">
+                                  Moroccan Abaya
+                                </SelectItem>
+                              </>
+                            ) : (
+                              <>
+                                <SelectItem value="Per 1 Yard">
+                                  Per 1 Yard
+                                </SelectItem>
+                                <SelectItem value="Per 3 Yard">
+                                  Per 3 Yard
+                                </SelectItem>
+                                <SelectItem value="Per 4 Yard">
+                                  Per 4 Yard
+                                </SelectItem>
+                                <SelectItem value="Per 5 Yard">
+                                  Per 5 Yard
+                                </SelectItem>
+                                <SelectItem value="Per Meter">
+                                  Per Meter
+                                </SelectItem>
+                                <SelectItem value="Others">Others</SelectItem>
+                              </>
+                            )}
                           </SelectContent>
                         </Select>
                       ) : (
