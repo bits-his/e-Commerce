@@ -255,7 +255,7 @@ export default function ProductsPage() {
     }
   };
 
-  const handleAddProduct = (e) => {
+  const   handleAddProduct = (e) => {
     e.preventDefault();
     console.log(newProduct, "newProduct from form");
 
