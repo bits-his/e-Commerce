@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -11,10 +10,10 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../storemanagement/Storeprofile.css";
-// import pic1 from "../storemanagement/pics/pic1.jpg";
-// import pic2 from "../storemanagement/pics/pic2.jpg";
-// import pic3 from "../storemanagement/pics/pic3.jpg";
-// import pic4 from "../storemanagement/pics/pic4.jpg";
+import pic1 from "../storemanagement/pics/pic1.jpg";
+import pic2 from "../storemanagement/pics/pic2.jpg";
+import pic3 from "../storemanagement/pics/pic3.jpg";
+import pic4 from "../storemanagement/pics/pic4.jpg";
 import logo from "../storemanagement/pics/brand.jpg";
 import Skeleton from "react-loading-skeleton";
 import { Alert, Input } from "reactstrap";
@@ -92,7 +91,7 @@ const Storeprofile = () => {
   const getProduct = () => {
     setLoading(true)
     _get(
-      `api/get-products?shop_id="${userDetails?.slice(1, -1)}"`,
+      `api/get-products?shop_id=${parseInt(userDetails)}`,
       (resp) => {
         setProducts(resp.result[0]);
         setLoading(false);
@@ -108,9 +107,9 @@ const Storeprofile = () => {
     getProduct();
   }, []);
 
-  // const filteredProducts = products.filter((product) =>
-  //   product.product_name?.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+  const filteredProducts = products.filter((product) =>
+    product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -170,14 +169,14 @@ const Storeprofile = () => {
             </Col>
             <Col>
               <h4 className="mb-0">Address</h4>
-              <small className="text-muted">{user.shopaddress}</small> <br />
+              <small className="text-muted">{profile.shopStreet}</small> <br />
               <small className="text-muted">{profile.shopCity}</small>
             </Col>
           </Row>
         </Card.Body>
       </Card>
 
-      <div className="d-flex justify-content-between align-items-center mt-4 mb-3">
+      <div className="d-flex justify-content-between align-items-center mt-4">
         <h5 className="fw-bold" style={{fontSize: '20px'}}>Products</h5>
         <div className="relative ml-auto flex-1 md:grow-0 hidden md:inline">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -211,25 +210,25 @@ const Storeprofile = () => {
               </div>
             ))}
           </div>
-        ) : products?.length > 0 ? (
+        ) : filteredProducts?.length > 0 ? (
           <div className="row row-cols-2 row-cols-sm-3 row-cols-lg-5 row-cols-xl-6 g-3 mt-0">
-            {products?.map((item, idx) => (
+            {filteredProducts?.map((item, idx) => (
               <div
                 key={idx}
                 className="text-decoration-none"
-                // onClick={() => handleItemClick(item.id)}
+                onClick={() => handleItemClick(item.id)}
               >
                 <div className="shadow rounded">
                   <div className="ratio ratio-1x1 bg-light overflow-hidden rounded-top">
                     <img
-                      alt={item.name}
+                      alt={item.product_name}
                       src={item.image_urls ? item.image_urls.split(",")[0] : defaultImg}
                       className="w-100 h-100 object-fit-cover"
                     />
                   </div>
                   <h5 className="mt-3 mb-3 ps-2 fw-large text-dark">
-                    {item.name.charAt(0).toUpperCase() +
-                      item.name.slice(1)}
+                    {item.product_name.charAt(0).toUpperCase() +
+                      item.product_name.slice(1)}
                   </h5>
                   <div className="mt-2 ps-2 d-flex flex-column">
                     <div className="d-flex rating">
@@ -245,10 +244,10 @@ const Storeprofile = () => {
                         />
                       ))}
                     </div>
-                    <p className="mt-1 mb-0 small text-muted">{item.qty}</p>
+                    <p className="mt-1 mb-0 small text-muted">10 reviews</p>
                   </div>
                   <p className="mt-2 pb-3 ps-2 fw-medium text-muted small">
-                    ₦{separator(item.price)}
+                    ₦{separator(item.product_price)}
                   </p>
                 </div>
               </div>
