@@ -33,9 +33,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { _get } from "@/utils/Helper";
+import { _get, _put } from "@/utils/Helper";
 import { customerstatus } from "@/utils/Cusromer";
 import { FaEllipsisH } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export default function Pending_customer(args) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -85,12 +86,43 @@ export default function Pending_customer(args) {
     setSelectedCustomer(null);
   };
 
-    
-    const navigate = useNavigate();
-    
-const handleViewclick = (customer) => {
-        navigate("vendor-view", { state: { customer } })
-    }
+  const updatevendorstatus = (id, status) => {
+    const obj = {
+      id,
+      status,
+    };
+
+    setLoading(true);
+
+    _put(
+      "api/updatestatusofuser",
+      obj,
+      (res) => {
+        setLoading(false);
+        if (res.success) {
+          toast.success("vendor status updated");
+          get_customers();
+        } else {
+          toast.error("Error updating vendor status");
+        }
+      },
+      (err) => {
+        setLoading(false);
+        toast.error("An error occurred while updating status");
+        console.error(err);
+      }
+    );
+  };
+
+  const handleupdatestatus = (id) => {
+    updatevendorstatus(id, "suspend");
+  };
+
+  const navigate = useNavigate();
+
+  const handleViewclick = (customer) => {
+    navigate("vendor-view", { state: { customer } });
+  };
   return (
     <>
       <main className="flex flex-1 flex-col gap-4 py-4 md:gap-8 md:p-8 bg-light min-h-[92vh]">
@@ -167,8 +199,15 @@ const handleViewclick = (customer) => {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
                             <DropdownMenuItem>Warn</DropdownMenuItem>
-                            <DropdownMenuItem>Suspend</DropdownMenuItem>
-                            <DropdownMenuItem className="mx-auto" onClick={() => handleViewclick(customer)}>
+                            <DropdownMenuItem
+                              onClick={() => handleupdatestatus(customer.id)}
+                            >
+                              Suspend
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="mx-auto"
+                              onClick={() => handleViewclick(customer)}
+                            >
                               {/* <Eye className="me-2" /> */}
                               View
                             </DropdownMenuItem>
