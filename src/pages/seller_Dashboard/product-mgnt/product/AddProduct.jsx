@@ -46,6 +46,7 @@ const AddProduct = ({
   options,
   selectedCheckboxes,
   shoesSize,
+  kidsshoesSize,
   capsSize,
   prod_images,
   removeImage,
@@ -306,6 +307,37 @@ const AddProduct = ({
                         }}
                       >
                         {shoesSize.map((option) => (
+                          <div key={option}>
+                            <input
+                              type="checkbox"
+                              id={option}
+                              name={option}
+                              checked={selectedCheckboxes.includes(option)}
+                              onChange={handleChange}
+                            />
+                            <label
+                              htmlFor={option}
+                              style={{ marginLeft: "3px" }}
+                            >
+                              {option}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </Col>
+                  )}
+
+                  {newProduct.sub_ctgry_id === "Kids Shoes" && (
+                    <Col md={12}>
+                      <Label>Product Size</Label>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          gap: "13px",
+                        }}
+                      >
+                        {kidsshoesSize.map((option) => (
                           <div key={option}>
                             <input
                               type="checkbox"
